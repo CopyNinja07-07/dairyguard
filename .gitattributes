@@ -1,0 +1,5 @@
+# keep the language bar honest: Python is the project
+docs/** linguist-generated
+demo/** linguist-generated
+paper/** linguist-documentation
+book/fig/** linguist-generated

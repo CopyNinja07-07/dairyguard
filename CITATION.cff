@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software or data, please cite it as below."
+title: "Beyond the 4 °C Alarm: a loss-budget benchmark for temperature-based milk spoilage estimation"
+type: software
+authors:
+  - family-names: "Singh"
+    given-names: "Suryansh Pratap"
+    affiliation: "Department of Mathematics and Computing, Shri Mata Vaishno Devi University"
+date-released: 2026-10-20
+license: MIT
+repository-code: "https://github.com/CopyNinja07-07/dairyguard"
+keywords: [cold chain, predictive microbiology, milk, shelf life, benchmark, calibration]

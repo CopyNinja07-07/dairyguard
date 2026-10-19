@@ -1,0 +1,18 @@
+__pycache__/
+*.pyc
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.bbl
+paper/*.blg
+*.pass1.pdf
+book/fig/eq_*.png
+
+# raw ComBase transcriptions are kept local
+data/*.csv
+!data/params.csv
+paper/main.pdf
+book/*.pdf
+docs/*.pass1.pdf
