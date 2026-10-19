@@ -88,7 +88,7 @@ Python 3.10 or newer is needed.
    ```bash
    pip install -r requirements.txt
    ```
-3. Run the 13 automatic checks (a few seconds).
+3. Run the 14 automatic checks (a few seconds).
    ```bash
    make test
    ```
@@ -242,7 +242,7 @@ dairyguard/
 │   ├── validate_combase.py   fits spoilage bacteria to ComBase records
 │   ├── validate_combase_lis.py   fits and tests Listeria
 │   └── summarize_runs.py     condenses the five runs into results/summary.json
-├── tests/                    13 automatic checks
+├── tests/                    14 automatic checks
 ├── results/                  saved output of the five runs
 │   ├── base/ lag/ low/ comb/ lis/   one folder per run (AUC, paired differences, calibration)
 │   ├── validation_*.json     outputs of the three validation checks
@@ -261,7 +261,7 @@ dairyguard/
 
 ## Tests
 
-`make test` runs 13 automatic checks. They confirm, among other things, that:
+`make test` runs 14 automatic checks. They confirm, among other things, that:
 
 - the closed-form shelf life agrees with the detailed simulation when both use the same numbers;
 - shelf life gets shorter as temperature rises;
@@ -269,6 +269,7 @@ dairyguard/
 - AUC is computed correctly, and two identical scores differ by exactly zero;
 - a clearly better score is detected as better by the paired comparison;
 - probability forecasts rise with temperature and the calibration measure behaves correctly.
+- the JavaScript code inside the web demo gives the same shelf-life answers as the Python original.
 
 The tests also run automatically on GitHub for every push.
 
