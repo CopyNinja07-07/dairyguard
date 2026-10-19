@@ -1,5 +1,5 @@
-# keep the language bar honest: Python is the project
-docs/** linguist-generated
-demo/** linguist-generated
-paper/** linguist-documentation
+# Built files are excluded from the language bar; hand-written source is counted.
+docs/explorer.html linguist-generated
+docs/site/** linguist-generated
 book/fig/** linguist-generated
+paper/numbers.tex linguist-generated
