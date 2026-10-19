@@ -3,3 +3,5 @@ docs/explorer.html linguist-generated
 docs/site/** linguist-generated
 book/fig/** linguist-generated
 paper/numbers.tex linguist-generated
+docs/index.html linguist-documentation=false
+docs/index.html linguist-detectable
