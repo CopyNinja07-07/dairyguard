@@ -1,0 +1,23 @@
+{
+ "n_all": 51,
+ "all": {
+  "n": 51,
+  "b_ln": 0.026,
+  "Tmin_C": -6.29,
+  "resid_log_sd": 0.19
+ },
+ "robust": {
+  "n": 50,
+  "b_ln": 0.0256,
+  "Tmin_C": -6.6,
+  "resid_log_sd": 0.162
+ },
+ "neumeyer": {
+  "bias_factor": 1.62,
+  "accuracy_factor": 1.62
+ },
+ "lin": {
+  "bias_factor": 1.6,
+  "accuracy_factor": 1.6
+ }
+}

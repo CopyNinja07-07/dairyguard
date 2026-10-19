@@ -1,0 +1,12 @@
+{
+ "b_ln": 0.0269,
+ "T0_C": -8.96,
+ "h0_mean": 3.91,
+ "h0_at_4C": 3.8,
+ "h0_mean_const_h": 91.0,
+ "h0_mean_two_excursions_h": 53.0,
+ "h0_at_4C_const_h": 90.1,
+ "h0_at_4C_two_excursions_h": 52.9,
+ "lin_reported_const_h": 90,
+ "lin_reported_two_excursions_h": 55
+}
