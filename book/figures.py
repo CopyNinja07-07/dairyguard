@@ -238,7 +238,7 @@ def fig_lis():
     """Listeria monocytogenes in milk: ComBase records, fitted curve, held-out records, and the temperature sensitivity of the two organisms."""
     import math, json
     root = os.path.join(os.path.dirname(__file__), "..")
-    d = pd.read_csv(os.path.join(root, "data", "combase_milk_full.csv"))
+    d = pd.read_csv(os.path.join(root, "data", "combase_milk_records.csv"))
     d = d[d.organism.fillna("").str.startswith("Listeria") & d.max_rate_log10_per_h.notna()].copy()
     d["T"] = pd.to_numeric(d.temp_C, errors="coerce"); d = d[d["T"].between(2, 16)]
     clean = d.conditions.fillna("").str.contains("Not specified")

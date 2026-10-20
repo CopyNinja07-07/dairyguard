@@ -227,7 +227,7 @@ Every number the model uses is in [`data/params.csv`](data/params.csv), with whe
 - **SOURCED**: taken from published work (for example a 1995 thesis and the 2016 study above).
 - **ASSUMED**: our own assumption, such as the strain spread, the waking-up time range and how often trucks warm up. These are flagged so nobody mistakes them for measurements.
 
-Growth records come from [ComBase](https://combase.cc), a public database of microbial growth. The raw records are not redistributed here; see [`data/README.md`](data/README.md).
+Growth records come from [ComBase](https://combase.cc), a public database of microbial growth. The 373 milk records we compiled, and the 51 spoilage records used for fitting, are in [`data/`](data/README.md).
 
 ## Repository layout
 
@@ -265,7 +265,7 @@ dairyguard/
 - **Only temperature is modelled.** Other causes of spoilage are out of scope.
 - ***Listeria* is growth only.** No illness or dose is modelled, and the growth targets are not regulatory limits.
 - The *Listeria* held-out test splits by condition, not by study, which is easier than a split by study.
-- **Related products exist.** Temperature loggers and indicators are already sold, and similar prediction tools have been published. This project's contribution is the comparison of what limits accuracy, not a new sensor, and its novelty against the literature is still being checked.
+- **Related products exist.** Temperature loggers and indicators are already sold, and similar prediction tools have been published. This project's contribution is the comparison of what limits accuracy, not a new sensor.
 - This is research, not food-safety or medical advice.
 
 ## Next steps

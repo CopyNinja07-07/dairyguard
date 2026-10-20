@@ -20,6 +20,7 @@ figures:
 paper: summary
 	$(PY) paper/figures_paper.py
 	$(PY) paper/make_numbers.py
+	$(PY) paper/make_tables.py
 	cd paper && latexmk -pdf -interaction=nonstopmode main.tex && cp main.pdf ../docs/DairyGuard_Research_Paper.pdf
 book: figures
 	cd book && $(PY) build_book.py

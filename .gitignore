@@ -10,9 +10,11 @@ paper/*.blg
 *.pass1.pdf
 book/fig/eq_*.png
 
-# raw ComBase records are kept local
 data/*.csv
 !data/params.csv
+!data/combase_milk_records.csv
+!data/combase_tasmania_pasteurised_milk.csv
 paper/main.pdf
 book/*.pdf
 docs/*.pass1.pdf
+paper/*.aux

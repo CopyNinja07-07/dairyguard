@@ -2,8 +2,8 @@
 
 | File | Content |
 |---|---|
-| `params.csv` | Every model parameter, its value, its source, and whether it is sourced from the literature or assumed. |
+| `params.csv` | Every model parameter, its value, its source, and whether it is sourced or assumed. |
 | `combase_tasmania_pasteurised_milk.csv` | 51 ComBase records of the maximum growth rate of aerobic spoilage bacteria in pasteurised milk, 2.7–14.9 °C (Tasmanian Institute of Agriculture). |
-| `combase_milk_full.csv` | 373 ComBase milk records (organism, temperature, aw, pH, conditions, source, maximum rate). A growth rate is stated for 179; the rest need curve fitting and are not used. |
+| `combase_milk_records.csv` | 373 ComBase growth records in milk: organism, food, temperature, aw, pH, conditions, source, maximum rate and status (`stated`, `fit_data_required`, `no_growth`, `not_transcribed`). |
 
-The two ComBase files are not redistributed here; ComBase data are available free at [combase.cc](https://combase.cc). The fitted results are in `results/validation_*.json`. To rerun the validation scripts, place the two CSV files in this folder.
+ComBase records are from [combase.cc](https://www.combase.cc) and remain subject to its terms of use. Please cite ComBase (Baranyi & Tamplin, J. Food Prot. 67:1967–1971, 2004) and the original source of each record.

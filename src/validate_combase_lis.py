@@ -4,7 +4,7 @@ Fit set: records with conditions 'Not specified' and 2-16 C. Held-out: the other
 Records come from the ComBase milk search."""
 import math, json
 import numpy as np, pandas as pd
-d = pd.read_csv("data/combase_milk_full.csv")
+d = pd.read_csv("data/combase_milk_records.csv")
 d = d[d.organism.fillna("").str.startswith("Listeria") & d.max_rate_log10_per_h.notna()].copy()
 d["T"] = pd.to_numeric(d.temp_C, errors="coerce"); d = d[d["T"].between(2, 16)]
 clean = d.conditions.fillna("").str.contains("Not specified")

@@ -21,7 +21,7 @@ l = V["lin"]; c = V["combase"]; s = V["lis"]
 mac("NumLinConst", "%.0f" % l["h0_at_4C_const_h"]); mac("NumLinExc", "%.0f" % l["h0_at_4C_two_excursions_h"])
 mac("NumLinErr", "%.0f" % (100 * (l["h0_at_4C_two_excursions_h"] - 55) / 55))
 mac("NumLinErrAbs", "%.0f" % abs(100 * (l["h0_at_4C_two_excursions_h"] - 55) / 55))
-mac("NumCbN", c["robust"]["n"] + 1); mac("NumCbB", "%.4f" % c["robust"]["b_ln"]); mac("NumCbT", "%.1f" % c["robust"]["Tmin_C"]); mac("NumCbSd", "%.2f" % c["robust"]["resid_log_sd"])
+mac("NumCbN", c["n_all"]); mac("NumCbNfit", c["robust"]["n"]); mac("NumCbAllB", "%.4f" % c["all"]["b_ln"]); mac("NumCbAllT", "%.1f" % c["all"]["Tmin_C"]); mac("NumCbB", "%.4f" % c["robust"]["b_ln"]); mac("NumCbT", "%.1f" % c["robust"]["Tmin_C"]); mac("NumCbSd", "%.2f" % c["robust"]["resid_log_sd"])
 mac("NumCbBias", "%.2f" % c["neumeyer"]["bias_factor"])
 mac("NumLisN", s["n_fit"]); mac("NumLisHeld", s["n_heldout"]); mac("NumLisB", "%.4f" % s["b_ln"]); mac("NumLisT", "%.1f" % s["Tmin_C"])
 mac("NumLisBLo", "%.4f" % s["b_ci95"][0]); mac("NumLisBHi", "%.4f" % s["b_ci95"][1]); mac("NumLisTLo", "%.1f" % s["Tmin_ci95"][0]); mac("NumLisTHi", "%.1f" % s["Tmin_ci95"][1])

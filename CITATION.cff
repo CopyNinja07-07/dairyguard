@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software or data, please cite it as below."
-title: "Beyond the 4 °C Alarm: a loss-budget benchmark for temperature-based milk spoilage estimation"
+title: "DairyGuard: a loss-budget benchmark for temperature-based milk spoilage estimation"
 type: software
 authors:
   - family-names: "Singh"
@@ -9,4 +9,12 @@ authors:
 date-released: 2026-10-20
 license: MIT
 repository-code: "https://github.com/CopyNinja07-07/dairyguard"
-keywords: [cold chain, predictive microbiology, milk, shelf life, benchmark, calibration]
+keywords: [cold chain, predictive microbiology, non-isothermal kinetics, milk, shelf life, benchmark, calibration]
+preferred-citation:
+  type: article
+  title: "How Much Can a Temperature Log Tell Us About Spoiling Milk? Non-Isothermal Growth Kinetics and a Loss Budget for Cold-Chain Monitoring"
+  authors:
+    - family-names: "Singh"
+      given-names: "Suryansh Pratap"
+  year: 2026
+  status: preprint

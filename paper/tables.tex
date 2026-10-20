@@ -1,0 +1,72 @@
+\newcommand{\DatNFull}{373}
+\newcommand{\DatNLis}{102}
+\newcommand{\DatNSp}{51}
+\newcommand{\TabAUC}{\begin{table*}[t]\centering\footnotesize
+\caption{AUC of the five scores from a DS18B20 record sampled every 15\,min (baseline run, 4\,000 trips per row). The best score in each row is in bold. The last two columns give the same kinetic score with an ideal sensor sampled every minute, and the oracle that knows each trip's biology}\label{tab:auc}
+\begin{tabular}{@{}lllccccccc@{}}\toprule\rowcolor{dghead}
+Limit & Product & $cv$ & CSL & Degree-h $>4$\,\textdegree C & Time $>5$\,\textdegree C & Time $>8$\,\textdegree C & $T_{\max}$ & Ideal, 1 min & Oracle\\\midrule
+A & Pouch & 0.00 & \textbf{0.705} & 0.690 & 0.635 & 0.569 & 0.629 & 0.718 & 1.000\\
+A & Pouch & 0.10 & \textbf{0.651} & 0.634 & 0.599 & 0.557 & 0.591 & 0.659 & 1.000\\
+A & Pouch & 0.25 & \textbf{0.620} & 0.619 & 0.591 & 0.561 & 0.602 & 0.627 & 1.000\\
+A & Crate & 0.00 & \textbf{0.722} & 0.711 & 0.701 & 0.586 & 0.638 & 0.732 & 1.000\\
+A & Crate & 0.10 & \textbf{0.674} & 0.666 & 0.657 & 0.577 & 0.611 & 0.687 & 1.000\\
+A & Crate & 0.25 & \textbf{0.599} & 0.596 & 0.592 & 0.541 & 0.571 & 0.603 & 1.000\\
+\midrule
+B & Pouch & 0.00 & \textbf{0.710} & 0.686 & 0.636 & 0.564 & 0.587 & 0.723 & 1.000\\
+B & Pouch & 0.10 & \textbf{0.656} & 0.634 & 0.606 & 0.539 & 0.564 & 0.670 & 1.000\\
+B & Pouch & 0.25 & \textbf{0.604} & 0.594 & 0.565 & 0.531 & 0.549 & 0.608 & 1.000\\
+B & Crate & 0.00 & \textbf{0.708} & 0.696 & 0.687 & 0.600 & 0.629 & 0.724 & 1.000\\
+B & Crate & 0.10 & \textbf{0.676} & 0.670 & 0.663 & 0.585 & 0.611 & 0.686 & 1.000\\
+B & Crate & 0.25 & \textbf{0.603} & 0.595 & 0.591 & 0.538 & 0.552 & 0.608 & 1.000\\
+\bottomrule\end{tabular}\end{table*}}
+
+\newcommand{\TabBudget}{\begin{table}[t]\centering\footnotesize
+\caption{Loss budget: mean AUC over the 12 settings of each run as information is removed, and the range of the biology gap (oracle minus ideal sensor)}\label{tab:budget}
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{@{}lcccccc@{}}\toprule\rowcolor{dghead}
+Run & Oracle & Ideal & PT1000 & DS18B20 & DS18B20 & Biology gap\\
+ & & 1\,min & 15\,min & 15\,min & 60\,min & \\\midrule
+Baseline & 1.000 & 0.671 & 0.670 & 0.661 & 0.662 & 0.27--0.40\\
+Extra lag & 0.988 & 0.652 & 0.652 & 0.644 & 0.645 & 0.27--0.40\\
+Low load & 1.000 & 0.667 & 0.666 & 0.656 & 0.657 & 0.28--0.40\\
+Milk flora & 1.000 & 0.664 & 0.663 & 0.654 & 0.653 & 0.28--0.40\\
+\textit{Listeria} & 0.950 & 0.738 & 0.737 & 0.725 & 0.726 & 0.09--0.34\\
+\bottomrule\end{tabular}\end{table}}
+
+\newcommand{\TabContrasts}{\begin{table*}[t]\centering\footnotesize
+\caption{Paired AUC differences on identical trips: minimum/maximum over the 12 settings of each run, with the number of settings (of 12) whose 95\,\% paired-bootstrap interval excludes zero in brackets}\label{tab:contrasts}
+\begin{tabular}{@{}lccccc@{}}\toprule\rowcolor{dghead}
+Contrast & Baseline & Extra lag & Low load & Milk flora & \textit{Listeria}\\\midrule
+CSL $-$ degree-h & 0.001/0.023 (10) & 0.006/0.037 (12) & 0.001/0.023 (8) & 0.004/0.025 (10) & 0.002/0.023 (8)\\
+CSL $-$ time $>5$\,\textdegree C & 0.008/0.074 (12) & 0.001/0.104 (11) & 0.005/0.066 (11) & 0.006/0.075 (11) & 0.010/0.077 (12)\\
+PT1000 $-$ DS18B20 & 0.003/0.015 (9) & 0.003/0.013 (7) & 0.005/0.018 (10) & 0.002/0.015 (8) & 0.005/0.020 (8)\\
+60\,min $-$ 1\,min & -0.008/0.004 (1) & -0.008/0.004 (1) & -0.011/0.008 (2) & -0.009/0.006 (0) & -0.008/0.009 (0)\\
+Adaptive $-$ 1\,min & -0.006/0.005 (0) & -0.006/0.006 (0) & -0.008/0.009 (1) & -0.007/0.006 (0) & -0.006/0.009 (0)\\
+\bottomrule\end{tabular}\end{table*}}
+
+\newcommand{\TabCal}{\begin{table*}[t]\centering\footnotesize
+\caption{Calibration: range of expected calibration error over the 12 settings, and mean Brier score, for each run. Lower is better}\label{tab:cal}
+\begin{tabular}{@{}lccccc@{}}\toprule\rowcolor{dghead}
+Variant & Baseline & Extra lag & Low load & Milk flora & \textit{Listeria}\\\midrule
+Probability, matched prior & 0.03--0.07 / 0.231 & 0.01--0.07 / 0.236 & 0.02--0.11 / 0.233 & 0.02--0.09 / 0.234 & 0.08--0.41 / 0.216\\
+Probability, overconfident & 0.04--0.13 / 0.237 & 0.05--0.13 / 0.244 & 0.02--0.14 / 0.238 & 0.02--0.13 / 0.239 & 0.11--0.44 / 0.218\\
+Single alarm & 0.33--0.43 / 0.380 & 0.34--0.44 / 0.391 & 0.34--0.44 / 0.386 & 0.34--0.43 / 0.385 & 0.34--0.45 / 0.400\\
+\bottomrule\end{tabular}\end{table*}}
+
+\newcommand{\TabDataComp}{\begin{table}[t]\centering\footnotesize
+\caption{Composition of the compiled ComBase milk database by organism. $n$: records; Rate: maximum growth rate stated; Curve: growth curve only; None: no growth reported; N/T: rate not transcribed}\label{tab:dcomp}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lccccc@{}}\toprule\rowcolor{dghead}
+Organism & $n$ & Rate & Curve & None & N/T\\\midrule
+\textit{L.~monocytogenes/innocua} & 149 & 102 & 43 & 0 & 4\\
+\textit{Bacillus cereus} & 94 & 47 & 36 & 3 & 8\\
+\textit{Escherichia coli} & 66 & 22 & 15 & 4 & 25\\
+\textit{Salmonella} spp. & 25 & 4 & 7 & 13 & 1\\
+Campylobacteraceae & 16 & 0 & 13 & 0 & 3\\
+Shigellae & 11 & 0 & 10 & 0 & 1\\
+\textit{Cronobacter} spp. & 6 & 0 & 5 & 0 & 1\\
+Aerobic spoilage bacteria & 4 & 4 & 0 & 0 & 0\\
+Lactic acid bacteria & 1 & 0 & 1 & 0 & 0\\
+Other & 1 & 0 & 1 & 0 & 0\\
+\midrule Total & 373 & 179 & 131 & 20 & 43\\
+\bottomrule\end{tabular}\end{table}}
