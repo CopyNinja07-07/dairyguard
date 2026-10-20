@@ -22,6 +22,8 @@ LIB = "/usr/share/fonts/truetype/liberation"
 for nm, fn in (("Serif", "LiberationSerif-Regular"), ("Serif-Bold", "LiberationSerif-Bold"),
                ("Serif-Italic", "LiberationSerif-Italic"), ("Serif-BoldItalic", "LiberationSerif-BoldItalic")):
     pdfmetrics.registerFont(TTFont(nm, f"{LIB}/{fn}.ttf"))
+pdfmetrics.registerFont(TTFont("Cond-Bold", "/usr/share/fonts/truetype/dejavu/DejaVuSansCondensed-Bold.ttf"))
+pdfmetrics.registerFont(TTFont("Mono", "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"))
 pdfmetrics.registerFontFamily("Serif", normal="Serif", bold="Serif-Bold", italic="Serif-Italic", boldItalic="Serif-BoldItalic")
 
 W, H = A4
@@ -96,27 +98,67 @@ class Doc(BaseDocTemplate):
                                PageTemplate(id="body", frames=[fr], onPage=self._page)])
 
     def _cover(self, c, d):
+        """Night-watch cover: a dark city, a signal light and the DairyGuard shield, drawn as vectors."""
+        import random
+        rnd = random.Random(11)
         c.saveState()
-        c.drawImage(os.path.join(HERE, "cover_bg.png"), 0, 0, width=W, height=H)
-        c.setFillColor(colors.HexColor("#E8FBFF"))
-        c.setFont("Serif-Bold", 40)
-        c.drawCentredString(W / 2, 205, TITLE)
-        c.setFont("Serif", 15)
-        c.setFillColor(colors.HexColor("#9FD8E6"))
-        c.drawCentredString(W / 2, 176, "How Much Can Temperature History")
-        c.drawCentredString(W / 2, 157, "Tell Us About Spoiling Milk?")
-        c.setStrokeColor(colors.HexColor("#3b7f94"))
-        c.setLineWidth(0.6)
-        c.line(W / 2 - 60, 140, W / 2 + 60, 140)
-        c.setFont("Serif-Italic", 10.5)
-        c.setFillColor(colors.HexColor("#E8FBFF"))
-        c.drawString(M, 72, "by")
-        c.setFont("Serif", 12)
-        c.drawString(M, 56, "Suryansh Pratap Singh")
-        c.setFont("Serif-Italic", 10)
-        c.setFillColor(colors.HexColor("#9FD8E6"))
-        c.drawRightString(W - M, 72, "A research project in cold-chain monitoring")
-        c.drawRightString(W - M, 57, "First edition · October 2026")
+        steps = 60
+        for i in range(steps):                                   # night sky gradient
+            t = i / (steps - 1)
+            r, g, b = (5 + 12 * t) / 255, (7 + 17 * t) / 255, (10 + 22 * t) / 255
+            c.setFillColorRGB(r, g, b); c.rect(0, H * (1 - (i + 1) / steps), W, H / steps + 1, stroke=0, fill=1)
+        c.setFillColorRGB(.82, .85, .9)
+        for _ in range(170):                                     # stars
+            c.setFillAlpha(.15 + .5 * rnd.random()); x, y = rnd.random() * W, H * (.35 + .65 * rnd.random())
+            c.circle(x, y, .3 + .6 * rnd.random(), stroke=0, fill=1)
+        bx, by = W * .82, 0                                      # signal light beam
+        import math
+        ang = math.radians(98); L = H * 1.05; sp = math.radians(4.5)
+        for k, a in enumerate([.10, .07, .05]):
+            c.setFillColorRGB(.95, .71, .27); c.setFillAlpha(a)
+            pth = c.beginPath(); w2 = sp * (1 + .5 * k)
+            pth.moveTo(bx - 4, by); pth.lineTo(bx + math.cos(ang - w2) * L, by + math.sin(ang - w2) * L)
+            pth.lineTo(bx + math.cos(ang + w2) * L, by + math.sin(ang + w2) * L); pth.close(); c.drawPath(pth, stroke=0, fill=1)
+        px, py = bx + math.cos(ang) * H * .66, by + math.sin(ang) * H * .66
+        for rr, a in [(120, .05), (85, .08), (60, .12)]:          # halo
+            c.setFillColorRGB(.95, .71, .27); c.setFillAlpha(a); c.circle(px, py, rr, stroke=0, fill=1)
+        c.setFillAlpha(1)
+        sc = 2.3                                                 # shield with DG
+        sh = c.beginPath()
+        pts = [(0, 26), (22, 19), (22, 2)]
+        sh.moveTo(px, py + 26 * sc); sh.lineTo(px + 22 * sc, py + 19 * sc); sh.lineTo(px + 22 * sc, py + 2 * sc)
+        sh.curveTo(px + 22 * sc, py - 12 * sc, px + 12 * sc, py - 21 * sc, px, py - 26 * sc)
+        sh.curveTo(px - 12 * sc, py - 21 * sc, px - 22 * sc, py - 12 * sc, px - 22 * sc, py + 2 * sc)
+        sh.lineTo(px - 22 * sc, py + 19 * sc); sh.close()
+        c.setFillColorRGB(.03, .04, .05); c.setFillAlpha(.85); c.drawPath(sh, stroke=0, fill=1); c.setFillAlpha(1)
+        c.setFillColor(colors.HexColor("#F2B544")); c.setFont("Cond-Bold", 30); c.drawCentredString(px, py - 9, "DG")
+        x = -6                                                   # skyline
+        while x < W + 10:
+            w = 18 + rnd.random() * 46; h = H * (.07 + rnd.random() * .2) * (1.5 if rnd.random() < .12 else 1)
+            c.setFillColorRGB(.012, .016, .024); c.rect(x, 0, w, h, stroke=0, fill=1)
+            for yy in range(8, int(h) - 6, 9):
+                for xx in range(5, int(w) - 5, 7):
+                    if rnd.random() < .11:
+                        warm = rnd.random() > .72
+                        c.setFillColor(colors.HexColor("#F2B544" if warm else "#5EC3FF")); c.setFillAlpha(.6 if warm else .25)
+                        c.rect(x + xx, h - yy - 4, 2.2, 3.6, stroke=0, fill=1); c.setFillAlpha(1)
+            x += w + rnd.random() * 3
+        for i in range(80):                                      # fade behind the title
+            c.setFillColorRGB(7 / 255, 9 / 255, 12 / 255); c.setFillAlpha(.92 * (1 - i / 80) ** 1.4)
+            c.rect(0, i * 4, W, 4, stroke=0, fill=1)
+        c.setFillAlpha(1)
+        c.setFillColor(colors.HexColor("#F2B544")); c.setFont("Mono", 8.5)
+        c.drawString(M, H - M, "THE STORYBOOK  ·  DAIRYGUARD RESEARCH")
+        c.setFillColor(colors.HexColor("#ECE9E2")); c.setFont("Cond-Bold", 46)
+        c.drawString(M, 250, "BEYOND THE")
+        c.setFillColor(colors.HexColor("#F2B544")); c.drawString(M, 202, "4 °C ALARM")
+        c.setFillColor(colors.HexColor("#8B939E")); c.setFont("Serif", 13.5)
+        c.drawString(M, 172, "How much can a temperature log tell us about spoiling milk?")
+        c.setStrokeColor(colors.HexColor("#F2B544")); c.setLineWidth(1.2); c.line(M, 156, M + 46, 156)
+        c.setFillColor(colors.HexColor("#ECE9E2")); c.setFont("Serif", 12.5); c.drawString(M, 74, "Suryansh Pratap Singh")
+        c.setFillColor(colors.HexColor("#8B939E")); c.setFont("Serif-Italic", 9.5)
+        c.drawString(M, 59, "Mathematics and Computing, Shri Mata Vaishno Devi University")
+        c.drawRightString(W - M, 59, "First edition · October 2026")
         c.restoreState()
 
     def _page(self, c, d):
@@ -236,6 +278,27 @@ def front(page_of):
         "The model is tied to data. It reproduces a published fluctuating-temperature experiment to within about 4%. Fitted to 51 real records of natural spoilage bacteria in pasteurised milk it shows that parameters from laboratory isolates overpredict growth by about 1.6 times. Fitted to real records for <i>Listeria monocytogenes</i>, a hazard organism, it predicts records it has not seen to within a factor of about 1.4, and the same design rules hold. Chapter 9 states what this does not show.",
     ]:
         s.append(P(t))
+    s.append(PageBreak())
+    s.append(P("What Is New Here", h_ch))
+    s.append(P("Plenty of studies model how milk spoils, and plenty build better sensors. This one asks a different question, and the difference is the reason the book exists."))
+    hd = ParagraphStyle("hd", parent=cellb, fontSize=10.5, leading=13, textColor=colors.white)
+    cl = ParagraphStyle("cl", parent=cell, fontSize=9.6, leading=12.6)
+    rows = [[P("The usual question", hd), P("The DairyGuard question", hd)],
+            [P("Which input moves the outcome most?", cl), P("Given a temperature log, what is a monitor still blind to?", cl)],
+            [P("Temperature is an unknown drawn at random, so it naturally ranks first.", cl), P("Temperature is measured, as a real monitor would measure it.", cl)],
+            [P("Measures how much shelf life varies.", cl), P("Measures how well a device can predict spoilage, against a known true answer.", cl)],
+            [P("Sensors and logging intervals are assumed, not tested.", cl), P("Accuracy is removed one source at a time: unseen biology, sensor error, sampling interval, choice of rule.", cl)],
+            [P("Comparisons across separate runs.", cl), P("Every comparison is made on the same trips, with a paired bootstrap.", cl)]]
+    tb = Table(rows, colWidths=[(W - 2 * M) / 2] * 2)
+    tb.setStyle(TableStyle([("BACKGROUND", (0, 0), (0, 0), colors.HexColor("#3a4757")), ("BACKGROUND", (1, 0), (1, 0), colors.HexColor("#b07a12")),
+                            ("BACKGROUND", (1, 1), (1, -1), colors.HexColor("#fdf6e7")), ("LINEBELOW", (0, 1), (-1, -1), 0.4, RULE),
+                            ("VALIGN", (0, 0), (-1, -1), "TOP"), ("TOPPADDING", (0, 0), (-1, -1), 6), ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+                            ("LEFTPADDING", (0, 0), (-1, -1), 8), ("RIGHTPADDING", (0, 0), (-1, -1), 8)]))
+    s += [tb, Spacer(1, 14)]
+    s.append(P("What was found", h_sec))
+    s.append(P("Three suspects were tested. A better thermometer gains at most about 2 points of accuracy (AUC, on a 50 to 100 scale). Reading every minute instead of every hour makes no measurable difference in most settings. A smarter growth-based rule beats a plain degree-hour count by at most about 4 points. The one thing no thermometer can see, which bacteria were in the milk and how many, costs 9 to 40 points. The pattern held in all five simulated worlds, including one for the pathogen <i>Listeria</i>."))
+    s.append(P("The plot twist", h_sec))
+    s.append(P("Earlier studies find that temperature matters most, and this book finds that biology matters most. Both are right. When nobody logs the trip, how warm it got is the biggest unknown. Once a monitor records it, what is left unexplained is mostly the milk itself. That second situation is the one a cold-chain monitor is in, and it is the one this book measures."))
     s.append(PageBreak())
     s.append(P("Chapter Plan", h_ch))
     for i, (k, t, w, d) in enumerate(CH, 1):

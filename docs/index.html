@@ -2,205 +2,288 @@
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>DairyGuard</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="description" content="The journey of a glass of milk, and what we found decides whether it stays safe.">
+<meta name="description" content="Every night, milk crosses the city. DairyGuard asks what a temperature log can really tell us about whether it stayed safe.">
+<meta name="theme-color" content="#07090c">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F7F3EA;--bg2:#EFE9DC;--ink:#17262B;--mut:#56656B;--line:#DDD5C4;--cold:#2C7FA8;--warm:#D4552B;--leaf:#2F7D5B;--milk:#FFFFFF;--r:16px}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E171A;--bg2:#142226;--ink:#F1EDE3;--mut:#9DB0B5;--line:#223338;--cold:#6CC0E8;--warm:#FF8A5C;--leaf:#6FD1A3;--milk:#F6F3EC;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0E171A;--bg2:#142226;--ink:#F1EDE3;--mut:#9DB0B5;--line:#223338;--cold:#6CC0E8;--warm:#FF8A5C;--leaf:#6FD1A3;--milk:#F6F3EC;color-scheme:dark}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 18px/1.7 "Inter Tight",system-ui,sans-serif;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}
-.w{max-width:1040px;margin:0 auto}
-h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:400;letter-spacing:-.02em;line-height:1.08;margin:0;text-wrap:balance}
-p{margin:0 0 1em;max-width:58ch}
-.eyebrow{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--leaf);font-weight:600}
-nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-block:22px}
-nav b{font:600 22px Fraunces,serif}nav a{color:var(--mut);text-decoration:none;font-size:15px;margin-left:20px}nav a:hover{color:var(--ink)}
-.hero{padding-block:70px 40px}
-.hero h1{font-size:clamp(42px,8vw,92px);margin:16px 0 24px;max-width:12em}
-.hero h1 em{font-style:italic;color:var(--warm)}
-.hero p{font-size:21px;color:var(--mut)}
-.cue{display:inline-flex;gap:10px;align-items:center;margin-top:24px;color:var(--mut);font-size:15px}
-.cue i{display:block;width:2px;height:34px;background:linear-gradient(var(--ink),transparent);animation:dr 1.8s infinite}
+:root{--bg:#07090c;--bg2:#0e1218;--bg3:#151b23;--ink:#ece9e2;--mut:#8b939e;--dim:#5a626d;--line:#1f2731;--sig:#f2b544;--hot:#ff5a3c;--cold:#5ec3ff;--ok:#5fd39a;--r:14px;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.w{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:"Big Shoulders Display","Arial Narrow","Roboto Condensed","DejaVu Sans Condensed",sans-serif;font-weight:800;letter-spacing:.01em;line-height:.98;margin:0;text-transform:uppercase;text-wrap:balance}
+p{margin:0 0 1em;max-width:60ch}
+a{color:var(--sig)}
+.tag{font:500 12px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--sig)}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+/* nav */
+nav{position:fixed;inset:0 0 auto;z-index:20;padding-top:env(safe-area-inset-top,0px);background:rgba(7,9,12,.78);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid rgba(31,39,49,.6)}
+nav .w{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-block:16px}
+nav b{display:flex;align-items:center;gap:10px;font:800 22px "Big Shoulders Display",sans-serif;letter-spacing:.06em;text-transform:uppercase}
+nav b img{width:28px;height:28px}
+nav .lk{display:flex;gap:18px;flex-wrap:wrap}
+nav .lk a{color:var(--mut);text-decoration:none;font-size:14px}nav .lk a:hover{color:var(--ink)}
+@media(max-width:640px){nav .lk a:not(.cta){display:none}}
+nav .cta{color:var(--bg)!important;background:var(--sig);padding:6px 12px;border-radius:99px;font-weight:600}
+/* hero */
+.hero{position:relative;height:100svh;min-height:600px;overflow:hidden;border-bottom:1px solid var(--line)}
+#sky{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .w{position:relative;height:100%;display:flex;flex-direction:column;justify-content:center;padding-top:72px;padding-bottom:6vh}
+.hero h1{font-size:clamp(44px,7vw,98px);max-width:9.5em}
+@media(max-width:640px){.hero .w{justify-content:flex-end;padding-bottom:8vh}}
+.hero h1 span{color:var(--sig)}
+.hero p{font-size:clamp(17px,2vw,21px);color:var(--mut);margin-top:22px;max-width:44ch}
+.cue{margin-top:18px;display:inline-flex;align-items:center;gap:10px;color:var(--dim);font:500 12px "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase}
+.cue i{display:block;width:1px;height:30px;background:linear-gradient(var(--sig),transparent);animation:dr 2s infinite}
 @keyframes dr{0%{transform:scaleY(0);transform-origin:top}60%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(1);transform-origin:bottom;opacity:0}}
 /* journey */
-#journey{height:520vh;position:relative}
-.stage{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:center}
-#cv{width:100%;height:min(86vh,720px);display:block}
+#journey{height:480vh;position:relative}
+.stage{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:1.05fr 1fr;gap:24px;align-items:center}
+#cv{width:100%;height:min(80vh,680px);display:block}
 .panel{min-width:0}
-.panel .step{font:400 14px "Inter Tight";color:var(--mut);margin-bottom:10px}
-.panel h2{font-size:clamp(30px,4.4vw,52px);margin-bottom:16px;transition:opacity .35s}
-.panel p{font-size:19px;color:var(--mut);transition:opacity .35s}
+.panel .step{font:500 12px "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--sig);margin-bottom:12px}
+.panel h2{font-size:clamp(40px,5vw,66px);margin-bottom:16px;transition:opacity .3s}
+.panel p{font-size:18px;color:var(--mut);transition:opacity .3s}
 .panel.sw h2,.panel.sw p{opacity:0}
-.read{margin-top:18px;padding:16px 18px;border:1px solid var(--line);background:var(--bg2);border-radius:var(--r);display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:440px}
-.read small{display:block;color:var(--mut);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;line-height:1.35}
-.read b{font:400 34px/1.1 Fraunces,serif}
-#bW{color:var(--warm)}#bC{color:var(--cold)}
-.note{font-size:13px;color:var(--mut);margin-top:14px;max-width:440px}
-@media(max-width:760px){.stage{grid-template-columns:1fr;grid-template-rows:46vh 1fr;align-items:start;padding-top:8px}#cv{height:44vh}.panel h2{font-size:28px;margin-bottom:8px}.panel p{font-size:16px;margin-bottom:8px}.read{padding:10px 14px}.read b{font-size:26px}.note{display:none}}
-section.c{padding-block:100px;border-top:1px solid var(--line)}
-section.c h2{font-size:clamp(32px,5.2vw,60px);margin:14px 0 24px;max-width:14em}
-section.c p{font-size:19px;color:var(--mut)}section.c p b{color:var(--ink);font-weight:500}
-.big{font:400 clamp(24px,3.6vw,40px)/1.25 Fraunces,serif;max-width:22em;color:var(--ink)}
-.big em{color:var(--leaf);font-style:italic}
-.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:34px}
-.sus{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:26px;min-width:0}
-.sus .q{font:400 28px Fraunces,serif;margin-bottom:8px}.sus p{margin:0;font-size:16px}
-.verdict{margin-top:6px;font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
-.rv{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s cubic-bezier(.2,.7,.2,1)}.rv.in{opacity:1;transform:none}
-.meter{margin-top:30px;display:grid;gap:26px;max-width:760px}
-.meter .row .top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline;margin-bottom:8px}
-.meter .row .top span:first-child{font-size:17px}.meter .row .top span:last-child{font:400 26px Fraunces,serif}
-.tr{height:16px;border-radius:99px;background:var(--bg2);border:1px solid var(--line);overflow:hidden}.fl{height:100%;width:0;border-radius:99px;transition:width 1.7s cubic-bezier(.2,.7,.2,1)}
-.hint{font-size:14px!important;color:var(--mut);max-width:60ch}
-.list{display:grid;gap:14px;margin-top:20px;max-width:640px}
-.list div{display:grid;grid-template-columns:34px 1fr;gap:12px;font-size:18px}.list div:before{content:"";width:12px;height:12px;border-radius:50%;background:var(--leaf);margin-top:9px}
-.limits{border:1px dashed var(--warm);border-radius:var(--r);padding:24px 28px;color:var(--ink);font-size:17px;max-width:760px}
-.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:30px}
-.lk{display:block;text-decoration:none;color:inherit;background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:26px;transition:.25s;min-width:0}
-.lk:hover{transform:translateY(-3px);border-color:var(--leaf)}.lk small{color:var(--leaf);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:12px}
-.lk h3{font-size:27px;margin:10px 0 8px}.lk p{font-size:15.5px;margin:0;color:var(--mut)}
-footer{padding-block:60px;border-top:1px solid var(--line);color:var(--mut);font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.read{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;max-width:440px}
+.read div{background:var(--bg2);padding:14px 16px}
+.read small{display:block;color:var(--dim);font:500 11px "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+.read b{font:800 38px/1.1 "Big Shoulders Display",sans-serif}
+#bW{color:var(--hot)}#bC{color:var(--cold)}
+.note{font-size:12.5px;color:var(--dim);margin-top:12px;max-width:440px}
+@media(max-width:760px){.stage{grid-template-columns:1fr;grid-template-rows:44vh 1fr;align-items:start;padding-top:64px}#cv{height:40vh}.panel h2{font-size:34px;margin-bottom:8px}.panel p{font-size:15.5px;margin-bottom:8px}.read b{font-size:28px}.note{display:none}}
+/* sections */
+section.c{padding-block:110px;border-top:1px solid var(--line)}
+section.c h2{font-size:clamp(40px,6.4vw,84px);margin:16px 0 26px;max-width:12em}
+section.c h2 span{color:var(--sig)}
+section.c p{color:var(--mut)}section.c p b{color:var(--ink);font-weight:600}
+.lead{font-size:clamp(19px,2.2vw,24px);line-height:1.5;color:var(--ink)!important;max-width:34em}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .8s,transform .8s cubic-bezier(.2,.7,.2,1)}.rv.in{opacity:1;transform:none}
+/* versus */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:34px}
+.vs>div{background:var(--bg2);padding:28px;min-width:0}
+.vs>div.us{background:linear-gradient(160deg,rgba(242,181,68,.10),rgba(242,181,68,0) 60%),var(--bg2)}
+.vs h3{font-size:30px;margin-bottom:6px}.vs .us h3{color:var(--sig)}
+.vs ul{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:12px}
+.vs li{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:15.5px;color:var(--mut)}
+.vs li:before{content:"—";color:var(--dim)}.vs .us li:before{content:"◆";color:var(--sig);font-size:12px;margin-top:4px}
+.vs li b{color:var(--ink);font-weight:600}
+@media(max-width:760px){.vs{grid-template-columns:1fr}}
+.who{margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.who div{border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;min-width:0}
+.who small{display:block;font:500 11px "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+.who p{font-size:14.5px;margin:0}
+/* suspects */
+.sus{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:34px}
+.card{position:relative;background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:26px;min-width:0;overflow:hidden}
+.card .no{font:500 11px "JetBrains Mono",monospace;letter-spacing:.14em;color:var(--dim)}
+.card h3{font-size:34px;margin:8px 0 8px}.card p{font-size:15px;margin:0}
+.card .v{margin-top:18px;display:inline-block;font:600 12px "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:99px;border:1px solid var(--line);color:var(--mut)}
+.card.villain{border-color:rgba(255,90,60,.5);background:radial-gradient(120% 90% at 100% 0,rgba(255,90,60,.16),transparent 60%),var(--bg2)}
+.card.villain .v{color:var(--hot);border-color:rgba(255,90,60,.5)}
+.meter{margin-top:46px;display:grid;gap:26px;max-width:780px}
+.meter .top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline;margin-bottom:9px}
+.meter .top span:first-child{font-size:16px;color:var(--ink)}.meter .top span:last-child{font:800 30px "Big Shoulders Display",sans-serif}
+.tr{height:10px;border-radius:99px;background:var(--bg3);overflow:hidden}.fl{height:100%;width:0;border-radius:99px;transition:width 1.7s cubic-bezier(.2,.7,.2,1)}
+.hint{font-size:13.5px!important;color:var(--dim)!important;max-width:62ch}
+/* twist */
+.twist{margin-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.twist div{border:1px solid var(--line);border-radius:var(--r);padding:24px;min-width:0}
+.twist small{font:500 11px "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.twist b{display:block;font:800 30px/1.05 "Big Shoulders Display",sans-serif;text-transform:uppercase;margin:8px 0}
+@media(max-width:760px){.twist{grid-template-columns:1fr}}
+.list{display:grid;gap:16px;margin-top:24px;max-width:680px}
+.list div{display:grid;grid-template-columns:44px 1fr;gap:6px;font-size:17px;color:var(--ink)}
+.list div span{font:500 12px "JetBrains Mono",monospace;color:var(--sig);padding-top:5px}
+.limits{border:1px dashed var(--dim);border-radius:var(--r);padding:24px 26px;color:var(--mut);font-size:16px;max-width:780px}
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:34px}
+.lk2{display:block;text-decoration:none;color:inherit;background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:24px;transition:.25s;min-width:0}
+.lk2:hover{transform:translateY(-3px);border-color:var(--sig)}
+.lk2 small{font:500 11px "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--sig)}
+.lk2 h3{font-size:32px;margin:10px 0 6px}.lk2 p{font-size:14.5px;margin:0;color:var(--mut)}
+footer{border-top:1px solid var(--line)}
+footer .w{padding-block:44px;color:var(--dim);font-size:13.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.fl{transition:none}.cue i{animation:none}}
 </style></head><body>
-<div class="w">
-<nav><b>DairyGuard</b><div><a href="#journey">The journey</a><a href="#why">Why it matters</a><a href="#found">What we found</a><a href="#read">Read more</a></div></nav>
+
+<nav><div class="w"><b><img src="favicon.svg" alt="">DairyGuard</b><div class="lk"><a href="#journey">The journey</a><a href="#different">What's new</a><a href="#found">Findings</a><a href="#read">Read</a><a class="cta" href="explorer.html">Open the demo</a></div></div></nav>
 
 <header class="hero">
-<span class="eyebrow">A research project on safe food</span>
-<h1>Every glass of milk has a <em>journey</em>.</h1>
-<p>From the farm to your fridge, milk is handled by many hands and carried through many temperatures. We set out to learn one simple thing: what decides whether it stays safe?</p>
-<span class="cue"><i></i>Scroll to follow one bottle</span>
-</header>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="w">
+<span class="tag">A research project · cold-chain safety</span>
+<h1 style="margin-top:14px">Every night, milk crosses the city. <span>Someone should be watching.</span></h1>
+<p>A thermometer can watch the truck. It cannot see the bacteria. DairyGuard measures exactly how much that blind spot costs.</p>
+<span class="cue"><i></i>Follow one bottle</span>
 </div>
+</header>
 
 <div id="journey"><div class="stage w">
-<canvas id="cv" role="img" aria-label="A milk bottle with bacteria that multiply faster when the temperature rises"></canvas>
+<canvas id="cv" role="img" aria-label="A milk bottle whose bacteria multiply faster as the temperature rises"></canvas>
 <div class="panel" id="panel">
 <div class="step" id="step">Stop 1 of 4</div>
 <h2 id="h">On the farm</h2>
-<p id="t">Fresh milk is cooled right away. At this temperature the tiny microbes that are always present barely stir.</p>
-<div class="read"><div><small>Growth if it had stayed cold</small><b id="bC">0</b></div><div><small>Growth of this bottle</small><b id="bW">0</b></div></div>
-<p class="note">An illustration drawn from our growth model. Times are relative to the start (1.0×). Time is squeezed so you can watch it. The dots are bacteria, drawn larger than life.</p>
+<p id="t">Fresh milk is cooled right away. At this temperature the microbes that are always present barely stir.</p>
+<div class="read"><div><small>If it stayed cold</small><b id="bC">1.0×</b></div><div><small>This bottle</small><b id="bW">1.0×</b></div></div>
+<p class="note">Drawn from the same growth law as the research. Growth is relative to the start; time is squeezed so you can watch it.</p>
 </div></div></div>
 
 <div class="w">
-<section class="c" id="why"><span class="eyebrow rv">Our belief</span>
-<p class="big rv" style="margin-top:14px">Safe food should not depend on <em>luck</em>. People who care about their health deserve to know that the milk in the glass was looked after the whole way.</p>
-<p class="rv" style="margin-top:28px">Unsafe food makes about <b>600 million people ill every year</b>, and around <b>420,000 die</b>, according to the World Health Organization. A large share of those deaths are in South-East Asia, including India. Cold, reliable handling is one of the simplest protections we have.</p>
-<p class="rv">Our project looks at one small piece of that chain: the temperature record of a milk delivery, and how well it can tell us whether the milk went off. We study spoilage, and one dangerous germ, <i>Listeria</i>. We do not measure sickness itself.</p>
+<section class="c" id="different"><span class="tag rv">Why this research is different</span>
+<h2 class="rv">Everyone asks how bad a warm hour is. <span>We asked what the monitor is blind to.</span></h2>
+<p class="lead rv">Plenty of studies model how milk spoils, and plenty build smarter sensors. None, as far as we can find, measures where a monitor's predictions actually go wrong once the temperature is logged.</p>
+<div class="vs rv">
+<div><h3>The usual question</h3><p style="margin:0;font-size:15px">Which input moves the outcome most?</p>
+<ul>
+<li><span><b>Temperature is a guess</b>, drawn at random, so it naturally comes out on top.</span></li>
+<li><span>Measures how much shelf life <b>varies</b>, not how well a device can <b>predict</b> it.</span></li>
+<li><span>Sensors and logging intervals are assumed, not tested.</span></li>
+</ul></div>
+<div class="us"><h3>The DairyGuard question</h3><p style="margin:0;font-size:15px">Given a real-looking temperature log, what is still lost?</p>
+<ul>
+<li><span>A simulated world where <b>the true answer is always known</b>, thousands of trips at a time.</span></li>
+<li><span>Accuracy is taken away <b>one source at a time</b>: unseen biology, sensor error, sampling interval, choice of rule.</span></li>
+<li><span>Every comparison is made <b>on the same trips</b>, so the differences are real, not noise.</span></li>
+</ul></div>
+</div>
+<div class="who">
+<div class="rv"><small>Cornell milk models</small><p>Monte Carlo spoilage models. Growth rate and storage temperature move the outcome most.</p></div>
+<div class="rv"><small>Uncertainty studies</small><p>Split shelf-life spread into parameters and temperature. Temperature wins, because it is unknown.</p></div>
+<div class="rv"><small>Cold-chain field and IoT work</small><p>Show that abuse shortens shelf life and build systems to catch it. They do not rank what limits prediction.</p></div>
+</div>
 </section>
 
-<section class="c" id="found"><span class="eyebrow rv">Our discovery</span>
-<h2 class="rv">We asked what really decides it. Three suspects.</h2>
-<div class="three">
-<div class="sus rv"><div class="q">A better thermometer?</div><p>A more accurate sensor in the truck.</p><div class="verdict" style="color:var(--mut)">Helps a little</div></div>
-<div class="sus rv"><div class="q">Checking more often?</div><p>Reading the temperature every minute instead of every hour.</p><div class="verdict" style="color:var(--mut)">Barely changes anything</div></div>
-<div class="sus rv"><div class="q">What was already in the milk?</div><p>Which microbes were present, and how many, before the trip began.</p><div class="verdict" style="color:var(--warm)">The big one</div></div>
+<section class="c" id="found"><span class="tag rv">What we found</span>
+<h2 class="rv">Three suspects. <span>One villain.</span></h2>
+<div class="sus">
+<div class="card rv"><div class="no">SUSPECT 01</div><h3>A better thermometer</h3><p>A lab-grade sensor in place of a cheap one.</p><span class="v">Barely helps</span></div>
+<div class="card rv"><div class="no">SUSPECT 02</div><h3>Checking more often</h3><p>Every minute instead of every hour.</p><span class="v">No real difference</span></div>
+<div class="card villain rv"><div class="no">SUSPECT 03</div><h3>What was already in the milk</h3><p>Which bacteria, how many, how fast they wake up. No thermometer sees this.</p><span class="v">The villain</span></div>
 </div>
-<p class="big rv" style="margin-top:54px">The thing that matters most is the one thing <em>no thermometer can see</em>.</p>
-<p class="rv" style="margin-top:20px">We tested this on thousands of computer-simulated milk deliveries, where we knew the true answer. We scored each method on one question: given a delivery's temperature record, can you tell the cartons that will spoil from the ones that will not? A coin flip scores 50. A perfect method scores 100.</p>
+<p class="rv" style="margin-top:44px">We scored every method on one question: from a delivery's temperature log, can you tell the cartons that will spoil from the ones that won't? A coin flip scores 50. A perfect method scores 100.</p>
 <div class="meter">
-<div class="row rv"><div class="top"><span>Points lost because we cannot see the microbes</span><span style="color:var(--warm)">9 to 40</span></div><div class="tr"><div class="fl" data-w="100" style="background:var(--warm)"></div></div></div>
-<div class="row rv"><div class="top"><span>Points gained by a smarter rule over a simple one</span><span>up to 4</span></div><div class="tr"><div class="fl" data-w="10" style="background:var(--cold)"></div></div></div>
-<div class="row rv"><div class="top"><span>Points gained by a better thermometer</span><span>up to 2</span></div><div class="tr"><div class="fl" data-w="5" style="background:var(--cold)"></div></div></div>
-<div class="row rv"><div class="top"><span>Points lost by checking hourly, not every minute</span><span>no measurable loss</span></div><div class="tr"><div class="fl" data-w="1" style="background:var(--cold)"></div></div></div>
+<div class="row rv"><div class="top"><span>Lost because we cannot see the bacteria</span><span style="color:var(--hot)">9–40 pts</span></div><div class="tr"><div class="fl" data-w="100" style="background:var(--hot)"></div></div></div>
+<div class="row rv"><div class="top"><span>Gained by a smarter rule over degree-hours</span><span>≤ 4 pts</span></div><div class="tr"><div class="fl" data-w="10" style="background:var(--cold)"></div></div></div>
+<div class="row rv"><div class="top"><span>Gained by a better thermometer</span><span>≤ 2 pts</span></div><div class="tr"><div class="fl" data-w="5" style="background:var(--cold)"></div></div></div>
+<div class="row rv"><div class="top"><span>Lost by checking hourly, not every minute</span><span>~0</span></div><div class="tr"><div class="fl" data-w="1.2" style="background:var(--cold)"></div></div></div>
 </div>
-<p class="hint rv" style="margin-top:22px">These ranges come from five different simulated worlds. The pattern held in all of them. The temperature events in the simulation are our assumptions, not measurements from real trucks.</p>
+<p class="hint rv" style="margin-top:24px">Ranges across five simulated worlds, including one for the pathogen <i>Listeria</i>. The pattern held in all of them.</p>
 </section>
 
-<section class="c"><span class="eyebrow rv">What it means</span>
-<h2 class="rv">Know the start, then keep it cold.</h2>
+<section class="c"><span class="tag rv">The plot twist</span>
+<h2 class="rv">Both sides are right. <span>They answer different questions.</span></h2>
+<div class="twist">
+<div class="rv"><small>Temperature unknown</small><b style="color:var(--cold)">Temperature dominates</b><p style="margin:0;font-size:15px">If nobody logs the trip, how warm it got is the biggest unknown. That is what earlier models find.</p></div>
+<div class="rv"><small>Temperature logged</small><b style="color:var(--hot)">Biology dominates</b><p style="margin:0;font-size:15px">Once a monitor records the trip, what is left unexplained is mostly the milk itself. That is what we measured.</p></div>
+</div>
+</section>
+
+<section class="c"><span class="tag rv">What it means</span>
+<h2 class="rv">Know the start. <span>Then keep it cold.</span></h2>
 <div class="list">
-<div class="rv">Money is better spent on knowing how clean the milk was at the start than on fancier sensors.</div>
-<div class="rv">A smarter score beats a plain "was it above 5 °C" alarm, but only by a small amount.</div>
-<div class="rv">Systems should say "there is a 70% chance this batch is at risk", not just flash red or green.</div>
-<div class="rv">At home, the simple habits still work: keep milk cold, put it back quickly, and mind the date.</div>
+<div class="rv"><span>01</span>Spend on knowing how clean the milk was at the start, not on fancier sensors.</div>
+<div class="rv"><span>02</span>A growth-based score beats a plain "was it above 5 °C" alarm, but only a little.</div>
+<div class="rv"><span>03</span>Monitors should say "70% chance this batch is at risk", not just flash red or green.</div>
+<div class="rv"><span>04</span>At home the old rules still work: keep milk cold and put it back fast.</div>
 </div>
 </section>
 
-<section class="c"><span class="eyebrow rv">Being honest</span>
+<section class="c"><span class="tag rv">Being honest</span>
 <h2 class="rv">What we have not shown.</h2>
-<div class="limits rv">Our trucks and fridges are simulated, so real-world logs are the next test. The growth numbers come from published studies and a public database of growth experiments. This is research in progress, not medical or food-safety advice.</div>
+<div class="limits rv">The trucks and fridges are simulated, so real delivery logs are the next test. Growth numbers come from published experiments and a public database of growth records. This is research, not medical or food-safety advice.</div>
 </section>
 
-<section class="c" id="read"><span class="eyebrow rv">Go deeper</span>
-<h2 class="rv">Three ways in.</h2>
+<section class="c" id="read"><span class="tag rv">Go deeper</span>
+<h2 class="rv">Pick your <span>way in.</span></h2>
 <div class="links">
-<a class="lk rv" href="DairyGuard_Research_Paper.pdf"><small>For scientists</small><h3>The research paper</h3><p>The full method and results, written for publication.</p></a>
-<a class="lk rv" href="DairyGuard_Storybook.pdf"><small>For curious readers</small><h3>The storybook</h3><p>The complete story of the research: the questions, the dead ends, how it was built and checked.</p></a>
-<a class="lk rv" href="explorer.html"><small>Try it yourself</small><h3>The live demo</h3><p>Warm up the truck, change the sensor, and watch the milk's clock tick.</p></a>
+<a class="lk2 rv" href="DairyGuard_Research_Paper.pdf"><small>For scientists</small><h3>The paper</h3><p>Method, validation and results, written for publication.</p></a>
+<a class="lk2 rv" href="DairyGuard_Storybook.pdf"><small>For curious readers</small><h3>The storybook</h3><p>The whole research as a story: the questions, the dead ends, the checks.</p></a>
+<a class="lk2 rv" href="explorer.html"><small>Try it</small><h3>The demo</h3><p>Heat the truck, swap the sensor, and watch the milk's fate play out.</p></a>
+<a class="lk2 rv" href="https://github.com/CopyNinja07-07/dairyguard"><small>For builders</small><h3>The code</h3><p>Every number regenerates from one command. Open source.</p></a>
 </div>
 </section>
-<footer><span>DairyGuard · by Suryansh Pratap Singh</span><span>Mathematics &amp; Computing, Shri Mata Vaishno Devi University</span></footer>
 </div>
+<footer><div class="w"><span>DairyGuard · Suryansh Pratap Singh</span><span>Mathematics &amp; Computing, Shri Mata Vaishno Devi University</span></div></footer>
 
 <script>
 (function(){
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');var f=e.target.querySelector('.fl');if(f)f.style.width=f.dataset.w+'%';io.unobserve(e.target)}})},{threshold:.2});
 document.querySelectorAll('.rv').forEach(function(x){io.observe(x)});
+if(!CanvasRenderingContext2D.prototype.roundRect){CanvasRenderingContext2D.prototype.roundRect=function(a,b,w,h){this.rect(a,b,w,h)}}
+var DPR=Math.min(2,devicePixelRatio||1);
+function seeded(s){return function(){s=(s*16807)%2147483647;return s/2147483647}}
 
-/* ---- the journey: temperature along the trip, and growth drawn from the same sqrt-law as the research ---- */
+/* ---------- hero: night city with a signal light ---------- */
+var sky=document.getElementById('sky'),g=sky.getContext('2d'),SW,SH,city=[],stars=[],clouds=[];
+function buildSky(){SW=sky.clientWidth;SH=sky.clientHeight;sky.width=SW*DPR;sky.height=SH*DPR;g.setTransform(DPR,0,0,DPR,0,0);
+ var r=seeded(11);city=[];var x=-10;while(x<SW+20){var w=24+r()*70,h=SH*(.08+r()*.26)*(r()<.12?1.6:1);var win=[];for(var yy=8;yy<h-6;yy+=11)for(var xx=6;xx<w-6;xx+=9)if(r()<.12)win.push([xx,yy,r()]);city.push({x:x,w:w,h:h,win:win,ant:r()<.15});x+=w+r()*4}
+ stars=[];for(var i=0;i<140;i++)stars.push([r()*SW,r()*SH*.6,r()*1.2+.2,r()*6.28]);
+ clouds=[];for(var j=0;j<9;j++)clouds.push([r()*SW,SH*(.08+r()*.28),120+r()*260,30+r()*40,(r()-.5)*.08])}
+buildSky();addEventListener('resize',function(){buildSky();rs()});
+var shield=new Path2D("M0 -26 L22 -19 V-2 C22 12 12 21 0 26 C-12 21 -22 12 -22 -2 V-19 Z");
+function drawSky(ts){var t=ts/1000;g.clearRect(0,0,SW,SH);
+ var bgG=g.createLinearGradient(0,0,0,SH);bgG.addColorStop(0,'#05070a');bgG.addColorStop(.7,'#0b1016');bgG.addColorStop(1,'#111820');g.fillStyle=bgG;g.fillRect(0,0,SW,SH);
+ stars.forEach(function(s){g.globalAlpha=.25+.35*Math.abs(Math.sin(t*.6+s[3]));g.fillStyle='#cfd6e0';g.fillRect(s[0],s[1],s[2],s[2])});g.globalAlpha=1;
+ /* beam */
+ var bx=SW*(SW<700?.9:.86),by=SH*1.02,ang=-Math.PI/2-.2+Math.sin(t*.18)*.08*(reduce?0:1),len=SH*1.1,tx=bx+Math.cos(ang)*len,ty=by+Math.sin(ang)*len;
+ var spread=.075;g.save();g.globalCompositeOperation='lighter';
+ var beam=g.createLinearGradient(bx,by,tx,ty);beam.addColorStop(0,'rgba(242,181,68,.28)');beam.addColorStop(1,'rgba(242,181,68,0.02)');
+ g.fillStyle=beam;g.beginPath();g.moveTo(bx-6,by);g.lineTo(bx+Math.cos(ang-spread)*len,by+Math.sin(ang-spread)*len);g.lineTo(bx+Math.cos(ang+spread)*len,by+Math.sin(ang+spread)*len);g.closePath();g.fill();
+ /* projected mark on the clouds */
+ var px=bx+Math.cos(ang)*SH*.78,py=Math.max(SH*(SW<700?.2:.16),by+Math.sin(ang)*SH*.78);if(SW<700){py=SH*.2}
+ var halo=g.createRadialGradient(px,py,0,px,py,SH*.16);halo.addColorStop(0,'rgba(242,181,68,.35)');halo.addColorStop(1,'rgba(242,181,68,0)');g.fillStyle=halo;g.beginPath();g.arc(px,py,SH*.16,0,6.283);g.fill();g.restore();
+ g.save();g.translate(px,py);var sc=Math.min(SW,SH)/520;g.scale(sc*1.6,sc*1.6);g.fillStyle='rgba(7,9,12,.82)';g.fill(shield);g.fillStyle='rgba(242,181,68,.9)';g.font='800 15px "Big Shoulders Display",Impact,sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('DG',0,1);g.restore();
+ /* clouds */
+ clouds.forEach(function(c){var cx=((c[0]+t*c[4]*60)%(SW+400)+SW+400)%(SW+400)-200;var cg=g.createRadialGradient(cx,c[1],0,cx,c[1],c[2]);cg.addColorStop(0,'rgba(120,135,155,.10)');cg.addColorStop(1,'rgba(120,135,155,0)');g.fillStyle=cg;g.beginPath();g.ellipse(cx,c[1],c[2],c[3],0,0,6.283);g.fill()});
+ /* skyline */
+ city.forEach(function(b){var y=SH-b.h;g.fillStyle='#030406';g.fillRect(b.x,y,b.w,b.h);if(b.ant){g.fillRect(b.x+b.w/2-1,y-24,2,24);g.fillStyle=(Math.sin(t*2+b.x)>0)?'#ff5a3c':'#401510';g.fillRect(b.x+b.w/2-2,y-26,4,4)}
+  b.win.forEach(function(w){g.fillStyle=w[2]>.75?'rgba(242,181,68,.55)':'rgba(94,195,255,.22)';g.fillRect(b.x+w[0],y+w[1],3,5)})});
+ /* lamp */
+ g.fillStyle='#030406';g.beginPath();g.roundRect(bx-16,by-24,32,26,4);g.fill();
+ var fade=g.createLinearGradient(0,SH*.55,0,SH);fade.addColorStop(0,'rgba(7,9,12,0)');fade.addColorStop(1,'rgba(7,9,12,.85)');g.fillStyle=fade;g.fillRect(0,SH*.55,SW,SH*.45)}
+
+/* ---------- journey bottle (same growth law as the research) ---------- */
 var STOPS=[
- {t:0,  s:"Stop 1 of 4",h:"On the farm",p:"Fresh milk is cooled right away. At this temperature the tiny microbes that are always present barely stir."},
- {t:.25,s:"Stop 2 of 4",h:"In the truck",p:"A door is left open, or the cooling slips. For a short while the milk warms up. Microbes do not grow steadily with heat; they speed up sharply."},
- {t:.5, s:"Stop 3 of 4",h:"At the shop",p:"Back in a cold shelf, the milk looks fine. But the microbes that woke up in the truck do not go back to sleep and forget."},
- {t:.75,s:"Stop 4 of 4",h:"In your fridge",p:"Same milk, same date on the carton. A bottle that had a warm truck ride has quietly used up more of its shelf life than one that never did."}];
-function Tp(p){var T=3.5;if(p>.1)T=4.2; if(p>.25&&p<.5){var x=(p-.25)/.25;T=4.2+11*Math.sin(Math.PI*Math.min(1,x*1.05))*(x<.95?1:0.2);}
- if(p>=.5)T=4.6; if(p>.88&&p<.93)T=8; return T}
+ {t:0,s:"Stop 1 of 4 · Farm",h:"Cold from the start",p:"Fresh milk is chilled at once. The microbes that are always there barely move."},
+ {t:.25,s:"Stop 2 of 4 · Truck",h:"The door stays open",p:"The cooling slips and the milk warms. Bacteria do not speed up a little with heat. They speed up sharply."},
+ {t:.5,s:"Stop 3 of 4 · Shop",h:"Back on a cold shelf",p:"It looks fine and the label has not changed. But the growth from the truck ride is already banked."},
+ {t:.75,s:"Stop 4 of 4 · Your fridge",h:"Same date, different fate",p:"Two bottles, one label. The one that rode the warm truck has quietly spent more of its life."}];
+function Tp(p){var T=3.5;if(p>.1)T=4.2;if(p>.25&&p<.5){var x=(p-.25)/.25;T=4.2+11*Math.sin(Math.PI*Math.min(1,x*1.05))*(x<.95?1:.2)}if(p>=.5)T=4.6;if(p>.88&&p<.93)T=8;return T}
 function Tc(p){return p<.1?3.5:(p<.5?4.2:4.6)}
-function mu(T){var s=0.030*(T+7.7);return T>-7.7?s*s:0}
-var N=400,Gw=[0],Gc=[0];
-for(var i=1;i<=N;i++){var p=i/N;Gw.push(Gw[i-1]+mu(Tp(p))*100/N);Gc.push(Gc[i-1]+mu(Tc(p))*100/N)}
-var k=Math.log(4.5)/Gc[N];
-function cnt(G,i){return 10*Math.exp(k*G[i])}
-var cv=document.getElementById('cv'),x=cv.getContext('2d'),W,H,D=Math.min(2,devicePixelRatio||1);
-function rs(){W=cv.clientWidth;H=cv.clientHeight;cv.width=W*D;cv.height=H*D;x.setTransform(D,0,0,D,0,0)}rs();addEventListener('resize',rs);
-function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
-var rnd=(function(){var s=7;return function(){s=(s*16807)%2147483647;return s/2147483647}})();
-var P=[];for(var j=0;j<260;j++)P.push({u:rnd(),v:rnd(),a:rnd()*6.28,ph:rnd()*6.28,s:.7+rnd()*.6});
-P.sort(function(a,b){return 0});
-var cur=0,tgt=0,lastStop=-1;
-function prog(){var r=document.getElementById('journey').getBoundingClientRect();var tot=r.height-innerHeight;return Math.max(0,Math.min(1,-r.top/tot))}
+function mu(T){var s=.030*(T+7.7);return T>-7.7?s*s:0}
+var N=400,Gw=[0],Gc=[0];for(var i=1;i<=N;i++){var pp=i/N;Gw.push(Gw[i-1]+mu(Tp(pp))*100/N);Gc.push(Gc[i-1]+mu(Tc(pp))*100/N)}
+var k=Math.log(4.5)/Gc[N];function cnt(G,i){return 10*Math.exp(k*G[i])}
+var cv=document.getElementById('cv'),x=cv.getContext('2d'),W,H;
+function rs(){W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;x.setTransform(DPR,0,0,DPR,0,0)}rs();
+var rnd=seeded(7),P=[];for(var j=0;j<260;j++)P.push({u:rnd(),v:rnd(),a:rnd()*6.28,ph:rnd()*6.28,s:.7+rnd()*.6});
+var cur=0,lastStop=-1;
+function prog(){var r=document.getElementById('journey').getBoundingClientRect();return Math.max(0,Math.min(1,-r.top/(r.height-innerHeight)))}
 function mix(a,b,t){return a+(b-a)*t}
-function lerpc(c1,c2,t){function h(c){c=c.replace('#','');return[parseInt(c.substr(0,2),16),parseInt(c.substr(2,2),16),parseInt(c.substr(4,2),16)]}var A=h(c1),B=h(c2);return'rgb('+A.map(function(v,i){return Math.round(mix(v,B[i],t))}).join(',')+')'}
-function draw(ts){
- tgt=prog();cur+=(tgt-cur)*.12;var p=cur;x.clearRect(0,0,W,H);
- var cold=css('--cold'),warm=css('--warm'),ink=css('--ink'),milk=css('--milk'),mut=css('--mut'),line=css('--line'),leaf=css('--leaf');
+function lerpc(A,B,t){return'rgb('+A.map(function(v,i){return Math.round(mix(v,B[i],t))}).join(',')+')'}
+var COLD=[94,195,255],HOT=[255,90,60],OK=[95,211,154];
+function drawBottle(ts){var p=cur;x.clearRect(0,0,W,H);
  var T=Tp(p),hot=Math.max(0,Math.min(1,(T-4.5)/11));
- var cx=W*.42,bw=Math.min(W*.46,230),bh=Math.min(H*.84,430),top=H*.08;
- /* bottle */
- var nw=bw*.42,sh=bh*.2,x0=cx-bw/2,x1=cx+bw/2,nx0=cx-nw/2,nx1=cx+nw/2,y0=top,yb=top+bh;
+ var cx=W*.42,bw=Math.min(W*.46,230),bh=Math.min(H*.84,430),top=H*.08,nw=bw*.42,sh=bh*.2,x0=cx-bw/2,x1=cx+bw/2,nx0=cx-nw/2,nx1=cx+nw/2,y0=top,yb=top+bh;
  function path(){x.beginPath();x.moveTo(nx0,y0);x.lineTo(nx1,y0);x.lineTo(nx1,y0+sh*.55);x.bezierCurveTo(nx1,y0+sh*.9,x1,y0+sh*.75,x1,y0+sh*1.5);x.lineTo(x1,yb-18);x.quadraticCurveTo(x1,yb,x1-18,yb);x.lineTo(x0+18,yb);x.quadraticCurveTo(x0,yb,x0,yb-18);x.lineTo(x0,y0+sh*1.5);x.bezierCurveTo(x0,y0+sh*.75,nx0,y0+sh*.9,nx0,y0+sh*.55);x.closePath()}
- x.save();path();x.fillStyle=milk;x.fill();x.clip();
- /* warm tint inside bottle */
- var g=x.createLinearGradient(0,y0,0,yb);g.addColorStop(0,'rgba(212,85,43,0)');g.addColorStop(1,'rgba(212,85,43,'+(.28*hot)+')');x.fillStyle=g;x.fillRect(x0,y0,bw,bh);
- /* bacteria */
- var i=Math.min(N,Math.round(p*N)),n=Math.min(P.length,Math.round(cnt(Gw,i)));
- var ly=y0+sh*1.25,lh=yb-ly-12,lw=bw-26;
- for(var q=0;q<n;q++){var o=P[q],t=ts/1000,px=x0+13+o.u*lw+Math.sin(t*o.s+o.ph)*3,py=ly+o.v*lh+Math.cos(t*o.s*.8+o.ph)*3;
-  var sz=mix(5,8,hot);x.save();x.translate(px,py);x.rotate(o.a+Math.sin(t+o.ph)*.3);x.fillStyle=lerpc('#2F7D5B','#D4552B',Math.max(hot,Math.min(1,q/P.length*1.3)*.35));x.beginPath();x.roundRect(-sz,-sz*.45,sz*2,sz*.9,sz*.45);x.fill();x.restore()}
- x.restore();
- path();x.strokeStyle=ink;x.lineWidth=3;x.stroke();
- /* thermometer */
- var tx=W*.8,tw=22,tt=H*.14,tb=H*.8;
- x.fillStyle='rgba(0,0,0,0)';x.strokeStyle=ink;x.lineWidth=2.5;x.beginPath();x.roundRect(tx-tw/2,tt,tw,tb-tt,tw/2);x.stroke();
- var fr=Math.max(.04,Math.min(1,(T+2)/22)),ty=mix(tb,tt+8,fr);
- x.fillStyle=lerpc('#2C7FA8','#D4552B',hot);x.beginPath();x.roundRect(tx-tw/2+4,ty,tw-8,tb-ty,6);x.fill();
- x.beginPath();x.arc(tx,tb+8,17,0,6.283);x.fill();x.strokeStyle=ink;x.stroke();
- x.fillStyle=ink;x.font='500 22px "Inter Tight",sans-serif';x.textAlign='center';x.fillText(T.toFixed(1)+' °C',tx,tt-14);
- /* journey track */
- var ty0=H-14,tl=W*.08,tr=W*.92;x.strokeStyle=line;x.lineWidth=3;x.beginPath();x.moveTo(tl,ty0);x.lineTo(tr,ty0);x.stroke();
- x.strokeStyle=leaf;x.beginPath();x.moveTo(tl,ty0);x.lineTo(mix(tl,tr,p),ty0);x.stroke();
- for(var s=0;s<4;s++){var sx=mix(tl,tr,s/3.4+.04);x.fillStyle=p>=STOPS[s].t-.001?leaf:line;x.beginPath();x.arc(sx,ty0,6,0,6.283);x.fill()}
- x.fillStyle=ink;x.beginPath();x.arc(mix(tl,tr,p),ty0,9,0,6.283);x.fill();
- /* readouts */
- var ci=Math.round(cnt(Gc,i)),wi=Math.round(cnt(Gw,i));document.getElementById('bC').textContent=(ci/10).toFixed(1)+'×';document.getElementById('bW').textContent=(wi/10).toFixed(1)+'×';
+ var glow=x.createRadialGradient(cx,yb-bh*.4,10,cx,yb-bh*.4,bh*.8);glow.addColorStop(0,'rgba('+(hot>.1?'255,90,60':'94,195,255')+','+(.10+.12*hot)+')');glow.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=glow;x.fillRect(0,0,W,H);
+ x.save();path();x.fillStyle='#e9e6df';x.fill();x.clip();
+ var gg=x.createLinearGradient(0,y0,0,yb);gg.addColorStop(0,'rgba(255,90,60,0)');gg.addColorStop(1,'rgba(255,90,60,'+(.3*hot)+')');x.fillStyle=gg;x.fillRect(x0,y0,bw,bh);
+ var ii=Math.min(N,Math.round(p*N)),n=Math.min(P.length,Math.round(cnt(Gw,ii))),ly=y0+sh*1.25,lh=yb-ly-12,lw=bw-26,t=ts/1000;
+ for(var q=0;q<n;q++){var o=P[q],px=x0+13+o.u*lw+Math.sin(t*o.s+o.ph)*3,py=ly+o.v*lh+Math.cos(t*o.s*.8+o.ph)*3,sz=mix(5,8,hot);
+  x.save();x.translate(px,py);x.rotate(o.a+Math.sin(t+o.ph)*.3);x.fillStyle=lerpc([46,140,96],[214,70,40],Math.max(hot,Math.min(1,q/P.length*1.3)*.35));x.beginPath();x.roundRect(-sz,-sz*.45,sz*2,sz*.9,sz*.45);x.fill();x.restore()}
+ x.restore();path();x.strokeStyle='#ece9e2';x.lineWidth=2.5;x.stroke();
+ var tx=W*.8,tw=20,tt=H*.14,tb=H*.8;x.strokeStyle='#5a626d';x.lineWidth=2;x.beginPath();x.roundRect(tx-tw/2,tt,tw,tb-tt,tw/2);x.stroke();
+ var fr=Math.max(.04,Math.min(1,(T+2)/22)),ty=mix(tb,tt+8,fr);x.fillStyle=lerpc(COLD,HOT,hot);x.beginPath();x.roundRect(tx-tw/2+4,ty,tw-8,tb-ty,6);x.fill();x.beginPath();x.arc(tx,tb+8,15,0,6.283);x.fill();
+ x.fillStyle='#ece9e2';x.font='500 18px "JetBrains Mono",monospace';x.textAlign='center';x.fillText(T.toFixed(1)+'°C',tx,tt-14);
+ var ty0=H-14,tl=W*.08,tr=W*.92;x.strokeStyle='#1f2731';x.lineWidth=3;x.beginPath();x.moveTo(tl,ty0);x.lineTo(tr,ty0);x.stroke();
+ x.strokeStyle='#f2b544';x.beginPath();x.moveTo(tl,ty0);x.lineTo(mix(tl,tr,p),ty0);x.stroke();
+ for(var s=0;s<4;s++){var sx=mix(tl,tr,s/3.4+.04);x.fillStyle=p>=STOPS[s].t-.001?'#f2b544':'#1f2731';x.beginPath();x.arc(sx,ty0,5,0,6.283);x.fill()}
+ x.fillStyle='#ece9e2';x.beginPath();x.arc(mix(tl,tr,p),ty0,7,0,6.283);x.fill();
+ document.getElementById('bC').textContent=(cnt(Gc,ii)/10).toFixed(1)+'×';document.getElementById('bW').textContent=(cnt(Gw,ii)/10).toFixed(1)+'×';
  var st=0;for(var s2=0;s2<4;s2++)if(p>=STOPS[s2].t-.001)st=s2;
- if(st!==lastStop){lastStop=st;var pn=document.getElementById('panel');pn.classList.add('sw');setTimeout(function(){document.getElementById('step').textContent=STOPS[st].s;document.getElementById('h').textContent=STOPS[st].h;document.getElementById('t').textContent=STOPS[st].p;pn.classList.remove('sw')},200)}
- requestAnimationFrame(draw)}
-if(!CanvasRenderingContext2D.prototype.roundRect){CanvasRenderingContext2D.prototype.roundRect=function(a,b,w,h,r){this.rect(a,b,w,h)}}
-requestAnimationFrame(draw);
+ if(st!==lastStop){lastStop=st;var pn=document.getElementById('panel');pn.classList.add('sw');setTimeout(function(){document.getElementById('step').textContent=STOPS[st].s;document.getElementById('h').textContent=STOPS[st].h;document.getElementById('t').textContent=STOPS[st].p;pn.classList.remove('sw')},180)}}
+function loop(ts){var r=sky.getBoundingClientRect();if(r.bottom>0)drawSky(ts);cur+=(prog()-cur)*.12;var jr=document.getElementById('journey').getBoundingClientRect();if(jr.top<innerHeight&&jr.bottom>0)drawBottle(ts);requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
 })();
 </script></body></html>
