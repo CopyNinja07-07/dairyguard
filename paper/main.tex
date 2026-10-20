@@ -1,44 +1,67 @@
-\documentclass[10pt,twocolumn,a4paper]{article}
-\usepackage[margin=1.75cm,top=2.0cm,bottom=2.0cm,columnsep=0.7cm]{geometry}
+\documentclass[9.5pt,twocolumn,a4paper]{article}
+\usepackage[a4paper,left=1.6cm,right=1.6cm,top=2.1cm,bottom=2.0cm,columnsep=0.62cm,headsep=0.45cm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{mathptmx}
-\usepackage{microtype}
+\usepackage[letterspace=180]{microtype}
 \usepackage{amsmath,amssymb,bm}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{cite}
-\usepackage[font=small,labelfont=bf,labelsep=period]{caption}
+\usepackage{xcolor}
+\definecolor{dgblue}{HTML}{1F5FA8}
+\definecolor{dgrule}{HTML}{9A9A9A}
+\usepackage[font={footnotesize},labelfont=bf,labelsep=period,justification=justified,singlelinecheck=false,figurename=Fig.,skip=4pt]{caption}
+\captionsetup[table]{labelsep=newline,position=top}
 \usepackage{titlesec}
 \usepackage{enumitem}
-\usepackage{xcolor}
-\usepackage[colorlinks=true,allcolors=blue!50!black]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,allcolors=dgblue]{hyperref}
+\urlstyle{same}
 \input{numbers.tex}
-\titleformat{\section}{\normalfont\bfseries\small\scshape\centering}{\thesection.}{0.5em}{}
-\titleformat{\subsection}{\normalfont\itshape\small}{\thesubsection}{0.5em}{}
-\titlespacing*{\section}{0pt}{1.1ex plus .3ex}{0.6ex}
-\titlespacing*{\subsection}{0pt}{0.9ex plus .2ex}{0.4ex}
+\titleformat{\section}{\normalfont\bfseries\normalsize}{\thesection.}{0.45em}{}
+\titleformat{\subsection}{\normalfont\itshape\normalsize}{\thesubsection.}{0.45em}{}
+\titlespacing*{\section}{0pt}{1.6ex plus .4ex}{0.8ex}
+\titlespacing*{\subsection}{0pt}{1.1ex plus .3ex}{0.5ex}
 \setlist{nosep,leftmargin=1.3em}
 \setlength{\parindent}{1.1em}
 \setlength{\parskip}{0pt}
-\renewcommand{\topfraction}{0.9}\renewcommand{\floatpagefraction}{0.8}
+\renewcommand{\topfraction}{0.9}\renewcommand{\floatpagefraction}{0.8}\renewcommand{\dbltopfraction}{0.9}
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}\setlength{\dbltextfloatsep}{10pt plus 2pt minus 2pt}
 \newcommand{\CSL}{\mathrm{CSL}}
 \newcommand{\SL}{\mathrm{SL}}
-
-\title{\vspace{-0.6cm}\textbf{How Much Can a Temperature Log Tell Us About Spoiling Milk?\\[2pt] \large A Loss-Budget Benchmark for Cold-Chain Monitoring}}
-\author{Suryansh Pratap Singh\\[1pt]
-\small Department of Mathematics and Computing, Shri Mata Vaishno Devi University\\[-2pt]
-\small Preprint, October 2026. Code and data: see Section~\ref{sec:repro}.}
-\date{}
-
-\graphicspath{{../book/fig/}}
+\newcommand{\spaced}[1]{\textls{\MakeUppercase{#1}}}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\footnotesize S.\,P.~Singh}
+\fancyhead[R]{\footnotesize Preprint, October 2026}
+\fancyfoot[C]{\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{first}{\fancyhf{}\fancyfoot[C]{\footnotesize\thepage}\renewcommand{\headrulewidth}{0pt}}
+\graphicspath{{fig/}}
+\hypersetup{pdftitle={How Much Can a Temperature Log Tell Us About Spoiling Milk?},pdfauthor={Suryansh Pratap Singh}}
 \begin{document}
-\twocolumn[
-\maketitle
-\begin{center}\begin{minipage}{0.93\textwidth}\small\noindent\textbf{Abstract.}~ A cold-chain monitor logs temperature, but a log is not a verdict: bacterial growth also depends on strain, starting load and lag, none of which a thermometer sees. We ask how much of the error in predicting milk spoilage from a temperature record is caused by biology, by the sensor, by the sampling interval and by the structure of the growth model. We build an open Monte Carlo benchmark in which a Baranyi--Roberts model with a square-root temperature law stands in for real milk, and an edge-computable Gompertz shelf-life accumulator tries to predict it from noisy, sampled records. Methods are compared by AUC with a paired bootstrap on identical trips, against an oracle and against simple rules. Parameters come from published experiments; the model reproduces a published fluctuating-temperature experiment to within \NumLinErr\,\%, and when fitted to \NumCbN{} ComBase records of natural spoilage flora it shows that growth parameters from inoculated isolates overpredict by a factor of \NumCbBias. Fitted to \NumLisN{} \textit{Listeria monocytogenes} records, the same law predicts \NumLisHeld{} records held out by condition with accuracy factor \NumLisAccHeld. Across five parameter sets, including this hazard case study, unobservable biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC in the baseline run (\NumLisGapMin--\NumLisGapMax{} for \textit{Listeria}); the kinetic score beats a plain degree-hour count by at most \NumLagGainMax; a PT1000 over a DS18B20 gains at most \NumBaseSensMax; and sampling hourly instead of every minute is indistinguishable in most settings. A Monte Carlo probability is better calibrated than a single alarm. We conclude that, for this problem, effort belongs in measuring biology, not in better thermometers, and we release code, tests and data.\par\smallskip
-\textbf{Keywords:} cold chain, predictive microbiology, shelf life, milk, sensor accuracy, sampling, benchmark, calibration, \textit{Listeria monocytogenes}
-\end{minipage}\end{center}
+\twocolumn[{%
+\thispagestyle{first}
+{\color{dgrule}\hrule height 0.4pt}\vspace{5pt}
+\noindent{\footnotesize Research article \hfill Preprint, October 2026 \hfill Code and data: \href{https://github.com/CopyNinja07-07/dairyguard}{github.com/CopyNinja07-07/dairyguard}}\par
+\vspace{4pt}{\color{dgrule}\hrule height 0.4pt}
+\vspace{16pt}
+\noindent{\fontsize{17}{21}\selectfont How Much Can a Temperature Log Tell Us About Spoiling Milk?\\[2pt] A Loss-Budget Benchmark for Cold-Chain Monitoring\par}
+\vspace{10pt}
+\noindent{\large Suryansh Pratap Singh\par}
 \vspace{4pt}
-]
+\noindent{\footnotesize\itshape Department of Mathematics and Computing, Shri Mata Vaishno Devi University, Katra, Jammu and Kashmir, India\par}
+\vspace{12pt}
+\noindent\begin{minipage}[t]{0.27\textwidth}
+{\footnotesize\spaced{Article info}}\par\vspace{3pt}{\color{dgrule}\hrule height 0.4pt}\vspace{5pt}
+{\footnotesize\textit{Keywords:}\\[1pt]
+Cold chain\\ Predictive microbiology\\ Shelf life\\ Milk\\ Sensor accuracy\\ Sampling interval\\ Benchmark\\ Calibration\\ \textit{Listeria monocytogenes}\par}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.69\textwidth}
+{\footnotesize\spaced{Abstract}}\par\vspace{3pt}{\color{dgrule}\hrule height 0.4pt}\vspace{5pt}
+{\footnotesize A cold-chain monitor logs temperature, but a log is not a verdict: bacterial growth also depends on strain, starting load and lag, none of which a thermometer sees. We ask how much of the error in predicting milk spoilage from a temperature record is caused by biology, by the sensor, by the sampling interval and by the structure of the growth model. We build an open Monte Carlo benchmark in which a Baranyi--Roberts model with a square-root temperature law stands in for real milk, and an edge-computable Gompertz shelf-life accumulator tries to predict it from noisy, sampled records. Methods are compared by AUC with a paired bootstrap on identical trips, against an oracle and against simple rules. Parameters come from published experiments; the model reproduces a published fluctuating-temperature experiment to within \NumLinErr\,\%, and when fitted to \NumCbN{} ComBase records of natural spoilage flora it shows that growth parameters from inoculated isolates overpredict by a factor of \NumCbBias. Fitted to \NumLisN{} \textit{Listeria monocytogenes} records, the same law predicts \NumLisHeld{} records held out by condition with accuracy factor \NumLisAccHeld. Across five parameter sets, including this hazard case study, unobservable biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC in the baseline run (\NumLisGapMin--\NumLisGapMax{} for \textit{Listeria}); the kinetic score beats a plain degree-hour count by at most \NumLagGainMax; a PT1000 over a DS18B20 gains at most \NumBaseSensMax; and sampling hourly instead of every minute is indistinguishable in most settings. A Monte Carlo probability is better calibrated than a single alarm. We conclude that, for this problem, effort belongs in measuring biology, not in better thermometers, and we release code, tests and data.\par}
+\end{minipage}
+\par\vspace{8pt}{\color{dgrule}\hrule height 0.4pt}\vspace{14pt}
+}]
 
 \section{Introduction}
 Milk is perishable in a precise way. Bacteria that grow slowly at 4\,\textdegree C grow quickly at 15\,\textdegree C, and every hand-off between plant, truck, hub, shop and home is a chance for the temperature to drift. A large body of work in predictive microbiology turns a temperature history into an estimate of growth \cite{tarlak2023,stavropoulou2019}, and recent surveys describe sensors, loggers and digital twins built on it \cite{taiwo2024,opara2025,ugwu2026}. The practical question for a cold-chain monitor is narrower: given only a temperature record, how well can an inexpensive calculation tell whether milk has gone past a limit, and what stops it doing better?
@@ -71,7 +94,11 @@ so that, at constant temperature, lag $\lambda = h_0/\mu$ and the product $\lamb
 
 \textbf{Related milk-specific work.} The Tasmanian thesis \cite{neumeyer1995} already built and industry-tested a milk \textit{Pseudomonas} temperature model with prototype software. Lin et al.\ measured growth under fluctuating temperature and observed extra lag after a shift when it fell within the lag phase \cite{lin2016}; Zwietering et al.\ examined growth after shifts and found extra lag of about a quarter of the lag at the new temperature \cite{zwietering1994}. We do not claim the idea of a temperature-driven shelf-life estimate.
 
-\section{Models and Benchmark}
+\section{Models and benchmark}
+\begin{figure*}[t]\centering\includegraphics[width=\textwidth]{design}
+\caption{Design of the benchmark. Each simulated trip has a true temperature history and a true biology, which the reference model turns into a true label (top). The monitor sees only a sensed, sampled record and turns it into a score (bottom). Scores are judged against the true labels by AUC; removing information step by step gives the loss budget.}\label{fig:design}\end{figure*}
+Fig.~\ref{fig:design} summarises the benchmark: a simulated world supplies the truth, and a monitor that sees only a sensed, sampled record tries to recover it.
+
 \subsection{Edge estimator}
 Let $\SL(T)$ be the time for a population at constant $T$ to reach a limit $N_L$ according to the modified Gompertz curve,
 \begin{equation}\label{eq:sl}
@@ -98,7 +125,7 @@ The metric is the area under the ROC curve (AUC), which depends on ranking and n
 Table~\ref{tab:runs} lists the five runs. The baseline uses the Neumeyer parameters and a measured lag range. Because inoculated-isolate parameters need not describe natural flora, a fourth run uses parameters fitted to ComBase records of spoilage flora (Section~\ref{sec:val}), and a fifth models \textit{Listeria monocytogenes} with parameters fitted to ComBase records, with labels of $+0.5$ and $+1$\,log$_{10}$ growth above the starting load (round-number labels, not regulatory limits).
 
 \begin{table}[t]
-\centering\small\caption{Benchmark runs. ``Assumed'' marks values without a source.}\label{tab:runs}
+\centering\footnotesize\caption{Benchmark runs. ``Assumed'' marks values without a source.}\label{tab:runs}
 \begin{tabular}{@{}p{2.3cm}p{5.3cm}@{}}\toprule
 Run & Biology and labels\\\midrule
 Baseline & $b=0.030$, $T_{\min}=-7.7$\,\textdegree C \cite{neumeyer1995}; $\sigma_T=1.5$\,K (assumed); $h_0\in[2.5,5]$ \cite{lin2016}; $N_0$ 30--100\,CFU/mL (assumed); limits $3\times10^4$, $10^6$; horizons \NumBaseHzA, \NumBaseHzB\,h\\
@@ -109,18 +136,18 @@ Milk flora & $b=\NumCbB$, $T_{\min}=\NumCbT$\,\textdegree C (ComBase, $n=\NumCbN
 \end{tabular}
 \end{table}
 
-\section{Validation Against Real Data}\label{sec:val}
+\section{Validation against real data}\label{sec:val}
 \textbf{Published experiment.} Lin et al.\ held UHT milk inoculated with \textit{P.\ fluorescens} at 4\,\textdegree C with two four-hour excursions to 29\,\textdegree C, and report that time to $10^6$\,CFU/mL fell from about 90\,h to about 55\,h \cite{lin2016}. With parameters fitted only to their growth rates and their 4\,\textdegree C lag, our reference model gives \NumLinConst\,h and \NumLinExc\,h (\NumLinErr\,\% on the excursion case, which was not used for fitting). The published times are approximate values read from the text; this is one experiment with one organism and an inoculated load far above real post-pasteurisation levels.
 
 \textbf{Natural spoilage flora.} ComBase (Tasmanian Institute of Agriculture records) gives maximum growth rates of aerobic spoilage bacteria in pasteurised milk at 2.7--14.9\,\textdegree C. The square-root law fits the \NumCbN{} records well, with $b=\NumCbB$, $T_{\min}=\NumCbT$\,\textdegree C and a residual standard deviation of \NumCbSd{} (natural-log units, including experimental noise). Parameters from inoculated isolates overpredict these records, with a bias factor of \NumCbBias{} that is nearly constant across temperature (Fig.~\ref{fig:cb}): the temperature \emph{shape} transfers, the \emph{level} does not. This is consistent with studies that choose a fast isolate as a worst case.
 
-\begin{figure}[t]\centering\includegraphics[width=\columnwidth]{combase.png}
-\caption{ComBase growth rates of spoilage flora in pasteurised milk (grey) against literature-anchored curves (orange, green) and the fit (blue).}\label{fig:cb}\end{figure}
+\begin{figure}[t]\centering\includegraphics[width=\columnwidth]{combase}
+\caption{Maximum growth rates of natural spoilage flora in pasteurised milk from ComBase (grey points) against the two literature-anchored models (orange, green) and the square-root fit to these records (blue).}\label{fig:cb}\end{figure}
 
 \textbf{\textit{Listeria monocytogenes}.} Of the ComBase milk records, those with a stated rate for \textit{L.\ monocytogenes} at 2--16\,\textdegree C were split by condition: \NumLisN{} records with no added factors were used for fitting and \NumLisHeld{} records with other stated conditions (sterilised or previously heated milk, added salts or acids) were held out. The fit gives $b=\NumLisB$ (95\,\% bootstrap interval \NumLisBLo--\NumLisBHi) and $T_{\min}=\NumLisT$\,\textdegree C (\NumLisTLo{} to \NumLisTHi{}), a generation time of \NumLisGen\,h at 4\,\textdegree C, and a bias factor of \NumLisBiasHeld{} and accuracy factor of \NumLisAccHeld{} on the held-out records (\NumLisAccFit{} on the fitted ones). The held-out split is by condition, not by study, so some records share a source with the fitted ones and the test is weaker than a split by study. Because $T_{\min}$ is closer to refrigeration temperature, the rate at 13\,\textdegree C is \NumLisRatio{} times the rate at 4\,\textdegree C for \textit{Listeria}, against about 3.4 times for spoilage flora (Fig.~\ref{fig:lis}).
 
-\begin{figure*}[t]\centering\includegraphics[width=0.78\textwidth]{lis.png}
-\caption{\textit{Listeria monocytogenes} in milk. Left: ComBase records, fit and held-out records. Right: growth rate relative to 4\,\textdegree C for the two organism classes.}\label{fig:lis}\end{figure*}
+\begin{figure*}[t]\centering\includegraphics[width=0.84\textwidth]{lis}
+\caption{\textit{Listeria monocytogenes} in milk. (a) ComBase records used for fitting (filled), records held out by condition (open) and the square-root fit. (b) Growth rate relative to 4\,\textdegree C for spoilage flora and \textit{Listeria}: a warm hour costs the pathogen more.}\label{fig:lis}\end{figure*}
 
 \textbf{Data provenance.} The ComBase records come from the database's search for milk. Of about 480 milk records, 373 were collected (179 with a stated growth rate), together with 51 records for aerobic spoilage flora in pasteurised milk. Records without a stated rate (``fit data'' required) were not used.
 
@@ -128,8 +155,8 @@ Milk flora & $b=\NumCbB$, $T_{\min}=\NumCbT$\,\textdegree C (ComBase, $n=\NumCbN
 \subsection{Loss budget}
 An oracle that knows each trip's true biology and temperature separates spoiled from unspoiled trips almost perfectly by construction. The same $\CSL$ with nominal biology and an ideal sensor loses \NumBaseGapMin--\NumBaseGapMax{} AUC across the 12 settings of the baseline run (Fig.~\ref{fig:budget}). The loss is large even when strains do not differ in growth rate, because the minimum growth temperature, lag state and starting load still differ between trips. None of it is in the temperature record, so no sensor or sampling rate can recover it.
 
-\begin{figure}[t]\centering\includegraphics[width=\columnwidth]{budget.png}
-\caption{Loss budget (limit $3\times10^4$\,CFU/mL, $cv=0.10$). Grey: oracle. Blue: the kinetic score as information is removed. Bars are 95\,\% bootstrap intervals.}\label{fig:budget}\end{figure}
+\begin{figure}[t]\centering\includegraphics[width=\columnwidth]{budget}
+\caption{Loss budget for (a) a low-mass pouch and (b) an insulated crate (limit $3\times10^4$\,CFU/mL, $cv=0.10$). Grey: oracle with true biology and true temperature. Blue: the kinetic score as information is removed step by step. Bars are 95\,\% bootstrap intervals.}\label{fig:budget}\end{figure}
 
 \subsection{Against simple rules}
 On identical trips the kinetic score beats time above 5\,\textdegree C in \NumBaseFiveSig{} of 12 settings and maximum temperature in \NumBaseMaxSig. Against degree-hours above 4\,\textdegree C, a rule that needs no growth model, the gain is positive with an interval excluding zero in \NumBaseGainSig{} of 12 settings but small: \NumBaseGainMin--\NumBaseGainMax{} AUC in the baseline run and up to \NumLagGainMax{} when extra lag is present. Because both scores approximate the time integral of a growth rate, this is expected. Most of the value of the kinetic score is available from a degree-hour count.
@@ -140,8 +167,8 @@ Replacing a DS18B20 with a PT1000 gains \NumBaseSensMin--\NumBaseSensMax{} AUC a
 \subsection{Robustness across parameter sets}
 Figure~\ref{fig:runs} summarises the four effects across all five runs. The pattern is the same whether the biology is anchored to inoculated isolates, includes extra lag, starts from a realistic low load, is fitted to natural flora, or describes \textit{Listeria}: the biology gap is \NumLowGapMin--\NumLowGapMax{} (low load), \NumCombGapMin--\NumCombGapMax{} (milk flora) and \NumLisGapMin--\NumLisGapMax{} (\textit{Listeria}); the gain over degree-hours stays below \NumLagGainMax{} in every run, and the sensor gain stays small (\NumLisSensMin--\NumLisSensMax{} for \textit{Listeria}).
 
-\begin{figure*}[t]\centering\includegraphics[width=0.95\textwidth]{runs.png}
-\caption{Range across the 12 settings of each run (bar: min to max; dot: median) of four effects, as AUC differences on identical trips. The pattern holds across all five parameter sets.}\label{fig:runs}\end{figure*}
+\begin{figure*}[t]\centering\includegraphics[width=\textwidth]{runs}
+\caption{Four effects across the five parameter sets, as AUC differences on identical trips: (a) loss to unobservable biology, (b) kinetic score over degree-hours, (c) PT1000 over DS18B20, (d) hourly over every-minute sampling. Bars span the 12 settings of each run; dots mark the median. Note the different horizontal scales.}\label{fig:runs}\end{figure*}
 
 \subsection{Calibration}
 A single alarm using nominal parameters is badly calibrated against the constructed labels (ECE \NumBaseEcePMin--\NumBaseEcePMax{}). A Monte Carlo probability with a prior matching the truth reaches ECE \NumBaseEceMMin--\NumBaseEceMMax, and an overconfident prior on the growth rate \NumBaseEceOMin--\NumBaseEceOMax. Absolute values reflect the constructed prevalence; the ranking of the three variants is the finding. The \textit{Listeria} run needs a caveat. With the $+1$\,log label the probability reaches ECE \NumLisEceBMMin--\NumLisEceBMMax{} against \NumLisEceBPMin--\NumLisEceBPMax{} for the alarm. With the half-log label the limit lies inside the early lag-to-growth transition, where the Gompertz estimator is a poor approximation of the reference; even the oracle reaches only \NumLisOrcAMin--\NumLisOrcAMax{} AUC there (\NumLisOrcBMin--\NumLisOrcBMax{} for the $+1$\,log label), and the probability, though still better than the alarm (ECE \NumLisEceAMMin--\NumLisEceAMMax{} against \NumLisEceAPMin--\NumLisEceAPMax), is poorly calibrated in absolute terms. Label choice interacts with estimator structure.
@@ -159,7 +186,8 @@ A temperature log can say much about how much growth the milk could have had, an
 \section{Reproducibility}\label{sec:repro}
 All results are generated from fixed random seeds by scripts in the accompanying repository, with \texttt{make all} reproducing the tables and figures, 14 automated tests, and a parameter file with provenance for every number. Numbers in this paper are read from the result files by a script and not typed by hand.
 
-\begin{thebibliography}{99}\small
+{\footnotesize
+\begin{thebibliography}{99}
 \bibitem{tarlak2023} F.~Tarlak, ``The use of predictive microbiology for the prediction of the shelf life of food products,'' \emph{Foods}, vol.~12, art.~4461, 2023.
 \bibitem{stavropoulou2019} E.~Stavropoulou and E.~Bezirtzoglou, ``Predictive modeling of microbial behavior in food,'' \emph{Foods}, vol.~8, art.~654, 2019.
 \bibitem{taiwo2024} O.~R.~Taiwo \emph{et al.}, ``Advancements in predictive microbiology: integrating new technologies for efficient food safety models,'' \emph{Int.\ J.\ Microbiol.}, vol.~2024, art.~6612162, 2024.
@@ -186,4 +214,5 @@ All results are generated from fixed random seeds by scripts in the accompanying
 \bibitem{baranyi1994} J.~Baranyi and T.~A.~Roberts, ``A dynamic approach to predicting bacterial growth in food,'' \emph{Int.\ J.\ Food Microbiol.}, vol.~23, pp.~277--294, 1994.
 \bibitem{zwietering1994} M.~H.~Zwietering, J.~C.~de~Wit, H.~G.~A.~M.~Cuppers and K.~van~'t~Riet, ``Modeling of bacterial growth with shifts in temperature,'' \emph{Appl.\ Environ.\ Microbiol.}, pp.~204--213, Jan.\ 1994.
 \end{thebibliography}
+}
 \end{document}

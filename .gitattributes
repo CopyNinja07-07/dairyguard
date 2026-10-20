@@ -5,3 +5,4 @@ book/fig/** linguist-generated
 paper/numbers.tex linguist-generated
 docs/index.html linguist-documentation=false
 docs/index.html linguist-detectable
+paper/fig/** linguist-generated

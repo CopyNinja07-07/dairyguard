@@ -17,7 +17,8 @@ summary:
 	$(PY) src/summarize_runs.py
 figures:
 	cd book && $(PY) figures.py
-paper: summary figures
+paper: summary
+	$(PY) paper/figures_paper.py
 	$(PY) paper/make_numbers.py
 	cd paper && latexmk -pdf -interaction=nonstopmode main.tex && cp main.pdf ../docs/DairyGuard_Research_Paper.pdf
 book: figures
