@@ -87,95 +87,148 @@ td.num,th.num{text-align:right;font-family:var(--fm)}
 .ft .fs{display:flex;align-items:center;gap:10px;font:500 10.5px var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
 .ft .fs i{width:4px;height:4px;border-radius:50%;background:var(--sig);display:block}
 .ft .fs b{font:400 15px "Tiro Devanagari Sanskrit",serif;letter-spacing:0;color:var(--ink);text-transform:none}
+.crates{display:grid;grid-template-columns:repeat(15,1fr);gap:8px 6px;margin:6px 0 4px}
+@media(max-width:620px){.crates{grid-template-columns:repeat(10,1fr)}}
+.crates svg{width:100%;height:auto;transition:transform .35s}
+.crates .bt path{transition:fill .5s}
+.crates .off path.m{fill:var(--hot)}.crates .ok path.m{fill:#cfe6f5}
+.hb{display:grid;gap:12px;margin-top:8px}
+.hb .r .t{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;margin-bottom:5px}.hb .r .t b{font:800 20px var(--fd)}
+.hb .tr2{height:10px;border-radius:99px;background:var(--bg3);overflow:hidden}.hb .tr2 i{display:block;height:100%;border-radius:99px;transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.nerd{margin-top:16px}.nerd summary{cursor:pointer;font:600 14px var(--fb);color:var(--mut)}.nerd summary:hover{color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:22px}
+.stats div{background:var(--bg2);padding:20px}.stats b{display:block;font:900 40px/1 var(--fd);color:var(--sig)}.stats span{display:block;margin-top:8px;font-size:13.5px;color:var(--mut)}
+.steps2{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:16px}
+.steps2 div{border:1px solid var(--line);border-radius:var(--r);padding:18px;min-width:0}
+.steps2 i{font:500 11px var(--fm);color:var(--sig);font-style:normal;letter-spacing:.14em}.steps2 b{display:block;font:800 22px var(--fd);text-transform:uppercase;margin:6px 0}.steps2 span{font-size:14px;color:var(--mut)}
+.refs{display:flex;flex-wrap:wrap;gap:8px}.refs a{font-size:13px;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:99px;padding:7px 12px;background:var(--bg2)}.refs a:hover{border-color:var(--sig)}
 </style></head><body>
 
 <nav><div class="w"><b><img src="favicon.svg" alt="">DairyGuard</b><div class="lk"><a href="index.html">Site</a><a href="DairyGuard_Research_Paper.pdf">Paper</a><a href="https://github.com/CopyNinja07-07/dairyguard">Code</a></div></div></nav>
 
 <div class="w">
 <header class="hero">
-<span class="tag">Interactive demo</span>
-<h1>Run a trip. See what the <span>thermometer cannot.</span></h1>
-<p>Choose a scenario or adjust the trip. A conventional alarm assumes a single, nominal batch of milk. DairyGuard evaluates the same temperature log against 200 plausible batches and reports a probability.</p>
+<span class="tag">Live demo</span>
+<h1>Is your milk still good? <span>Ask the trip.</span></h1>
+<p>Every carton has a hidden journey: the dairy, the truck, the shop, your fridge. Pick what happened along the way and see the chance it has gone off. Then see why a thermometer, on its own, can never be completely sure.</p>
 <div class="chips" id="presets">
-<button class="chip" data-p="calm">Steady cold chain</button>
-<button class="chip" data-p="door" aria-pressed="true">Door left open</button>
-<button class="chip" data-p="ac">Refrigeration failure</button>
-<button class="chip" data-p="counter">Left at room temperature</button>
+<button class="chip" data-p="calm">Perfect cold chain</button>
+<button class="chip" data-p="door" aria-pressed="true">Shop door left open</button>
+<button class="chip" data-p="ac">Truck fridge failed</button>
+<button class="chip" data-p="counter">Forgot it on the counter</button>
 </div>
 </header>
 
 <div class="app">
 <aside class="card ctrl" id="ctrl">
-<h3>The trip</h3>
-<label><div class="lbl"><span>Storage temperature</span><span class="v" id="v-base"></span></div><input type="range" id="base" min="1" max="8" step="0.5" value="4"></label>
-<label><div class="lbl"><span>Excursion temperature</span><span class="v" id="v-peak"></span></div><input type="range" id="peak" min="8" max="35" step="0.5" value="17.5"></label>
-<label><div class="lbl"><span>Excursion duration</span><span class="v" id="v-dur"></span></div><input type="range" id="dur" min="10" max="480" step="10" value="90"></label>
-<label><div class="lbl"><span>Product thermal lag</span><span class="v" id="v-tau"></span></div><input type="range" id="tau" min="0.1" max="4" step="0.05" value="1"></label>
+<h3>What happened on the way</h3>
+<label><div class="lbl"><span>Fridge temperature</span><span class="v" id="v-base"></span></div><input type="range" id="base" min="1" max="8" step="0.5" value="4"></label>
+<label><div class="lbl"><span>How hot it got</span><span class="v" id="v-peak"></span></div><input type="range" id="peak" min="8" max="35" step="0.5" value="17.5"></label>
+<label><div class="lbl"><span>For how long</span><span class="v" id="v-dur"></span></div><input type="range" id="dur" min="10" max="480" step="10" value="90"></label>
+<label><div class="lbl"><span>Packaging <small class="dim">(how slowly the milk warms)</small></span><span class="v" id="v-tau"></span></div><input type="range" id="tau" min="0.1" max="4" step="0.05" value="1"></label>
 <div class="sep"></div>
-<div><div class="lbl"><span>Organism</span></div><div class="seg" id="org"><button data-o="sp" aria-pressed="true">Spoilage flora</button><button data-o="lis" aria-pressed="false">Listeria</button></div></div>
-<div><div class="lbl"><span>Sensor</span></div><div class="seg" id="sen"><button data-s="DS18B20" aria-pressed="true">DS18B20</button><button data-s="PT1000" aria-pressed="false">PT1000</button><button data-s="ideal" aria-pressed="false">Ideal</button></div></div>
-<div><div class="lbl"><span>Sampling interval</span></div><div class="seg" id="smp"><button data-m="1" aria-pressed="false">1 min</button><button data-m="15" aria-pressed="true">15 min</button><button data-m="60" aria-pressed="false">60 min</button></div></div>
+<div><div class="lbl"><span>What we are checking for</span></div><div class="seg" id="org"><button data-o="sp" aria-pressed="true">Spoilage</button><button data-o="lis" aria-pressed="false">Listeria (food poisoning)</button></div></div>
+<div><div class="lbl"><span>Thermometer</span></div><div class="seg" id="sen"><button data-s="DS18B20" aria-pressed="true">Cheap</button><button data-s="PT1000" aria-pressed="false">Lab-grade</button><button data-s="ideal" aria-pressed="false">Perfect</button></div></div>
+<div><div class="lbl"><span>It checks the temperature every</span></div><div class="seg" id="smp"><button data-m="1" aria-pressed="false">1 min</button><button data-m="15" aria-pressed="true">15 min</button><button data-m="60" aria-pressed="false">hour</button></div></div>
 </aside>
 
 <div class="right">
 <div class="verdict">
-<div><span class="tag" id="vk">Probability of exceeding the limit</span><div class="big" id="pbig">–</div><span class="status" id="stat">–</span><p class="mut" style="font-size:13px;margin:12px 0 0" id="vexp"></p></div>
+<div><span class="tag" id="vk">Chance this milk has gone off</span><div class="big" id="pbig">–</div><span class="status" id="stat">–</span><p class="mut" style="font-size:13.5px;margin:12px 0 0" id="vexp"></p></div>
 <div class="vs2">
-<div><div class="k">Conventional alarm · nominal batch</div><div class="n" id="alarm">–</div><p id="alarmp"></p></div>
-<div><div class="k">DairyGuard · 200-batch Monte Carlo</div><div class="n" id="dg" style="color:var(--sig)">–</div><p id="dgp"></p></div>
+<div><div class="k">A normal temperature alarm says</div><div class="n" id="alarm">–</div><p id="alarmp"></p></div>
+<div><div class="k">DairyGuard says</div><div class="n" id="dg" style="color:var(--sig)">–</div><p id="dgp"></p></div>
 </div>
 </div>
 
-<div class="card ch"><h3>The trip</h3><p class="sub">Air temperature, product temperature and the readings the sensor records.</p>
+<div class="card ch"><h3>The trip</h3><p class="sub">The air around the milk (red), the milk itself, which warms up slowly (blue), and what the thermometer wrote down (dots).</p>
 <svg id="c1" viewBox="0 0 640 200" role="img" aria-label="Temperature over the trip"></svg>
-<div class="legend"><span><i style="background:var(--hot)"></i>air</span><span><i style="background:var(--cold)"></i>product</span><span><i style="background:var(--sig)"></i>sensor readings</span></div></div>
+<div class="legend"><span><i style="background:var(--hot)"></i>air</span><span><i style="background:var(--cold)"></i>milk</span><span><i style="background:var(--sig)"></i>thermometer readings</span></div></div>
 
-<div class="card ch"><h3>Same log, different milk</h3><p class="sub" id="mvsub">Bacterial count (log₁₀ CFU/mL) for 60 plausible batches on the same trip. Their temperature logs are identical, so no sensor can tell them apart.</p>
-<svg id="c2" viewBox="0 0 640 220" role="img" aria-label="Growth of 60 possible versions of the milk"></svg>
-<div class="legend"><b id="mvcount" style="color:var(--ink);font-weight:600"></b><span><i style="background:var(--hot)"></i>exceeded the limit</span><span><i style="background:#3a4757"></i>remained below</span><span><i style="background:var(--ink)"></i>nominal batch</span></div></div>
+<div class="card ch"><h3>60 cartons, one truck</h3><p class="sub">These 60 cartons rode the exact same trip, so the thermometer saw the exact same thing for all of them. The only difference is the bacteria each one started with.</p>
+<div class="crates" id="crates" role="img" aria-label="60 cartons coloured by whether they spoiled"></div>
+<div class="legend"><b id="mvcount" style="color:var(--ink);font-weight:600"></b><span><i style="background:var(--hot)"></i>went off</span><span><i style="background:#cfe6f5"></i>still fine</span></div>
+<p class="punch" id="mvpunch"></p></div>
 
-<div class="card ch"><h3>What moves the estimate?</h3><p class="sub">Change in estimated shelf life used, from switching sensor and sampling interval, compared with the spread caused by unobserved biology.</p>
+<div class="card ch"><h3>What changes the answer more?</h3><p class="sub">How far the estimate of "how much of its life the milk has used" swings if you upgrade the thermometer or check more often, compared with not knowing the bacteria already in the milk.</p>
 <div class="duel">
-<div><div class="top"><span>Sensor and sampling interval (all 9 combinations)</span><b id="dsen">–</b></div><div class="bar"><i id="bsen" style="background:var(--cold)"></i></div></div>
-<div><div class="top"><span>Unobserved biology (10th to 90th percentile)</span><b id="dbio" style="color:var(--hot)">–</b></div><div class="bar"><i id="bbio" style="background:var(--hot)"></i></div></div>
+<div><div class="top"><span>Better thermometer or more frequent checks</span><b id="dsen">–</b></div><div class="bar"><i id="bsen" style="background:var(--cold)"></i></div></div>
+<div><div class="top"><span>Not knowing the bacteria in the milk</span><b id="dbio" style="color:var(--hot)">–</b></div><div class="bar"><i id="bbio" style="background:var(--hot)"></i></div></div>
 </div>
 <p class="punch" id="punch"></p></div>
 </div>
 </div>
 
-<section class="s"><span class="tag">Benchmark results</span>
-<h2>4,000 trips per setting. <span>The full benchmark.</span></h2>
-<p class="lede" id="xnote">AUC measures how well a score separates trips that spoiled from those that did not: 0.5 is chance, 1.0 is perfect. Intervals are 95% bootstrap intervals.</p>
+<section class="s"><span class="tag">The proof</span>
+<h2>240,000 simulated deliveries. <span>Here is what they show.</span></h2>
+<p class="lede" id="xnote">Each method is given a score out of 100 for how well it tells spoiled milk from good milk. 50 is a coin toss. 100 is perfect.</p>
 <div class="ectl">
-<label>Parameter set<select id="xvar"></select></label>
-<label>Limit<select id="xthr"><option value="A_3e4">3 x 10^4 CFU/mL</option><option value="B_1e6">10^6 CFU/mL</option></select></label>
-<label>Packaging<select id="xtau"><option value="low_mass">Low-mass pouch</option><option value="insulated">Insulated crate</option></select></label>
-<label>Strain variability<select id="xcv"><option value="0">0</option><option value="0.1" selected>0.10</option><option value="0.25">0.25</option></select></label>
+<label>Simulated world<select id="xvar"></select></label>
+<label>Spoilage line<select id="xthr"><option value="A_3e4">Early (30,000 per mL)</option><option value="B_1e6">Late (1 million per mL)</option></select></label>
+<label>Packaging<select id="xtau"><option value="low_mass">Thin pouch</option><option value="insulated">Insulated crate</option></select></label>
+<label>How different the bacteria are<select id="xcv"><option value="0">Identical</option><option value="0.1" selected>Somewhat</option><option value="0.25">Very</option></select></label>
 </div>
 <div class="g2">
-<div class="card ch"><h3>Which score ranks best</h3><p class="sub">DS18B20 sensor, 15-minute sampling.</p><svg id="e1" viewBox="0 0 520 240" role="img" aria-label="AUC by score"></svg></div>
-<div class="card ch"><h3>Where accuracy is lost</h3><p class="sub" id="e2n"></p><svg id="e2" viewBox="0 0 520 240" role="img" aria-label="Loss budget"></svg></div>
+<div class="card ch"><h3>Where the accuracy goes</h3><p class="sub" id="e2n"></p><div class="hb" id="wf"></div></div>
+<div class="card ch"><h3>Which rule spots spoiled milk best</h3><p class="sub">Cheap thermometer, checked every 15 minutes.</p><div class="hb" id="rules"></div></div>
 </div>
-<div class="g2" style="margin-top:16px">
-<div class="card ch"><h3>Paired comparisons on identical trips</h3><div class="tw" id="e3t"></div></div>
-<div class="card ch"><h3>Probability versus a single alarm</h3><div class="tw" id="e4t"></div></div>
-</div>
+<details class="card ch nerd"><summary>For researchers: the full statistics</summary>
+<p class="sub" style="margin-top:12px">AUC with 95% bootstrap intervals; paired differences on identical trips; Brier score and expected calibration error.</p>
+<div class="g2"><div><h3 style="font-size:16px;margin:8px 0">Paired comparisons</h3><div class="tw" id="e3t"></div></div><div><h3 style="font-size:16px;margin:8px 0">Probability versus single alarm</h3><div class="tw" id="e4t"></div></div></div>
+</details>
 </section>
 
-<section class="s"><span class="tag">Validation</span>
-<h2>Does it match <span>real data?</span></h2>
+<section class="s"><span class="tag">Reality check</span>
+<h2>Does it match <span>real milk?</span></h2>
 <div class="g2" style="margin-top:14px">
-<div class="card ch"><h3>A published experiment</h3><p class="sub">Fitted to growth rates only, then used to predict a fluctuating-temperature experiment it was not fitted to (Lin et al., 2016).</p><div class="tw" id="lint"></div></div>
-<div class="card ch"><h3>Real growth records</h3><p class="sub">From ComBase, a public database of growth experiments.</p><p style="font-size:14px;margin:0 0 10px">Natural spoilage flora in pasteurised milk (51 records) follow the same temperature shape, but grow about <b>1.6× slower</b> than lab strains. Select "Fitted to real milk flora" above: the conclusions hold.</p><p style="font-size:14px;margin:0" id="lisv"></p></div>
+<div class="card ch"><h3>A real lab experiment</h3><p class="sub">Scientists warmed milk twice for four hours and timed how fast it spoiled (Lin et al., 2016). Our model had never seen this result. Here is what it predicted.</p><div class="tw" id="lint"></div></div>
+<div class="card ch"><h3>Real growth records</h3><p class="sub">From ComBase, a public database of bacterial growth experiments.</p><p style="font-size:14.5px;margin:0 0 10px">Real milk bacteria (51 records) follow the same temperature pattern as the model, but grow about <b>1.6× slower</b> than the lab strains. Switching the model to these real numbers does not change any conclusion.</p><p style="font-size:14.5px;margin:0" id="lisv"></p></div>
 </div>
 </section>
 
-<section class="s"><span class="tag">Limitations</span>
-<h2>What this <span>does not</span> show.</h2>
+<section class="s"><span class="tag">The work behind it</span>
+<h2>Built from the ground up, <span>checked at every step.</span></h2>
+<div class="stats">
+<div><b>240,000</b><span>simulated milk deliveries, each tracked minute by minute</span></div>
+<div><b>30</b><span>published studies and standards read and cited</span></div>
+<div><b>150</b><span>real bacterial growth records used to test the model</span></div>
+<div><b>4%</b><span>error when predicting a real lab experiment it never saw</span></div>
+<div><b>14</b><span>automated tests run on every change</span></div>
+<div><b>~1,900</b><span>lines of code: simulator, statistics, demo, paper and storybook</span></div>
+</div>
+<div class="steps2">
+<div><i>01</i><b>Read the science</b><span>From the Ratkowsky growth law and Baranyi&ndash;Roberts model to FSSAI milk standards and the Cornell spoilage models.</span></div>
+<div><i>02</i><b>Built a world</b><span>A simulator of trucks, shops and fridges where the true answer is always known.</span></div>
+<div><i>03</i><b>Checked it against reality</b><span>A published lab experiment and 150 real growth records from ComBase.</span></div>
+<div><i>04</i><b>Ran the experiment</b><span>Five simulated worlds, 12 settings each, 4,000 deliveries per setting.</span></div>
+</div>
+<h3 style="font-size:22px;margin:34px 0 12px">Built on</h3>
+<div class="refs">
+<a href="https://scholar.google.com/scholar?q=%22Prediction+of+growth+of+Pseudomonas+fluorescens+in+milk+during+storage+under+fluctuating+temperature%22">Lin et al. 2016 · <i>J. Dairy Sci.</i></a>
+<a href="https://eprints.utas.edu.au/21013/">Neumeyer 1995 · Univ. of Tasmania</a>
+<a href="https://doi.org/10.1016/0168-1605(94)90157-0">Baranyi &amp; Roberts 1994 · <i>Int. J. Food Microbiol.</i></a>
+<a href="https://doi.org/10.1128/aem.60.1.204-213.1994">Zwietering et al. 1994 · <i>Appl. Environ. Microbiol.</i></a>
+<a href="https://doi.org/10.3168/jds.2020-19130">Martin et al. 2021 · <i>J. Dairy Sci.</i></a>
+<a href="https://doi.org/10.3168/jds.2021-21316">Lau et al. 2022 · <i>J. Dairy Sci.</i></a>
+<a href="https://doi.org/10.3168/jds.2018-14501">Buehler et al. 2018 · <i>J. Dairy Sci.</i></a>
+<a href="https://doi.org/10.3168/jds.2023-23673">Qian et al. 2023 · <i>J. Dairy Sci.</i></a>
+<a href="https://doi.org/10.3390/foods9060714">Giannakourou &amp; Taoukis 2020 · <i>Foods</i></a>
+<a href="https://doi.org/10.1016/j.jfoodeng.2024.112403">Giannakourou &amp; Taoukis 2025 · <i>J. Food Eng.</i></a>
+<a href="https://doi.org/10.1016/j.foodcont.2026.112100">M&uuml;ller et al. 2026 · <i>Food Control</i></a>
+<a href="https://doi.org/10.1016/j.jfp.2026.100754">Tashiguano et al. 2026 · <i>J. Food Prot.</i></a>
+<a href="https://doi.org/10.1016/j.jfoodeng.2023.111518">Zou et al. 2023 · <i>J. Food Eng.</i></a>
+<a href="https://www.combase.cc">ComBase growth database</a>
+<a href="https://fssai.gov.in">FSSAI microbiological standards</a>
+<a href="DairyGuard_Storybook.pdf">All 30 references in the storybook</a>
+</div>
+</section>
+
+<section class="s"><span class="tag">Fine print</span>
+<h2>What this <span>does not</span> tell you.</h2>
 <ul class="fine">
-<li>Trucks and fridges are simulated. Strain spread and starting load are assumptions; real delivery logs and new lab counts are the next step.</li>
-<li>The model estimates bacterial growth, not illness, and is not a food-safety verdict.</li>
-<li>About half of the simulated trips spoil by design, so the probabilities shown are not real-world rates.</li>
+<li>The trucks and fridges are simulated. Real delivery logs and new lab counts are the next step.</li>
+<li>It estimates how much bacteria grew, not whether anyone gets sick. It is not a food-safety verdict: if milk smells or looks off, do not drink it.</li>
+<li>About half of the simulated trips spoil by design, so the percentages are not real-world rates.</li>
 </ul>
 </section>
 </div>
@@ -243,21 +296,21 @@ function run(){
  let lo=1e9,hi=-1e9;for(const s of Object.keys(SENS))for(const m of [1,15,60]){const c=csl(sensed(pr,s,m,3),m,N,p);lo=Math.min(lo,c);hi=Math.max(hi,c)}
  const srt=[...cs].sort((x,y)=>x-y),b10=srt[Math.floor(.1*srt.length)],b90=srt[Math.floor(.9*srt.length)];
  const dSen=(hi-lo)*100,dBio=(b90-b10)*100;
- $("dsen").textContent="±"+f1(dSen/2,dSen<2?1:0)+"%";$("dbio").textContent=f1(b10*100,0)+"–"+f1(b90*100,0)+"%";
+ $("dsen").textContent="±"+f1(dSen/2,dSen<2?1:0)+"%";$("dbio").textContent="±"+f1(dBio/2,0)+"%";
  const mx=Math.max(dSen,dBio,1);$("bsen").style.width=Math.max(1,dSen/mx*100)+"%";$("bbio").style.width=Math.max(1,dBio/mx*100)+"%";
  const ratio=dBio/Math.max(dSen,0.1);
- $("punch").innerHTML=ratio>3?`On this trip, unobserved biology moves the estimate <b>${ratio>50?"more than 50":Math.round(ratio)} times</b> more than any change of sensor or sampling interval. This is the central finding of the study.`:`On this trip the difference is smaller (${f1(ratio,1)} times), but across thousands of trips unobserved biology dominates.`;
+ $("punch").innerHTML=ratio>3?`Not knowing the bacteria matters <b>${ratio>50?"more than 50":Math.round(ratio)} times</b> more than buying a better thermometer. That is the main discovery of this project.`:`On this trip the gap is smaller (${f1(ratio,1)} times), but across thousands of trips the bacteria matter far more than the thermometer.`;
  // verdict
  const pct=Math.round(P*100);$("pbig").textContent=pct+"%";
- const S=P<.15?["Low risk","var(--ok)"]:P<.4?["Monitor closely","var(--sig)"]:P<.75?["Elevated risk","#ff8a5c"]:["High risk","var(--hot)"];
+ const S=P<.15?["Looks fresh","var(--ok)"]:P<.4?["Drink it soon","var(--sig)"]:P<.75?["Check before you drink","#ff8a5c"]:["Likely spoiled","var(--hot)"];
  $("stat").textContent=S[0];$("stat").style.color=S[1];$("pbig").style.color=S[1];
- $("vk").textContent=st.org==="lis"?"Probability of more than +1 log growth":"Probability of exceeding the limit";
- $("vexp").textContent=`Of 200 plausible batches with this exact temperature log, ${pct}% ${O.verb} by hour ${H}.`;
- const al=cNom>=1;$("alarm").textContent=al?"Alarm":"No alarm";$("alarm").style.color=al?"var(--hot)":"var(--ok)";
- $("alarmp").textContent=`Assumes one nominal batch, which has used ${f1(cNom*100,0)}% of its shelf life. Output: yes or no.`;
- $("dg").textContent=pct+"% at risk";$("dgp").textContent=(al&&P<.5)?"The alarm flags the trip, yet most plausible batches stay below the limit.":(!al&&P>=.25)?"The alarm reports no problem, yet a substantial share of plausible batches exceed the limit.":"Agrees with the alarm, and states how confident that call is.";
+ $("vk").textContent=st.org==="lis"?"Chance Listeria multiplied tenfold":"Chance this milk has gone off";
+ $("vexp").textContent=st.org==="lis"?`We ran this exact trip on 200 cartons with different starting bacteria. In ${pct} of every 100, Listeria grew more than tenfold by hour ${H}.`:`We ran this exact trip on 200 cartons with different starting bacteria. In ${pct} of every 100, the milk crossed the spoilage line by hour ${H}.`;
+ const al=cNom>=1;$("alarm").textContent=al?"Warning":"All good";$("alarm").style.color=al?"var(--hot)":"var(--ok)";
+ $("alarmp").textContent=`It treats every carton as the same textbook milk (${f1(cNom*100,0)}% of its life used), so it can only say yes or no.`;
+ $("dg").textContent=pct+"% chance";$("dgp").textContent=(al&&P<.5)?"The alarm panics, but most cartons on this trip are actually fine.":(!al&&P>=.25)?"The alarm says all good, but a real share of these cartons have gone off.":"Same answer as the alarm, but now you know how sure to be.";
  drawTemp(amb,pr,rec,H,peak,base);
- drawVerse(pr,H,N,p,ds.slice(0,60));
+ drawCrates(pr,N,ds.slice(0,60));
 }
 function axes(w,h,L,R,Tp,B,H,yr,ystep,yfmt){const x=t=>L+t/H*(w-L-R),y=v=>h-B-(v-yr[0])/(yr[1]-yr[0])*(h-B-Tp);let s="";
  for(let v=yr[0];v<=yr[1]+1e-9;v+=ystep)s+=`<line class="gl" x1="${L}" x2="${w-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${yfmt(v)}</text>`;
@@ -269,16 +322,11 @@ function drawTemp(amb,pr,rec,H,peak,base){const w=vw("c1",640),h=w<500?230:200;$
  s+=`<path d="${path(pr,A.x,A.y,yr,k)}" fill="none" stroke="var(--cold)" stroke-width="2.2"/>`;
  const step=Math.max(1,Math.ceil(rec.length/240));for(let j=0;j<rec.length;j+=step){const [i,v]=rec[j];s+=`<circle cx="${A.x(i/60).toFixed(1)}" cy="${A.y(Math.min(v,yr[1])).toFixed(1)}" r="1.8" fill="var(--sig)"/>`}
  $("c1").innerHTML=s}
-function drawVerse(pr,H,N,p,ds){const w=vw("c2",640),h=w<500?260:220;$("c2").setAttribute("viewBox",`0 0 ${w} ${h}`);const dt=1/60,lim=Math.log10(N);
- const trajs=ds.map(q=>baranyiTrajectory(pr,q,dt));const nom=baranyiTrajectory(pr,p,dt);
- let ymin=Math.floor(Math.min(...ds.map(q=>q.logN0))-0.2),ymax=Math.max(lim+1,...trajs.map(t=>t[t.length-1]));ymax=Math.min(Math.ceil(ymax),9.5);
- const yr=[ymin,ymax],step=(ymax-ymin)>5?2:1;const A=axes(w,h,34,8,10,22,H,yr,step,v=>v);let s=A.s;
- const k=Math.ceil(pr.length/300);let nOver=0;
- trajs.forEach(t=>{const over=Math.max(...t)>=lim;if(over)nOver++;s+=`<path d="${path(t,A.x,A.y,yr,k)}" fill="none" stroke="${over?"var(--hot)":"#3a4757"}" stroke-width="1" opacity="${over?.55:.7}"/>`});
- s+=`<path d="${path(nom,A.x,A.y,yr,k)}" fill="none" stroke="var(--ink)" stroke-width="2.2"/>`;
- s+=`<line x1="34" x2="${w-8}" y1="${A.y(lim)}" y2="${A.y(lim)}" stroke="var(--sig)" stroke-dasharray="4 4"/><text x="${w-8}" y="${A.y(lim)-6}" text-anchor="end" style="fill:var(--sig)">limit: ${ORGS[st.org].limLab}</text>`;
- $("mvcount").textContent=`${nOver} of ${ds.length} batches exceeded the limit`;
- $("c2").innerHTML=s}
+const BOT='<svg viewBox="0 0 20 34" class="bt"><path class="m" d="M7 1h6v5l4 5v19a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V11l4-5z"/><path d="M7 1h6v3H7z" fill="#5a626d"/></svg>';
+function drawCrates(pr,N,ds){const box=$("crates");if(box.children.length!==ds.length){box.innerHTML=ds.map(()=>`<div>${BOT}</div>`).join("")}
+ const lim=Math.log10(N);let nOver=0;ds.forEach((q,i)=>{const t=baranyiTrajectory(pr,q,1/60);let mx=-1e9;for(let k=0;k<t.length;k+=10)if(t[k]>mx)mx=t[k];const over=Math.max(mx,t[t.length-1])>=lim;if(over)nOver++;const el=box.children[i];el.className=over?"off":"ok";el.style.transitionDelay=(i*8)+"ms"});
+ $("mvcount").textContent=`${nOver} of ${ds.length} went off`;
+ $("mvpunch").innerHTML=nOver===0?"Every carton survived this trip.":nOver===ds.length?"Every carton went off on this trip.":`Same trip, same thermometer readings, different fates. <b>No thermometer could tell these ${nOver} apart from the other ${ds.length-nOver}.</b>`}
 function seg(id,key,attr,cast){document.querySelectorAll("#"+id+" button").forEach(b=>b.addEventListener("click",()=>{st[key]=cast(b.dataset[attr]);document.querySelectorAll("#"+id+" button").forEach(x=>x.setAttribute("aria-pressed",x===b));run()}))}
 seg("org","org","o",String);seg("sen","sen","s",String);seg("smp","smp","m",Number);
 document.querySelectorAll("#ctrl input").forEach(e=>e.addEventListener("input",()=>{document.querySelectorAll("#presets .chip").forEach(c=>c.setAttribute("aria-pressed","false"));run()}));
@@ -287,27 +335,26 @@ document.querySelectorAll("#presets .chip").forEach(c=>c.addEventListener("click
 const COL={CSL:"var(--sig)",deg_hours_4C:"var(--cold)",t_above_5C:"#8fa3b8",t_above_8C:"#6b7c8f",maxT:"#4c5a69"};
 const MS={CSL:"Kinetic score",deg_hours_4C:"Degree-hours",t_above_5C:"Time > 5 °C",t_above_8C:"Time > 8 °C",maxT:"Max temp"};
 const ML={CSL:"Kinetic score (CSL)",deg_hours_4C:"Degree-hours > 4 °C",t_above_5C:"Time > 5 °C",t_above_8C:"Time > 8 °C",maxT:"Max temperature"};
-function dotplot(id,items,xr){const svg=$(id),w=vw(id,520),hh=240,L=w<420?128:170;svg.setAttribute("viewBox",`0 0 ${w} ${hh}`);const R=44,Tp=6,B=26,n=items.length,rh=(hh-Tp-B)/n,x=v=>L+(v-xr[0])/(xr[1]-xr[0])*(w-L-R);let s="";
- for(let v=xr[0];v<=xr[1]+1e-9;v+=0.1)s+=`<line class="gl" x1="${x(v)}" x2="${x(v)}" y1="${Tp}" y2="${hh-B}"/><text x="${x(v)}" y="${hh-8}" text-anchor="middle">${v.toFixed(1)}</text>`;
- items.forEach((it,i)=>{const yy=Tp+rh*(i+.5);s+=`<text x="${L-10}" y="${yy+4}" text-anchor="end" style="fill:var(--ink);font:12px var(--fb)">${w<420&&it.short?it.short:it.label}</text><line x1="${x(it.lo)}" x2="${x(it.hi)}" y1="${yy}" y2="${yy}" stroke="${it.c}" stroke-width="3" stroke-linecap="round"/><circle cx="${x(it.v)}" cy="${yy}" r="6" fill="${it.c}"/><text x="${x(it.hi)+9}" y="${yy+4}" style="fill:var(--ink)">${it.v.toFixed(2)}</text>`});svg.innerHTML=s}
 const CN=c=>c.replace(/ \(.*\)/,'').replace('CSL','Kinetic score').replace('degree_hours_4C','degree-hours').replace('time_above_5C','time > 5 °C').replace('max_temperature','max temperature').replace('sensor: PT1000 - DS18B20','PT1000 minus DS18B20').replace('sampling: 60min - 1min','60-min minus 1-min sampling').replace('adaptive - fixed1min','Adaptive minus 1-min sampling').replace(' - ',' minus ');
+function bars(id,items){$(id).innerHTML=items.map(it=>`<div class="r"><div class="t"><span>${it.label}</span><b style="color:${it.c}">${Math.round(it.v*100)}</b></div><div class="tr2"><i style="width:${Math.max(2,(it.v-0.5)/0.5*100)}%;background:${it.c}"></i></div></div>`).join("")}
 function explore(){const thr=$("xthr").value,tau=$("xtau").value,cv=+$("xcv").value,vv=$("xvar").value,isL=vv=="lis";
- $("xthr").options[0].text=isL?"+0.5 log growth":"3 x 10^4 CFU/mL";$("xthr").options[1].text=isL?"+1 log growth":"10^6 CFU/mL";
+ $("xthr").options[0].text=isL?"Early (Listeria grows 3x)":"Early (30,000 per mL)";$("xthr").options[1].text=isL?"Late (Listeria grows 10x)":"Late (1 million per mL)";
  const f=r=>r[0]==vv&&r[1]==thr&&r[2]==tau&&r[3]==cv,get=(s,m,me)=>D.auc.find(r=>f(r)&&r[4]==s&&r[5]==m&&r[6]==me);
- dotplot("e1",["CSL","deg_hours_4C","t_above_5C","t_above_8C","maxT"].map(m=>{const r=get("DS18B20","15",m);return{label:ML[m],short:MS[m],c:COL[m],v:r[7],lo:r[8],hi:r[9]}}),[0.5,0.9]);
- const bs=[["Oracle (true biology)",get("oracle","1","CSL_oracle"),"var(--ink)","Oracle"],["Ideal sensor, 1 min",get("ideal","1","CSL"),"var(--sig)","Ideal, 1 min"],["PT1000, 15 min",get("PT1000","15","CSL"),"var(--sig)","PT1000, 15 min"],["DS18B20, 15 min",get("DS18B20","15","CSL"),"var(--sig)","DS18B20, 15 min"]];
- dotplot("e2",bs.map(b=>({label:b[0],short:b[3],c:b[2],v:b[1][7],lo:b[1][8],hi:b[1][9]})),[0.5,1.0]);
- const gap=bs[0][1][7]-bs[1][1][7];$("e2n").textContent=`Unobserved biology costs ${gap.toFixed(2)} AUC; sensor and sampling together cost ${Math.abs(bs[1][1][7]-bs[3][1][7]).toFixed(2)}.`;
+ const o=get("oracle","1","CSL_oracle"),id=get("ideal","1","CSL"),pt=get("PT1000","15","CSL"),ds=get("DS18B20","15","CSL");
+ bars("wf",[{label:"Knowing everything, even the bacteria",v:o[7],c:"var(--ink)"},{label:"Perfect thermometer, every minute",v:id[7],c:"var(--sig)"},{label:"Lab-grade thermometer, every 15 min",v:pt[7],c:"var(--sig)"},{label:"Cheap thermometer, every 15 min",v:ds[7],c:"var(--sig)"}]);
+ $("e2n").innerHTML=`Not knowing the bacteria costs <b>${Math.round((o[7]-id[7])*100)} points</b>. The thermometer and how often it checks cost <b>${Math.max(0,Math.round((id[7]-ds[7])*100))}</b>.`;
+ const NM={CSL:["Growth model (ours)","var(--sig)"],deg_hours_4C:["Degree-hours above 4 °C","var(--cold)"],t_above_5C:["Time above 5 °C","#8fa3b8"],t_above_8C:["Time above 8 °C","#6b7c8f"],maxT:["Hottest temperature reached","#4c5a69"]};
+ bars("rules",["CSL","deg_hours_4C","t_above_5C","t_above_8C","maxT"].map(m=>{const r=get("DS18B20","15",m);return{label:NM[m][0],v:r[7],c:NM[m][1]}}));
  const pf=D.paired.filter(r=>r[0]==vv&&r[1]==thr&&r[2]==tau&&r[3]==cv);
- $("e3t").innerHTML="<table><tr><th>Comparison</th><th class='num'>Diff</th><th class='num'>95% interval</th><th>Significant</th></tr>"+pf.filter(r=>!r[4].startsWith("sensor: ideal")&&!r[4].startsWith("sampling: 15")&&!r[4].startsWith("biology")).map(r=>{const ex=r[6]>0||r[7]<0;return`<tr><td>${CN(r[4])}</td><td class="num">${r[5].toFixed(3)}</td><td class="num">${r[6].toFixed(3)} to ${r[7].toFixed(3)}</td><td class="${ex?"yes":"no"}">${ex?"yes":"no"}</td></tr>`}).join("")+"</table>";
+ $("e3t").innerHTML="<table><tr><th>Comparison</th><th class='num'>AUC diff</th><th class='num'>95% interval</th><th>Significant</th></tr>"+pf.filter(r=>!r[4].startsWith("sensor: ideal")&&!r[4].startsWith("sampling: 15")).map(r=>{const ex=r[6]>0||r[7]<0;return`<tr><td>${CN(r[4])}</td><td class="num">${r[5].toFixed(3)}</td><td class="num">${r[6].toFixed(3)} to ${r[7].toFixed(3)}</td><td class="${ex?"yes":"no"}">${ex?"yes":"no"}</td></tr>`}).join("")+"</table>";
  const cf=D.cal.filter(r=>r[0]==vv&&r[1]==thr&&r[2]==tau&&r[3]==cv),nm={"MC matched prior":"Probability (DairyGuard)","MC overconfident b (cv_prior=0)":"Probability, overconfident prior","point alarm (nominal params)":"Single alarm"};
- $("e4t").innerHTML="<table><tr><th>Method</th><th class='num'>Brier</th><th class='num'>Calib. error</th></tr>"+cf.map(r=>`<tr><td>${nm[r[4]]}</td><td class="num">${r[5].toFixed(3)}</td><td class="num">${r[6].toFixed(3)}</td></tr>`).join("")+"</table><p class='mut' style='font-size:12.5px;margin:10px 0 0'>Lower is better for both. A calibrated probability outperforms a binary alarm.</p>";
- const hz=(D.paired.find(r=>r[0]==vv&&r[1]==thr)||[])[8];$("xnote").textContent=`AUC measures how well a score separates trips that spoiled (within ${hz} h, the label shelf life at 4 °C) from those that did not: 0.5 is chance, 1.0 is perfect. Intervals are 95% bootstrap intervals.`}
-const VN={base:"Baseline",lag:"Extra lag after temperature shifts",low:"Low starting load",comb:"Fitted to real milk flora",lis:"Listeria monocytogenes"};
+ $("e4t").innerHTML="<table><tr><th>Method</th><th class='num'>Brier</th><th class='num'>Calib. error</th></tr>"+cf.map(r=>`<tr><td>${nm[r[4]]}</td><td class="num">${r[5].toFixed(3)}</td><td class="num">${r[6].toFixed(3)}</td></tr>`).join("")+"</table><p class='mut' style='font-size:12.5px;margin:10px 0 0'>Lower is better for both.</p>";
+}
+const VN={base:"Standard milk",lag:"Bacteria slow to wake up",low:"Very clean milk",comb:"Real milk bacteria (ComBase)",lis:"Listeria (food poisoning)"};
 D.variants.forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=VN[v]||v;$("xvar").appendChild(o)});
 ["xvar","xthr","xtau","xcv"].forEach(i=>$(i).addEventListener("change",explore));
-(function(){const L=D.lin;$("lint").innerHTML="<table><tr><th></th><th class='num'>Published</th><th class='num'>Our model</th></tr><tr><td>Hours to 10⁶ CFU/mL at a steady 4 °C</td><td class='num'>≈ 90</td><td class='num'>"+L.h0_at_4C_const_h.toFixed(0)+"</td></tr><tr><td>After two 4 h excursions to 29 °C</td><td class='num'>≈ 55</td><td class='num'>"+L.h0_at_4C_two_excursions_h.toFixed(0)+"</td></tr></table>";
- const S=D.lis;$("lisv").innerHTML="<i>Listeria monocytogenes</i>: fitted to "+S.n_fit+" records, the model predicts "+S.n_heldout+" held-out records with an accuracy factor of "+S.heldout_bias_accuracy[1].toFixed(2)+". Its growth rate rises <b>"+S.rate_ratio_13C_vs_4C.toFixed(1)+"×</b> between 4 and 13 °C, against about 3× for spoilage flora."})();
+(function(){const L=D.lin;$("lint").innerHTML="<table><tr><th></th><th class='num'>Lab result</th><th class='num'>Our prediction</th></tr><tr><td>Hours to spoil, kept at 4 °C</td><td class='num'>≈ 90</td><td class='num'>"+L.h0_at_4C_const_h.toFixed(0)+"</td></tr><tr><td>Hours to spoil, after two warm spells</td><td class='num'>≈ 55</td><td class='num'>"+L.h0_at_4C_two_excursions_h.toFixed(0)+"</td></tr></table>";
+ const S=D.lis;$("lisv").innerHTML="<b>Listeria</b>, the food-poisoning bacterium, was fitted on "+S.n_fit+" records and then tested on "+S.n_heldout+" it had never seen: predictions were within a factor of about "+S.heldout_bias_accuracy[1].toFixed(1)+". It speeds up <b>"+S.rate_ratio_13C_vs_4C.toFixed(1)+"×</b> between 4 and 13 °C, about twice as sharply as spoilage bacteria."})();
 run();explore();
 let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{run();explore()},150)});
 </script>
