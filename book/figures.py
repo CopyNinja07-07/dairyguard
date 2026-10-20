@@ -266,7 +266,7 @@ RUNS = [("results/base", "Baseline"), ("results/lag", "Extra lag after shifts"),
 def fig_runs():
     """Range of four headline effects across the 12 settings of each benchmark run."""
     root = os.path.join(os.path.dirname(__file__), "..")
-    q = [("CSL - degree_hours_4C", "Kinetic score beats degree-hours by"), ("biology gap: oracle - ideal(1min,CSL)", "Loss to unobservable biology"),
+    q = [("CSL - degree_hours_4C", "Kinetic score beats degree-hours by"), ("biology gap: oracle - ideal(1min,CSL)", "Loss to unobserved biology"),
          ("sensor: PT1000 - DS18B20 (CSL,15min)", "Gain from a better sensor"), ("sampling: 60min - 1min (DS18B20,CSL)", "Change from sampling hourly vs every minute")]
     runs = [(d, n) for d, n in RUNS if os.path.exists(os.path.join(root, d, "paired_contrasts.csv"))]
     cols = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"]

@@ -20,6 +20,7 @@ for k, nm in names.items():
 l = V["lin"]; c = V["combase"]; s = V["lis"]
 mac("NumLinConst", "%.0f" % l["h0_at_4C_const_h"]); mac("NumLinExc", "%.0f" % l["h0_at_4C_two_excursions_h"])
 mac("NumLinErr", "%.0f" % (100 * (l["h0_at_4C_two_excursions_h"] - 55) / 55))
+mac("NumLinErrAbs", "%.0f" % abs(100 * (l["h0_at_4C_two_excursions_h"] - 55) / 55))
 mac("NumCbN", c["robust"]["n"] + 1); mac("NumCbB", "%.4f" % c["robust"]["b_ln"]); mac("NumCbT", "%.1f" % c["robust"]["Tmin_C"]); mac("NumCbSd", "%.2f" % c["robust"]["resid_log_sd"])
 mac("NumCbBias", "%.2f" % c["neumeyer"]["bias_factor"])
 mac("NumLisN", s["n_fit"]); mac("NumLisHeld", s["n_heldout"]); mac("NumLisB", "%.4f" % s["b_ln"]); mac("NumLisT", "%.1f" % s["Tmin_C"])

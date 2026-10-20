@@ -7,7 +7,7 @@ Adds to v1:
     with calibration metrics (Brier, ECE) under matched / overconfident priors
   * loss budget: oracle -> biology-limited -> +sensor -> +sampling
 
-All biology parameters are still placeholders unless marked SOURCED in params.csv.
+Parameter provenance (sourced, fitted or assumed) is recorded in data/params.csv.
 """
 import sys
 import numpy as np

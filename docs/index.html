@@ -5,7 +5,7 @@
 <meta name="description" content="Every night, milk crosses the city. DairyGuard asks what a temperature log can really tell us about whether it stayed safe.">
 <meta name="theme-color" content="#07090c">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#07090c;--bg2:#0e1218;--bg3:#151b23;--ink:#ece9e2;--mut:#8b939e;--dim:#5a626d;--line:#1f2731;--sig:#f2b544;--hot:#ff5a3c;--cold:#5ec3ff;--ok:#5fd39a;--r:14px;color-scheme:dark}
 *{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}
@@ -101,8 +101,24 @@ section.c p{color:var(--mut)}section.c p b{color:var(--ink);font-weight:600}
 .lk2:hover{transform:translateY(-3px);border-color:var(--sig)}
 .lk2 small{font:500 11px "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--sig)}
 .lk2 h3{font-size:32px;margin:10px 0 6px}.lk2 p{font-size:14.5px;margin:0;color:var(--mut)}
-footer{border-top:1px solid var(--line)}
-footer .w{padding-block:44px;color:var(--dim);font-size:13.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+/* closing */
+.closing{position:relative;height:min(94vh,780px);min-height:560px;overflow:hidden;border-top:1px solid var(--line);background:radial-gradient(120% 70% at 50% 100%,#10161e,var(--bg) 70%)}
+#pool{position:absolute;inset:0;width:100%;height:100%;display:block}
+.closing .w{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:calc(9vh + 56px)}
+.sk{font-family:"Tiro Devanagari Sanskrit","Noto Serif Devanagari",serif;font-size:clamp(36px,6.4vw,78px);line-height:1.2;color:var(--ink);margin:18px 0 10px;letter-spacing:.01em}
+.iast{font-family:"Tiro Devanagari Sanskrit",Georgia,serif;font-style:italic;font-size:clamp(17px,2vw,22px);color:var(--sig);margin:0}
+.trn{font-size:clamp(17px,2vw,21px);color:var(--ink);margin:14px 0 0;max-width:34ch}
+.src{font:500 11px "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-top:14px}
+/* footer */
+.ft{border-top:1px solid var(--line);background:var(--bg)}
+.ft .w{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:22px;padding-block:38px}
+.ft .brand{display:flex;align-items:center;gap:10px;font:800 22px "Big Shoulders Display","Arial Narrow",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-decoration:none}
+.ft .brand img{width:28px;height:28px}
+.ft p{font:500 10.5px "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin:8px 0 0}
+.ft .fl2{display:flex;gap:22px;flex-wrap:wrap}.ft .fl2 a{color:var(--mut);text-decoration:none;font-size:13.5px}.ft .fl2 a:hover{color:var(--sig)}
+.ft .fs{display:flex;align-items:center;gap:10px;font:500 10.5px "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.ft .fs i{width:4px;height:4px;border-radius:50%;background:var(--sig);display:block}
+.ft .fs b{font:400 15px "Tiro Devanagari Sanskrit",serif;letter-spacing:0;color:var(--ink);text-transform:none}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.fl{transition:none}.cue i{animation:none}}
 </style></head><body>
 
@@ -203,7 +219,21 @@ footer .w{padding-block:44px;color:var(--dim);font-size:13.5px;display:flex;just
 </div>
 </section>
 </div>
-<footer><div class="w"><span>DairyGuard · Suryansh Pratap Singh</span><span>Mathematics &amp; Computing, Shri Mata Vaishno Devi University</span></div></footer>
+<section class="closing" aria-label="Closing">
+<canvas id="pool" aria-hidden="true"></canvas>
+<div class="w">
+<span class="tag rv">Why it matters</span>
+<p class="sk rv" lang="sa">आहारशुद्धौ सत्त्वशुद्धिः</p>
+<p class="iast rv">āhāra-śuddhau sattva-śuddhiḥ</p>
+<p class="trn rv">When food is pure, the mind is pure.</p>
+<p class="src rv">Chāndogya Upaniṣad 7.26.2</p>
+</div>
+</section>
+<footer class="ft"><div class="w">
+<div><a class="brand" href="#"><img src="favicon.svg" alt="">DairyGuard</a><p>© 2026 DairyGuard · Cold-chain intelligence · Open science</p></div>
+<div class="fl2"><a href="https://github.com/CopyNinja07-07/dairyguard">GitHub</a><a href="DairyGuard_Research_Paper.pdf">Paper</a><a href="DairyGuard_Storybook.pdf">Storybook</a><a href="explorer.html">Demo</a></div>
+<div class="fs"><span>Food first</span><i></i><span>Sanskrit: <b lang="sa">आहार</b> nourishment</span></div>
+</div></footer>
 
 <script>
 (function(){
@@ -221,7 +251,7 @@ function buildSky(){SW=sky.clientWidth;SH=sky.clientHeight;sky.width=SW*DPR;sky.
  stars=[];for(var i=0;i<140;i++)stars.push([r()*SW,r()*SH*.6,r()*1.2+.2,r()*6.28]);
  clouds=[];for(var j=0;j<9;j++)clouds.push([r()*SW,SH*(.08+r()*.28),120+r()*260,30+r()*40,(r()-.5)*.08])}
 buildSky();addEventListener('resize',function(){buildSky();rs()});
-var shield=new Path2D("M0 -26 L22 -19 V-2 C22 12 12 21 0 26 C-12 21 -22 12 -22 -2 V-19 Z");
+var LOGO=new Image();LOGO.src="favicon.svg";var shield=new Path2D("M0 -26 L22 -19 V-2 C22 12 12 21 0 26 C-12 21 -22 12 -22 -2 V-19 Z");
 function drawSky(ts){var t=ts/1000;g.clearRect(0,0,SW,SH);
  var bgG=g.createLinearGradient(0,0,0,SH);bgG.addColorStop(0,'#05070a');bgG.addColorStop(.7,'#0b1016');bgG.addColorStop(1,'#111820');g.fillStyle=bgG;g.fillRect(0,0,SW,SH);
  stars.forEach(function(s){g.globalAlpha=.25+.35*Math.abs(Math.sin(t*.6+s[3]));g.fillStyle='#cfd6e0';g.fillRect(s[0],s[1],s[2],s[2])});g.globalAlpha=1;
@@ -233,7 +263,7 @@ function drawSky(ts){var t=ts/1000;g.clearRect(0,0,SW,SH);
  /* projected mark on the clouds */
  var px=bx+Math.cos(ang)*SH*.78,py=Math.max(SH*(SW<700?.2:.16),by+Math.sin(ang)*SH*.78);if(SW<700){py=SH*.2}
  var halo=g.createRadialGradient(px,py,0,px,py,SH*.16);halo.addColorStop(0,'rgba(242,181,68,.35)');halo.addColorStop(1,'rgba(242,181,68,0)');g.fillStyle=halo;g.beginPath();g.arc(px,py,SH*.16,0,6.283);g.fill();g.restore();
- g.save();g.translate(px,py);var sc=Math.min(SW,SH)/520;g.scale(sc*1.6,sc*1.6);g.fillStyle='rgba(7,9,12,.82)';g.fill(shield);g.fillStyle='rgba(242,181,68,.9)';g.font='800 15px "Big Shoulders Display",Impact,sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('DG',0,1);g.restore();
+ if(LOGO.complete&&LOGO.naturalWidth){var ls=Math.min(SW,SH)*(SW<700?.2:.15);g.save();g.globalAlpha=.92;g.drawImage(LOGO,px-ls/2,py-ls/2,ls,ls);g.restore()}
  /* clouds */
  clouds.forEach(function(c){var cx=((c[0]+t*c[4]*60)%(SW+400)+SW+400)%(SW+400)-200;var cg=g.createRadialGradient(cx,c[1],0,cx,c[1],c[2]);cg.addColorStop(0,'rgba(120,135,155,.10)');cg.addColorStop(1,'rgba(120,135,155,0)');g.fillStyle=cg;g.beginPath();g.ellipse(cx,c[1],c[2],c[3],0,0,6.283);g.fill()});
  /* skyline */
@@ -284,6 +314,21 @@ function drawBottle(ts){var p=cur;x.clearRect(0,0,W,H);
  var st=0;for(var s2=0;s2<4;s2++)if(p>=STOPS[s2].t-.001)st=s2;
  if(st!==lastStop){lastStop=st;var pn=document.getElementById('panel');pn.classList.add('sw');setTimeout(function(){document.getElementById('step').textContent=STOPS[st].s;document.getElementById('h').textContent=STOPS[st].h;document.getElementById('t').textContent=STOPS[st].p;pn.classList.remove('sw')},180)}}
 function loop(ts){var r=sky.getBoundingClientRect();if(r.bottom>0)drawSky(ts);cur+=(prog()-cur)*.12;var jr=document.getElementById('journey').getBoundingClientRect();if(jr.top<innerHeight&&jr.bottom>0)drawBottle(ts);requestAnimationFrame(loop)}
+/* ---------- closing: a drop of milk into a still pool ---------- */
+var pc=document.getElementById('pool'),pg=pc.getContext('2d'),PW,PH,rings=[],spl=[],drop=null,nextDrop=0;
+function rsP(){PW=pc.clientWidth;PH=pc.clientHeight;pc.width=PW*DPR;pc.height=PH*DPR;pg.setTransform(DPR,0,0,DPR,0,0)}rsP();addEventListener('resize',rsP);
+function drawPool(ts){var t=ts/1000;pg.clearRect(0,0,PW,PH);var hz=PH*.8,cx=PW/2;
+ var sea=pg.createLinearGradient(0,hz,0,PH);sea.addColorStop(0,'rgba(236,233,226,.05)');sea.addColorStop(1,'rgba(236,233,226,0)');pg.fillStyle=sea;pg.fillRect(0,hz,PW,PH-hz);
+ pg.strokeStyle='rgba(242,181,68,.18)';pg.lineWidth=1;pg.beginPath();pg.moveTo(0,hz);pg.lineTo(PW,hz);pg.stroke();
+ if(!drop&&t>nextDrop){drop={y:PH*.56,v:0}}
+ if(drop){drop.v+=PH*.0009;drop.y+=drop.v;var r=7;pg.fillStyle='#ece9e2';pg.beginPath();pg.moveTo(cx,drop.y-r*2.4);pg.bezierCurveTo(cx+r*.9,drop.y-r,cx+r,drop.y,cx,drop.y+r);pg.bezierCurveTo(cx-r,drop.y,cx-r*.9,drop.y-r,cx,drop.y-r*2.4);pg.fill();
+  if(drop.y>=hz){drop=null;nextDrop=t+(reduce?9:2.4);for(var k=0;k<3;k++)rings.push({t0:t+k*.28});for(var j=0;j<14;j++){var a=Math.PI*(.15+.7*Math.random());spl.push({x:cx,y:hz,vx:Math.cos(a)*(1+Math.random()*2.2)*(Math.random()<.5?-1:1),vy:-Math.sin(a)*(2.2+Math.random()*2.4),life:1})}}}
+ rings=rings.filter(function(rg){var age=t-rg.t0;if(age<0)return true;if(age>3.2)return false;var R=age*PW*.13,al=Math.max(0,.55*(1-age/3.2));
+  pg.strokeStyle='rgba(236,233,226,'+al+')';pg.lineWidth=1.4;pg.beginPath();pg.ellipse(cx,hz,R,R*.16,0,0,6.283);pg.stroke();
+  pg.strokeStyle='rgba(242,181,68,'+al*.6+')';pg.beginPath();pg.ellipse(cx,hz,R*.82,R*.13,0,0,6.283);pg.stroke();return true});
+ spl=spl.filter(function(p){p.vy+=.12;p.x+=p.vx;p.y+=p.vy;p.life-=.02;if(p.y>hz+2||p.life<=0)return false;pg.fillStyle='rgba(236,233,226,'+p.life+')';pg.beginPath();pg.arc(p.x,p.y,1.6,0,6.283);pg.fill();return true});
+ var glow=pg.createRadialGradient(cx,hz,0,cx,hz,PW*.35);glow.addColorStop(0,'rgba(242,181,68,.10)');glow.addColorStop(1,'rgba(242,181,68,0)');pg.fillStyle=glow;pg.fillRect(0,0,PW,PH)}
+var _loop=loop;loop=function(ts){var r=pc.getBoundingClientRect();if(r.top<innerHeight&&r.bottom>0)drawPool(ts);_loop(ts)};
 requestAnimationFrame(loop);
 })();
 </script></body></html>

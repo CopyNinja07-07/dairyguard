@@ -157,7 +157,7 @@ RUNS = [("base", "Baseline"), ("lag", "Extra lag after shifts"), ("low", "Low st
 
 
 def fig_runs():
-    q = [("biology gap: oracle - ideal(1min,CSL)", "Loss to unobservable biology"),
+    q = [("biology gap: oracle - ideal(1min,CSL)", "Loss to unobserved biology"),
          ("CSL - degree_hours_4C", "Kinetic score minus degree-hours"),
          ("sensor: PT1000 - DS18B20 (CSL,15min)", "PT1000 minus DS18B20"),
          ("sampling: 60min - 1min (DS18B20,CSL)", "Hourly minus every-minute sampling")]

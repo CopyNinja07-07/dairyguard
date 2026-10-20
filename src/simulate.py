@@ -1,5 +1,5 @@
 """Monte Carlo benchmark: do kinetic scores beat threshold rules, and how much do sensor
-error / sampling interval matter?  Development run: parameters flagged in params.csv.
+error / sampling interval matter?  Parameter provenance is recorded in data/params.csv.
 
 Label definition (fixed before any method comparison was looked at):
   a trip is 'spoiled' if the reference (Baranyi) population exceeds the threshold within the

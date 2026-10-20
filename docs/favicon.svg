@@ -1,11 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="15" fill="#0E171A"/>
-  <path d="M30 6 L52 13 V30 C52 44 42 53 30 58 C18 53 8 44 8 30 V13 Z" fill="#F6F3EC"/>
-  <path d="M30 11 L47 16.5 V30 C47 41 39.5 48.500 30 53 C20.500 48.500 13 41 13 30 V16.500 Z" fill="#17262B"/>
-  <text x="30" y="37" text-anchor="middle" font-family="Inter Tight,Arial,Helvetica,sans-serif" font-weight="800" font-size="21" fill="#F6F3EC" letter-spacing="-1">DG</text>
-  <g transform="rotate(-35 49 49)">
-    <path d="M37 49 q-2.500 -3.500 -5 0 t-5 0" fill="none" stroke="#FF8A5C" stroke-width="1.700" stroke-linecap="round"/>
-    <rect x="37" y="42.500" width="24" height="13" rx="6.500" fill="#FF8A5C" stroke="#0E171A" stroke-width="2.500"/>
-    <circle cx="45" cy="49" r="1.700" fill="#0E171A" opacity=".55"/><circle cx="52" cy="47" r="1.300" fill="#0E171A" opacity=".55"/><circle cx="54" cy="51.500" r="1.500" fill="#0E171A" opacity=".55"/>
-  </g>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#121a24"/><stop offset="1" stop-color="#06080b"/></linearGradient>
+    <linearGradient id="cv" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5ec3ff"/><stop offset=".55" stop-color="#f2b544"/><stop offset="1" stop-color="#ff5a3c"/></linearGradient>
+    <radialGradient id="gl" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#f2b544" stop-opacity=".55"/><stop offset="1" stop-color="#f2b544" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#bg)"/>
+  <rect x=".75" y=".75" width="62.5" height="62.5" rx="14.3" fill="none" stroke="#f2b544" stroke-opacity=".28" stroke-width="1.2"/>
+  <!-- growth curve: lag, exponential, stationary (bacterial growth, drawn as a sigmoid) -->
+  <path d="M8 55 C 22 55, 26 54.5, 32 49.5 S 42 41, 56 40.5" fill="none" stroke="url(#cv)" stroke-width="2.6" stroke-linecap="round"/>
+  <circle cx="8" cy="55" r="1.7" fill="#5ec3ff"/><circle cx="32" cy="49.5" r="1.6" fill="#f2b544"/>
+  <rect x="50.5" y="37.6" width="9" height="5.6" rx="2.8" fill="#ff5a3c" transform="rotate(-8 55 40.4)"/>
+  <path d="M15.18994140625 33.5C21.67529296875 33.5 25.72509765625 29.3935546875 25.72509765625 22.95068359375C25.72509765625 16.5078125 21.61865234375 12.4013671875 15.18994140625 12.4013671875H7.359375V33.5ZM12.45703125 29.251953125V16.6494140625H14.87841796875C18.75830078125 16.6494140625 20.59912109375 18.78759765625 20.59912109375 22.95068359375C20.59912109375 27.099609375 18.80078125 29.251953125 14.93505859375 29.251953125ZM36.59306640625 33.83984375C42.24296875 33.83984375 46.13701171875 30.22900390625 46.13701171875 24.87646484375V22.01611328125H36.93291015625V25.75439453125H41.15263671875C41.11015625 27.93505859375 39.42509765625 29.3935546875 36.748828125 29.3935546875C33.42119140625 29.3935546875 31.52373046875 27.0146484375 31.52373046875 22.96484375C31.52373046875 18.90087890625 33.40703125 16.5078125 36.6921875 16.5078125C38.97197265625 16.5078125 40.41630859375 17.697265625 40.7986328125 19.56640625H45.98125C45.51396484375 15.07763671875 41.4783203125 12.0615234375 36.50810546875 12.0615234375C30.7732421875 12.0615234375 26.39775390625 16.06884765625 26.39775390625 22.96484375C26.39775390625 29.54931640625 30.46171875 33.83984375 36.59306640625 33.83984375Z" fill="#ece9e2"/>
+  <!-- degree mark -->
+  <circle cx="47.5" cy="11.5" r="7" fill="url(#gl)"/>
+  <circle cx="47.5" cy="11.5" r="3.6" fill="none" stroke="#f2b544" stroke-width="2.4"/>
 </svg>
