@@ -4,7 +4,6 @@
 
 ### What really decides whether milk goes bad on its way from the farm to your fridge?
 
-[![tests](https://github.com/CopyNinja07-07/dairyguard/actions/workflows/ci.yml/badge.svg)](https://github.com/CopyNinja07-07/dairyguard/actions)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
@@ -12,7 +11,7 @@ A simulation study of the cold chain for milk. We built a virtual world of thous
 
 **[Website](https://copyninja07-07.github.io/dairyguard/) · [Live demo](https://copyninja07-07.github.io/dairyguard/explorer.html) · [Research paper (PDF)](docs/DairyGuard_Research_Paper.pdf) · [Storybook (PDF)](docs/DairyGuard_Storybook.pdf)**
 
-**Contents:** [The short version](#the-short-version) · [Problem](#problem) · [Approach](#approach-in-plain-words) · [Architecture](#architecture) · [Quickstart](#quickstart) · [The model](#the-model) · [The simulated world](#the-simulated-world) · [How methods are judged](#how-methods-are-judged) · [Is the model believable?](#is-the-model-believable) · [Results](#results) · [Listeria case study](#listeria-case-study) · [Data](#data-and-parameters) · [Repository layout](#repository-layout) · [Tests](#tests) · [Limitations](#limitations) · [Next steps](#next-steps) · [Glossary](#glossary) · [Cite](#cite-and-licence)
+**Contents:** [The short version](#the-short-version) · [Problem](#problem) · [Approach](#approach-in-plain-words) · [Architecture](#architecture) · [Quickstart](#quickstart) · [The model](#the-model) · [The simulated world](#the-simulated-world) · [How methods are judged](#how-methods-are-judged) · [Is the model believable?](#is-the-model-believable) · [Results](#results) · [Listeria case study](#listeria-case-study) · [Data](#data-and-parameters) · [Repository layout](#repository-layout) · [Limitations](#limitations) · [Next steps](#next-steps) · [Glossary](#glossary) · [Cite](#cite-and-licence)
 
 ---
 
@@ -258,20 +257,6 @@ dairyguard/
 ├── Makefile                  one-word commands: test, runs, summary, paper, book, demo
 ├── CITATION.cff   LICENSE   requirements.txt
 ```
-
-## Tests
-
-`make test` runs 14 automatic checks. They confirm, among other things, that:
-
-- the closed-form shelf life agrees with the detailed simulation when both use the same numbers;
-- shelf life gets shorter as temperature rises;
-- the published 2016 results are reproduced within 10%;
-- AUC is computed correctly, and two identical scores differ by exactly zero;
-- a clearly better score is detected as better by the paired comparison;
-- probability forecasts rise with temperature and the calibration measure behaves correctly.
-- the JavaScript code inside the web demo gives the same shelf-life answers as the Python original.
-
-The tests also run automatically on GitHub for every push.
 
 ## Limitations
 
