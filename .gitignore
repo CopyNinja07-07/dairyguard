@@ -10,7 +10,7 @@ paper/*.blg
 *.pass1.pdf
 book/fig/eq_*.png
 
-# raw ComBase transcriptions are kept local
+# raw ComBase records are kept local
 data/*.csv
 !data/params.csv
 paper/main.pdf

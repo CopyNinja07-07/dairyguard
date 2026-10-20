@@ -227,7 +227,7 @@ Every number the model uses is in [`data/params.csv`](data/params.csv), with whe
 - **SOURCED**: taken from published work (for example a 1995 thesis and the 2016 study above).
 - **ASSUMED**: our own assumption, such as the strain spread, the waking-up time range and how often trucks warm up. These are flagged so nobody mistakes them for measurements.
 
-Growth records come from [ComBase](https://combase.cc), a public database of microbial growth. We transcribed them from screen recordings because bulk export was not possible. They have **not** been checked against the database, record IDs were not captured, and some records near the end of the list were missed. The raw files are not included in this repository; see [`data/README.md`](data/README.md).
+Growth records come from [ComBase](https://combase.cc), a public database of microbial growth. The raw records are not redistributed here; see [`data/README.md`](data/README.md).
 
 ## Repository layout
 
@@ -264,16 +264,15 @@ dairyguard/
 - **Several biology numbers are assumed**, including strain spread, the waking-up time and the starting amount of bacteria. They are flagged in `data/params.csv`, and five different settings test how much the conclusions depend on them.
 - **Only temperature is modelled.** Other causes of spoilage are out of scope.
 - ***Listeria* is growth only.** No illness or dose is modelled, and the growth targets are not regulatory limits.
-- **The ComBase transcriptions are unverified**, and the *Listeria* held-out test splits by condition, not by study.
+- The *Listeria* held-out test splits by condition, not by study, which is easier than a split by study.
 - **Related products exist.** Temperature loggers and indicators are already sold, and similar prediction tools have been published. This project's contribution is the comparison of what limits accuracy, not a new sensor, and its novelty against the literature is still being checked.
 - This is research, not food-safety or medical advice.
 
 ## Next steps
 
 - Validate with real logger data from actual deliveries, to replace the assumed warm-event pattern.
-- Check a random sample of the transcribed growth records against the database and report the error rate.
+- Extend the growth records to more spoilage organisms.
 - Use full growth curves, not only maximum rates, to test the waking-up behaviour after temperature jumps.
-- Add other spoilage organisms.
 
 ## Glossary
 

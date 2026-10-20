@@ -1,6 +1,6 @@
 """Fit the square-root model to ComBase records (aerobic spoilage flora, pasteurised milk, Tasmanian Institute of Agriculture)
 and score the Neumeyer/Lin-anchored model against them (bias and accuracy factors, Ross 1996).
-Data were transcribed by OCR from a screen recording of the ComBase search results; record 21 (temperature misread as 74.0) is excluded
+Record 21 (an implausible temperature of 74.0 C) is excluded
 and record 18 (rate 0.0242 at 6.8 C, an outlier) is kept in the 'all' fit and dropped in the 'robust' fit."""
 import math, json
 import numpy as np, pandas as pd

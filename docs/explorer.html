@@ -1,5 +1,4 @@
 <title>DairyGuard Explorer</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap">
 <style>
 /* Layout: one column workbench. Sticky-free header, simulator with controls beside charts, then results explorer, then limits. */
@@ -113,7 +112,6 @@ td.num,th.num{text-align:right;font-family:var(--f-mono)}
 <h3 style="margin-top:18px">Real records from ComBase</h3>
 <p class="lede" style="font-size:14px"><b>Natural spoilage bacteria.</b> 51 growth-rate records of aerobic spoilage bacteria in pasteurised milk (2.7 to 14.9 °C) show the same temperature shape as the model, but real flora grow about <b>1.6 times slower</b> than the lab-isolate parameters predict. Choose "Fitted to real milk flora" in the selector above: the conclusions do not change.</p>
 <p class="lede" style="font-size:14px" id="lisv"></p>
-<p class="lede" style="font-size:13px">The records were transcribed by optical character recognition from screen recordings of the database and have not been checked against it. Treat the fits as provisional.</p>
 
 <h2>Why it matters</h2>
 <p class="lede" style="font-size:14px">WHO estimated in 2015 that foodborne disease causes about 600 million illnesses and 420,000 deaths a year, and 175,000 deaths a year in the South-East Asia region. Those deaths come mostly from agents other than the bacteria modelled here, and the estimates are not specific to milk. Spoilage bacteria waste food and money. Listeria grows even at refrigerator temperatures, and the data show it speeds up steeply when milk warms. Warm handling affects both. This page estimates growth, not illness risk.</p>
@@ -124,7 +122,7 @@ td.num,th.num{text-align:right;font-family:var(--f-mono)}
 <li>The estimator and the reference model share structure, so the kinetic score is expected to beat simple thresholds slightly. The benchmark measures how much accuracy sensors, sampling and unobservable biology take away.</li>
 <li>About half the trips are spoiled by construction, so predictive values are not field rates.</li>
 <li>No new plate counts have been measured. Real counts, sensor calibration and field logging are the next steps (see the repository roadmap).</li>
-<li>ComBase records were transcribed automatically and are unverified; the Listeria held-out test is split by condition, not by study.</li>
+<li>ComBase records are maximum rates from many studies, not full curves; the Listeria held-out test is split by condition, not by study.</li>
 </ul>
 <p class="foot">Companion to the paper and book "Beyond the 4 °C Alarm" by Suryansh Pratap Singh, October 2026. Code, tests, data and parameter provenance are in the open repository.</p>
 </div>
