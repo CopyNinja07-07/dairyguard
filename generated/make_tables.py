@@ -287,7 +287,7 @@ None (log only) & """ + f"{cw.nominal.min():.3f}--{cw.nominal.max():.3f} & {cw.n
 """ + _r("budget", "True lag and starting load") + "\n" + _r("ratelaw", "True rate law ($b$, $T_{\\min}$)") + "\n" + "\n".join(crow) + "\n" + r"""All biology (oracle) & 1.000 & 1.000 & 100\\
 \bottomrule\end{tabular}\end{table}"""
 
-# ---------------------------------------------------------------- technical report appendix tables
+# ---------------------------------------------------------------- book appendix tables
 def _tex(x):
     x = str(x)
     for a, b in (("\\", "/"), ("&", "\\&"), ("%", "\\%"), ("_", "\\_\\allowbreak{}"), ("#", "\\#"), ("^", "\\^{}"), ("~", "$\\sim$"), ("+/-", "$\\pm$")):

@@ -1,4 +1,4 @@
-"""Vector figures shared by the technical report and the white paper (white background, serif type, lettered panels).
+"""Vector figures shared by the book and the white paper (white background, serif type, lettered panels).
 Run from the repository root: python generated/figures.py"""
 import os
 import sys
@@ -446,7 +446,7 @@ def fig_secondary():
     lis = full[full.organism.str.startswith("Listeria") & full["T"].between(2, 16)]
     lis = lis[lis.conditions.fillna("").str.contains("Not specified")]
     res = json.load(open(os.path.join(ROOT, "results", "secondary_models.json")))
-    sys.path.insert(0, os.path.join(ROOT, "src")); import compare_secondary as C
+    sys.path.insert(0, os.path.join(ROOT, "experiments")); import compare_secondary as C
     styles = {"sqrt": ("-", BLUE, "square-root"), "arrhenius": ((0, (4, 2)), ORANGE, "Arrhenius"),
               "q10": ((0, (1.5, 1.2)), GREEN, "constant Q$_{10}$"), "davey": ((0, (6, 1.5, 1.5, 1.5)), PINK, "Arrhenius–Davey")}
     fig, axs = plt.subplots(1, 3, figsize=(W2, 2.12), gridspec_kw={"width_ratios": [1, 1, 0.9]})
@@ -494,7 +494,7 @@ def fig_stats():
     def roc(s):
         o = np.argsort(-s); yy = y[o]; tp = np.cumsum(yy) / yy.sum(); fp = np.cumsum(1 - yy) / (1 - yy).sum()
         return np.r_[0, fp], np.r_[0, tp]
-    sys.path.insert(0, os.path.join(ROOT, "src")); import benchmark as Bm
+    sys.path.insert(0, os.path.join(ROOT, "src")); from dairyguard import benchmark as Bm
     fig, axs = plt.subplots(1, 3, figsize=(W2, 2.45))
     ax = axs[0]
     for k, lab, ls, c in [("oracle", "oracle", (0, (1, 1)), MUTED), ("CSL", "CSL", "-", BLUE), ("deg_hours_4C", "degree-hours", (0, (4, 2)), ORANGE),

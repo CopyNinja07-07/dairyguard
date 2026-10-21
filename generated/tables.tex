@@ -119,7 +119,7 @@ shift\_\allowbreak{}lag\_\allowbreak{}fraction & 0 (baseline) / 0.25 (structure-
 sensor\_\allowbreak{}DS18B20 & bias U(-0.5,0.5), noise sd 0.05, res 0.0625 & degC & accuracy $\pm$0.5 C from the manufacturer datasheet; noise ASSUMED\\
 sensor\_\allowbreak{}PT1000\_\allowbreak{}MAX31865 & bias U(-0.15,0.15), noise sd 0.03, res 0.03125 & degC & accuracy $\pm$0.15 C (IEC 60751 Class A tolerance at 0 C); noise ASSUMED\\
 combase\_\allowbreak{}fit & b 0.0256, Tmin -6.6 C (n=50 robust); log resid sd 0.16 &  & EMPIRICAL: 51 ComBase records (Tasmanian Institute of Agriculture, pasteurised milk, 2.7-14.9 C); one record with an implausible temperature removed; Neumeyer/Lin parameters overpredict these by 1.6x\\
-runs\_\allowbreak{}reported & baseline; extra lag; low starting load; ComBase-fitted milk flora; Listeria &  & all use seeds fixed in src/benchmark\_\allowbreak{}v2.py; 4000 trips per setting\\
+runs\_\allowbreak{}reported & baseline; extra lag; low starting load; ComBase-fitted milk flora; Listeria &  & all use seeds fixed in src/dairyguard/benchmark.py; 4000 trips per setting\\
 lis\_\allowbreak{}b & 0.0235 & ln basis & FITTED: 46 ComBase records of Listeria monocytogenes in milk, conditions not specified, 2-16 C; bootstrap 95\% 0.0203-0.0265. Held-out check on 53 records: bias factor 1.02, accuracy factor 1.37 (split by condition, not by study)\\
 lis\_\allowbreak{}Tmin & -2.3 & degC & FITTED: same fit; bootstrap 95\% -4.2 to -0.9 C\\
 lis\_\allowbreak{}Tmin\_\allowbreak{}sd & 1.0 & K & ASSUMED: of the order of the bootstrap standard error (about 0.8 K)\\

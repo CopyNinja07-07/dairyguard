@@ -1,0 +1,21 @@
+{
+ "n_studies": 11,
+ "n_records": 87,
+ "Tmin": -4.008507226742112,
+ "b_median": 0.022228052640833423,
+ "cv_b": 0.25285863562626515,
+ "within_study_rmse_ln": 0.2643576183265164,
+ "study_b": {
+  "Donnelly (et al.), 1986": 0.022228052640833423,
+  "Food Standards Agency funded data generated at Champden and ": 0.022358022320176633,
+  "Kamau (et al.), 1990": 0.009931965041381736,
+  "Marshall (et al.), 1988": 0.020736478530555897,
+  "Mod\u00e9lisation a vis\u00e9e pr\u00e9visionnelle de la cin\u00e9tique de crois": 0.016433704183407803,
+  "Myntzaw (et al.), 2023": 0.022604565648861027,
+  "Pearson (et al.), 1990": 0.02167525986741363,
+  "Rajkowski (et al.), 1994": 0.023490589649423983,
+  "Rosenow (et al.), 1987": 0.01983162075312423,
+  "Rosenow (et al.), 1993": 0.023038340074215735,
+  "Walker (et al.), 1990": 0.02291855932847903
+ }
+}

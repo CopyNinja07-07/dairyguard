@@ -9,7 +9,7 @@ Label definition (fixed before any method comparison was looked at):
 import sys
 import numpy as np
 import pandas as pd
-from dg_kinetics import mu_sqrt, sl_gompertz, make_sl_lookup, LN10
+from .kinetics import mu_sqrt, sl_gompertz, make_sl_lookup, LN10
 
 TMIN, TMIN_SD, B0 = -7.75, 0.7, 0.016
 H0_EST, LOGN0_EST, LOG10NMAX = 1.5, 1.7, 9.0
@@ -23,9 +23,9 @@ if os.environ.get("DG_PARAMS") == "lis":
     pass
 if os.environ.get("DG_N0") == "low":   # realistic post-pasteurisation load (Martin 2021: 1-50 cells per 100 mL up to ~1 cell/mL)
     LOGN0_EST = -0.25
-if os.environ.get("DG_PARAMS") == "comb":   # fitted to 50 ComBase records (Tasmanian Inst. of Agriculture, aerobic spoilage flora in pasteurised milk, 2.7-14.9 C), see src/validate_combase.py
+if os.environ.get("DG_PARAMS") == "comb":   # fitted to 50 ComBase records (Tasmanian Inst. of Agriculture, aerobic spoilage flora in pasteurised milk, 2.7-14.9 C), see experiments/validate_combase.py
     TMIN, TMIN_SD, B0, H0_EST, H0_RANGE = -6.6, 1.5, 0.0256, 3.8, (2.5, 5.0)
-if os.environ.get("DG_PARAMS") == "lis":   # Listeria monocytogenes in milk, fitted to 40 ComBase records (conditions 'not specified', 3-15 C), see src/validate_combase_lis.py.
+if os.environ.get("DG_PARAMS") == "lis":   # Listeria monocytogenes in milk, fitted to 40 ComBase records (conditions 'not specified', 3-15 C), see experiments/validate_combase_lis.py.
     # Hazard case study: label 'A' = +0.5 log10 growth, 'B' = +1 log10 over the starting load (round-number growth labels, NOT regulatory limits). Tmin SD, lag and starting load are ASSUMED.
     TMIN, TMIN_SD, B0, H0_EST, H0_RANGE, LOGN0_EST = -2.3, 1.0, 0.0235, 3.0, (2.0, 4.5), -1.0
 SHIFT_F = float(os.environ.get("DG_SHIFT", "0"))   # extra lag after a temperature shift, as a fraction of h0 (Zwietering 1994: 0.25)
@@ -37,7 +37,7 @@ PEAKS, PW = np.array([12, 14.3, 17.5, 30.7]), np.array([.30, .25, .30, .15])
 METHODS = ("CSL", "maxT", "t_above_8C", "t_above_5C", "deg_hours_4C")
 # Additional single-parameter integrators with a fixed temperature law (evaluated with a separate random stream so that
 # the results of METHODS are unchanged). Arrhenius activation energies: fitted to the ComBase records of the run's
-# organism (src/compare_secondary.py; spoilage flora 92 kJ/mol, L. monocytogenes 130 kJ/mol) and 120 kJ/mol reported for
+# organism (experiments/compare_secondary.py; spoilage flora 92 kJ/mol, L. monocytogenes 130 kJ/mol) and 120 kJ/mol reported for
 # spoilage of carrot juice by isothermal calorimetry (Wadso et al. 2011); Q10 = 3 as in Zou et al. 2023.
 EA_FIT = 130.1e3 if os.environ.get("DG_PARAMS") == "lis" else 92.3e3
 EXTRA = {"arrhenius_fit": ("arr", EA_FIT), "arrhenius_120kJ": ("arr", 120e3), "q10_3": ("q10", 3.0)}
@@ -266,9 +266,3 @@ def run(N=4000, seed=7, cvs=(0.0, 0.10, 0.25), samplings=(1, 5, 15, 30, 60), out
     pd.DataFrame(rows).to_csv(f"{out}/benchmark_results.csv", index=False)
     pd.DataFrame(skipped, columns=["thr", "cv", "n0_spread", "horizon_h", "prevalence"]).to_csv(f"{out}/skipped_scenarios.csv", index=False)
     return pd.DataFrame(rows)
-
-
-if __name__ == "__main__":
-    N = int(sys.argv[1]) if len(sys.argv) > 1 else 4000
-    out = sys.argv[2] if len(sys.argv) > 2 else "results"
-    run(N=N, out=out)

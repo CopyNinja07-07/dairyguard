@@ -3,8 +3,8 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 import numpy as np
-import benchmark as B
-import simulate as S
+from dairyguard import benchmark as B
+from dairyguard import simulate as S
 
 
 def test_auc_fast_matches_reference():

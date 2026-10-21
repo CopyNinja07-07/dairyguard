@@ -1,8 +1,9 @@
 {
-  "title": "DairyGuard: what a temperature log can and cannot tell about milk spoilage",
+  "title": "DairyGuard Kinetic: an open cold-chain spoilage monitor for milk",
   "upload_type": "software",
-  "description": "Open code, data and results for DairyGuard: a Monte Carlo benchmark of 240,000 simulated milk deliveries that measures how much prediction accuracy a cold-chain temperature monitor loses to unobserved biology, sensor error, sampling interval and decision rule, with a generalized-time kinetic theory and a calorimetric extension. Full write-up: DairyGuard Technical Report DG-TR-01 (not peer reviewed).",
+  "version": "2026.10",
+  "description": "DairyGuard reads a cold-chain temperature log and estimates the shelf life used, the probability that milk has crossed the FSSAI bacterial limit, and the hours left at 4 °C. It includes a Python package and command line, C firmware for an ESP32, a browser app, ComBase-based growth-law studies, and a benchmark of 240,000 simulated deliveries that measures how much accuracy a temperature monitor loses to unobserved biology, sensor error, reading interval and decision rule. Full write-up: the book 'Beyond the 4 °C Alarm' (self-published, not peer reviewed).",
   "creators": [{"name": "Singh, Suryansh Pratap", "affiliation": "Shri Mata Vaishno Devi University"}],
   "license": "MIT",
-  "keywords": ["cold chain", "predictive microbiology", "non-isothermal kinetics", "generalized time", "milk", "shelf life", "calorimetry"]
+  "keywords": ["cold chain", "predictive microbiology", "non-isothermal kinetics", "generalized time", "milk", "shelf life", "Monte Carlo", "calorimetry"]
 }

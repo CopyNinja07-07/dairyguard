@@ -18,3 +18,5 @@ whitepaper/*.pdf
 **/*.fdb_latexmk
 **/*.bbl
 **/*.blg
+*.egg-info/
+build/

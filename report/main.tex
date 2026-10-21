@@ -77,18 +77,34 @@
 \thispagestyle{empty}
 \vspace*{\fill}
 {\small\noindent Suryansh Pratap Singh\\
-\textit{Beyond the 4\,\textdegree C Alarm: What a Temperature Log Can and Cannot Tell About Milk Spoilage.} DairyGuard Technical Report DG-TR-01, October 2026. This report has not been peer reviewed.\\[6pt]
-\textbf{Evidence status.} Chapter~4 and the proofs are mathematical results that hold within the stated models. Chapters~5, 9, 10 and 11, and Section~\ref{sec:rivalres}, report simulations: their numbers describe a virtual cold chain built from published parameters, not field measurements. Chapter~7 and the first half of Chapter~8 compare the models with real published growth data. No new laboratory measurements were made.\\[6pt]
+\textit{Beyond the 4\,\textdegree C Alarm: What a Temperature Log Can and Cannot Tell About Milk Spoilage.} Published by the author, Katra, Jammu and Kashmir, October 2026. This book has not been peer reviewed.\\[6pt]
+\textbf{Evidence status.} Chapter~4 and the proofs are mathematical results that hold within the stated models. Chapters~5, 9, 10 and 11, Section~\ref{sec:rivalres} and the second half of Chapter~12 report simulations: their numbers describe a virtual cold chain built from published parameters, not field measurements. Chapter~7, the first half of Chapter~8 and the first half of Chapter~12 use real published growth data. No new laboratory measurements were made.\\[6pt]
 Code, data, simulation results and the source of this text: \url{https://github.com/CopyNinja07-07/dairyguard}. Every number in the text, tables and figures is generated from the result files by script, with fixed random seeds, and can be reproduced with \texttt{make all}.\\[6pt]
 Released under the MIT licence. ComBase records remain subject to the ComBase terms of use.\par}
 
+
+\chapter*{Preface: how this began}
+\addcontentsline{toc}{chapter}{Preface: how this began}
+DairyGuard did not start as a research question. It started as a box. For the Smart India Hackathon our team designed a small cold-chain pod for dairy logistics: an ESP32 microcontroller reading a DS18B20 temperature probe, a Peltier cooler, and an app that would warn when milk had been too warm for too long. To turn a temperature reading into ``how much life does this milk have left'', the pod needed a shelf-life model, and the usual answer in the literature is a time--temperature integrator with an Arrhenius law.
+
+Building that model raised a question the hardware could not answer. The probe measures the air and the pack. It does not measure the bacteria. Two cartons on the same truck, with the same temperature history, can be in very different states because they started with different numbers and kinds of bacteria. So how much can any temperature log, from any logger, actually tell us about the milk? And if it is wrong, is it wrong because the thermometer is cheap, because it reads too rarely, because the formula is poor, or because of something no thermometer can see?
+
+This book answers that question as carefully as I could. I built a virtual cold chain in which the true answer is always known, tied every number in it to published experiments and to the public ComBase database, and measured how much accuracy each missing piece of information costs. I then asked why the losses fall as they do, and found that the mathematics of non-isothermal kinetics, developed in thermal analysis for chemical reactions, explains them: bacterial growth reads the temperature history only through one accumulated quantity, a biological clock. Finally I tested the parts that can be tested on real data, and set out what the rest would need.
+
+Everything in this book is open. The code, the data, the tests and the scripts that write every number are in the repository named at the front of this book, and anyone can run them. Where a result comes from simulation, the text says so; where it comes from real measurements, it says that too.
+
+\vspace{10pt}
+\noindent Suryansh Pratap Singh\\
+Department of Mathematics and Computing, Shri Mata Vaishno Devi University\\
+October 2026
+
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
-A cold-chain monitor records temperature, but whether milk spoils also depends on which bacteria it carries, how many and how ready they are to grow, none of which a thermometer observes. This report asks how much of the error in predicting spoilage from a temperature record is caused by that unobserved biology, how much by the sensor, how much by the sampling interval and how much by the choice of decision rule.
+A cold-chain monitor records temperature, but whether milk spoils also depends on which bacteria it carries, how many and how ready they are to grow, none of which a thermometer observes. This book asks how much of the error in predicting spoilage from a temperature record is caused by that unobserved biology, how much by the sensor, how much by the sampling interval and how much by the choice of decision rule.
 
 The question is answered with an open Monte Carlo benchmark of 240\,000 simulated deliveries. A Baranyi--Roberts growth model with a square-root temperature law stands in for real milk, and a closed-form Gompertz shelf-life accumulator, cheap enough to run on a microcontroller, tries to predict it from noisy, sampled records. Every rule is judged by its ability to rank spoiled above unspoiled trips, measured by the area under the receiver operating characteristic curve (AUC), with paired bootstrap comparisons on identical trips and an oracle that knows each trip's biology. Parameters are tied to published experiments and to the ComBase database. The model reproduces a published fluctuating-temperature experiment within \NumLinErrAbs\,\%, fits \NumCbNfit{} ComBase records of natural spoilage flora, and predicts \NumLisHeld{} held-out growth rates of \textit{Listeria monocytogenes} with an accuracy factor of \NumLisAccHeld.
 
-Unobserved biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC, an order of magnitude more than anything an engineer controls. A platinum resistance sensor instead of a low-cost digital probe gains at most \NumBaseSensMax; hourly sampling is indistinguishable from minute-by-minute sampling in \NumBaseSampNull{} of 12 settings; and a growth-model score improves on a plain degree-hour count by at most \NumLagGainMax. A Monte Carlo probability is far better calibrated than a single alarm. The same pattern holds in five parameter sets, including a hazard case study for \textit{Listeria}. Treating growth as a non-isothermal kinetic process explains these results: under the square-root law the growth models, and the heat released by a growing culture, depend on the temperature history only through a generalized time, analogous to Ozawa's generalized time in thermal analysis. Error propagation predicts the size of each loss before any simulation is run; no Arrhenius or $Q_{10}$ integrator outperforms the square-root integrator in any of 60 settings; and an isothermal calorimetric detection time of the batch, combined with the log, recovers \CalFracMin--\CalFracMax\,\% of the loss to biology. For this problem, the accuracy of a temperature monitor is limited by biology, not by the thermometer, and effort is better spent on measuring the product than on measuring its temperature more precisely.
+Unobserved biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC, an order of magnitude more than anything an engineer controls. A platinum resistance sensor instead of a low-cost digital probe gains at most \NumBaseSensMax; hourly sampling is indistinguishable from minute-by-minute sampling in \NumBaseSampNull{} of 12 settings; and a growth-model score improves on a plain degree-hour count by at most \NumLagGainMax. A Monte Carlo probability is far better calibrated than a single alarm. The same pattern holds in five parameter sets, including a hazard case study for \textit{Listeria}. Treating growth as a non-isothermal kinetic process explains these results: under the square-root law the growth models, and the heat released by a growing culture, depend on the temperature history only through a generalized time, analogous to Ozawa's generalized time in thermal analysis. Error propagation predicts the size of each loss before any simulation is run; in simulation no Arrhenius or $Q_{10}$ integrator outperforms the square-root integrator in any of 60 settings; and an isothermal calorimetric detection time of the batch, combined with the log, recovers \CalFracMin--\CalFracMax\,\% of the loss to biology. Real data supports the central assumption: across \GlCvStudies{} independent ComBase studies of \textit{Listeria} in milk, the square-root slope varies with a coefficient of variation of \GlCvB, the upper end of the range simulated. A monotone neural growth law trained on these records predicts unseen studies no better than the classical laws, and a logistic model trained on 4\,000 labelled trips is no better calibrated than the monitor's own probability, which needs no labels. For this problem, the accuracy of a temperature monitor is limited by biology, not by the thermometer, and effort is better spent on measuring the product than on measuring its temperature more precisely.
 
 
 \chapter*{The study in numbers}
@@ -98,7 +114,7 @@ Unobserved biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC, an order of magni
 \stat{240\,000}{simulated deliveries}{five parameter sets, 12 settings each, every trip read with every sensor, sampling rule and score}
 \stat{\NumBaseGapMin--\NumBaseGapMax}{AUC lost to unseen biology}{strain, starting load and lag: what no thermometer can measure}
 \stat{\NumBaseSampNull\ of 12}{settings where hourly = every minute}{reading the temperature once an hour lost nothing measurable}
-\stat{0 of 60}{settings where Arrhenius or $Q_{10}$ wins}{the formulas behind many shelf-life labels never beat the square-root rule}
+\stat{0.25}{between-study spread of growth rates}{real ComBase data from \GlCvStudies{} studies: the hidden biology is not an assumption}
 \end{minipage}\hfill
 \begin{minipage}[t]{0.485\textwidth}
 \stat{$\le$\,\NumBaseSensMax}{AUC gained by a lab-grade sensor}{a PT1000 platinum probe against a low-cost DS18B20}
@@ -176,8 +192,8 @@ A real cold chain never reveals the truth for every carton, so the question cann
 \item How much of the loss to biology can a calorimetric measurement of the batch recover?
 \end{enumerate}
 
-\section{Structure of the report}
-Chapter~\ref{ch:background} reviews the microbiology of milk spoilage, predictive microbiology and existing approaches to cold-chain monitoring. Chapter~\ref{ch:models} sets out the growth models and the edge estimator, and Chapter~\ref{ch:kin} develops their kinetic theory. Chapter~\ref{ch:bench} describes the benchmark and Chapter~\ref{ch:stats} its statistical methods. Chapter~\ref{ch:val} validates the model against published and ComBase data, and Chapter~\ref{ch:laws} compares temperature laws. Chapter~\ref{ch:results} reports the results, Chapter~\ref{ch:listeria} the \textit{Listeria} case study, Chapter~\ref{ch:calo} the calorimetric route to the missing biology, and Chapter~\ref{ch:design} the design of a monitor and the software. Chapter~\ref{ch:disc} discusses the findings and their limits, and Chapter~\ref{ch:concl} concludes. The appendices list the parameters with their provenance, the data and the procedure for reproducing every result.
+\section{Structure of the book}
+Chapter~\ref{ch:background} reviews the microbiology of milk spoilage, predictive microbiology and existing approaches to cold-chain monitoring. Chapter~\ref{ch:models} sets out the growth models and the edge estimator, and Chapter~\ref{ch:kin} develops their kinetic theory. Chapter~\ref{ch:bench} describes the benchmark and Chapter~\ref{ch:stats} its statistical methods. Chapter~\ref{ch:val} validates the model against published and ComBase data, and Chapter~\ref{ch:laws} compares temperature laws. Chapter~\ref{ch:results} reports the results, Chapter~\ref{ch:listeria} the \textit{Listeria} case study, Chapter~\ref{ch:calo} the calorimetric route to the missing biology, Chapter~\ref{ch:further} further tests on real data and of the monitor, and Chapter~\ref{ch:design} the design of a monitor, the software and the firmware. Chapter~\ref{ch:disc} discusses the findings and their limits, and Chapter~\ref{ch:concl} concludes. The appendices list the parameters with their provenance, the data and the procedure for reproducing every result.
 
 %======================================================================
 \chapter{Background}\label{ch:background}
@@ -309,7 +325,7 @@ with $T_K$ the absolute temperature. For spoilage flora with $T_{\min}=-7.7$\deg
 \caption{Temperature dependence of growth. (a) Square-root law for spoilage flora (baseline, solid line) and \textit{L.~monocytogenes} (ComBase fit, dashed line). (b) Shelf life at a steady temperature, $\SL=K/\mu$, for the $3\times10^4$\,CFU\,mL$^{-1}$ limit (logarithmic axis). (c) Equivalent Arrhenius activation energy from Eq.~\eqref{eq:ea}}\label{fig:rates}\end{figure}
 
 \section{Reduction to a generalized time}
-The central observation of this report is that the growth equations care about temperature only through one accumulated quantity.
+The central observation of this book is that the growth equations care about temperature only through one accumulated quantity.
 
 \begin{definition}[Biological time]
 For a temperature history $T(\cdot)$, the biological time elapsed by $t$ is $\tau(t)=\int_0^t \mu(T(s))\dd s$.
@@ -583,7 +599,7 @@ A ComBase search with milk as the food matrix returned about 480 records, of whi
 \chapter{Temperature laws compared}\label{ch:laws}
 \hook{Shelf-life labels and indicators often assume an Arrhenius law. Does the choice of law matter once the biology is unknown?}
 \begin{summary}
-Four temperature laws fit ComBase growth records about equally well inside the range of the data, but only the square-root law predicts growth in the cold without bias. On 240\,000 trips, no Arrhenius or $Q_{10}$ integrator outperforms the square-root integrator in any of 60 settings, although the margins are small.
+Four temperature laws fit ComBase growth records about equally well inside the range of the data, but only the square-root law predicts growth in the cold without bias. In the simulated world, whose reference biology follows the square-root law, no Arrhenius or $Q_{10}$ integrator outperforms the square-root integrator in any of 60 settings, although the margins are small. Tested study by study on real \textit{Listeria} data, no law is clearly best (Chapter~\ref{ch:further}).
 \end{summary}
 \section{Four laws fitted to ComBase records}
 Five secondary models are common in food microbiology and thermal analysis. The square-root law, Eq.~\eqref{eq:sqrt}, is used throughout; for the whole biokinetic range it is extended to $\sqrt{\mu}=b(T-T_{\min})\{1-\exp[c(T-T_{\max})]\}$ \cite{ratkowsky1982}, which reduces to Eq.~\eqref{eq:sqrt} well below the maximum temperature $T_{\max}$. The Arrhenius law and its three-parameter extension by Davey are
@@ -747,6 +763,53 @@ Calorimetry cannot travel with a crate, and a temperature log cannot see the bio
 
 
 %======================================================================
+\chapter{Further results on real data and the monitor}\label{ch:further}
+\hook{The simulation answers what a log can tell. Real data and further tests say how far the answer can be trusted.}
+\begin{summary}
+On real ComBase records, growth rates differ between independent studies with a coefficient of variation of \GlCvB, so the biology a log cannot see is real and of the size assumed. Tested on studies they have not seen, the square-root, Arrhenius, $Q_{10}$ and Davey laws and a monotone neural network perform within a narrow band, with no clear winner. The monitor's Monte Carlo probability is as well calibrated as a logistic model trained on 4\,000 labelled trips, it is stable from 80 plausible batches, and the loss to biology survives correlated biological parameters. The monitor's estimate of hours left is cautious but imprecise, for the same reason that the log cannot see the biology.
+\end{summary}
+
+\section{How much do real growth rates differ?}
+The benchmark assumes that the slope $b$ of the square-root law varies between batches with a coefficient of variation of 0, 10 or 25\,\%. ComBase allows a direct check. Its \textit{L.~monocytogenes} records in milk with a stated growth rate between 0 and 15\degC{} come from many independent studies, each made with its own strains, media and methods. Fitting the square-root law with one shared $T_{\min}$ and a separate slope for each of the \GlCvStudies{} studies with at least three records (\GlCvRecords{} records) gives a spread of $\ln b$ between studies of \GlCvB, while the scatter within a study is \GlCvWithin{} on $\ln\mu$ (Fig.~\ref{fig:growthlaws}c). Real growth rates therefore differ between studies by about as much as the largest spread simulated. The biological variation that dominates the loss budget is not a modelling convenience; it is visible in the published data.
+
+\section{Which temperature law predicts unseen studies?}
+Chapter~\ref{ch:laws} compared four laws within the range of the data and when extrapolating into the cold. A stricter test is to predict a study that the law has never seen. Each law was fitted to all \textit{Listeria} studies but one and used to predict the growth rates of the study left out, for each of the \GlLisGroups{} studies in turn (\GlLisN{} records). For the spoilage flora, which come from a single source, five-fold cross-validation over records was used instead (\GlSpN{} records). Alongside the four classical laws we trained a monotone neural network, $\sqrt{\mu}=\sum_k \mathrm{e}^{u_k}\,\mathrm{softplus}\big(\mathrm{e}^{v_k}(T-c_k)/10\big)$ with four units, which can take any increasing shape but cannot decrease with temperature; five independently initialised networks were averaged, and their spread estimates the network's own uncertainty (Fig.~\ref{fig:growthlaws}b).
+
+\begin{table}[!htbp]\centering\small
+\caption{Accuracy factor $A_f$ on held-out data (1 is perfect). \textit{Listeria}: leave one study out; spoilage flora: five-fold cross-validation}\label{tab:heldoutlaws}
+\begin{tabular}{@{}lcc@{}}\toprule\rowcolor{dghead}
+Law & \textit{Listeria} (\GlLisGroups{} studies) & Spoilage flora\\\midrule
+Square-root & \GlLisSqrtAf & \GlSpSqrtAf\\
+Arrhenius & \GlLisArrAf & \GlSpArrAf\\
+$Q_{10}$ (exponential) & \GlLisQtenAf & \GlSpQtenAf\\
+Davey & \GlLisDaveyAf & \GlSpDaveyAf\\
+Monotone neural network & \GlLisNetAf & \GlSpNetAf\\
+\bottomrule\end{tabular}\end{table}
+
+All five laws fall within a narrow band (Table~\ref{tab:heldoutlaws}, Fig.~\ref{fig:growthlaws}a). For \textit{Listeria} the Arrhenius and $Q_{10}$ laws generalise slightly better across studies, for the spoilage flora the square-root law does, and the neural network sits in between. The differences between laws, about 0.1 in the accuracy factor, are small next to the differences between studies. Two conclusions follow. First, the choice of temperature law is a second-order question for a monitor; the first-order question is the biology of the batch, as the loss budget says. Second, a more flexible model of the rate, here a neural network, gains nothing when all it can learn from is maximum rates at a handful of temperatures. Learning more requires richer data: complete growth curves, including the lag, measured under changing temperatures and paired with information about each batch.
+
+\begin{figure}[!htbp]\centering\includegraphics[width=\textwidth]{growthlaws}
+\caption{Growth laws on real data. (a) Held-out accuracy factor of five laws; dark bars \textit{Listeria} (leave one study out), light bars spoilage flora (five-fold). (b) \textit{L.~monocytogenes} growth rates in milk from ComBase (points) with the square-root law and the monotone neural law; the band is $\pm2$ ensemble standard deviations. (c) Square-root slope $b$ fitted separately to each study with at least three records, with the median (dashed)}\label{fig:growthlaws}\end{figure}
+
+\section{Is a learned probability better?}
+Comparing the Monte Carlo probability with a single alarm is an easy test, because an alarm can only say 0 or 1. A fairer comparison is with a probability learned from data. We trained a logistic regression on six features of the log (degree-hours above 4\degC, hours above 5 and 8\degC, maximum and mean temperature, and the logarithm of CSL) on 4\,000 simulated trips with known outcomes, and tested it on 4\,000 independent trips, against the monitor's probability and the single alarm (insulated crate, DS18B20 every 15\,min). The trained model reached an AUC of \MsCrateLrAuc{} and a calibration error of \MsCrateLrEce; the monitor's probability \MsCrateDgAuc{} and \MsCrateDgEce; the alarm \MsCrateAlAuc{} and \MsCrateAlEce{} (Fig.~\ref{fig:monitorstudies}a). The low-mass pouch gave the same picture (\MsPouchLrAuc{} and \MsPouchDgAuc). A probability built from the biology is therefore as good as one learned from thousands of labelled trips, and it needs no labels, which a real cold chain does not have.
+
+\section{How many plausible batches are needed?}
+The monitor's probability is the share of $K$ plausible batches whose consumed shelf life reaches 1. With $K=10$ the calibration error is \MsMcEceTen, with 20 it is \MsMcEceTwenty, with 40 \MsMcEceForty, and from 80 it stays between \MsMcEceEighty{} and \MsMcEceOneSixty{} (Fig.~\ref{fig:monitorstudies}b). The 80 batches used in the benchmark are therefore enough, and the firmware's 64 are close to that.
+
+\section{Correlated biology}
+The benchmark draws the slope $b$ and the minimum temperature $T_{\min}$ independently, but strains that grow fast in the cold may also have a low $T_{\min}$. With a correlation of $-0.6$, 0 and $+0.6$ between $\ln b$ and $-T_{\min}$ (strain spread 25\,\%), the loss to biology was \MsCorNeg, \MsCorZero{} and \MsCorPos{} AUC (Fig.~\ref{fig:monitorstudies}c). Correlation shifts the loss by a few hundredths but leaves it the dominant term.
+
+\section{How long will this batch last?}
+A dairy wants more than a probability: it wants to know how many hours of sale are left. After each simulated trip that stayed under the limit (\MsHlTrips{} trips), the monitor estimated the hours the batch would last at 4\degC, typically (the median over plausible batches) and cautiously (the value nine batches in ten exceed). The true time was computed by continuing the reference model at 4\degC. The cautious figure was safe in \MsHlCautious\,\% of trips, more often than the nominal 90\,\%, so it is conservative. The typical figure was within \MsHlErr\,h of the truth in half the trips, against a median true time of \MsHlTrue\,h, and its rank correlation with the truth was only \MsHlRho. This is the loss budget seen from another side: the log fixes how much biological time has passed, but the time a batch can afford depends on biology the log cannot see. A measurement of the batch at loading is what would make this estimate precise.
+
+\begin{figure}[!htbp]\centering\includegraphics[width=\textwidth]{monitorstudies}
+\caption{Further tests of the monitor (simulation, baseline world). (a) Calibration error and AUC of a single alarm, a logistic regression trained on 4\,000 labelled trips, and the monitor's Monte Carlo probability. (b) Calibration error against the number of plausible batches. (c) AUC lost to biology when $\ln b$ and $-T_{\min}$ are correlated}\label{fig:monitorstudies}\end{figure}
+
+\section{What these results ask for}
+Each result in this chapter points the same way. Real growth rates vary between studies as much as the benchmark assumed; a flexible model gains nothing from rates alone; a learned probability is no better than one built from biology; and the hours left are uncertain because the batch is unknown. The next step is therefore not a cleverer formula for the temperature log but new information about the batch: complete growth curves of real milk under changing temperatures, measured together with simple tests of each batch at loading. A model that can use such data, keeping the generalized-time structure that this book establishes and learning only what it leaves unknown, is the natural successor to DairyGuard Kinetic.
+
+%======================================================================
 \chapter{Monitor design and software}\label{ch:design}
 \hook{What the results mean for anyone who builds, buys or trusts a cold-chain monitor.}
 \begin{summary}
@@ -775,18 +838,25 @@ Figure~\ref{fig:system} shows how the estimator runs on a logger. A probe readin
 \caption[Processing on the logger]{Processing on the logger, with example values 40\,min after a truck door was left open. Steps 2--5 run on the device; parameter fitting and the shelf-life table are prepared offline}\label{fig:system}\end{figure}
 
 \section{Software}
-The repository is organised in layers. A kinetics module implements Eqs.~\eqref{eq:sqrt}--\eqref{eq:csl}; a simulator implements Chapter~\ref{ch:bench}; the benchmark computes scores, AUCs, paired bootstraps and calibration; validation scripts reproduce Chapter~\ref{ch:val}; and scripts write every number, table and figure of this report from the result files. Numerical work uses NumPy, SciPy and Matplotlib \cite{harris2020,virtanen2020,hunter2007}. Nineteen automated tests (Table~\ref{tab:tests}) run on every change. Parts of the simulation code were developed with an AI coding assistant; all of it is covered by the tests and was checked by the author.
+The code is an installable Python package, \texttt{dairyguard}, with the research scripts kept separately in \texttt{experiments/}. The package is organised in layers: \texttt{kinetics} implements Eqs.~\eqref{eq:sqrt}--\eqref{eq:csl}; \texttt{simulate} and \texttt{benchmark} implement Chapters~\ref{ch:bench} and \ref{ch:stats}; \texttt{growthlaws} holds the secondary models of Chapter~\ref{ch:laws}, the monotone neural law and the validation tools of Chapter~\ref{ch:further}; \texttt{products} holds the parameter sets of each product; and \texttt{monitor} is the estimator that a logger or a server runs as readings arrive. A command-line tool judges any logged trip,
+\begin{center}\texttt{dairyguard assess trip.csv --product milk}\end{center}
+and prints the shelf life used, the probability that the limit has been crossed, the hours left at 4\degC{} (typical and cautious) and a plain verdict. Scripts in \texttt{generated/} write every number, table and figure of this book from the result files. Numerical work uses NumPy, SciPy and Matplotlib \cite{harris2020,virtanen2020,hunter2007}. Twenty-seven automated tests (Table~\ref{tab:tests}) run on every change. Parts of the code were developed with an AI coding assistant; all of it is covered by the tests and was checked by the author.
 
 \begin{table}[!htbp]\centering\footnotesize
 \caption{Automated tests}\label{tab:tests}
-\begin{tabular}{@{}p{2.6cm}p{11.2cm}@{}}\toprule\rowcolor{dghead}
+\begin{tabular}{@{}p{2.8cm}p{11cm}@{}}\toprule\rowcolor{dghead}
 Group & What is checked\\\midrule
 Kinetics (4) & Gompertz agrees with exponential growth; reference and estimator agree at constant temperature with equal parameters; the look-up table matches the closed form; shelf life falls with temperature\\
 Validation (3) & Fitted parameters are plausible; the constant-4\degC{} and two-excursion times of Lin et al.\ are reproduced within 10\,\%\\
 Statistics (6) & Fast AUC matches a reference implementation; known AUC values are recovered; the paired difference of identical scores is zero; a real improvement is detected; the probability rises with temperature; calibration of perfect and poor forecasts\\
-Parity (1) & The browser kernel matches the Python kernel\\
 Units and headlines (5) & ComBase rates are converted from decimal to natural logarithms before fitting; shelf life scales correctly with the rate; the headline numbers follow from the result files\\
+Monitor and laws (6) & The monitor matches the closed form at constant temperature; a warmer trip is riskier; log reading and the command line work; the square-root fit recovers known parameters; the neural law can only rise with temperature\\
+Firmware (2) & The C code for microcontrollers gives the same shelf life as Python at every reading; its probability and hours-left behave correctly\\
+Parity (1) & The browser kernel matches the Python kernel\\
 \bottomrule\end{tabular}\end{table}
+
+\section{Firmware}
+The monitor also exists as portable C for microcontrollers (\texttt{firmware/}). The core keeps the consumed shelf life of the nominal batch and of 64 plausible batches drawn at start-up with a small deterministic random-number generator, using under 2\,kB of memory and no dynamic allocation; an ESP32 sketch reads a DS18B20 probe every 15\,min, updates the monitor, drives a green, amber or red light and reports over serial. A test compiles the core on a desktop and checks that it reproduces the Python monitor's shelf life at every reading of a trip to a relative error below $2\times10^{-4}$.
 
 \section{Browser demonstrator}
 A public demonstrator runs the same kernel in the browser (\url{https://copyninja07-07.github.io/dairyguard/explorer.html}); a parity test ensures that it reproduces the Python implementation. A user chooses or draws a trip, such as a shop door left open or a failed truck refrigerator, and sees the probability that the milk has passed the limit, the simulated growth in 60 cartons that share the same log, the fraction of shelf life used with its biological spread, simulated heat-flow curves of three batches with their detection times, and the comparison of the log alone with the log plus a calorimetric test. Every model in the demonstrator answers the same request, a temperature log and any tests at loading, so a future model can be added beside the present one and compared on the same trip. The demonstrator is software only.
@@ -824,10 +894,10 @@ In an open benchmark of 240\,000 trips anchored to published and ComBase data, u
 \item A better sensor or faster sampling recovers at most about 0.02 AUC.
 \item A growth-model score clearly beats threshold and maximum rules but only narrowly beats degree-hours.
 \item A probability is far better calibrated than a single alarm.
-\item Growth reads the temperature history only through a generalized time, which explains every loss; the square-root law is never outperformed by Arrhenius or $Q_{10}$ rules.
+\item Growth reads the temperature history only through a generalized time, which explains every loss. In simulation the square-root law is never outperformed by Arrhenius or $Q_{10}$ rules; on real data from studies a law has not seen, the four laws are close, and the square-root law is the safest in the cold.
 \item A single calorimetric detection time of the batch recovers \CalFracMin--\CalFracMax\,\% of the loss to biology.
 \end{enumerate}
-The next stage of the project, a hybrid neural model trained on real growth data and on new laboratory measurements, is set out in DairyGuard White Paper WP-01. Four directions follow: measurements of real logger data from Indian dairy routes to replace the assumed excursion model; challenge tests with natural flora under fluctuating temperature, with new plate counts; calorimetric experiments on milk under stepwise temperature programmes, to test the master curve and measure detection times of real batches; and a hardware logger running the estimator.
+The results of Chapter~\ref{ch:further} show what the next stage needs: richer data about each batch rather than a cleverer formula for the log. Four directions follow: measurements of real logger data from Indian dairy routes to replace the assumed excursion model; challenge tests with natural flora under fluctuating temperature, with new plate counts; calorimetric experiments on milk under stepwise temperature programmes, to test the master curve and measure detection times of real batches; and a hardware logger running the estimator.
 
 \section*{Acknowledgements}
 The author thanks the ComBase consortium and the laboratories whose published growth records made this study possible.
@@ -867,8 +937,9 @@ Command & Effect\\\midrule
 \texttt{make test} & run the 19 automated tests\\
 \texttt{make runs} & run the five benchmark runs (about three hours on two cores)\\
 \texttt{make validate} & reproduce the validation of Chapter~\ref{ch:val}\\
+\texttt{make extensions} & run the growth-law study and the monitor studies of Chapter~\ref{ch:further}\\
 \texttt{make generated} & write all numbers, tables and figures from the result files\\
-\texttt{make report} & build this report\\
+\texttt{make report} & build this book\\
 \texttt{make whitepaper} & build White Paper WP-01\\
 \texttt{make all} & everything above\\
 \bottomrule\end{tabular}\end{center}

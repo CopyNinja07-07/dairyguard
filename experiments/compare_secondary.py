@@ -8,7 +8,7 @@ Models for the maximum specific growth rate mu (h-1, natural-log basis):
 Checks: fit quality (RMSE of ln mu, AICc), bias and accuracy factors (Ross 1996),
 leave-one-temperature-out cross-validation, cold extrapolation (fit on T >= 8 C, predict T < 8 C),
 and, for Listeria monocytogenes, prediction of records held out by condition.
-Run from the repository root: python src/compare_secondary.py  ->  results/secondary_models.json, .csv
+Run from the repository root: python experiments/compare_secondary.py  ->  results/secondary_models.json, .csv
 """
 import json
 import math

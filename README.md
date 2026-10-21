@@ -1,64 +1,186 @@
-<p align="center"><img src="docs/banner.png" alt="DairyGuard: what a temperature log can and cannot tell us about spoiling milk" width="100%"></p>
+<p align="center"><img src="docs/banner.png" alt="DairyGuard" width="100%"></p>
 
-# DairyGuard
+<h1 align="center">DairyGuard</h1>
 
-![python](https://img.shields.io/badge/python-3.10%2B-blue) ![tests](https://img.shields.io/badge/tests-19%20passing-brightgreen) ![license](https://img.shields.io/badge/license-MIT-green)
+<p align="center"><b>Reads a cold-chain temperature log and says how likely it is that milk has crossed its bacterial limit, and how sure it can be.</b></p>
 
-**How well can a temperature log predict whether milk has spoiled, and what limits it?**
+<p align="center">
+<a href="https://github.com/CopyNinja07-07/dairyguard/actions"><img src="https://github.com/CopyNinja07-07/dairyguard/actions/workflows/ci.yml/badge.svg" alt="tests"></a>
+<img src="https://img.shields.io/badge/python-3.10%2B-3776ab" alt="python">
+<img src="https://img.shields.io/badge/firmware-C99%20%C2%B7%20ESP32-555" alt="firmware">
+<img src="https://img.shields.io/badge/tests-27%20passing-2ea44f" alt="27 tests">
+<img src="https://img.shields.io/badge/license-MIT-green" alt="MIT">
+</p>
 
-A cold-chain logger records temperature. But bacterial growth also depends on things no thermometer sees: how many bacteria the milk started with, which strains, and how long they take to wake up. DairyGuard measures how much prediction accuracy is lost to each source of error, explains the result mathematically, and is now building a hybrid neural model to recover what the log cannot see.
+<p align="center">
+<a href="https://copyninja07-07.github.io/dairyguard/"><b>Website</b></a> ·
+<a href="https://copyninja07-07.github.io/dairyguard/explorer.html"><b>Open the monitor</b></a> ·
+<a href="docs/Beyond-the-4C-Alarm-DairyGuard.pdf"><b>The book</b></a> ·
+<a href="docs/DairyGuard-White-Paper-WP01.pdf"><b>Architecture white paper</b></a>
+</p>
 
-**[Website](https://copyninja07-07.github.io/dairyguard/) · [Live demo](https://copyninja07-07.github.io/dairyguard/explorer.html) · [Technical Report TR-01](docs/DairyGuard-Technical-Report-TR01.pdf) · [White Paper WP-01](docs/DairyGuard-White-Paper-WP01.pdf) · [Roadmap](ROADMAP.md)**
+<p align="center"><img src="docs/img/trip.gif" alt="A delivery with a three-hour warm spell: the milk temperature, 40 possible batches of bacteria, and DairyGuard's verdict updating live" width="88%"></p>
 
-**Contents:** [Key results](#key-results) · [How it works](#how-it-works) · [The mathematics](#the-mathematics) · [The statistics](#the-statistics) · [Simulation design](#simulation-design) · [Checks against real data](#checks-against-real-data) · [Quickstart](#quickstart) · [Code map](#code-map) · [What comes next](#what-comes-next) · [Limitations](#limitations) · [Cite](#cite-and-licence)
+<p align="center"><sub>One delivery, a three-hour warm spell. Same temperature log, 40 possible batches of milk: some cross the limit, some don't. DairyGuard reports the chance, live.</sub></p>
 
 ---
 
-## Key results
+## Contents
 
-Scores are the area under the ROC curve (AUC): the chance that a delivery which crossed the bacterial limit gets a higher risk score than one that didn't. 0.5 is a coin flip, 1.0 is perfect.
+[Why we started](#why-we-started) · [Quickstart](#quickstart) · [How it works](#how-it-works) · [How we collected the data](#how-we-collected-the-data) · [How we fitted and trained the models](#how-we-fitted-and-trained-the-models) · [How we tested it](#how-we-tested-it) · [Results](#results) · [The mathematics](#the-mathematics) · [Firmware](#firmware) · [Python API](#python-api) · [Repository map](#repository-map) · [Reproduce everything](#reproduce-everything) · [Limits](#limits) · [Next in our lab](#next-in-our-lab) · [Cite](#cite)
 
-| Finding | Number | Evidence |
-|---|---|---|
-| Accuracy lost to the biology a thermometer cannot see | 0.27 to 0.40 AUC | simulation |
-| Accuracy gained by a lab-grade PT1000 over a cheap DS18B20 | at most 0.02 AUC | simulation |
-| Hourly logging vs logging every minute | no detectable difference in 11 of 12 settings | simulation |
-| Growth-model score vs a plain degree-hour count | at most 0.04 AUC better | simulation |
-| Arrhenius or Q10 integrators vs the square-root law | never better, in 60 of 60 settings | simulation |
-| Calibration error of a probability vs a single alarm | 0.03 to 0.07 vs 0.34 to 0.43 | simulation |
-| Gap closed by one calorimetric test of the batch | 69 to 94% | simulation |
-| Prediction of a published fluctuating-temperature experiment | within 4% | real data |
-| Held-out *Listeria* growth rates | accuracy factor 1.37 | real data |
+## Why we started
 
-**In one sentence:** the accuracy of a temperature monitor is limited by biology, not by the thermometer, so effort is better spent measuring the product than measuring its temperature more precisely.
+For the Smart India Hackathon our team designed a cold-chain pod for dairy logistics: an ESP32, a DS18B20 temperature probe and a Peltier cooler, with an app that warns when milk has been too warm for too long. Building its shelf-life model raised a question the hardware could not answer.
+
+A logger records temperature faithfully. But whether milk spoils also depends on how many bacteria it started with, which kind, and how fast they wake up, and no thermometer sees any of that. So when a monitor gets it wrong, what is to blame: the cheap sensor, the reading interval, the formula, or the hidden biology? DairyGuard was built to measure each one, and then to turn the answer into a monitor that is honest about what it cannot know.
+
+## Quickstart
+
+```bash
+git clone https://github.com/CopyNinja07-07/dairyguard.git
+cd dairyguard
+pip install -e .
+dairyguard assess examples/truck_fridge_failed.csv
+```
+
+```text
+DairyGuard Kinetic 2026.10  |  Pasteurised milk, psychrotrophic spoilage flora (literature parameters)
+Log: 288 readings over 72.0 h, max 26.0 C, 5.0 h above 8 C in 1 warm event(s)
+
+  Shelf life used (textbook batch)     127 %   [########################]
+  Chance it crossed the limit           81 %   [###################.....]
+  Hours left if held at 4 C              0 h   (typical batch)
+  Hours left, cautious                   0 h   (9 batches in 10 reach this)
+
+  Verdict: LIKELY OVER THE LIMIT
+  Limit: FSSAI aerobic plate count limit for pasteurised milk, 3 x 10^4 CFU/mL
+```
+
+A log is any CSV with a temperature column and one of `time_h`, `time_min` or `timestamp`. Other commands:
+
+```bash
+dairyguard assess my_log.csv --product listeria --json   # machine-readable output
+dairyguard shelf-life --temps 2 4 8 12                    # time to the limit at steady temperatures
+dairyguard products                                       # milk, milk-combase, listeria
+```
+
+| Steady temperature | 2 °C | 4 °C | 8 °C | 12 °C |
+|---|---|---|---|---|
+| Time to the FSSAI limit (textbook batch) | 120 h | 83 h | 46 h | 29 h |
 
 ## How it works
 
-Nobody counts the bacteria in every real carton, so predictions can't be checked in the field. DairyGuard builds a virtual cold chain where the true answer is always known, ties every number in it to published experiments, and then removes information one source at a time.
-
 ```mermaid
 flowchart LR
-    A["Simulated delivery<br/>temperature every minute"] --> B["Reference growth model<br/>decides the true outcome"]
-    A --> C["Sensor error<br/>DS18B20, PT1000, ideal"]
-    C --> D["Sampling<br/>1, 15, 60 min, adaptive"]
-    D --> E["Prediction rules<br/>5 compared"]
-    B --> F{"AUC, paired bootstrap,<br/>calibration"}
-    E --> F
-    F --> G["Loss budget:<br/>what cost how much"]
+    D["<b>1 · Data</b><br/>373 ComBase milk records<br/>published experiments<br/>every value sourced"] --> M["<b>2 · Models</b><br/>square-root growth law<br/>Gompertz shelf life<br/>Baranyi reference"]
+    M --> E["<b>3 · Monitor</b><br/>shelf life used<br/>chance limit crossed<br/>hours left · verdict"]
+    E --> P["<b>5 · Runs on</b><br/>Python package + CLI<br/>C firmware for ESP32<br/>browser app"]
+    M --> S["<b>4 · Evaluation</b><br/>240,000 simulated trips<br/>AUC · paired bootstrap<br/>calibration"]
+    E --> S
 ```
 
-The loss budget compares the same trips under shrinking information:
+The monitor does three things at every reading:
 
-| Step | What the predictor knows |
+1. **Advances the biological clock.** Each reading adds `Δt / SL(T)` to the shelf life used, where `SL(T)` is the time the milk would last at that temperature.
+2. **Carries 80 plausible batches along.** Each batch has its own growth rate, lag and starting count, drawn from the spread seen between real studies. The share of batches over the limit is the chance the limit was crossed.
+3. **Turns that into a decision.** Fresh, use soon, check before use, or likely over the limit, with hours left if the milk is put back at 4 °C, typical and cautious.
+
+<p align="center"><img src="docs/img/clock.gif" alt="Growth curves at 4, 8 and 12 °C collapse into one curve when plotted on the bacteria's own clock" width="88%"></p>
+
+<p align="center"><sub>Why a running total is enough: on the bacteria's own clock, growth at 4, 8 and 12 °C is one curve. Proof in the book, Chapter 4.</sub></p>
+
+## How we collected the data
+
+| Source | What we took | Used for |
+|---|---|---|
+| [ComBase](https://www.combase.cc), pasteurised milk | 51 growth rates of natural spoilage flora, 2.7 to 14.9 °C | fitting the `milk-combase` product |
+| ComBase, *Listeria monocytogenes* in milk | 101 growth rates from 20 studies | fitting and held-out testing of five growth laws |
+| ComBase, wider milk set | 373 records from 52 sources in total | between-study spread of growth rates |
+| Lin et al. 2016 | milk at 4 °C with two 4-hour spells at 29 °C | a real fluctuating-temperature check |
+| FSSAI standards | aerobic plate count limit for pasteurised milk, 3 × 10⁴ CFU/mL | the line that counts as "crossed" |
+| Sensor datasheets | DS18B20 ±0.5 °C, PT1000 ±0.15 °C | sensor error in the simulator |
+
+For every ComBase record we transcribed the organism, temperature, pH, water activity, source study and growth rate, and converted each rate from log₁₀ to natural-log units before fitting (a test guards this). Every parameter in the simulator is listed in [`data/params.csv`](data/params.csv) with its source, or marked ASSUMED where no source exists.
+
+## How we fitted and trained the models
+
+**Growth laws.** We fitted five laws for growth rate against temperature by least squares on log growth rates: the Ratkowsky square-root law, Arrhenius, Q10, Davey, and a monotone neural network.
+
+**The neural law.** `sqrt(μ) = Σₖ exp(uₖ) · softplus(exp(vₖ)(T − cₖ)/10)`, four units, so the rate can only rise with temperature. It is trained with an L2 penalty as an ensemble of five networks from different starts, using `scipy.optimize.least_squares`. Code: [`src/dairyguard/growthlaws.py`](src/dairyguard/growthlaws.py).
+
+**Judged on unseen data.** For *Listeria*, each of the 20 studies is left out in turn, every law is fitted on the other 19, and the held-out study is predicted. Spoilage flora use 5-fold cross-validation. Scores are the Ross bias and accuracy factors. Code: [`experiments/growth_law_study.py`](experiments/growth_law_study.py).
+
+**Between-study spread.** A square-root law with one slope `b` per study and a shared `Tmin`, fitted to the 11 studies with three or more records, gives the real spread of growth rates between studies. That spread sets how widely the monitor's 80 batches are drawn.
+
+## How we tested it
+
+Nobody counts the bacteria in every real carton, so the monitor cannot be checked in the field yet. We built a virtual cold chain where the truth is always known:
+
+| Part | Choice |
 |---|---|
-| Oracle | true biology and true temperature |
-| Biology-limited | true temperature, assumed biology |
-| + sensor | sensed temperature, assumed biology |
-| + sampling | sensed and sampled temperature, assumed biology |
+| Trips | fridge at 2.5 to 5 °C; warm events about once per 6 days, 10 min to 8 h, peaks 12 to 30.7 °C |
+| Packaging | low-mass pouch (5 to 20 min time constant) or insulated crate (1 to 4 h) |
+| Hidden biology | drawn per trip: growth slope (spread 0, 10 or 25%), minimum temperature, lag, starting count |
+| Sensors | DS18B20, PT1000, ideal |
+| Reading interval | 1, 15 or 60 min, or adaptive |
+| Settings | 2 limits × 2 packagings × 3 biology spreads = 12, with 4,000 trips each |
+| Worlds | baseline, extra lag, low starting load, ComBase-fitted flora, *Listeria*: **240,000 trips** |
+
+The reference Baranyi–Roberts model decides the true outcome minute by minute; the monitor sees only the sensed, sampled log.
+
+| Method | What it answers | Code |
+|---|---|---|
+| AUC (Mann–Whitney) | can a rule tell crossed cartons from safe ones? | `simulate.py` |
+| Paired bootstrap, B = 400 | is rule A really better than rule B on the same trips? | `benchmark.py` |
+| Brier score, calibration error | is "70%" right 70% of the time? | `simulate.py` |
+| Ross bias and accuracy factors | how far off are predicted growth rates? | `growthlaws.py` |
+| AICc | which growth law fits best for its complexity? | `growthlaws.py` |
+| Spearman correlation | does "hours left" rank trips correctly? | `monitor_studies.py` |
+
+**27 automated tests** pin the kinetics, unit conversions, headline numbers, the monitor, the growth laws, parity between the Python and browser code, and the firmware against Python. A full rerun reproduces every saved result exactly (all seeds fixed).
+
+## Results
+
+AUC is the chance that a delivery which crossed the limit scores higher than one that didn't: 0.5 is a coin flip, 1.0 is perfect.
+
+**What limits a temperature monitor** <sub>(simulation)</sub>
+
+| Finding | Number |
+|---|---|
+| Accuracy lost to the biology a thermometer cannot see | 0.27 to 0.40 AUC |
+| Gained by a lab-grade PT1000 over a cheap DS18B20 | at most 0.02 AUC |
+| Reading hourly instead of every minute | no detectable loss in 11 of 12 settings |
+| Calibration error: DairyGuard's probability vs a single alarm | 0.03 to 0.07 vs 0.34 to 0.43 |
+| Gap closed by one heat-flow (calorimetry) test of the batch | 69 to 94% |
+
+**Against real data**
+
+| Check | Result |
+|---|---|
+| Lin et al. 2016, fluctuating temperatures | time to 10⁶ CFU/mL: 53 h predicted, about 55 h measured |
+| Spread of growth rates between 11 real studies | 25% (coefficient of variation of the slope) |
+| Five growth laws on 20 unseen *Listeria* studies | accuracy factors 1.37 to 1.45; no law clearly best |
+| Neural law vs square-root law | no gain on growth rates alone |
+
+<p align="center"><img src="docs/img/growthlaws.png" alt="Held-out accuracy of five growth laws; Listeria rates with square-root and neural fits; slope per study" width="100%"></p>
+
+**The monitor under test** <sub>(simulation)</sub>
+
+| Check | Result |
+|---|---|
+| DairyGuard's probability vs a logistic model trained on 4,000 labelled trips | equal AUC (0.675 vs 0.673) and calibration, with no labels needed |
+| Number of plausible batches needed | calibration settles from 80 |
+| Growth rate and lag correlated (ρ from −0.6 to 0.6) | loss to biology stays 0.35 to 0.42 AUC |
+| Cautious "hours left" | safe on 99.9% of trips; typical estimate off by a median 16 h |
+
+<p align="center"><img src="docs/img/monitorstudies.png" alt="Calibration against a trained model, Monte Carlo convergence, correlated biology" width="100%"></p>
+
+**In one sentence:** the accuracy of a temperature monitor is limited by biology, not by the thermometer, so effort is better spent measuring the milk than measuring its temperature more precisely.
 
 ## The mathematics
 
-**Growth rate against temperature** (Ratkowsky square-root law; μ in h⁻¹, natural-log basis):
+**Growth rate against temperature** (Ratkowsky square-root law, natural-log basis):
 
 $$\sqrt{\mu(T)} = b\,(T - T_{\min})$$
 
@@ -66,155 +188,119 @@ $$\sqrt{\mu(T)} = b\,(T - T_{\min})$$
 
 $$\frac{dy}{dt} = \mu(T)\,\frac{q}{1+q}\left(1 - e^{\,y-y_{\max}}\right), \qquad \frac{dq}{dt} = \mu(T)\,q$$
 
-**The biological clock.** Both equations are multiplied by the same $\mu(T)$. Changing the time variable to the generalized time
+**The biological clock.** Both equations carry the same factor $\mu(T)$. In generalized time
 
 $$\tau(t) = \int_0^t \mu\big(T(s)\big)\,ds$$
 
-removes temperature completely: $dy/d\tau$ and $dq/d\tau$ do not depend on $T$. So the whole temperature history matters only through $\tau$. This is the analogue of Ozawa's generalized time in thermal analysis, and it explains every result in the loss budget.
+temperature disappears from the equations, so the whole temperature history matters only through $\tau$. This is the analogue of Ozawa's generalized time in thermal analysis, and it explains why sensor precision and reading interval barely matter.
 
-**Shelf life and consumed shelf life.** At a steady temperature the time to the limit $N_L$ is a closed-form Gompertz expression $SL(T)$. Along a logged trip with readings every $\Delta t$:
+**Shelf life used.** With readings every $\Delta t$ and the Gompertz shelf life $SL(T)$:
 
-$$\mathrm{CSL} = \sum_i \frac{\Delta t}{SL(T_i)}, \qquad \text{predict "crossed" when } \mathrm{CSL} \ge 1$$
+$$\mathrm{CSL} = \sum_i \frac{\Delta t}{SL(T_i)}$$
 
-Because $1/SL(T) = \mu(T)/K$ for a constant budget $K$, CSL is just $\tau/K$, a discretised generalized time.
+Since $1/SL(T) \propto \mu(T)$, CSL is a discretised generalized time.
 
-**Apparent activation energy.** The square-root law implies an Arrhenius slope that changes with temperature,
+**Apparent activation energy.** The square-root law implies $E_{\mathrm{app}} = 2RT^2/(T - T_{\min})$, falling from 109 to 66 kJ/mol between 4 and 13 °C, which is why a fixed-activation-energy integrator does not do better in simulation.
 
-$$E_{\mathrm{app}} = \frac{2RT^2}{T - T_{\min}},$$
+**Calorimetry.** If heat flow is proportional to cell formation, $P/\mu = Y_Q V\,G(\tau)$: heat-flow curves from any temperature programme collapse onto one master curve, so one isothermal test measures the batch's own biology.
 
-which falls from 109 to 66 kJ/mol between 4 and 13 °C. This is why a fixed-activation-energy integrator cannot beat the square-root law.
+Full derivations are in [the book](docs/Beyond-the-4C-Alarm-DairyGuard.pdf), Chapter 4 and the appendices.
 
-**Calorimetry.** If heat flow is proportional to the rate of cell formation, $P = Y_Q V\,dN/dt$, then
+## Firmware
 
-$$\frac{P(t)}{\mu(T(t))} = Y_Q V\,G\big(\tau(t)\big),$$
+[`firmware/`](firmware) runs the same monitor on an ESP32 with a DS18B20 probe on GPIO 4 and green, amber and red LEDs on GPIO 25, 26 and 27.
 
-so heat-flow curves from any temperature programme collapse onto one master curve. An isothermal detection time $t_{\det}$ measures the batch's own growth rate, lag and starting load in one number, which is exactly the biology the log cannot see.
+- `dairyguard_monitor/dg_core.c`, `dg_core.h`: portable C99, no dynamic memory, 64 plausible batches in under 2 kB
+- `dairyguard_monitor/dairyguard_monitor.ino`: reads the probe every 15 minutes, updates the core, lights the verdict, prints a status line over serial
+- `firmware/host_test.c`: compiled and checked against the Python monitor by `tests/test_firmware.py`
 
-Proofs are in Appendix C of [TR-01](docs/DairyGuard-Technical-Report-TR01.pdf).
-
-## The statistics
-
-| Method | Used for | Where |
-|---|---|---|
-| AUC, by the Mann–Whitney rank statistic | ranking accuracy of each rule | `src/simulate.py`, `src/benchmark.py` |
-| Paired bootstrap on identical trips (B = 400) | confidence intervals for differences between rules | `src/benchmark.py` |
-| Hanley–McNeil standard error | sample size: 4,000 trips per setting | TR-01, Chapter 6 |
-| Monte Carlo posterior over 80 biology draws | a probability instead of an alarm | `src/benchmark.py` |
-| Brier score, expected calibration error (ECE) | is "70%" right 70% of the time? | `src/simulate.py` |
-| Bias and accuracy factors (Ross 1996) | growth-rate fits against ComBase | `src/validate_combase*.py` |
-| AICc model selection | four temperature laws compared | `src/compare_secondary.py` |
-
-A difference between two rules is called detectable when its 95% paired-bootstrap interval excludes zero.
-
-## Simulation design
-
-| Part | Choice |
-|---|---|
-| Trips | fridge at 2.5–5 °C; warm events about once per 6 days, 10 min to 8 h, peaks 12–30.7 °C |
-| Packaging | low-mass pouch (5–20 min time constant) or insulated crate (1–4 h) |
-| Hidden biology | per trip: growth slope b (spread 0, 10 or 25%), minimum temperature, lag, starting count |
-| Sensors | DS18B20 (±0.5 °C), PT1000 (±0.15 °C), ideal |
-| Sampling | every 1, 15 or 60 min, or adaptive |
-| Rules | maximum temperature, time above 5 °C, time above 8 °C, degree-hours above 4 °C, CSL |
-| Settings | 2 limits × 2 packaging types × 3 biology spreads = 12, with 4,000 trips each |
-| Worlds | baseline, extra lag, low starting load, ComBase-fitted flora, *Listeria*: 240,000 trips |
-
-Every parameter and its source is in [`data/params.csv`](data/params.csv), marked SOURCED or ASSUMED.
-
-## Checks against real data
-
-| Check | Data | Result |
-|---|---|---|
-| Fluctuating-temperature experiment | Lin et al. 2016, milk at 4 °C with two 4-h spells at 29 °C | time to 10⁶ CFU/mL: 53 h predicted vs about 55 h measured |
-| Natural spoilage flora | 51 ComBase records, pasteurised milk, 2.7–14.9 °C | real flora grow about 1.6× slower than lab strains |
-| *Listeria monocytogenes* | 46 records to fit, 53 held out | held-out bias factor 1.02, accuracy factor 1.37 |
-| Temperature laws | square-root, Arrhenius, Q10 and Davey laws on ComBase records | square-root law has the lowest AICc for both spoilage flora and *Listeria* |
-
-## Quickstart
-
-```bash
-git clone https://github.com/CopyNinja07-07/dairyguard.git
-cd dairyguard
-pip install -r requirements.txt
-make test        # 19 checks, a few seconds
-make summary     # condense the saved results of all five worlds
+```c
+dg_monitor m;
+dg_init(&m, &DG_MILK, 42);
+dg_update(&m, temperature_C, 0.25f);          /* every 15 minutes */
+dg_status s = dg_status_now(&m);              /* s.probability_crossed, s.state, ... */
 ```
 
-Use the kinetic model directly:
+## Python API
 
 ```python
-import sys; sys.path.insert(0, "src")
-import numpy as np
-from dg_kinetics import mu_sqrt, sl_gompertz
+from dairyguard import ColdChainMonitor
 
-b, Tmin, h0, logN0, logNmax, limit = 0.030, -7.7, 3.8, 1.7, 9.0, 3e4
+monitor = ColdChainMonitor("milk", n_draws=200, seed=0)
+for _ in range(160):
+    monitor.update(4.0, dt_hours=0.25)        # 40 h in the fridge
+for _ in range(8):
+    status = monitor.update(17.5, dt_hours=0.25)   # a 2 h warm spell
 
-print(sl_gompertz(4.0, b, Tmin, h0, logN0, logNmax, limit))     # shelf life at 4 °C: about 83 h
-
-# a trip logged every 15 min: 40 h cold, a 2 h warm spell at 17.5 °C, 10 h cold
-log = np.r_[np.full(160, 4.0), np.full(8, 17.5), np.full(40, 4.0)]
-csl = np.sum(0.25 / sl_gompertz(log, b, Tmin, h0, logN0, logNmax, limit))
-print(f"shelf life used: {csl:.0%}")                             # 72%
-
-# the biological clock: how many hours at 4 °C this trip is worth
-print(np.sum(0.25 * mu_sqrt(log, b, Tmin)) / mu_sqrt(4.0, b, Tmin))   # about 59
+print(status.shelf_life_used)        # 0.60
+print(status.probability_crossed)    # 0.05
+print(status.hours_left_at_4C)       # about 31
+print(status.state)                  # 'fresh'
 ```
 
-Rebuild everything from scratch (about three hours on two cores, all seeds fixed):
-
-```bash
-make runs && make validate && make generated && make report && make whitepaper && make demo
+```python
+from dairyguard import growthlaws as gl
+law = gl.MonotoneNet(units=4, ensemble=5).fit(T, mu)        # or SquareRoot(), Arrhenius(), ...
+scores = gl.leave_one_group_out(gl.SquareRoot, T, mu, studies)
 ```
 
-## Code map
+## Repository map
 
 ```
 dairyguard/
-├── src/
-│   ├── dg_kinetics.py         growth rate, Gompertz shelf life, Baranyi model
-│   ├── simulate.py            trips, hidden biology, sensors, sampling, scores, AUC
-│   ├── benchmark.py           the full benchmark: paired bootstrap, probability forecasts
-│   ├── validate_lin.py        reproduces Lin et al. 2016
-│   ├── validate_combase.py    fits natural spoilage flora
-│   ├── validate_combase_lis.py   fits and tests Listeria on held-out records
-│   ├── compare_secondary.py   four temperature laws, AICc
-│   ├── calorimetry_info.py    value of a calorimetric test of the batch
-│   ├── example_setting.py     one setting in full detail
-│   └── summarize_runs.py      condenses all runs into results/summary.json
-├── tests/                     19 automated checks
-├── results/                   saved output of the five worlds
-├── data/                      parameters with sources, ComBase records
-├── generated/                 numbers, tables and figures written from the results
-├── report/                    source of Technical Report TR-01
-├── whitepaper/                source of White Paper WP-01
-├── demo/                      source of the browser demo
-├── docs/                      the website, the demo and the PDFs (GitHub Pages)
-├── ROADMAP.md                 the plan to February 2027
-└── Makefile                   test, runs, validate, summary, generated, report, whitepaper, demo
+├── src/dairyguard/        the package
+│   ├── kinetics.py          growth rate, Gompertz shelf life, Baranyi model
+│   ├── monitor.py           ColdChainMonitor: shelf life used, probability, hours left, verdict
+│   ├── products.py          milk, milk-combase, listeria presets with sources
+│   ├── growthlaws.py        five growth laws incl. a monotone neural law; cross-validation
+│   ├── simulate.py          trips, hidden biology, sensors, sampling, scores
+│   ├── benchmark.py         the full benchmark with paired bootstrap and calibration
+│   ├── io.py · cli.py       log reading and the `dairyguard` command
+├── firmware/              C core, ESP32 sketch, host test
+├── experiments/           every study in the book, one script each
+├── tests/                 27 automated tests
+├── data/                  ComBase records and parameters with sources
+├── results/               saved output of all runs
+├── generated/             numbers, tables and figures written from results
+├── examples/              two example temperature logs
+├── report/ · whitepaper/  LaTeX sources of the book and the white paper
+├── demo/                  source of the browser app
+└── docs/                  website, app and PDFs (GitHub Pages)
 ```
 
-## What comes next
+## Reproduce everything
 
-**DairyGuard Neural**, a hybrid neural differential-equation model. It keeps the proven generalized-time core and learns three things from real data: the temperature response of real bacteria (a monotone neural growth law), departures from the textbook equations after temperature shifts (small residual networks), and the hidden state of each batch from cheap tests at loading (a variational encoder). It will be trained on ComBase growth curves and new laboratory counts of milk. The full design, data plan and evaluation rules are fixed in advance in [White Paper WP-01](docs/DairyGuard-White-Paper-WP01.pdf). The timeline is in [ROADMAP.md](ROADMAP.md).
-
-Have growth data, a microbiology lab or a calorimeter? [Open an issue](https://github.com/CopyNinja07-07/dairyguard/issues/new?template=offer-data.yml).
-
-## Limitations
-
-- **The main results are simulated.** Trip patterns are assumed, and several biological numbers are assumed and flagged in `data/params.csv`. They describe a virtual cold chain, not field rates.
-- **The calorimetry result is simulated.** No milk has been measured in a calorimeter yet.
-- **"Spoiled" means the modelled count crossed a stated limit** (the FSSAI hygiene limit for pasteurised milk, or a growth target). It is not a sensory or safety verdict.
-- **Only temperature is modelled.** Spore-formers and other causes of spoilage are out of scope.
-- *Listeria* results concern growth only. No illness is modelled.
-- This is research, not food-safety advice.
-
-## Cite and licence
-
-```
-Singh SP. Beyond the 4 °C alarm: what a temperature log can and cannot tell about milk spoilage.
-DairyGuard Technical Report DG-TR-01, 2026. https://github.com/CopyNinja07-07/dairyguard
+```bash
+make test         # 27 tests, a few seconds
+make validate     # real-data checks
+make extensions   # growth-law study, monitor studies, figures, animations (a few minutes)
+make runs         # the five simulated worlds, about three hours on two cores
+make generated report whitepaper demo
 ```
 
-Citation metadata is in [`CITATION.cff`](CITATION.cff). Code under the MIT licence. ComBase records remain subject to the ComBase terms of use.
+Every number in the book and on the website is written from the result files by script, never typed by hand.
 
-**Author:** Suryansh Pratap Singh, Department of Mathematics and Computing, Shri Mata Vaishno Devi University.
+## Limits
+
+- **The main results are simulated.** Trip patterns and several biological numbers are assumed and flagged in `data/params.csv`.
+- **The heat-flow (calorimetry) result is simulated.** No milk has been measured in a calorimeter yet.
+- **"Crossed the limit" means the modelled count passed the FSSAI hygiene limit.** It is not a taste test or a safety verdict.
+- **Only temperature is modelled.** Spore-formers and other causes of spoilage are out of scope. *Listeria* results concern growth only.
+- This is research software, not food-safety advice.
+
+## Next in our lab
+
+The results point in one direction: the 25% spread between real studies is biology a log cannot see, and a more flexible formula on growth rates alone does not recover it. Our next model keeps DairyGuard Kinetic's proven core and learns each batch's biology from complete growth curves of milk under changing temperatures, plus simple tests at loading. Over November and December we are building the growth-curve pipeline and the lab protocol; first measurements are planned for January and February 2027. See [ROADMAP.md](ROADMAP.md).
+
+Have growth data, a microbiology lab or a calorimeter? [Offer data or lab access](https://github.com/CopyNinja07-07/dairyguard/issues/new?template=offer-data.yml).
+
+## Cite
+
+```
+Singh SP. Beyond the 4 °C Alarm: What a Temperature Log Can and Cannot Tell About Milk Spoilage.
+Self-published, Katra, 2026. https://github.com/CopyNinja07-07/dairyguard
+```
+
+Citation metadata is in [`CITATION.cff`](CITATION.cff). Code under the MIT licence; ComBase records remain subject to the ComBase terms of use. The book and white paper have not been peer reviewed.
+
+<sub>Suryansh Pratap Singh · Department of Mathematics and Computing, Shri Mata Vaishno Devi University</sub>

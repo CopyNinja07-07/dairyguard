@@ -1,57 +1,51 @@
 # DairyGuard roadmap
 
-DairyGuard grows in stops. Each one ends in something finished and public. A journal paper comes last, once real laboratory results stand.
+Each stop ends in something finished and public. A journal paper comes last, once laboratory results stand.
 
 | When | Stop | Output | Status |
 |---|---|---|---|
-| October 2026 | The case is opened | DairyGuard Kinetic, 240,000 simulated deliveries, Technical Report TR-01, website and demo | Done |
-| November 2026 | The plan is written | White Paper WP-01; PyTorch prototype checked on curves simulated by DairyGuard Kinetic | In progress |
-| December 2026 | Learning from real curves | Neural growth law trained on ComBase growth curves on a Colab GPU, compared with the square-root law | Next |
-| January 2027 | Into the lab | Experiments E1 and E2: milk at steady and changing temperatures, counted on plates | Planned |
-| February 2027 | DairyGuard Neural | First trained model, held-out evaluation, live in the demo; Technical Report TR-02 | Planned |
-| Spring 2027 | The three questions | Experiments E3 (batches with cheap tests) and E4 (calorimetry with a partner lab) | Planned |
-| After that | A paper | Peer-reviewed paper built on the laboratory results | Planned |
+| October 2026 | DairyGuard Kinetic | Python package and command line, ESP32 firmware, browser app, 240,000 simulated deliveries, the book and the architecture white paper | Done |
+| October 2026 | Real-data checks | Five growth laws on 20 unseen *Listeria* studies, between-study spread from 11 studies, monitor against a trained model | Done |
+| November to December 2026 | Curves and protocol | A pipeline for complete ComBase growth curves (counts against time), and a written lab protocol for milk at steady and changing temperatures | In progress |
+| January to February 2027 | First lab measurements | Plate counts of milk at steady and shifting temperatures, with simple batch tests on the first day | Planned |
+| After that | The next model | A model that learns each batch's biology from growth curves and batch tests, evaluated on data it has not seen | Planned |
+| After that | Peer review | A journal paper built on the laboratory results | Planned |
 
-Technical reports and white papers are not peer reviewed. Each says so on its first page.
+## Why the next model is needed
 
-## DairyGuard Neural in one paragraph
+DairyGuard Kinetic's own results set the direction:
 
-DairyGuard Kinetic shows, in simulation, that the biggest limit on predicting spoilage from a temperature log is the biology the log cannot see. DairyGuard Neural keeps the proven generalized-time core and adds three learned parts: a monotone neural growth law fitted to real growth curves, small residual networks that show where real bacteria depart from the Baranyi–Roberts equations after a temperature shift, and an encoder that turns cheap tests at loading into a probability range for each batch's hidden biology. It is trained by maximising an evidence lower bound through an adaptive ODE solver in PyTorch. The full design is in [White Paper WP-01](docs/DairyGuard-White-Paper-WP01.pdf).
+- Real growth rates differ between studies by about 25%. That is biology a temperature log cannot see.
+- A flexible neural growth law fitted to growth rates alone predicts unseen studies no better than the square-root law. More data of the same kind will not close the gap.
+- In simulation, one measurement of the batch itself closes most of the gap.
 
-## The three research questions
-
-1. **Does real milk run on one biological clock?** If real growth curves collapse on generalized time, one isothermal or calorimetric test can stand in for a whole temperature study. If not, the residual networks show exactly which temperature shifts break it.
-2. **Which cheap test buys the most accuracy?** Dye reduction, an initial plate count, pH and a calorimetric detection time, ranked by AUC and calibration gained per rupee.
-3. **Do chilled foods share a common hidden biology?** Whether the latent space learned on milk transfers to meat, fish and ready-to-eat foods in ComBase.
-
-## Data and laboratories needed
-
-| Need | Why | Where |
-|---|---|---|
-| ComBase growth curves (counts against time) | Train the growth law and the residuals on real data | Public, [combase.cc](https://www.combase.cc) |
-| Published fluctuating-temperature studies | Test against real temperature shifts | Literature; authors contacted for raw counts |
-| Microbiology lab: incubators, autoclave, laminar flow, plate count agar | Experiments E1 to E3, about 300 to 400 plate counts (ISO 4833-1, ISO 17410) | University laboratory |
-| Microplate reader (optional) | Dye-reduction kinetics in many wells at once | University laboratory |
-| Isothermal microcalorimeter | Experiment E4: test the calorimetric master curve on real milk | Partner laboratory |
+So the next step is better data, not a bigger formula: complete growth curves of real milk under changing temperatures, and cheap tests of each batch at loading.
 
 ## Rules fixed in advance
 
-- Training, validation and test data are split by study and by batch before results are looked at.
-- Baselines: DairyGuard Kinetic, a classical Baranyi–Roberts fit, and a black-box recurrent network of similar size.
-- Every result is reported on real data the model has not seen. Results on simulated data are labelled as simulation.
+- Data are split by study and by batch before any result is looked at.
+- Every new model is compared with DairyGuard Kinetic on the same unseen data.
+- Results on simulated data are labelled as simulation.
 - "Crossing the limit" means the bacterial count passed a stated limit. It is not a safety verdict.
-- Every number in a report is generated from result files by script.
+- Every number in a report is written from result files by script.
 
 ## Open tasks
 
-- [x] Unit audit: ComBase rates converted from log10 to natural-log units before fitting (test added)
-- [x] Headline numbers pinned by regression tests
+- [x] Unit audit: ComBase rates converted from log10 to natural-log units before fitting
+- [x] Headline numbers pinned by tests
+- [x] Growth laws compared on held-out studies
+- [x] Monitor compared with a trained logistic model; Monte Carlo size and correlated biology checked
+- [x] Firmware tested against the Python monitor
 - [ ] ComBase growth-curve pipeline
-- [ ] PyTorch prototype recovers known parameters from simulated curves
-- [ ] Monotone neural growth law trained on ComBase
-- [ ] Logistic-regression probability baseline and correlated-parameter sensitivity run for TR-02
-- [ ] Laboratory protocol for E1 and E2 written and agreed with a lab
+- [ ] Lab protocol for steady and shifting temperatures, agreed with a lab
+- [ ] First plate counts
 
-## Help
+## Data and laboratories needed
 
-Have growth data, a microbiology lab or a calorimeter? Open an issue with the "Offer data or lab access" form.
+| Need | Why |
+|---|---|
+| Growth curves of milk or chilled food under changing temperatures | train and test the next model on real dynamics |
+| Microbiology lab: incubators, laminar flow, plate count agar | about 300 to 400 plate counts (ISO 4833-1) |
+| Isothermal microcalorimeter | test the heat-flow result on real milk |
+
+Have growth data or a lab? Open an issue with the "Offer data or lab access" form.

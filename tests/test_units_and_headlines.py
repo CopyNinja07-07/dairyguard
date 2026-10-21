@@ -13,7 +13,7 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, os.path.join(ROOT, "src"))
 import numpy as np
 import pandas as pd
-from dg_kinetics import LN10, mu_sqrt, sl_gompertz
+from dairyguard.kinetics import LN10, mu_sqrt, sl_gompertz
 
 J = lambda *p: json.load(open(os.path.join(ROOT, *p)))
 

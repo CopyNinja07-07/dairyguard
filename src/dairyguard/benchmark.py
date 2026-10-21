@@ -13,8 +13,8 @@ import sys
 import numpy as np
 import pandas as pd
 from scipy.stats import rankdata
-import simulate as S
-from dg_kinetics import sl_gompertz, make_sl_lookup
+from . import simulate as S
+from .kinetics import sl_gompertz, make_sl_lookup
 
 TAU_H = {"low_mass": (5 / 60, 20 / 60), "insulated": (1.0, 4.0)}      # product time constant, hours
 CVS = (0.0, 0.10, 0.25)
@@ -168,9 +168,3 @@ def run(N=4000, seed=11, out="results"):
     pd.DataFrame(rows).to_csv(f"{out}/auc_results.csv", index=False)
     pd.DataFrame(paired).to_csv(f"{out}/paired_contrasts.csv", index=False)
     pd.DataFrame(cal).to_csv(f"{out}/calibration.csv", index=False)
-
-
-if __name__ == "__main__":
-    N = int(sys.argv[1]) if len(sys.argv) > 1 else 4000
-    out = sys.argv[2] if len(sys.argv) > 2 else "results"
-    run(N=N, out=out)

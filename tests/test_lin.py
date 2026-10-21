@@ -1,5 +1,5 @@
 import os, sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "experiments"))
 import validate_lin as V
 
 def test_fit_parameters_are_sensible():

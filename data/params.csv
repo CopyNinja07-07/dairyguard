@@ -20,7 +20,7 @@ shift_lag_fraction,"0 (baseline) / 0.25 (structure-risk run)",fraction of h0,ext
 sensor_DS18B20,"bias U(-0.5,0.5), noise sd 0.05, res 0.0625",degC,sensor model,"accuracy +/-0.5 C from the manufacturer datasheet; noise ASSUMED"
 sensor_PT1000_MAX31865,"bias U(-0.15,0.15), noise sd 0.03, res 0.03125",degC,sensor model,"accuracy +/-0.15 C (IEC 60751 Class A tolerance at 0 C); noise ASSUMED"
 combase_fit,"b 0.0256, Tmin -6.6 C (n=50 robust); log resid sd 0.16",,natural-flora growth rate fit used in the milk-flora run,"EMPIRICAL: 51 ComBase records (Tasmanian Institute of Agriculture, pasteurised milk, 2.7-14.9 C); one record with an implausible temperature removed; Neumeyer/Lin parameters overpredict these by 1.6x"
-runs_reported,"baseline; extra lag; low starting load; ComBase-fitted milk flora; Listeria",,list of benchmark runs,"all use seeds fixed in src/benchmark_v2.py; 4000 trips per setting"
+runs_reported,"baseline; extra lag; low starting load; ComBase-fitted milk flora; Listeria",,list of benchmark runs,"all use seeds fixed in src/dairyguard/benchmark.py; 4000 trips per setting"
 lis_b,0.0235,ln basis,Listeria growth slope (Listeria run),"FITTED: 46 ComBase records of Listeria monocytogenes in milk, conditions not specified, 2-16 C; bootstrap 95% 0.0203-0.0265. Held-out check on 53 records: bias factor 1.02, accuracy factor 1.37 (split by condition, not by study)"
 lis_Tmin,-2.3,degC,Listeria minimum growth temperature (Listeria run),"FITTED: same fit; bootstrap 95% -4.2 to -0.9 C"
 lis_Tmin_sd,1.0,K,between-trip spread of Listeria Tmin (Listeria run),"ASSUMED: of the order of the bootstrap standard error (about 0.8 K)"

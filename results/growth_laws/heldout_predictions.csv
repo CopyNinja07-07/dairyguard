@@ -1,0 +1,761 @@
+data,law,study,T,mu_obs,mu_pred
+Listeria (leave one study out),square-root,"Denis (et al.), 1989",4.0,0.040295239127395806,0.024778350408131297
+Listeria (leave one study out),square-root,"Denis (et al.), 1989",15.0,0.18236473936512845,0.1486226451626979
+Listeria (leave one study out),square-root,"Donnelly (et al.), 1986",4.0,0.01591086299258886,0.024434783546636005
+Listeria (leave one study out),square-root,"Donnelly (et al.), 1986",4.0,0.04789376993427615,0.024434783546636005
+Listeria (leave one study out),square-root,"Donnelly (et al.), 1986",4.0,0.04835428695287497,0.024434783546636005
+Listeria (leave one study out),square-root,"Donnelly (et al.), 1986",10.0,0.06447238260383328,0.07882201910435112
+Listeria (leave one study out),square-root,"Donnelly (et al.), 1986",10.0,0.0957875398685523,0.07882201910435112
+Listeria (leave one study out),square-root,"Donnelly (et al.), 1986",10.0,0.09670857390574994,0.07882201910435112
+Listeria (leave one study out),square-root,"Donnelly (et al.), 1986",10.0,0.12779347266116955,0.07882201910435112
+Listeria (leave one study out),square-root,"Farrag (et al.), 1989",7.0,0.023256109439239864,0.04897497462179954
+Listeria (leave one study out),square-root,"Farrag (et al.), 1991",7.0,0.0349992934135095,0.049212624581364994
+Listeria (leave one study out),square-root,"Farrag (et al.), 1991",13.0,0.042597824220389845,0.12101016781402381
+Listeria (leave one study out),square-root,Food Standards Agency funded data generated at Champden and ,5.0,0.03131515726471902,0.031440924531934
+Listeria (leave one study out),square-root,Food Standards Agency funded data generated at Champden and ,5.0,0.02740076260662915,0.031440924531934
+Listeria (leave one study out),square-root,Food Standards Agency funded data generated at Champden and ,5.0,0.02970334769962319,0.031440924531934
+Listeria (leave one study out),square-root,Food Standards Agency funded data generated at Champden and ,7.0,0.055492300741156506,0.04759824077970427
+Listeria (leave one study out),square-root,Food Standards Agency funded data generated at Champden and ,7.0,0.07414323999440828,0.04759824077970427
+Listeria (leave one study out),square-root,Food Standards Agency funded data generated at Champden and ,7.0,0.08012996123619279,0.04759824077970427
+Listeria (leave one study out),square-root,Food Standards Agency funded data generated at Champden and ,10.0,0.13124735030066062,0.07809324858246029
+Listeria (leave one study out),square-root,Food Standards Agency funded data generated at Champden and ,10.0,0.19917361054398497,0.07809324858246029
+Listeria (leave one study out),square-root,Food Standards Agency funded data generated at Champden and ,10.0,0.06378160707593507,0.07809324858246029
+Listeria (leave one study out),square-root,"Kamau (et al.), 1990",10.0,0.023716626457838674,0.08381328935155147
+Listeria (leave one study out),square-root,"Kamau (et al.), 1990",10.0,0.028321796643826766,0.08381328935155147
+Listeria (leave one study out),square-root,"Kamau (et al.), 1990",10.0,0.010799124086142075,0.08381328935155147
+Listeria (leave one study out),square-root,"Marshall (et al.), 1988",10.0,0.06930781129912078,0.07908703887005115
+Listeria (leave one study out),square-root,"Marshall (et al.), 1988",10.0,0.0856561654593785,0.07908703887005115
+Listeria (leave one study out),square-root,"Marshall (et al.), 1988",10.0,0.09555728135925291,0.07908703887005115
+Listeria (leave one study out),square-root,"Marshall (et al.), 1988",10.0,0.09762960794294755,0.07908703887005115
+Listeria (leave one study out),square-root,"Marshall (et al.), 1988",10.0,0.10200451961963623,0.07908703887005115
+Listeria (leave one study out),square-root,"Marshall (et al.), 1988",10.0,0.06976832831771959,0.07908703887005115
+Listeria (leave one study out),square-root,"Marshall (et al.), 1988",10.0,0.08772849204307315,0.07908703887005115
+Listeria (leave one study out),square-root,"Marshall (et al.), 1988",10.0,0.09901115899874396,0.07908703887005115
+Listeria (leave one study out),square-root,"Marshall (et al.), 1988",10.0,0.09624805688715111,0.07908703887005115
+Listeria (leave one study out),square-root,nan,10.0,0.09555728135925291,0.07971834118973088
+Listeria (leave one study out),square-root,"Marshall (et al.), 1988",10.0,0.06930781129912078,0.07908703887005115
+Listeria (leave one study out),square-root,"Marshall (et al.), 1988",10.0,0.07230117192001304,0.07908703887005115
+Listeria (leave one study out),square-root,"Marshall (et al.), 1988",10.0,0.08243254632918684,0.07908703887005115
+Listeria (leave one study out),square-root,"Marshall (et al.), 1988",10.0,0.07874841018039637,0.07908703887005115
+Listeria (leave one study out),square-root,"Marshall (et al.), 1988",10.0,0.08657719949657613,0.07908703887005115
+Listeria (leave one study out),square-root,"Mathieu (et al.), 1994",7.0,0.07230117192001304,0.04829436734974361
+Listeria (leave one study out),square-root,"Mathieu (et al.), 1994",15.0,0.19249611377430223,0.14803518941624508
+Listeria (leave one study out),square-root,"Motlagh (et al.), 1992",4.0,0.017200310644665522,0.025275188426248603
+Listeria (leave one study out),square-root,"Papageorgiou (et al.), 1989",4.0,0.015312190868410404,0.025709255639893597
+Listeria (leave one study out),square-root,"Papageorgiou (et al.), 1989",4.0,0.01402274321633374,0.025709255639893597
+Listeria (leave one study out),square-root,"Pearson (et al.), 1990",13.0,0.1351617449587505,0.11740290432956234
+Listeria (leave one study out),square-root,"Pearson (et al.), 1990",13.0,0.1351617449587505,0.11740290432956234
+Listeria (leave one study out),square-root,"Pearson (et al.), 1990",13.0,0.139997173654038,0.11740290432956234
+Listeria (leave one study out),square-root,"Pearson (et al.), 1990",13.0,0.13401045241225348,0.11740290432956234
+Listeria (leave one study out),square-root,"Pearson (et al.), 1990",13.0,0.13401045241225348,0.11740290432956234
+Listeria (leave one study out),square-root,"Pearson (et al.), 1990",13.0,0.13723407154244513,0.11740290432956234
+Listeria (leave one study out),square-root,"Pine (et al.), 1988",5.0,0.019203559675570345,0.032304540343603104
+Listeria (leave one study out),square-root,"Rajkowski (et al.), 1994",12.0,0.1607204394909844,0.10092398703842832
+Listeria (leave one study out),square-root,"Rajkowski (et al.), 1994",12.0,0.1908843042092064,0.10092398703842832
+Listeria (leave one study out),square-root,"Rajkowski (et al.), 1994",12.0,0.14460234384002607,0.10092398703842832
+Listeria (leave one study out),square-root,"Rajkowski (et al.), 1994",12.0,0.1706215553908588,0.10092398703842832
+Listeria (leave one study out),square-root,"Rajkowski (et al.), 1994",12.0,0.17430569153964928,0.10092398703842832
+Listeria (leave one study out),square-root,"Rajkowski (et al.), 1994",12.0,0.17637801812334392,0.10092398703842832
+Listeria (leave one study out),square-root,"Rajkowski (et al.), 1994",12.0,0.10568865576842672,0.10092398703842832
+Listeria (leave one study out),square-root,"Rajkowski (et al.), 1994",12.0,0.10292555365683384,0.10092398703842832
+Listeria (leave one study out),square-root,"Rajkowski (et al.), 1994",12.0,0.08934030160816898,0.10092398703842832
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1987",4.0,0.021321937961124863,0.025243069588877454
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1987",4.0,0.02302585092994046,0.025243069588877454
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1987",4.0,0.02302585092994046,0.025243069588877454
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1987",13.0,0.1155897716683011,0.11860143587243684
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1987",13.0,0.11743183974269633,0.11860143587243684
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1987",13.0,0.15404294272130167,0.11860143587243684
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1993",13.0,0.14759570446091835,0.11330660623798988
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1993",13.0,0.14828647998881656,0.11330660623798988
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1993",13.0,0.15864811290728978,0.11330660623798988
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1993",13.0,0.1512798406097088,0.11330660623798988
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1993",13.0,0.14229975874703205,0.11330660623798988
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1993",13.0,0.16900974582576297,0.11330660623798988
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1993",13.0,0.15404294272130167,0.11330660623798988
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1993",13.0,0.1505890650818106,0.11330660623798988
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1993",13.0,0.14759570446091835,0.11330660623798988
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1993",13.0,0.1768385351419427,0.11330660623798988
+Listeria (leave one study out),square-root,"Rosenow (et al.), 1993",13.0,0.14621415340512192,0.11330660623798988
+Listeria (leave one study out),square-root,"Walker (et al.), 1990",0.0,0.011190563551951062,0.002147270868785599
+Listeria (leave one study out),square-root,"Walker (et al.), 1990",0.0,0.011190563551951062,0.002147270868785599
+Listeria (leave one study out),square-root,"Walker (et al.), 1990",5.0,0.028782313662425577,0.027519343397438546
+Listeria (leave one study out),square-root,"Walker (et al.), 1990",7.5,0.04328859974828807,0.05092469250833263
+Listeria (leave one study out),square-root,"Walker (et al.), 1990",9.3,0.1259514045867743,0.07220147621123948
+Listeria (leave one study out),square-root,"Zapico (et al.), 1993",8.0,0.04858454546217437,0.058402018371657344
+Listeria (leave one study out),square-root,"Zapico (et al.), 1993",8.0,0.046742477387779126,0.058402018371657344
+Listeria (leave one study out),square-root,Modélisation a visée prévisionnelle de la cinétique de crois,3.0,0.006401186558523448,0.02100982179170589
+Listeria (leave one study out),square-root,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.02555869453223391,0.027480522854207042
+Listeria (leave one study out),square-root,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.02302585092994046,0.027480522854207042
+Listeria (leave one study out),square-root,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.023256109439239864,0.027480522854207042
+Listeria (leave one study out),square-root,Modélisation a visée prévisionnelle de la cinétique de crois,5.0,0.018305551489302668,0.03481857278923195
+Listeria (leave one study out),square-root,Modélisation a visée prévisionnelle de la cinétique de crois,6.0,0.013401045241225346,0.0430239715967806
+Listeria (leave one study out),square-root,Modélisation a visée prévisionnelle de la cinétique de crois,7.0,0.0349992934135095,0.052096719276853005
+Listeria (leave one study out),square-root,Modélisation a visée prévisionnelle de la cinétique de crois,8.0,0.03960446359949759,0.06203681582944916
+Listeria (leave one study out),square-root,Modélisation a visée prévisionnelle de la cinétique de crois,9.0,0.04559118484128211,0.07284426125456905
+Listeria (leave one study out),square-root,Modélisation a visée prévisionnelle de la cinétique de crois,10.0,0.06240005602013864,0.08451905555221273
+Listeria (leave one study out),square-root,Modélisation a visée prévisionnelle de la cinétique de crois,11.0,0.05411074968536008,0.0970611987223801
+Listeria (leave one study out),square-root,Modélisation a visée prévisionnelle de la cinétique de crois,13.0,0.0948665058313547,0.1247475316802862
+Listeria (leave one study out),square-root,Modélisation a visée prévisionnelle de la cinétique de crois,14.0,0.11789235676129516,0.13989172146802484
+Listeria (leave one study out),square-root,Modélisation a visée prévisionnelle de la cinétique de crois,15.0,0.0999321930359416,0.15590326012828726
+Listeria (leave one study out),square-root,"Myntzaw (et al.), 2023",8.4,0.07713660061530055,0.061786562794516345
+Listeria (leave one study out),square-root,"Myntzaw (et al.), 2023",8.4,0.08703771651517493,0.061786562794516345
+Listeria (leave one study out),square-root,"Myntzaw (et al.), 2023",8.4,0.07253143042931244,0.061786562794516345
+Listeria (leave one study out),Arrhenius,"Denis (et al.), 1989",4.0,0.040295239127395806,0.022199207733860072
+Listeria (leave one study out),Arrhenius,"Denis (et al.), 1989",15.0,0.18236473936512845,0.2023572370051295
+Listeria (leave one study out),Arrhenius,"Donnelly (et al.), 1986",4.0,0.01591086299258886,0.021598295621875506
+Listeria (leave one study out),Arrhenius,"Donnelly (et al.), 1986",4.0,0.04789376993427615,0.021598295621875506
+Listeria (leave one study out),Arrhenius,"Donnelly (et al.), 1986",4.0,0.04835428695287497,0.021598295621875506
+Listeria (leave one study out),Arrhenius,"Donnelly (et al.), 1986",10.0,0.06447238260383328,0.07453887866375812
+Listeria (leave one study out),Arrhenius,"Donnelly (et al.), 1986",10.0,0.0957875398685523,0.07453887866375812
+Listeria (leave one study out),Arrhenius,"Donnelly (et al.), 1986",10.0,0.09670857390574994,0.07453887866375812
+Listeria (leave one study out),Arrhenius,"Donnelly (et al.), 1986",10.0,0.12779347266116955,0.07453887866375812
+Listeria (leave one study out),Arrhenius,"Farrag (et al.), 1989",7.0,0.023256109439239864,0.04209466141895447
+Listeria (leave one study out),Arrhenius,"Farrag (et al.), 1991",7.0,0.0349992934135095,0.04201696019855463
+Listeria (leave one study out),Arrhenius,"Farrag (et al.), 1991",13.0,0.042597824220389845,0.13975516454601764
+Listeria (leave one study out),Arrhenius,Food Standards Agency funded data generated at Champden and ,5.0,0.03131515726471902,0.026548868764452987
+Listeria (leave one study out),Arrhenius,Food Standards Agency funded data generated at Champden and ,5.0,0.02740076260662915,0.026548868764452987
+Listeria (leave one study out),Arrhenius,Food Standards Agency funded data generated at Champden and ,5.0,0.02970334769962319,0.026548868764452987
+Listeria (leave one study out),Arrhenius,Food Standards Agency funded data generated at Champden and ,7.0,0.055492300741156506,0.04008931021354964
+Listeria (leave one study out),Arrhenius,Food Standards Agency funded data generated at Champden and ,7.0,0.07414323999440828,0.04008931021354964
+Listeria (leave one study out),Arrhenius,Food Standards Agency funded data generated at Champden and ,7.0,0.08012996123619279,0.04008931021354964
+Listeria (leave one study out),Arrhenius,Food Standards Agency funded data generated at Champden and ,10.0,0.13124735030066062,0.07358030554797522
+Listeria (leave one study out),Arrhenius,Food Standards Agency funded data generated at Champden and ,10.0,0.19917361054398497,0.07358030554797522
+Listeria (leave one study out),Arrhenius,Food Standards Agency funded data generated at Champden and ,10.0,0.06378160707593507,0.07358030554797522
+Listeria (leave one study out),Arrhenius,"Kamau (et al.), 1990",10.0,0.023716626457838674,0.07929494898441214
+Listeria (leave one study out),Arrhenius,"Kamau (et al.), 1990",10.0,0.028321796643826766,0.07929494898441214
+Listeria (leave one study out),Arrhenius,"Kamau (et al.), 1990",10.0,0.010799124086142075,0.07929494898441214
+Listeria (leave one study out),Arrhenius,"Marshall (et al.), 1988",10.0,0.06930781129912078,0.07455296998524757
+Listeria (leave one study out),Arrhenius,"Marshall (et al.), 1988",10.0,0.0856561654593785,0.07455296998524757
+Listeria (leave one study out),Arrhenius,"Marshall (et al.), 1988",10.0,0.09555728135925291,0.07455296998524757
+Listeria (leave one study out),Arrhenius,"Marshall (et al.), 1988",10.0,0.09762960794294755,0.07455296998524757
+Listeria (leave one study out),Arrhenius,"Marshall (et al.), 1988",10.0,0.10200451961963623,0.07455296998524757
+Listeria (leave one study out),Arrhenius,"Marshall (et al.), 1988",10.0,0.06976832831771959,0.07455296998524757
+Listeria (leave one study out),Arrhenius,"Marshall (et al.), 1988",10.0,0.08772849204307315,0.07455296998524757
+Listeria (leave one study out),Arrhenius,"Marshall (et al.), 1988",10.0,0.09901115899874396,0.07455296998524757
+Listeria (leave one study out),Arrhenius,"Marshall (et al.), 1988",10.0,0.09624805688715111,0.07455296998524757
+Listeria (leave one study out),Arrhenius,nan,10.0,0.09555728135925291,0.07571918012215377
+Listeria (leave one study out),Arrhenius,"Marshall (et al.), 1988",10.0,0.06930781129912078,0.07455296998524757
+Listeria (leave one study out),Arrhenius,"Marshall (et al.), 1988",10.0,0.07230117192001304,0.07455296998524757
+Listeria (leave one study out),Arrhenius,"Marshall (et al.), 1988",10.0,0.08243254632918684,0.07455296998524757
+Listeria (leave one study out),Arrhenius,"Marshall (et al.), 1988",10.0,0.07874841018039637,0.07455296998524757
+Listeria (leave one study out),Arrhenius,"Marshall (et al.), 1988",10.0,0.08657719949657613,0.07455296998524757
+Listeria (leave one study out),Arrhenius,"Mathieu (et al.), 1994",7.0,0.07230117192001304,0.04142321783008693
+Listeria (leave one study out),Arrhenius,"Mathieu (et al.), 1994",15.0,0.19249611377430223,0.20025833624562636
+Listeria (leave one study out),Arrhenius,"Motlagh (et al.), 1992",4.0,0.017200310644665522,0.02287753975099764
+Listeria (leave one study out),Arrhenius,"Papageorgiou (et al.), 1989",4.0,0.015312190868410404,0.023364501825454
+Listeria (leave one study out),Arrhenius,"Papageorgiou (et al.), 1989",4.0,0.01402274321633374,0.023364501825454
+Listeria (leave one study out),Arrhenius,"Pearson (et al.), 1990",13.0,0.1351617449587505,0.13633166797128762
+Listeria (leave one study out),Arrhenius,"Pearson (et al.), 1990",13.0,0.1351617449587505,0.13633166797128762
+Listeria (leave one study out),Arrhenius,"Pearson (et al.), 1990",13.0,0.139997173654038,0.13633166797128762
+Listeria (leave one study out),Arrhenius,"Pearson (et al.), 1990",13.0,0.13401045241225348,0.13633166797128762
+Listeria (leave one study out),Arrhenius,"Pearson (et al.), 1990",13.0,0.13401045241225348,0.13633166797128762
+Listeria (leave one study out),Arrhenius,"Pearson (et al.), 1990",13.0,0.13723407154244513,0.13633166797128762
+Listeria (leave one study out),Arrhenius,"Pine (et al.), 1988",5.0,0.019203559675570345,0.028086464856575226
+Listeria (leave one study out),Arrhenius,"Rajkowski (et al.), 1994",12.0,0.1607204394909844,0.10808373571427994
+Listeria (leave one study out),Arrhenius,"Rajkowski (et al.), 1994",12.0,0.1908843042092064,0.10808373571427994
+Listeria (leave one study out),Arrhenius,"Rajkowski (et al.), 1994",12.0,0.14460234384002607,0.10808373571427994
+Listeria (leave one study out),Arrhenius,"Rajkowski (et al.), 1994",12.0,0.1706215553908588,0.10808373571427994
+Listeria (leave one study out),Arrhenius,"Rajkowski (et al.), 1994",12.0,0.17430569153964928,0.10808373571427994
+Listeria (leave one study out),Arrhenius,"Rajkowski (et al.), 1994",12.0,0.17637801812334392,0.10808373571427994
+Listeria (leave one study out),Arrhenius,"Rajkowski (et al.), 1994",12.0,0.10568865576842672,0.10808373571427994
+Listeria (leave one study out),Arrhenius,"Rajkowski (et al.), 1994",12.0,0.10292555365683384,0.10808373571427994
+Listeria (leave one study out),Arrhenius,"Rajkowski (et al.), 1994",12.0,0.08934030160816898,0.10808373571427994
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1987",4.0,0.021321937961124863,0.0226614433528467
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1987",4.0,0.02302585092994046,0.0226614433528467
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1987",4.0,0.02302585092994046,0.0226614433528467
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1987",13.0,0.1155897716683011,0.1368308556017587
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1987",13.0,0.11743183974269633,0.1368308556017587
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1987",13.0,0.15404294272130167,0.1368308556017587
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1993",13.0,0.14759570446091835,0.1315721923662733
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1993",13.0,0.14828647998881656,0.1315721923662733
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1993",13.0,0.15864811290728978,0.1315721923662733
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1993",13.0,0.1512798406097088,0.1315721923662733
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1993",13.0,0.14229975874703205,0.1315721923662733
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1993",13.0,0.16900974582576297,0.1315721923662733
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1993",13.0,0.15404294272130167,0.1315721923662733
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1993",13.0,0.1505890650818106,0.1315721923662733
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1993",13.0,0.14759570446091835,0.1315721923662733
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1993",13.0,0.1768385351419427,0.1315721923662733
+Listeria (leave one study out),Arrhenius,"Rosenow (et al.), 1993",13.0,0.14621415340512192,0.1315721923662733
+Listeria (leave one study out),Arrhenius,"Walker (et al.), 1990",0.0,0.011190563551951062,0.00950093068415811
+Listeria (leave one study out),Arrhenius,"Walker (et al.), 1990",0.0,0.011190563551951062,0.00950093068415811
+Listeria (leave one study out),Arrhenius,"Walker (et al.), 1990",5.0,0.028782313662425577,0.02725104182251124
+Listeria (leave one study out),Arrhenius,"Walker (et al.), 1990",7.5,0.04328859974828807,0.04550687222114449
+Listeria (leave one study out),Arrhenius,"Walker (et al.), 1990",9.3,0.1259514045867743,0.06545993629328424
+Listeria (leave one study out),Arrhenius,"Zapico (et al.), 1993",8.0,0.04858454546217437,0.051104686259205605
+Listeria (leave one study out),Arrhenius,"Zapico (et al.), 1993",8.0,0.046742477387779126,0.051104686259205605
+Listeria (leave one study out),Arrhenius,Modélisation a visée prévisionnelle de la cinétique de crois,3.0,0.006401186558523448,0.02015133453211805
+Listeria (leave one study out),Arrhenius,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.02555869453223391,0.02465650907486004
+Listeria (leave one study out),Arrhenius,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.02302585092994046,0.02465650907486004
+Listeria (leave one study out),Arrhenius,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.023256109439239864,0.02465650907486004
+Listeria (leave one study out),Arrhenius,Modélisation a visée prévisionnelle de la cinétique de crois,5.0,0.018305551489302668,0.03012515484778675
+Listeria (leave one study out),Arrhenius,Modélisation a visée prévisionnelle de la cinétique de crois,6.0,0.013401045241225346,0.03675392149304168
+Listeria (leave one study out),Arrhenius,Modélisation a visée prévisionnelle de la cinétique de crois,7.0,0.0349992934135095,0.04477766564281287
+Listeria (leave one study out),Arrhenius,Modélisation a visée prévisionnelle de la cinétique de crois,8.0,0.03960446359949759,0.05447649594713889
+Listeria (leave one study out),Arrhenius,Modélisation a visée prévisionnelle de la cinétique de crois,9.0,0.04559118484128211,0.06618404664420545
+Listeria (leave one study out),Arrhenius,Modélisation a visée prévisionnelle de la cinétique de crois,10.0,0.06240005602013864,0.08029718144620435
+Listeria (leave one study out),Arrhenius,Modélisation a visée prévisionnelle de la cinétique de crois,11.0,0.05411074968536008,0.09728736056885462
+Listeria (leave one study out),Arrhenius,Modélisation a visée prévisionnelle de la cinétique de crois,13.0,0.0948665058313547,0.14223970656654772
+Listeria (leave one study out),Arrhenius,Modélisation a visée prévisionnelle de la cinétique de crois,14.0,0.11789235676129516,0.1716490199054892
+Listeria (leave one study out),Arrhenius,Modélisation a visée prévisionnelle de la cinétique de crois,15.0,0.0999321930359416,0.2068689425480268
+Listeria (leave one study out),Arrhenius,"Myntzaw (et al.), 2023",8.4,0.07713660061530055,0.05463812323511819
+Listeria (leave one study out),Arrhenius,"Myntzaw (et al.), 2023",8.4,0.08703771651517493,0.05463812323511819
+Listeria (leave one study out),Arrhenius,"Myntzaw (et al.), 2023",8.4,0.07253143042931244,0.05463812323511819
+Listeria (leave one study out),Q10,"Denis (et al.), 1989",4.0,0.040295239127395806,0.02229193182704246
+Listeria (leave one study out),Q10,"Denis (et al.), 1989",15.0,0.18236473936512845,0.2069104395362363
+Listeria (leave one study out),Q10,"Donnelly (et al.), 1986",4.0,0.01591086299258886,0.021697286519181673
+Listeria (leave one study out),Q10,"Donnelly (et al.), 1986",4.0,0.04789376993427615,0.021697286519181673
+Listeria (leave one study out),Q10,"Donnelly (et al.), 1986",4.0,0.04835428695287497,0.021697286519181673
+Listeria (leave one study out),Q10,"Donnelly (et al.), 1986",10.0,0.06447238260383328,0.07395440315913239
+Listeria (leave one study out),Q10,"Donnelly (et al.), 1986",10.0,0.0957875398685523,0.07395440315913239
+Listeria (leave one study out),Q10,"Donnelly (et al.), 1986",10.0,0.09670857390574994,0.07395440315913239
+Listeria (leave one study out),Q10,"Donnelly (et al.), 1986",10.0,0.12779347266116955,0.07395440315913239
+Listeria (leave one study out),Q10,"Farrag (et al.), 1989",7.0,0.023256109439239864,0.04175603924211527
+Listeria (leave one study out),Q10,"Farrag (et al.), 1991",7.0,0.0349992934135095,0.04166806468949903
+Listeria (leave one study out),Q10,"Farrag (et al.), 1991",13.0,0.042597824220389845,0.14058783427920649
+Listeria (leave one study out),Q10,Food Standards Agency funded data generated at Champden and ,5.0,0.03131515726471902,0.02647994069669735
+Listeria (leave one study out),Q10,Food Standards Agency funded data generated at Champden and ,5.0,0.02740076260662915,0.02647994069669735
+Listeria (leave one study out),Q10,Food Standards Agency funded data generated at Champden and ,5.0,0.02970334769962319,0.02647994069669735
+Listeria (leave one study out),Q10,Food Standards Agency funded data generated at Champden and ,7.0,0.055492300741156506,0.039724236804599466
+Listeria (leave one study out),Q10,Food Standards Agency funded data generated at Champden and ,7.0,0.07414323999440828,0.039724236804599466
+Listeria (leave one study out),Q10,Food Standards Agency funded data generated at Champden and ,7.0,0.08012996123619279,0.039724236804599466
+Listeria (leave one study out),Q10,Food Standards Agency funded data generated at Champden and ,10.0,0.13124735030066062,0.07299000495897098
+Listeria (leave one study out),Q10,Food Standards Agency funded data generated at Champden and ,10.0,0.19917361054398497,0.07299000495897098
+Listeria (leave one study out),Q10,Food Standards Agency funded data generated at Champden and ,10.0,0.06378160707593507,0.07299000495897098
+Listeria (leave one study out),Q10,"Kamau (et al.), 1990",10.0,0.023716626457838674,0.0786718767699923
+Listeria (leave one study out),Q10,"Kamau (et al.), 1990",10.0,0.028321796643826766,0.0786718767699923
+Listeria (leave one study out),Q10,"Kamau (et al.), 1990",10.0,0.010799124086142075,0.0786718767699923
+Listeria (leave one study out),Q10,"Marshall (et al.), 1988",10.0,0.06930781129912078,0.07391194066620763
+Listeria (leave one study out),Q10,"Marshall (et al.), 1988",10.0,0.0856561654593785,0.07391194066620763
+Listeria (leave one study out),Q10,"Marshall (et al.), 1988",10.0,0.09555728135925291,0.07391194066620763
+Listeria (leave one study out),Q10,"Marshall (et al.), 1988",10.0,0.09762960794294755,0.07391194066620763
+Listeria (leave one study out),Q10,"Marshall (et al.), 1988",10.0,0.10200451961963623,0.07391194066620763
+Listeria (leave one study out),Q10,"Marshall (et al.), 1988",10.0,0.06976832831771959,0.07391194066620763
+Listeria (leave one study out),Q10,"Marshall (et al.), 1988",10.0,0.08772849204307315,0.07391194066620763
+Listeria (leave one study out),Q10,"Marshall (et al.), 1988",10.0,0.09901115899874396,0.07391194066620763
+Listeria (leave one study out),Q10,"Marshall (et al.), 1988",10.0,0.09624805688715111,0.07391194066620763
+Listeria (leave one study out),Q10,nan,10.0,0.09555728135925291,0.07515098697958779
+Listeria (leave one study out),Q10,"Marshall (et al.), 1988",10.0,0.06930781129912078,0.07391194066620763
+Listeria (leave one study out),Q10,"Marshall (et al.), 1988",10.0,0.07230117192001304,0.07391194066620763
+Listeria (leave one study out),Q10,"Marshall (et al.), 1988",10.0,0.08243254632918684,0.07391194066620763
+Listeria (leave one study out),Q10,"Marshall (et al.), 1988",10.0,0.07874841018039637,0.07391194066620763
+Listeria (leave one study out),Q10,"Marshall (et al.), 1988",10.0,0.08657719949657613,0.07391194066620763
+Listeria (leave one study out),Q10,"Mathieu (et al.), 1994",7.0,0.07230117192001304,0.041081500253599836
+Listeria (leave one study out),Q10,"Mathieu (et al.), 1994",15.0,0.19249611377430223,0.20476165309984268
+Listeria (leave one study out),Q10,"Motlagh (et al.), 1992",4.0,0.017200310644665522,0.022978390579212967
+Listeria (leave one study out),Q10,"Papageorgiou (et al.), 1989",4.0,0.015312190868410404,0.02346858427072004
+Listeria (leave one study out),Q10,"Papageorgiou (et al.), 1989",4.0,0.01402274321633374,0.02346858427072004
+Listeria (leave one study out),Q10,"Pearson (et al.), 1990",13.0,0.1351617449587505,0.1372170003483463
+Listeria (leave one study out),Q10,"Pearson (et al.), 1990",13.0,0.1351617449587505,0.1372170003483463
+Listeria (leave one study out),Q10,"Pearson (et al.), 1990",13.0,0.139997173654038,0.1372170003483463
+Listeria (leave one study out),Q10,"Pearson (et al.), 1990",13.0,0.13401045241225348,0.1372170003483463
+Listeria (leave one study out),Q10,"Pearson (et al.), 1990",13.0,0.13401045241225348,0.1372170003483463
+Listeria (leave one study out),Q10,"Pearson (et al.), 1990",13.0,0.13723407154244513,0.1372170003483463
+Listeria (leave one study out),Q10,"Pine (et al.), 1988",5.0,0.019203559675570345,0.0280502786835578
+Listeria (leave one study out),Q10,"Rajkowski (et al.), 1994",12.0,0.1607204394909844,0.1080713404882176
+Listeria (leave one study out),Q10,"Rajkowski (et al.), 1994",12.0,0.1908843042092064,0.1080713404882176
+Listeria (leave one study out),Q10,"Rajkowski (et al.), 1994",12.0,0.14460234384002607,0.1080713404882176
+Listeria (leave one study out),Q10,"Rajkowski (et al.), 1994",12.0,0.1706215553908588,0.1080713404882176
+Listeria (leave one study out),Q10,"Rajkowski (et al.), 1994",12.0,0.17430569153964928,0.1080713404882176
+Listeria (leave one study out),Q10,"Rajkowski (et al.), 1994",12.0,0.17637801812334392,0.1080713404882176
+Listeria (leave one study out),Q10,"Rajkowski (et al.), 1994",12.0,0.10568865576842672,0.1080713404882176
+Listeria (leave one study out),Q10,"Rajkowski (et al.), 1994",12.0,0.10292555365683384,0.1080713404882176
+Listeria (leave one study out),Q10,"Rajkowski (et al.), 1994",12.0,0.08934030160816898,0.1080713404882176
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1987",4.0,0.021321937961124863,0.02276648216922267
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1987",4.0,0.02302585092994046,0.02276648216922267
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1987",4.0,0.02302585092994046,0.02276648216922267
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1987",13.0,0.1155897716683011,0.137652677316272
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1987",13.0,0.11743183974269633,0.137652677316272
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1987",13.0,0.15404294272130167,0.137652677316272
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1993",13.0,0.14759570446091835,0.13248906451460088
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1993",13.0,0.14828647998881656,0.13248906451460088
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1993",13.0,0.15864811290728978,0.13248906451460088
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1993",13.0,0.1512798406097088,0.13248906451460088
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1993",13.0,0.14229975874703205,0.13248906451460088
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1993",13.0,0.16900974582576297,0.13248906451460088
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1993",13.0,0.15404294272130167,0.13248906451460088
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1993",13.0,0.1505890650818106,0.13248906451460088
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1993",13.0,0.14759570446091835,0.13248906451460088
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1993",13.0,0.1768385351419427,0.13248906451460088
+Listeria (leave one study out),Q10,"Rosenow (et al.), 1993",13.0,0.14621415340512192,0.13248906451460088
+Listeria (leave one study out),Q10,"Walker (et al.), 1990",0.0,0.011190563551951062,0.00999103544057086
+Listeria (leave one study out),Q10,"Walker (et al.), 1990",0.0,0.011190563551951062,0.00999103544057086
+Listeria (leave one study out),Q10,"Walker (et al.), 1990",5.0,0.028782313662425577,0.027330952911527356
+Listeria (leave one study out),Q10,"Walker (et al.), 1990",7.5,0.04328859974828807,0.04520400466987064
+Listeria (leave one study out),Q10,"Walker (et al.), 1990",9.3,0.1259514045867743,0.06494008457558922
+Listeria (leave one study out),Q10,"Zapico (et al.), 1993",8.0,0.04858454546217437,0.050622795320220355
+Listeria (leave one study out),Q10,"Zapico (et al.), 1993",8.0,0.046742477387779126,0.050622795320220355
+Listeria (leave one study out),Q10,Modélisation a visée prévisionnelle de la cinétique de crois,3.0,0.006401186558523448,0.02035757572023501
+Listeria (leave one study out),Q10,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.02555869453223391,0.024741806230763105
+Listeria (leave one study out),Q10,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.02302585092994046,0.024741806230763105
+Listeria (leave one study out),Q10,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.023256109439239864,0.024741806230763105
+Listeria (leave one study out),Q10,Modélisation a visée prévisionnelle de la cinétique de crois,5.0,0.018305551489302668,0.030070229578080674
+Listeria (leave one study out),Q10,Modélisation a visée prévisionnelle de la cinétique de crois,6.0,0.013401045241225346,0.036546188198426824
+Listeria (leave one study out),Q10,Modélisation a visée prévisionnelle de la cinétique de crois,7.0,0.0349992934135095,0.04441681658487966
+Listeria (leave one study out),Q10,Modélisation a visée prévisionnelle de la cinétique de crois,8.0,0.03960446359949759,0.053982472394200724
+Listeria (leave one study out),Q10,Modélisation a visée prévisionnelle de la cinétique de crois,9.0,0.04559118484128211,0.06560819864750643
+Listeria (leave one study out),Q10,Modélisation a visée prévisionnelle de la cinétique de crois,10.0,0.06240005602013864,0.07973765444342792
+Listeria (leave one study out),Q10,Modélisation a visée prévisionnelle de la cinétique de crois,11.0,0.05411074968536008,0.09691004580539833
+Listeria (leave one study out),Q10,Modélisation a visée prévisionnelle de la cinétique de crois,13.0,0.0948665058313547,0.14314608801351913
+Listeria (leave one study out),Q10,Modélisation a visée prévisionnelle de la cinétique de crois,14.0,0.11789235676129516,0.17397419127867383
+Listeria (leave one study out),Q10,Modélisation a visée prévisionnelle de la cinétique de crois,15.0,0.0999321930359416,0.2114414696977962
+Listeria (leave one study out),Q10,"Myntzaw (et al.), 2023",8.4,0.07713660061530055,0.05410826793604111
+Listeria (leave one study out),Q10,"Myntzaw (et al.), 2023",8.4,0.08703771651517493,0.05410826793604111
+Listeria (leave one study out),Q10,"Myntzaw (et al.), 2023",8.4,0.07253143042931244,0.05410826793604111
+Listeria (leave one study out),Davey,"Denis (et al.), 1989",4.0,0.040295239127395806,0.021966052455381163
+Listeria (leave one study out),Davey,"Denis (et al.), 1989",15.0,0.18236473936512845,0.1877190854798513
+Listeria (leave one study out),Davey,"Donnelly (et al.), 1986",4.0,0.01591086299258886,0.021370951282850815
+Listeria (leave one study out),Davey,"Donnelly (et al.), 1986",4.0,0.04789376993427615,0.021370951282850815
+Listeria (leave one study out),Davey,"Donnelly (et al.), 1986",4.0,0.04835428695287497,0.021370951282850815
+Listeria (leave one study out),Davey,"Donnelly (et al.), 1986",10.0,0.06447238260383328,0.07625166879984115
+Listeria (leave one study out),Davey,"Donnelly (et al.), 1986",10.0,0.0957875398685523,0.07625166879984115
+Listeria (leave one study out),Davey,"Donnelly (et al.), 1986",10.0,0.09670857390574994,0.07625166879984115
+Listeria (leave one study out),Davey,"Donnelly (et al.), 1986",10.0,0.12779347266116955,0.07625166879984115
+Listeria (leave one study out),Davey,"Farrag (et al.), 1989",7.0,0.023256109439239864,0.043493965680689146
+Listeria (leave one study out),Davey,"Farrag (et al.), 1991",7.0,0.0349992934135095,0.04295153592693908
+Listeria (leave one study out),Davey,"Farrag (et al.), 1991",13.0,0.042597824220389845,0.13750878795737298
+Listeria (leave one study out),Davey,Food Standards Agency funded data generated at Champden and ,5.0,0.03131515726471902,0.02657875603983697
+Listeria (leave one study out),Davey,Food Standards Agency funded data generated at Champden and ,5.0,0.02740076260662915,0.02657875603983697
+Listeria (leave one study out),Davey,Food Standards Agency funded data generated at Champden and ,5.0,0.02970334769962319,0.02657875603983697
+Listeria (leave one study out),Davey,Food Standards Agency funded data generated at Champden and ,7.0,0.055492300741156506,0.04022944169479301
+Listeria (leave one study out),Davey,Food Standards Agency funded data generated at Champden and ,7.0,0.07414323999440828,0.04022944169479301
+Listeria (leave one study out),Davey,Food Standards Agency funded data generated at Champden and ,7.0,0.08012996123619279,0.04022944169479301
+Listeria (leave one study out),Davey,Food Standards Agency funded data generated at Champden and ,10.0,0.13124735030066062,0.0737977388888925
+Listeria (leave one study out),Davey,Food Standards Agency funded data generated at Champden and ,10.0,0.19917361054398497,0.0737977388888925
+Listeria (leave one study out),Davey,Food Standards Agency funded data generated at Champden and ,10.0,0.06378160707593507,0.0737977388888925
+Listeria (leave one study out),Davey,"Kamau (et al.), 1990",10.0,0.023716626457838674,0.08345201658344606
+Listeria (leave one study out),Davey,"Kamau (et al.), 1990",10.0,0.028321796643826766,0.08345201658344606
+Listeria (leave one study out),Davey,"Kamau (et al.), 1990",10.0,0.010799124086142075,0.08345201658344606
+Listeria (leave one study out),Davey,"Marshall (et al.), 1988",10.0,0.06930781129912078,0.07579940963998344
+Listeria (leave one study out),Davey,"Marshall (et al.), 1988",10.0,0.0856561654593785,0.07579940963998344
+Listeria (leave one study out),Davey,"Marshall (et al.), 1988",10.0,0.09555728135925291,0.07579940963998344
+Listeria (leave one study out),Davey,"Marshall (et al.), 1988",10.0,0.09762960794294755,0.07579940963998344
+Listeria (leave one study out),Davey,"Marshall (et al.), 1988",10.0,0.10200451961963623,0.07579940963998344
+Listeria (leave one study out),Davey,"Marshall (et al.), 1988",10.0,0.06976832831771959,0.07579940963998344
+Listeria (leave one study out),Davey,"Marshall (et al.), 1988",10.0,0.08772849204307315,0.07579940963998344
+Listeria (leave one study out),Davey,"Marshall (et al.), 1988",10.0,0.09901115899874396,0.07579940963998344
+Listeria (leave one study out),Davey,"Marshall (et al.), 1988",10.0,0.09624805688715111,0.07579940963998344
+Listeria (leave one study out),Davey,nan,10.0,0.09555728135925291,0.07741598448311678
+Listeria (leave one study out),Davey,"Marshall (et al.), 1988",10.0,0.06930781129912078,0.07579940963998344
+Listeria (leave one study out),Davey,"Marshall (et al.), 1988",10.0,0.07230117192001304,0.07579940963998344
+Listeria (leave one study out),Davey,"Marshall (et al.), 1988",10.0,0.08243254632918684,0.07579940963998344
+Listeria (leave one study out),Davey,"Marshall (et al.), 1988",10.0,0.07874841018039637,0.07579940963998344
+Listeria (leave one study out),Davey,"Marshall (et al.), 1988",10.0,0.08657719949657613,0.07579940963998344
+Listeria (leave one study out),Davey,"Mathieu (et al.), 1994",7.0,0.07230117192001304,0.042409533775761434
+Listeria (leave one study out),Davey,"Mathieu (et al.), 1994",15.0,0.19249611377430223,0.18835350889973312
+Listeria (leave one study out),Davey,"Motlagh (et al.), 1992",4.0,0.017200310644665522,0.022633692760770138
+Listeria (leave one study out),Davey,"Papageorgiou (et al.), 1989",4.0,0.015312190868410404,0.02312708171991053
+Listeria (leave one study out),Davey,"Papageorgiou (et al.), 1989",4.0,0.01402274321633374,0.02312708171991053
+Listeria (leave one study out),Davey,"Pearson (et al.), 1990",13.0,0.1351617449587505,0.1331915039866932
+Listeria (leave one study out),Davey,"Pearson (et al.), 1990",13.0,0.1351617449587505,0.1331915039866932
+Listeria (leave one study out),Davey,"Pearson (et al.), 1990",13.0,0.139997173654038,0.1331915039866932
+Listeria (leave one study out),Davey,"Pearson (et al.), 1990",13.0,0.13401045241225348,0.1331915039866932
+Listeria (leave one study out),Davey,"Pearson (et al.), 1990",13.0,0.13401045241225348,0.1331915039866932
+Listeria (leave one study out),Davey,"Pearson (et al.), 1990",13.0,0.13723407154244513,0.1331915039866932
+Listeria (leave one study out),Davey,"Pine (et al.), 1988",5.0,0.019203559675570345,0.028285539010814084
+Listeria (leave one study out),Davey,"Rajkowski (et al.), 1994",12.0,0.1607204394909844,0.10791172425778567
+Listeria (leave one study out),Davey,"Rajkowski (et al.), 1994",12.0,0.1908843042092064,0.10791172425778567
+Listeria (leave one study out),Davey,"Rajkowski (et al.), 1994",12.0,0.14460234384002607,0.10791172425778567
+Listeria (leave one study out),Davey,"Rajkowski (et al.), 1994",12.0,0.1706215553908588,0.10791172425778567
+Listeria (leave one study out),Davey,"Rajkowski (et al.), 1994",12.0,0.17430569153964928,0.10791172425778567
+Listeria (leave one study out),Davey,"Rajkowski (et al.), 1994",12.0,0.17637801812334392,0.10791172425778567
+Listeria (leave one study out),Davey,"Rajkowski (et al.), 1994",12.0,0.10568865576842672,0.10791172425778567
+Listeria (leave one study out),Davey,"Rajkowski (et al.), 1994",12.0,0.10292555365683384,0.10791172425778567
+Listeria (leave one study out),Davey,"Rajkowski (et al.), 1994",12.0,0.08934030160816898,0.10791172425778567
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1987",4.0,0.021321937961124863,0.022410768110340838
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1987",4.0,0.02302585092994046,0.022410768110340838
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1987",4.0,0.02302585092994046,0.022410768110340838
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1987",13.0,0.1155897716683011,0.13407718632863777
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1987",13.0,0.11743183974269633,0.13407718632863777
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1987",13.0,0.15404294272130167,0.13407718632863777
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1993",13.0,0.14759570446091835,0.12669197043438077
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1993",13.0,0.14828647998881656,0.12669197043438077
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1993",13.0,0.15864811290728978,0.12669197043438077
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1993",13.0,0.1512798406097088,0.12669197043438077
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1993",13.0,0.14229975874703205,0.12669197043438077
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1993",13.0,0.16900974582576297,0.12669197043438077
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1993",13.0,0.15404294272130167,0.12669197043438077
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1993",13.0,0.1505890650818106,0.12669197043438077
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1993",13.0,0.14759570446091835,0.12669197043438077
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1993",13.0,0.1768385351419427,0.12669197043438077
+Listeria (leave one study out),Davey,"Rosenow (et al.), 1993",13.0,0.14621415340512192,0.12669197043438077
+Listeria (leave one study out),Davey,"Walker (et al.), 1990",0.0,0.011190563551951062,0.006501459098944974
+Listeria (leave one study out),Davey,"Walker (et al.), 1990",0.0,0.011190563551951062,0.006501459098944974
+Listeria (leave one study out),Davey,"Walker (et al.), 1990",5.0,0.028782313662425577,0.026848940778544113
+Listeria (leave one study out),Davey,"Walker (et al.), 1990",7.5,0.04328859974828807,0.048062334773022936
+Listeria (leave one study out),Davey,"Walker (et al.), 1990",9.3,0.1259514045867743,0.06958585766263793
+Listeria (leave one study out),Davey,"Zapico (et al.), 1993",8.0,0.04858454546217437,0.05282803651425849
+Listeria (leave one study out),Davey,"Zapico (et al.), 1993",8.0,0.046742477387779126,0.05282803651425849
+Listeria (leave one study out),Davey,Modélisation a visée prévisionnelle de la cinétique de crois,3.0,0.006401186558523448,0.019833406402278056
+Listeria (leave one study out),Davey,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.02555869453223391,0.024542949190094414
+Listeria (leave one study out),Davey,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.02302585092994046,0.024542949190094414
+Listeria (leave one study out),Davey,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.023256109439239864,0.024542949190094414
+Listeria (leave one study out),Davey,Modélisation a visée prévisionnelle de la cinétique de crois,5.0,0.018305551489302668,0.030249743564985707
+Listeria (leave one study out),Davey,Modélisation a visée prévisionnelle de la cinétique de crois,6.0,0.013401045241225346,0.037137464336787315
+Listeria (leave one study out),Davey,Modélisation a visée prévisionnelle de la cinétique de crois,7.0,0.0349992934135095,0.04541798854137167
+Listeria (leave one study out),Davey,Modélisation a visée prévisionnelle de la cinétique de crois,8.0,0.03960446359949759,0.055334700185842696
+Listeria (leave one study out),Davey,Modélisation a visée prévisionnelle de la cinétique de crois,9.0,0.04559118484128211,0.0671660168423153
+Listeria (leave one study out),Davey,Modélisation a visée prévisionnelle de la cinétique de crois,10.0,0.06240005602013864,0.08122912845198897
+Listeria (leave one study out),Davey,Modélisation a visée prévisionnelle de la cinétique de crois,11.0,0.05411074968536008,0.09788393441846069
+Listeria (leave one study out),Davey,Modélisation a visée prévisionnelle de la cinétique de crois,13.0,0.0948665058313547,0.1406466322181601
+Listeria (leave one study out),Davey,Modélisation a visée prévisionnelle de la cinétique de crois,14.0,0.11789235676129516,0.16772567650619866
+Listeria (leave one study out),Davey,Modélisation a visée prévisionnelle de la cinétique de crois,15.0,0.0999321930359416,0.1993476183113562
+Listeria (leave one study out),Davey,"Myntzaw (et al.), 2023",8.4,0.07713660061530055,0.055762412214594666
+Listeria (leave one study out),Davey,"Myntzaw (et al.), 2023",8.4,0.08703771651517493,0.055762412214594666
+Listeria (leave one study out),Davey,"Myntzaw (et al.), 2023",8.4,0.07253143042931244,0.055762412214594666
+Listeria (leave one study out),neural,"Denis (et al.), 1989",4.0,0.040295239127395806,0.020346689996164163
+Listeria (leave one study out),neural,"Denis (et al.), 1989",15.0,0.18236473936512845,0.17491059407967627
+Listeria (leave one study out),neural,"Donnelly (et al.), 1986",4.0,0.01591086299258886,0.019193933091030065
+Listeria (leave one study out),neural,"Donnelly (et al.), 1986",4.0,0.04789376993427615,0.019193933091030065
+Listeria (leave one study out),neural,"Donnelly (et al.), 1986",4.0,0.04835428695287497,0.019193933091030065
+Listeria (leave one study out),neural,"Donnelly (et al.), 1986",10.0,0.06447238260383328,0.07744143940843759
+Listeria (leave one study out),neural,"Donnelly (et al.), 1986",10.0,0.0957875398685523,0.07744143940843759
+Listeria (leave one study out),neural,"Donnelly (et al.), 1986",10.0,0.09670857390574994,0.07744143940843759
+Listeria (leave one study out),neural,"Donnelly (et al.), 1986",10.0,0.12779347266116955,0.07744143940843759
+Listeria (leave one study out),neural,"Farrag (et al.), 1989",7.0,0.023256109439239864,0.04506484000277158
+Listeria (leave one study out),neural,"Farrag (et al.), 1991",7.0,0.0349992934135095,0.04348681644382703
+Listeria (leave one study out),neural,"Farrag (et al.), 1991",13.0,0.042597824220389845,0.13742260770583486
+Listeria (leave one study out),neural,Food Standards Agency funded data generated at Champden and ,5.0,0.03131515726471902,0.02376543539870915
+Listeria (leave one study out),neural,Food Standards Agency funded data generated at Champden and ,5.0,0.02740076260662915,0.02376543539870915
+Listeria (leave one study out),neural,Food Standards Agency funded data generated at Champden and ,5.0,0.02970334769962319,0.02376543539870915
+Listeria (leave one study out),neural,Food Standards Agency funded data generated at Champden and ,7.0,0.055492300741156506,0.03664219265354296
+Listeria (leave one study out),neural,Food Standards Agency funded data generated at Champden and ,7.0,0.07414323999440828,0.03664219265354296
+Listeria (leave one study out),neural,Food Standards Agency funded data generated at Champden and ,7.0,0.08012996123619279,0.03664219265354296
+Listeria (leave one study out),neural,Food Standards Agency funded data generated at Champden and ,10.0,0.13124735030066062,0.07711667390221552
+Listeria (leave one study out),neural,Food Standards Agency funded data generated at Champden and ,10.0,0.19917361054398497,0.07711667390221552
+Listeria (leave one study out),neural,Food Standards Agency funded data generated at Champden and ,10.0,0.06378160707593507,0.07711667390221552
+Listeria (leave one study out),neural,"Kamau (et al.), 1990",10.0,0.023716626457838674,0.08589158745215114
+Listeria (leave one study out),neural,"Kamau (et al.), 1990",10.0,0.028321796643826766,0.08589158745215114
+Listeria (leave one study out),neural,"Kamau (et al.), 1990",10.0,0.010799124086142075,0.08589158745215114
+Listeria (leave one study out),neural,"Marshall (et al.), 1988",10.0,0.06930781129912078,0.07569680367853257
+Listeria (leave one study out),neural,"Marshall (et al.), 1988",10.0,0.0856561654593785,0.07569680367853257
+Listeria (leave one study out),neural,"Marshall (et al.), 1988",10.0,0.09555728135925291,0.07569680367853257
+Listeria (leave one study out),neural,"Marshall (et al.), 1988",10.0,0.09762960794294755,0.07569680367853257
+Listeria (leave one study out),neural,"Marshall (et al.), 1988",10.0,0.10200451961963623,0.07569680367853257
+Listeria (leave one study out),neural,"Marshall (et al.), 1988",10.0,0.06976832831771959,0.07569680367853257
+Listeria (leave one study out),neural,"Marshall (et al.), 1988",10.0,0.08772849204307315,0.07569680367853257
+Listeria (leave one study out),neural,"Marshall (et al.), 1988",10.0,0.09901115899874396,0.07569680367853257
+Listeria (leave one study out),neural,"Marshall (et al.), 1988",10.0,0.09624805688715111,0.07569680367853257
+Listeria (leave one study out),neural,nan,10.0,0.09555728135925291,0.07927449600905354
+Listeria (leave one study out),neural,"Marshall (et al.), 1988",10.0,0.06930781129912078,0.07569680367853257
+Listeria (leave one study out),neural,"Marshall (et al.), 1988",10.0,0.07230117192001304,0.07569680367853257
+Listeria (leave one study out),neural,"Marshall (et al.), 1988",10.0,0.08243254632918684,0.07569680367853257
+Listeria (leave one study out),neural,"Marshall (et al.), 1988",10.0,0.07874841018039637,0.07569680367853257
+Listeria (leave one study out),neural,"Marshall (et al.), 1988",10.0,0.08657719949657613,0.07569680367853257
+Listeria (leave one study out),neural,"Mathieu (et al.), 1994",7.0,0.07230117192001304,0.04224082253763068
+Listeria (leave one study out),neural,"Mathieu (et al.), 1994",15.0,0.19249611377430223,0.17686025897337823
+Listeria (leave one study out),neural,"Motlagh (et al.), 1992",4.0,0.017200310644665522,0.021386231670839265
+Listeria (leave one study out),neural,"Papageorgiou (et al.), 1989",4.0,0.015312190868410404,0.02196967454841801
+Listeria (leave one study out),neural,"Papageorgiou (et al.), 1989",4.0,0.01402274321633374,0.02196967454841801
+Listeria (leave one study out),neural,"Pearson (et al.), 1990",13.0,0.1351617449587505,0.13218665967081208
+Listeria (leave one study out),neural,"Pearson (et al.), 1990",13.0,0.1351617449587505,0.13218665967081208
+Listeria (leave one study out),neural,"Pearson (et al.), 1990",13.0,0.139997173654038,0.13218665967081208
+Listeria (leave one study out),neural,"Pearson (et al.), 1990",13.0,0.13401045241225348,0.13218665967081208
+Listeria (leave one study out),neural,"Pearson (et al.), 1990",13.0,0.13401045241225348,0.13218665967081208
+Listeria (leave one study out),neural,"Pearson (et al.), 1990",13.0,0.13723407154244513,0.13218665967081208
+Listeria (leave one study out),neural,"Pine (et al.), 1988",5.0,0.019203559675570345,0.02744906138928794
+Listeria (leave one study out),neural,"Rajkowski (et al.), 1994",12.0,0.1607204394909844,0.10790584985088268
+Listeria (leave one study out),neural,"Rajkowski (et al.), 1994",12.0,0.1908843042092064,0.10790584985088268
+Listeria (leave one study out),neural,"Rajkowski (et al.), 1994",12.0,0.14460234384002607,0.10790584985088268
+Listeria (leave one study out),neural,"Rajkowski (et al.), 1994",12.0,0.1706215553908588,0.10790584985088268
+Listeria (leave one study out),neural,"Rajkowski (et al.), 1994",12.0,0.17430569153964928,0.10790584985088268
+Listeria (leave one study out),neural,"Rajkowski (et al.), 1994",12.0,0.17637801812334392,0.10790584985088268
+Listeria (leave one study out),neural,"Rajkowski (et al.), 1994",12.0,0.10568865576842672,0.10790584985088268
+Listeria (leave one study out),neural,"Rajkowski (et al.), 1994",12.0,0.10292555365683384,0.10790584985088268
+Listeria (leave one study out),neural,"Rajkowski (et al.), 1994",12.0,0.08934030160816898,0.10790584985088268
+Listeria (leave one study out),neural,"Rosenow (et al.), 1987",4.0,0.021321937961124863,0.020908660104344348
+Listeria (leave one study out),neural,"Rosenow (et al.), 1987",4.0,0.02302585092994046,0.020908660104344348
+Listeria (leave one study out),neural,"Rosenow (et al.), 1987",4.0,0.02302585092994046,0.020908660104344348
+Listeria (leave one study out),neural,"Rosenow (et al.), 1987",13.0,0.1155897716683011,0.1331731754765586
+Listeria (leave one study out),neural,"Rosenow (et al.), 1987",13.0,0.11743183974269633,0.1331731754765586
+Listeria (leave one study out),neural,"Rosenow (et al.), 1987",13.0,0.15404294272130167,0.1331731754765586
+Listeria (leave one study out),neural,"Rosenow (et al.), 1993",13.0,0.14759570446091835,0.12394867903710695
+Listeria (leave one study out),neural,"Rosenow (et al.), 1993",13.0,0.14828647998881656,0.12394867903710695
+Listeria (leave one study out),neural,"Rosenow (et al.), 1993",13.0,0.15864811290728978,0.12394867903710695
+Listeria (leave one study out),neural,"Rosenow (et al.), 1993",13.0,0.1512798406097088,0.12394867903710695
+Listeria (leave one study out),neural,"Rosenow (et al.), 1993",13.0,0.14229975874703205,0.12394867903710695
+Listeria (leave one study out),neural,"Rosenow (et al.), 1993",13.0,0.16900974582576297,0.12394867903710695
+Listeria (leave one study out),neural,"Rosenow (et al.), 1993",13.0,0.15404294272130167,0.12394867903710695
+Listeria (leave one study out),neural,"Rosenow (et al.), 1993",13.0,0.1505890650818106,0.12394867903710695
+Listeria (leave one study out),neural,"Rosenow (et al.), 1993",13.0,0.14759570446091835,0.12394867903710695
+Listeria (leave one study out),neural,"Rosenow (et al.), 1993",13.0,0.1768385351419427,0.12394867903710695
+Listeria (leave one study out),neural,"Rosenow (et al.), 1993",13.0,0.14621415340512192,0.12394867903710695
+Listeria (leave one study out),neural,"Walker (et al.), 1990",0.0,0.011190563551951062,0.0036834514085578077
+Listeria (leave one study out),neural,"Walker (et al.), 1990",0.0,0.011190563551951062,0.0036834514085578077
+Listeria (leave one study out),neural,"Walker (et al.), 1990",5.0,0.028782313662425577,0.02756966668432879
+Listeria (leave one study out),neural,"Walker (et al.), 1990",7.5,0.04328859974828807,0.04865276096766531
+Listeria (leave one study out),neural,"Walker (et al.), 1990",9.3,0.1259514045867743,0.0676674210534123
+Listeria (leave one study out),neural,"Zapico (et al.), 1993",8.0,0.04858454546217437,0.05407638235997303
+Listeria (leave one study out),neural,"Zapico (et al.), 1993",8.0,0.046742477387779126,0.05407638235997303
+Listeria (leave one study out),neural,Modélisation a visée prévisionnelle de la cinétique de crois,3.0,0.006401186558523448,0.018299573919615838
+Listeria (leave one study out),neural,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.02555869453223391,0.023529409154158586
+Listeria (leave one study out),neural,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.02302585092994046,0.023529409154158586
+Listeria (leave one study out),neural,Modélisation a visée prévisionnelle de la cinétique de crois,4.0,0.023256109439239864,0.023529409154158586
+Listeria (leave one study out),neural,Modélisation a visée prévisionnelle de la cinétique de crois,5.0,0.018305551489302668,0.03016218971307397
+Listeria (leave one study out),neural,Modélisation a visée prévisionnelle de la cinétique de crois,6.0,0.013401045241225346,0.03798870303928089
+Listeria (leave one study out),neural,Modélisation a visée prévisionnelle de la cinétique de crois,7.0,0.0349992934135095,0.04688589507245828
+Listeria (leave one study out),neural,Modélisation a visée prévisionnelle de la cinétique de crois,8.0,0.03960446359949759,0.056798284272612895
+Listeria (leave one study out),neural,Modélisation a visée prévisionnelle de la cinétique de crois,9.0,0.04559118484128211,0.06770509130471186
+Listeria (leave one study out),neural,Modélisation a visée prévisionnelle de la cinétique de crois,10.0,0.06240005602013864,0.0798787029117842
+Listeria (leave one study out),neural,Modélisation a visée prévisionnelle de la cinétique de crois,11.0,0.05411074968536008,0.09808461006048907
+Listeria (leave one study out),neural,Modélisation a visée prévisionnelle de la cinétique de crois,13.0,0.0948665058313547,0.14238741645376213
+Listeria (leave one study out),neural,Modélisation a visée prévisionnelle de la cinétique de crois,14.0,0.11789235676129516,0.16767355188684324
+Listeria (leave one study out),neural,Modélisation a visée prévisionnelle de la cinétique de crois,15.0,0.0999321930359416,0.19505837740071946
+Listeria (leave one study out),neural,"Myntzaw (et al.), 2023",8.4,0.07713660061530055,0.056153847852585315
+Listeria (leave one study out),neural,"Myntzaw (et al.), 2023",8.4,0.08703771651517493,0.056153847852585315
+Listeria (leave one study out),neural,"Myntzaw (et al.), 2023",8.4,0.07253143042931244,0.056153847852585315
+Spoilage flora (5-fold),square-root,2,2.7,0.039374205090198185,0.05060114530973412
+Spoilage flora (5-fold),square-root,1,3.4,0.03200593279261724,0.062450569673535024
+Spoilage flora (5-fold),square-root,3,3.4,0.06078824645504281,0.0614544043576403
+Spoilage flora (5-fold),square-root,0,4.2,0.07690634210600113,0.07092822146255653
+Spoilage flora (5-fold),square-root,3,4.2,0.07207091341071364,0.07253537895146821
+Spoilage flora (5-fold),square-root,2,4.3,0.09809012496154636,0.07225888345184213
+Spoilage flora (5-fold),square-root,4,4.6,0.0900310771360672,0.07507545954808013
+Spoilage flora (5-fold),square-root,0,4.9,0.08289306334778565,0.08127199198040257
+Spoilage flora (5-fold),square-root,3,5.0,0.09118236968256423,0.08453432402305122
+Spoilage flora (5-fold),square-root,1,5.2,0.11259641104740885,0.08848495476806213
+Spoilage flora (5-fold),square-root,4,5.7,0.11328718657530706,0.09242440592543993
+Spoilage flora (5-fold),square-root,4,5.8,0.11973442483569038,0.09409092722318074
+Spoilage flora (5-fold),square-root,1,5.9,0.09924141750804338,0.09983133070090985
+Spoilage flora (5-fold),square-root,2,5.9,0.11950416632639099,0.09776457203682579
+Spoilage flora (5-fold),square-root,0,6.3,0.11789235676129516,0.10407091151927468
+Spoilage flora (5-fold),square-root,3,6.6,0.11190563551951062,0.11128612559948249
+Spoilage flora (5-fold),square-root,1,6.6,0.12940528222626538,0.1118619666244552
+Spoilage flora (5-fold),square-root,3,6.8,0.05572255925045591,0.11488827999340506
+Spoilage flora (5-fold),square-root,3,7.3,0.141148466200535,0.1241446735307226
+Spoilage flora (5-fold),square-root,1,7.4,0.12687243862397193,0.12644913419915735
+Spoilage flora (5-fold),square-root,2,8.1,0.13930639812613976,0.13911787542368623
+Spoilage flora (5-fold),square-root,2,8.2,0.1503588065725112,0.14117042818098094
+Spoilage flora (5-fold),square-root,4,8.7,0.14160898321913382,0.14889751054764086
+Spoilage flora (5-fold),square-root,4,8.8,0.16256250756537963,0.1510107536171042
+Spoilage flora (5-fold),square-root,1,8.8,0.1556547522863975,0.1541272088542216
+Spoilage flora (5-fold),square-root,2,9.3,0.14345105129352906,0.1647405582347767
+Spoilage flora (5-fold),square-root,1,9.4,0.1901935286813082,0.1668271102256137
+Spoilage flora (5-fold),square-root,0,9.6,0.172463623465254,0.1689498206991071
+Spoilage flora (5-fold),square-root,0,9.6,0.1515100991190082,0.1689498206991071
+Spoilage flora (5-fold),square-root,3,9.9,0.19779205948818857,0.17805826527688792
+Spoilage flora (5-fold),square-root,1,10.1,0.1851278414767213,0.1822790461026475
+Spoilage flora (5-fold),square-root,0,10.2,0.16463483414907426,0.1824264709356337
+Spoilage flora (5-fold),square-root,4,10.5,0.18720016806041592,0.18921416683376505
+Spoilage flora (5-fold),square-root,2,10.7,0.17039129688155938,0.1973693404490308
+Spoilage flora (5-fold),square-root,0,10.7,0.19940386905328436,0.1940519985738103
+Spoilage flora (5-fold),square-root,0,11.1,0.20953524346245817,0.20361095682759822
+Spoilage flora (5-fold),square-root,4,11.5,0.19618024992309271,0.21369701081631662
+Spoilage flora (5-fold),square-root,2,11.5,0.23946884967138077,0.21733709182191452
+Spoilage flora (5-fold),square-root,3,11.6,0.21828506681583554,0.21855193190545444
+Spoilage flora (5-fold),square-root,3,12.1,0.22127842743672782,0.23125071473435366
+Spoilage flora (5-fold),square-root,2,12.5,0.2463766049503629,0.24364957611559265
+Spoilage flora (5-fold),square-root,2,12.6,0.17269388197455343,0.24636349535525667
+Spoilage flora (5-fold),square-root,4,12.6,0.29242830681024384,0.24234801801825495
+Spoilage flora (5-fold),square-root,0,12.7,0.23946884967138077,0.24414488889382988
+Spoilage flora (5-fold),square-root,0,13.2,0.3062438173682081,0.25756580641566307
+Spoilage flora (5-fold),square-root,4,13.3,0.2555869453223391,0.2615185928673783
+Spoilage flora (5-fold),square-root,4,13.8,0.28321796643826763,0.27565858238847457
+Spoilage flora (5-fold),square-root,1,13.9,0.20953524346245817,0.27810062233402566
+Spoilage flora (5-fold),square-root,3,14.2,0.30163864718222,0.2885013204349045
+Spoilage flora (5-fold),square-root,0,14.8,0.34538776394910686,0.3029257464891637
+Spoilage flora (5-fold),square-root,1,14.9,0.2763102111592855,0.306668304110899
+Spoilage flora (5-fold),Arrhenius,2,2.7,0.039374205090198185,0.060887025600102784
+Spoilage flora (5-fold),Arrhenius,1,3.4,0.03200593279261724,0.06804392068761403
+Spoilage flora (5-fold),Arrhenius,3,3.4,0.06078824645504281,0.06944660790415162
+Spoilage flora (5-fold),Arrhenius,0,4.2,0.07690634210600113,0.0753582694229324
+Spoilage flora (5-fold),Arrhenius,3,4.2,0.07207091341071364,0.07773778532905669
+Spoilage flora (5-fold),Arrhenius,2,4.3,0.09809012496154636,0.07686820200131983
+Spoilage flora (5-fold),Arrhenius,4,4.6,0.0900310771360672,0.07769032228981121
+Spoilage flora (5-fold),Arrhenius,0,4.9,0.08289306334778565,0.0832875782047753
+Spoilage flora (5-fold),Arrhenius,3,5.0,0.09118236968256423,0.08696240388401337
+Spoilage flora (5-fold),Arrhenius,1,5.2,0.11259641104740885,0.08821001797312655
+Spoilage flora (5-fold),Arrhenius,4,5.7,0.11328718657530706,0.0913007612763771
+Spoilage flora (5-fold),Arrhenius,4,5.8,0.11973442483569038,0.09264465922968429
+Spoilage flora (5-fold),Arrhenius,1,5.9,0.09924141750804338,0.09749089376902421
+Spoilage flora (5-fold),Arrhenius,2,5.9,0.11950416632639099,0.09678497137780705
+Spoilage flora (5-fold),Arrhenius,0,6.3,0.11789235676129516,0.1015841256160005
+Spoilage flora (5-fold),Arrhenius,3,6.6,0.11190563551951062,0.10861622106364735
+Spoilage flora (5-fold),Arrhenius,1,6.6,0.12940528222626538,0.10769431255942928
+Spoilage flora (5-fold),Arrhenius,3,6.8,0.05572255925045591,0.11165739045121333
+Spoilage flora (5-fold),Arrhenius,3,7.3,0.141148466200535,0.11961746686480254
+Spoilage flora (5-fold),Arrhenius,1,7.4,0.12687243862397193,0.12059599054751823
+Spoilage flora (5-fold),Arrhenius,2,8.1,0.13930639812613976,0.13229187309183255
+Spoilage flora (5-fold),Arrhenius,2,8.2,0.1503588065725112,0.1341689624078498
+Spoilage flora (5-fold),Arrhenius,4,8.7,0.14160898321913382,0.14089488776519837
+Spoilage flora (5-fold),Arrhenius,4,8.8,0.16256250756537963,0.14292456354233363
+Spoilage flora (5-fold),Arrhenius,1,8.8,0.1556547522863975,0.14677667388898974
+Spoilage flora (5-fold),Arrhenius,2,9.3,0.14345105129352906,0.15655752707500778
+Spoilage flora (5-fold),Arrhenius,1,9.4,0.1901935286813082,0.1595753131649125
+Spoilage flora (5-fold),Arrhenius,0,9.6,0.172463623465254,0.16096810951464924
+Spoilage flora (5-fold),Arrhenius,0,9.6,0.1515100991190082,0.16096810951464924
+Spoilage flora (5-fold),Arrhenius,3,9.9,0.19779205948818857,0.17045448026323043
+Spoilage flora (5-fold),Arrhenius,1,10.1,0.1851278414767213,0.17584555610435126
+Spoilage flora (5-fold),Arrhenius,0,10.2,0.16463483414907426,0.1748185657401534
+Spoilage flora (5-fold),Arrhenius,4,10.5,0.18720016806041592,0.18198459782428897
+Spoilage flora (5-fold),Arrhenius,2,10.7,0.17039129688155938,0.1902055827130405
+Spoilage flora (5-fold),Arrhenius,0,10.7,0.19940386905328436,0.1872168255903491
+Spoilage flora (5-fold),Arrhenius,0,11.1,0.20953524346245817,0.19773127276994784
+Spoilage flora (5-fold),Arrhenius,4,11.5,0.19618024992309271,0.20949390321826106
+Spoilage flora (5-fold),Arrhenius,2,11.5,0.23946884967138077,0.21240451373775127
+Spoilage flora (5-fold),Arrhenius,3,11.6,0.21828506681583554,0.21412150260999177
+Spoilage flora (5-fold),Arrhenius,3,12.1,0.22127842743672782,0.22885926267771697
+Spoilage flora (5-fold),Arrhenius,2,12.5,0.2463766049503629,0.24361932051909896
+Spoilage flora (5-fold),Arrhenius,2,12.6,0.17269388197455343,0.24696965954859162
+Spoilage flora (5-fold),Arrhenius,4,12.6,0.29242830681024384,0.24430231947865558
+Spoilage flora (5-fold),Arrhenius,0,12.7,0.23946884967138077,0.24565927316937966
+Spoilage flora (5-fold),Arrhenius,0,13.2,0.3062438173682081,0.2627681403729043
+Spoilage flora (5-fold),Arrhenius,4,13.3,0.2555869453223391,0.2692414156482041
+Spoilage flora (5-fold),Arrhenius,4,13.8,0.28321796643826763,0.28851528189365705
+Spoilage flora (5-fold),Arrhenius,1,13.9,0.20953524346245817,0.2954217577395815
+Spoilage flora (5-fold),Arrhenius,3,14.2,0.30163864718222,0.30191479970134916
+Spoilage flora (5-fold),Arrhenius,0,14.8,0.34538776394910686,0.3254294685335217
+Spoilage flora (5-fold),Arrhenius,1,14.9,0.2763102111592855,0.33786782217271766
+Spoilage flora (5-fold),Q10,2,2.7,0.039374205090198185,0.06187484803316001
+Spoilage flora (5-fold),Q10,1,3.4,0.03200593279261724,0.06867127756904727
+Spoilage flora (5-fold),Q10,3,3.4,0.06078824645504281,0.07023557530824358
+Spoilage flora (5-fold),Q10,0,4.2,0.07690634210600113,0.07583023169064794
+Spoilage flora (5-fold),Q10,3,4.2,0.07207091341071364,0.07828403835080402
+Spoilage flora (5-fold),Q10,2,4.3,0.09809012496154636,0.07738167617094445
+Spoilage flora (5-fold),Q10,4,4.6,0.0900310771360672,0.07802212640177805
+Spoilage flora (5-fold),Q10,0,4.9,0.08289306334778565,0.08354151712911444
+Spoilage flora (5-fold),Q10,3,5.0,0.09118236968256423,0.08725479407856235
+Spoilage flora (5-fold),Q10,1,5.2,0.11259641104740885,0.08829324626624611
+Spoilage flora (5-fold),Q10,4,5.7,0.11328718657530706,0.09128408977127549
+Spoilage flora (5-fold),Q10,4,5.8,0.11973442483569038,0.09259617060045149
+Spoilage flora (5-fold),Q10,1,5.9,0.09924141750804338,0.09735889224814295
+Spoilage flora (5-fold),Q10,2,5.9,0.11950416632639099,0.09677476385583793
+Spoilage flora (5-fold),Q10,0,6.3,0.11789235676129516,0.10139634671321483
+Spoilage flora (5-fold),Q10,3,6.6,0.11190563551951062,0.10839804552435603
+Spoilage flora (5-fold),Q10,1,6.6,0.12940528222626538,0.10735536748985944
+Spoilage flora (5-fold),Q10,3,6.8,0.05572255925045591,0.11137827078740394
+Spoilage flora (5-fold),Q10,3,7.3,0.141148466200535,0.11919225025568349
+Spoilage flora (5-fold),Q10,1,7.4,0.12687243862397193,0.12004274611693738
+Spoilage flora (5-fold),Q10,2,8.1,0.13930639812613976,0.13161567124488469
+Spoilage flora (5-fold),Q10,2,8.2,0.1503588065725112,0.13346821499506645
+Spoilage flora (5-fold),Q10,4,8.7,0.14160898321913382,0.14006615265989486
+Spoilage flora (5-fold),Q10,4,8.8,0.16256250756537963,0.14207940726080037
+Spoilage flora (5-fold),Q10,1,8.8,0.1556547522863975,0.14595944388560111
+Spoilage flora (5-fold),Q10,2,9.3,0.14345105129352906,0.1556505263504361
+Spoilage flora (5-fold),Q10,1,9.4,0.1901935286813082,0.15871439545562993
+Spoilage flora (5-fold),Q10,0,9.6,0.172463623465254,0.16006819466402336
+Spoilage flora (5-fold),Q10,0,9.6,0.1515100991190082,0.16006819466402336
+Spoilage flora (5-fold),Q10,3,9.9,0.19779205948818857,0.16958024910835723
+Spoilage flora (5-fold),Q10,1,10.1,0.1851278414767213,0.1750106421367487
+Spoilage flora (5-fold),Q10,0,10.2,0.16463483414907426,0.17392277409124057
+Spoilage flora (5-fold),Q10,4,10.5,0.18720016806041592,0.18109066590875628
+Spoilage flora (5-fold),Q10,2,10.7,0.17039129688155938,0.18929279449177397
+Spoilage flora (5-fold),Q10,0,10.7,0.19940386905328436,0.18637999386229173
+Spoilage flora (5-fold),Q10,0,11.1,0.20953524346245817,0.1969851849206504
+Spoilage flora (5-fold),Q10,4,11.5,0.19618024992309271,0.2088696965531665
+Spoilage flora (5-fold),Q10,2,11.5,0.23946884967138077,0.21168792037301826
+Spoilage flora (5-fold),Q10,3,11.6,0.21828506681583554,0.21354870016557959
+Spoilage flora (5-fold),Q10,3,12.1,0.22127842743672782,0.22853066340468145
+Spoilage flora (5-fold),Q10,2,12.5,0.2463766049503629,0.2434437159914758
+Spoilage flora (5-fold),Q10,2,12.6,0.17269388197455343,0.2468702846539713
+Spoilage flora (5-fold),Q10,4,12.6,0.29242830681024384,0.24437273130028164
+Spoilage flora (5-fold),Q10,0,12.7,0.23946884967138077,0.2457936450388265
+Spoilage flora (5-fold),Q10,0,13.2,0.3062438173682081,0.2633986163864553
+Spoilage flora (5-fold),Q10,4,13.3,0.2555869453223391,0.2700463439501828
+Spoilage flora (5-fold),Q10,4,13.8,0.28321796643826763,0.2900200258713214
+Spoilage flora (5-fold),Q10,1,13.9,0.20953524346245817,0.29750701687539155
+Spoilage flora (5-fold),Q10,3,14.2,0.30163864718222,0.3038254726558288
+Spoilage flora (5-fold),Q10,0,14.8,0.34538776394910686,0.3286628182007176
+Spoilage flora (5-fold),Q10,1,14.9,0.2763102111592855,0.3420876628564241
+Spoilage flora (5-fold),Davey,2,2.7,0.039374205090198185,0.05001343442651313
+Spoilage flora (5-fold),Davey,1,3.4,0.03200593279261724,0.06454292061560961
+Spoilage flora (5-fold),Davey,3,3.4,0.06078824645504281,0.05890315897056327
+Spoilage flora (5-fold),Davey,0,4.2,0.07690634210600113,0.06903567593001186
+Spoilage flora (5-fold),Davey,3,4.2,0.07207091341071364,0.07079326900350864
+Spoilage flora (5-fold),Davey,2,4.3,0.09809012496154636,0.07139108074130997
+Spoilage flora (5-fold),Davey,4,4.6,0.0900310771360672,0.07433768879957954
+Spoilage flora (5-fold),Davey,0,4.9,0.08289306334778565,0.08068167246308544
+Spoilage flora (5-fold),Davey,3,5.0,0.09118236968256423,0.08403390618697842
+Spoilage flora (5-fold),Davey,1,5.2,0.11259641104740885,0.08795741013791283
+Spoilage flora (5-fold),Davey,4,5.7,0.11328718657530706,0.09295242633224965
+Spoilage flora (5-fold),Davey,4,5.8,0.11973442483569038,0.0947612238825391
+Spoilage flora (5-fold),Davey,1,5.9,0.09924141750804338,0.09854910689061304
+Spoilage flora (5-fold),Davey,2,5.9,0.11950416632639099,0.09792507943149713
+Spoilage flora (5-fold),Davey,0,6.3,0.11789235676129516,0.10688126996647651
+Spoilage flora (5-fold),Davey,3,6.6,0.11190563551951062,0.11417225694885291
+Spoilage flora (5-fold),Davey,1,6.6,0.12940528222626538,0.11001336169227643
+Spoilage flora (5-fold),Davey,3,6.8,0.05572255925045591,0.11823395641282035
+Spoilage flora (5-fold),Davey,3,7.3,0.141148466200535,0.12861822516494345
+Spoilage flora (5-fold),Davey,1,7.4,0.12687243862397193,0.12420809265785138
+Spoilage flora (5-fold),Davey,2,8.1,0.13930639812613976,0.14202960024392816
+Spoilage flora (5-fold),Davey,2,8.2,0.1503588065725112,0.14420809181565564
+Spoilage flora (5-fold),Davey,4,8.7,0.14160898321913382,0.15396808324613087
+Spoilage flora (5-fold),Davey,4,8.8,0.16256250756537963,0.15617874657254216
+Spoilage flora (5-fold),Davey,1,8.8,0.1556547522863975,0.15190030685842384
+Spoilage flora (5-fold),Davey,2,9.3,0.14345105129352906,0.1688954914746789
+Spoilage flora (5-fold),Davey,1,9.4,0.1901935286813082,0.16488247176179474
+Spoilage flora (5-fold),Davey,0,9.6,0.172463623465254,0.1775385849439218
+Spoilage flora (5-fold),Davey,0,9.6,0.1515100991190082,0.1775385849439218
+Spoilage flora (5-fold),Davey,3,9.9,0.19779205948818857,0.1853696246929516
+Spoilage flora (5-fold),Davey,1,10.1,0.1851278414767213,0.180863887228907
+Spoilage flora (5-fold),Davey,0,10.2,0.16463483414907426,0.1903488539986144
+Spoilage flora (5-fold),Davey,4,10.5,0.18720016806041592,0.19419146304801996
+Spoilage flora (5-fold),Davey,2,10.7,0.17039129688155938,0.20151591778014438
+Spoilage flora (5-fold),Davey,0,10.7,0.19940386905328436,0.20069090203214773
+Spoilage flora (5-fold),Davey,0,11.1,0.20953524346245817,0.2086701814459749
+Spoilage flora (5-fold),Davey,4,11.5,0.19618024992309271,0.21610759850311337
+Spoilage flora (5-fold),Davey,2,11.5,0.23946884967138077,0.22023944539547988
+Spoilage flora (5-fold),Davey,3,11.6,0.21828506681583554,0.22095036897207102
+Spoilage flora (5-fold),Davey,3,12.1,0.22127842743672782,0.23052353028445693
+Spoilage flora (5-fold),Davey,2,12.5,0.2463766049503629,0.24315675541448012
+Spoilage flora (5-fold),Davey,2,12.6,0.17269388197455343,0.2453970388644278
+Spoilage flora (5-fold),Davey,4,12.6,0.29242830681024384,0.23882280938511416
+Spoilage flora (5-fold),Davey,0,12.7,0.23946884967138077,0.23688055793699772
+Spoilage flora (5-fold),Davey,0,13.2,0.3062438173682081,0.24414900398810965
+Spoilage flora (5-fold),Davey,4,13.3,0.2555869453223391,0.25210958775196574
+Spoilage flora (5-fold),Davey,4,13.8,0.28321796643826763,0.2608910046586698
+Spoilage flora (5-fold),Davey,1,13.9,0.20953524346245817,0.2821493481425109
+Spoilage flora (5-fold),Davey,3,14.2,0.30163864718222,0.26349289527842273
+Spoilage flora (5-fold),Davey,0,14.8,0.34538776394910686,0.2611674859792254
+Spoilage flora (5-fold),Davey,1,14.9,0.2763102111592855,0.31227664437165675
+Spoilage flora (5-fold),neural,2,2.7,0.039374205090198185,0.05095561435191404
+Spoilage flora (5-fold),neural,1,3.4,0.03200593279261724,0.06368110181787727
+Spoilage flora (5-fold),neural,3,3.4,0.06078824645504281,0.06159194905382842
+Spoilage flora (5-fold),neural,0,4.2,0.07690634210600113,0.07098452772330949
+Spoilage flora (5-fold),neural,3,4.2,0.07207091341071364,0.07260939761568196
+Spoilage flora (5-fold),neural,2,4.3,0.09809012496154636,0.07237362848567254
+Spoilage flora (5-fold),neural,4,4.6,0.0900310771360672,0.07509742481178049
+Spoilage flora (5-fold),neural,0,4.9,0.08289306334778565,0.08128087820505209
+Spoilage flora (5-fold),neural,3,5.0,0.09118236968256423,0.08455271846985286
+Spoilage flora (5-fold),neural,1,5.2,0.11259641104740885,0.08872621146482948
+Spoilage flora (5-fold),neural,4,5.7,0.11328718657530706,0.09236642932186205
+Spoilage flora (5-fold),neural,4,5.8,0.11973442483569038,0.09402661801680622
+Spoilage flora (5-fold),neural,1,5.9,0.09924141750804338,0.09960840358693465
+Spoilage flora (5-fold),neural,2,5.9,0.11950416632639099,0.09769359658749803
+Spoilage flora (5-fold),neural,0,6.3,0.11789235676129516,0.10400362440041301
+Spoilage flora (5-fold),neural,3,6.6,0.11190563551951062,0.11121600834657545
+Spoilage flora (5-fold),neural,1,6.6,0.12940528222626538,0.11113165298350339
+Spoilage flora (5-fold),neural,3,6.8,0.05572255925045591,0.11480949657703977
+Spoilage flora (5-fold),neural,3,7.3,0.141148466200535,0.12404694530937235
+Spoilage flora (5-fold),neural,1,7.4,0.12687243862397193,0.12509073897353984
+Spoilage flora (5-fold),neural,2,8.1,0.13930639812613976,0.1388932794631692
+Spoilage flora (5-fold),neural,2,8.2,0.1503588065725112,0.14094247255306058
+Spoilage flora (5-fold),neural,4,8.7,0.14160898321913382,0.14873621236652795
+Spoilage flora (5-fold),neural,4,8.8,0.16256250756537963,0.1508497991117099
+Spoilage flora (5-fold),neural,1,8.8,0.1556547522863975,0.15158976444623454
+Spoilage flora (5-fold),neural,2,9.3,0.14345105129352906,0.1645019168280604
+Spoilage flora (5-fold),neural,1,9.4,0.1901935286813082,0.16379318202204884
+Spoilage flora (5-fold),neural,0,9.6,0.172463623465254,0.1688322244711757
+Spoilage flora (5-fold),neural,0,9.6,0.1515100991190082,0.1688322244711757
+Spoilage flora (5-fold),neural,3,9.9,0.19779205948818857,0.1779416547609245
+Spoilage flora (5-fold),neural,1,10.1,0.1851278414767213,0.17874131781998645
+Spoilage flora (5-fold),neural,0,10.2,0.16463483414907426,0.18232678171198116
+Spoilage flora (5-fold),neural,4,10.5,0.18720016806041592,0.18910926516163623
+Spoilage flora (5-fold),neural,2,10.7,0.17039129688155938,0.19719936217949557
+Spoilage flora (5-fold),neural,0,10.7,0.19940386905328436,0.1939753032303692
+Spoilage flora (5-fold),neural,0,11.1,0.20953524346245817,0.20355833946378302
+Spoilage flora (5-fold),neural,4,11.5,0.19618024992309271,0.2136765413308793
+Spoilage flora (5-fold),neural,2,11.5,0.23946884967138077,0.21725621355124056
+Spoilage flora (5-fold),neural,3,11.6,0.21828506681583554,0.21852000838143212
+Spoilage flora (5-fold),neural,3,12.1,0.22127842743672782,0.23126222810152605
+Spoilage flora (5-fold),neural,2,12.5,0.2463766049503629,0.24373995230968304
+Spoilage flora (5-fold),neural,2,12.6,0.17269388197455343,0.24647498948419008
+Spoilage flora (5-fold),neural,4,12.6,0.29242830681024384,0.24247293661004454
+Spoilage flora (5-fold),neural,0,12.7,0.23946884967138077,0.2442450866821805
+Spoilage flora (5-fold),neural,0,13.2,0.3062438173682081,0.2577342770927463
+Spoilage flora (5-fold),neural,4,13.3,0.2555869453223391,0.26176813362089174
+Spoilage flora (5-fold),neural,4,13.8,0.28321796643826763,0.27601378675206506
+Spoilage flora (5-fold),neural,1,13.9,0.20953524346245817,0.29073122446428107
+Spoilage flora (5-fold),neural,3,14.2,0.30163864718222,0.28880514400516405
+Spoilage flora (5-fold),neural,0,14.8,0.34538776394910686,0.3033877606327956
+Spoilage flora (5-fold),neural,1,14.9,0.2763102111592855,0.3501467353876421

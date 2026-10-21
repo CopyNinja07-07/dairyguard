@@ -3,7 +3,7 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 import numpy as np
-from dg_kinetics import mu_sqrt, sl_gompertz, make_sl_lookup, baranyi_isothermal_time
+from dairyguard.kinetics import mu_sqrt, sl_gompertz, make_sl_lookup, baranyi_isothermal_time
 
 P = dict(b=0.016, Tmin=-7.75, h0=1.5, log10N0=1.7, log10Nmax=9.0)
 

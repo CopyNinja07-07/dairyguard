@@ -1,6 +1,7 @@
 numpy
-pandas
 scipy
+pandas
 matplotlib
+imageio
 reportlab
 pillow

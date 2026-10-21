@@ -1,12 +1,12 @@
 """Per-trip scores for one representative setting (baseline biology, limit 3e4 CFU/mL, low-mass pouch, cv = 0.10),
 used for the ROC curves, reliability diagram and bootstrap distribution in the paper.
-Run from the repository root: DG_PARAMS=ref python src/example_setting.py  ->  results/example_setting.npz"""
+Run from the repository root: DG_PARAMS=ref python experiments/example_setting.py  ->  results/example_setting.npz"""
 import os, sys
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src"))
 import numpy as np
-import simulate as S
-import benchmark as B
-from dg_kinetics import make_sl_lookup
+from dairyguard import simulate as S
+from dairyguard import benchmark as B
+from dairyguard.kinetics import make_sl_lookup
 
 rng = np.random.default_rng(2026)
 Nlim = S.THR["A_3e4"]; hz = S.label_horizon_h(Nlim); steps = hz * 60

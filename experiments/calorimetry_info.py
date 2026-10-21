@@ -13,10 +13,10 @@ Writes results/calorimetry_info.csv and results/calorimetry_info_paired.csv.
 import os, sys
 import numpy as np
 import pandas as pd
-sys.path.insert(0, os.path.dirname(__file__))
-import simulate as S
-from dg_kinetics import sl_gompertz, make_sl_lookup, mu_sqrt
-from benchmark import auc_fast, paired_diff, TAU_H, CVS, N0_RANGE
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src"))
+from dairyguard import simulate as S
+from dairyguard.kinetics import sl_gompertz, make_sl_lookup, mu_sqrt
+from dairyguard.benchmark import auc_fast, paired_diff, TAU_H, CVS, N0_RANGE
 
 T_REF, N_DET, CV_DET = 20.0, 1e5, 0.05
 

@@ -1,4 +1,4 @@
-"""Figures for the DairyGuard technical report. Reads results/*/*.csv. Palette validated with the
+"""Figures for the DairyGuard book. Reads results/*/*.csv. Palette validated with the
 dataviz skill's validate_palette.js (light + dark: all checks pass; light contrast WARN for aqua,
 yellow, magenta -> visible value labels and tables are provided as relief)."""
 import os
@@ -10,7 +10,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
-from dg_kinetics import mu_sqrt, sl_gompertz
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "experiments"))
+from dairyguard.kinetics import mu_sqrt, sl_gompertz
 
 RES = os.path.join(os.path.dirname(__file__), "..", "results/base")
 OUT = os.path.join(os.path.dirname(__file__), "fig")
@@ -41,7 +42,7 @@ def load():
 
 def fig_trace():
     """Illustration of one trip: temperature, reference growth, and the CSL accumulator."""
-    from dg_kinetics import baranyi_isothermal_time  # noqa: F401  (import check)
+    from dairyguard.kinetics import baranyi_isothermal_time  # noqa: F401  (import check)
     P = dict(b=0.030, Tmin=-7.7, h0=3.8, N0=1.7, Nmax=9.0)
     dt = 1 / 60
     hrs = 120

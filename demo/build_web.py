@@ -10,7 +10,14 @@ for v, d in RUNS:
     pr += [[v, r.thr, r.tau, r.cv, r.contrast, round(r.diff, 4), round(r.lo, 4), round(r.hi, 4), int(r.horizon_h)] for r in p.itertuples()]
     cr += [[v, r.thr, r.tau, r.cv, r.variant, round(r.brier, 4), round(r.ECE, 4)] for r in c.itertuples()]
 lin = json.load(open("../results/validation_lin.json")); lis = json.load(open("../results/validation_lis.json"))
-data = json.dumps({"auc": auc, "paired": pr, "cal": cr, "lin": lin, "lis": lis, "variants": sorted({r[0] for r in auc})}, separators=(",", ":"))
+gl = None
+if os.path.exists("../results/growth_laws/cv_scores.csv"):
+    cvs = pd.read_csv("../results/growth_laws/cv_scores.csv")
+    gl = {"cv": [dict(data=r.data, law=r.law, Af=round(r.Af, 4), Bf=round(r.Bf, 4)) for r in cvs.itertuples()],
+          "var": json.load(open("../results/growth_laws/variation.json"))}
+ms = json.load(open("../results/monitor_studies.json")) if os.path.exists("../results/monitor_studies.json") else None
+data = json.dumps({"auc": auc, "paired": pr, "cal": cr, "lin": lin, "lis": lis, "gl": gl, "ms": ms,
+                   "variants": sorted({r[0] for r in auc})}, separators=(",", ":"))
 kern = open("kernel.js").read().replace("if (typeof module", "if (false && typeof module")
 html = open("template.html").read().replace("/*KERNEL*/", kern).replace("/*DATA*/", data)
 open("../docs/explorer.html", "w").write(html); print(len(html), sorted({r[0] for r in auc}))

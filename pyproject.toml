@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dairyguard"
+version = "2026.10"
+description = "What a temperature log can and cannot tell about spoiling milk: kinetic models, a cold-chain monitor and an open benchmark."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Suryansh Pratap Singh"}]
+dependencies = ["numpy>=1.24", "scipy>=1.10", "pandas>=2.0"]
+
+[project.optional-dependencies]
+research = ["matplotlib>=3.7", "scikit-learn>=1.3"]
+
+[project.scripts]
+dairyguard = "dairyguard.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

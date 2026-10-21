@@ -1,5 +1,5 @@
 """Condense every benchmark run into the headline numbers quoted in the paper, book and web page.
-Usage: python3 src/summarize_runs.py   (writes results/summary.json)"""
+Usage: python3 experiments/summarize_runs.py   (writes results/summary.json)"""
 import json, os
 import pandas as pd
 RUNS = {"base": ("results/base", "Baseline (sourced biology)"), "lag": ("results/lag", "Extra lag after temperature shifts"),

@@ -6,7 +6,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from dg_kinetics import sl_gompertz  # noqa: E402
+from dairyguard.kinetics import sl_gompertz  # noqa: E402
 
 TEMPS = [0, 2, 4, 6, 8, 10, 12, 15, 17.5, 20, 25]
 LIMITS = [1e5, 1e6, 1e7]
