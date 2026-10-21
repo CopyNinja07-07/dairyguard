@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>DairyGuard Demo</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>DairyGuard Demo</title><link rel="icon" href="dg-icon.svg" type="image/svg+xml"><link rel="icon" href="dg-icon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="dg-touch-icon.png">
 <meta name="theme-color" content="#07090c">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Tiro+Devanagari+Sanskrit&display=swap">
@@ -92,6 +92,19 @@ td.num,th.num{text-align:right;font-family:var(--fm)}
 .crates svg{width:100%;height:auto;transition:transform .35s}
 .crates .bt path{transition:fill .5s}
 .crates .off path.m{fill:var(--hot)}.crates .ok path.m{fill:#cfe6f5}
+.mods{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+@media(max-width:760px){.mods{grid-template-columns:1fr}}
+.mod{border:1px solid var(--line);border-radius:var(--r);padding:16px;min-width:0;background:var(--bg)}
+.mod.v2{border-color:rgba(242,181,68,.55)}
+.mod .hd{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.mod .bd{font:600 11px var(--fm);letter-spacing:.12em;padding:4px 9px;border-radius:99px;border:1px solid var(--line);color:var(--mut)}
+.mod.v2 .bd{background:var(--sig);color:#07090c;border-color:var(--sig)}
+.mod .sc{font:900 34px/1 var(--fd)}.mod.v2 .sc{color:var(--sig)}
+.mod p{font-size:13.5px;color:var(--mut);margin:8px 0 10px}
+.dots{display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:3px}
+.dots i{display:block;aspect-ratio:1;border-radius:50%;background:var(--bg3)}
+.dots i.gd{background:var(--ok)}.dots i.bd2{background:var(--hot)}
+.newb{display:inline-block;margin-left:8px;font:600 10px var(--fm);letter-spacing:.12em;color:#07090c;background:var(--sig);border-radius:99px;padding:3px 8px;vertical-align:4px}
 .hb{display:grid;gap:12px;margin-top:8px}
 .hb .r .t{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;margin-bottom:5px}.hb .r .t b{font:800 20px var(--fd)}
 .hb .tr2{height:10px;border-radius:99px;background:var(--bg3);overflow:hidden}.hb .tr2 i{display:block;height:100%;border-radius:99px;transition:width .6s cubic-bezier(.2,.7,.2,1)}
@@ -104,11 +117,11 @@ td.num,th.num{text-align:right;font-family:var(--fm)}
 .refs{display:flex;flex-wrap:wrap;gap:8px}.refs a{font-size:13px;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:99px;padding:7px 12px;background:var(--bg2)}.refs a:hover{border-color:var(--sig)}
 </style></head><body>
 
-<nav><div class="w"><b><img src="favicon.svg" alt="">DairyGuard</b><div class="lk"><a href="index.html">Site</a><a href="DairyGuard_Research_Paper.pdf?v=2">Paper</a><a href="https://github.com/CopyNinja07-07/dairyguard">Code</a></div></div></nav>
+<nav><div class="w"><b><img src="dg-icon.svg" alt="">DairyGuard</b><div class="lk"><a href="index.html">Site</a><a href="DairyGuard_Research_Paper.pdf?v=2">Paper</a><a href="https://github.com/CopyNinja07-07/dairyguard">Code</a></div></div></nav>
 
 <div class="w">
 <header class="hero">
-<span class="tag">Live demo</span>
+<span class="tag">Live demo · now with model v2</span>
 <h1>Is your milk still good? <span>Ask the trip.</span></h1>
 <p>Every carton has a hidden journey: the dairy, the truck, the shop, your fridge. Pick what happened along the way and see the chance it has gone off. Then see why a thermometer, on its own, can never be completely sure.</p>
 <div class="chips" id="presets">
@@ -149,6 +162,14 @@ td.num,th.num{text-align:right;font-family:var(--fm)}
 <div class="crates" id="crates" role="img" aria-label="60 cartons coloured by whether they spoiled"></div>
 <div class="legend"><b id="mvcount" style="color:var(--ink);font-weight:600"></b><span><i style="background:var(--hot)"></i>went off</span><span><i style="background:#cfe6f5"></i>still fine</span></div>
 <p class="punch" id="mvpunch"></p></div>
+
+<div class="card ch"><h3>Model v1 vs model v2 <span class="newb">NEW</span></h3><p class="sub">Both models judge the same 60 cartons. Green: the model got that carton right. Red: it got it wrong.</p>
+<div class="mods">
+<div class="mod"><div class="hd"><span class="bd">V1 · LOG ONLY</span><span class="sc" id="v1s">–</span></div><p>Reads the temperature log and gives one answer for every carton on the truck, because every carton has the same log.</p><div class="dots" id="v1d"></div></div>
+<div class="mod v2"><div class="hd"><span class="bd">V2 · LOG + HEAT TEST</span><span class="sc" id="v2s">–</span></div><p>Adds one heat-flow (calorimetry) test of each batch at dispatch: how fast its bacteria start to give off heat at 20 °C. Now each carton gets its own answer.</p><div class="dots" id="v2d"></div></div>
+</div>
+<p class="punch" id="v12punch"></p>
+<p class="mut" style="font-size:12.5px;margin:6px 0 0">The heat test is simulated with a 5% measurement error. Across 48,000 simulated trips it recovers 69–94% of the accuracy the log alone cannot reach (paper v2, Results).</p></div>
 
 <div class="card ch"><h3>What changes the answer more?</h3><p class="sub">How far the estimate of "how much of its life the milk has used" swings if you upgrade the thermometer or check more often, compared with not knowing the bacteria already in the milk.</p>
 <div class="duel">
@@ -242,7 +263,7 @@ td.num,th.num{text-align:right;font-family:var(--fm)}
 </section>
 </div>
 <footer class="ft"><div class="w">
-<div><a class="brand" href="index.html"><img src="favicon.svg" alt="">DairyGuard</a><p>© 2026 DairyGuard · Cold-chain intelligence · Open science</p></div>
+<div><a class="brand" href="index.html"><img src="dg-icon.svg" alt="">DairyGuard</a><p>© 2026 DairyGuard · Cold-chain intelligence · Open science</p></div>
 <div class="fl2"><a href="https://github.com/CopyNinja07-07/dairyguard">GitHub</a><a href="DairyGuard_Research_Paper.pdf?v=2">Paper</a><a href="DairyGuard_Monograph.pdf">Monograph</a><a href="index.html">Site</a></div>
 <div class="fs"><span>Food first</span><i></i><span>Sanskrit: <b lang="sa">आहार</b> nourishment</span></div>
 </div></footer>
@@ -294,8 +315,14 @@ function run(){
  $("alarmp").textContent=`It treats every carton as the same textbook milk (${f1(cNom*100,0)}% of its life used), so it can only say yes or no.`;
  $("dg").textContent=pct+"% chance";$("dgp").textContent=(al&&P<.5)?"The alarm panics, but most cartons on this trip are actually fine.":(!al&&P>=.25)?"The alarm says all good, but a real share of these cartons have gone off.":"Same answer as the alarm, but now you know how sure to be.";
  drawTemp(amb,pr,rec,H,peak,base);
- drawCrates(pr,N,ds.slice(0,60));
+ const truth=drawCrates(pr,N,ds.slice(0,60));
+ compareModels(cNom,N,p,ds.slice(0,60),truth);
 }
+function compareModels(cNom,N,p,ds,truth){const Ndet=st.org==="lis"?Math.pow(10,p.logN0+2):1e5,r=rng(5);
+ const tNom=slGompertz(20,Ndet,p),v1=cNom>=1;let c1=0,c2=0,h1="",h2="";
+ ds.forEach((q,i)=>{const td=slGompertz(20,Ndet,q)*Math.exp(0.05*gauss(r)),v2=cNom*tNom/td>=1,ok1=v1===truth[i],ok2=v2===truth[i];c1+=ok1;c2+=ok2;h1+=`<i class="${ok1?"gd":"bd2"}"></i>`;h2+=`<i class="${ok2?"gd":"bd2"}"></i>`});
+ $("v1d").innerHTML=h1;$("v2d").innerHTML=h2;$("v1s").textContent=c1+"/"+ds.length;$("v2s").textContent=c2+"/"+ds.length;
+ $("v12punch").innerHTML=c2>c1?`On this trip, model v2 gets <b>${c2-c1} more cartons right</b>. The thermometer did not change; the extra information came from measuring the milk itself.`:c2===c1?"On this trip both models get the same number right. The gain from v2 shows on trips closer to the spoilage line: try <b>Truck fridge failed</b>.":"On this trip the 5% error of the heat test costs a carton or two. Across thousands of trips it wins back most of what the log misses: try <b>Truck fridge failed</b>."}
 function axes(w,h,L,R,Tp,B,H,yr,ystep,yfmt){const x=t=>L+t/H*(w-L-R),y=v=>h-B-(v-yr[0])/(yr[1]-yr[0])*(h-B-Tp);let s="";
  for(let v=yr[0];v<=yr[1]+1e-9;v+=ystep)s+=`<line class="gl" x1="${L}" x2="${w-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${yfmt(v)}</text>`;
  const xs=H>150?24:H>60?12:6;for(let t=0;t<=H;t+=xs)s+=`<text x="${x(t)}" y="${h-6}" text-anchor="middle">${t}h</text>`;return{x,y,s}}
@@ -307,10 +334,10 @@ function drawTemp(amb,pr,rec,H,peak,base){const w=vw("c1",640),h=w<500?230:200;$
  const step=Math.max(1,Math.ceil(rec.length/240));for(let j=0;j<rec.length;j+=step){const [i,v]=rec[j];s+=`<circle cx="${A.x(i/60).toFixed(1)}" cy="${A.y(Math.min(v,yr[1])).toFixed(1)}" r="1.8" fill="var(--sig)"/>`}
  $("c1").innerHTML=s}
 const BOT='<svg viewBox="0 0 20 34" class="bt"><path class="m" d="M7 1h6v5l4 5v19a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V11l4-5z"/><path d="M7 1h6v3H7z" fill="#5a626d"/></svg>';
-function drawCrates(pr,N,ds){const box=$("crates");if(box.children.length!==ds.length){box.innerHTML=ds.map(()=>`<div>${BOT}</div>`).join("")}
- const lim=Math.log10(N);let nOver=0;ds.forEach((q,i)=>{const t=baranyiTrajectory(pr,q,1/60);let mx=-1e9;for(let k=0;k<t.length;k+=10)if(t[k]>mx)mx=t[k];const over=Math.max(mx,t[t.length-1])>=lim;if(over)nOver++;const el=box.children[i];el.className=over?"off":"ok";el.style.transitionDelay=(i*8)+"ms"});
+function drawCrates(pr,N,ds){const truth=[];const box=$("crates");if(box.children.length!==ds.length){box.innerHTML=ds.map(()=>`<div>${BOT}</div>`).join("")}
+ const lim=Math.log10(N);let nOver=0;ds.forEach((q,i)=>{const t=baranyiTrajectory(pr,q,1/60);let mx=-1e9;for(let k=0;k<t.length;k+=10)if(t[k]>mx)mx=t[k];const over=Math.max(mx,t[t.length-1])>=lim;if(over)nOver++;truth.push(over);const el=box.children[i];el.className=over?"off":"ok";el.style.transitionDelay=(i*8)+"ms"});
  $("mvcount").textContent=`${nOver} of ${ds.length} went off`;
- $("mvpunch").innerHTML=nOver===0?"Every carton survived this trip.":nOver===ds.length?"Every carton went off on this trip.":`Same trip, same thermometer readings, different fates. <b>No thermometer could tell these ${nOver} apart from the other ${ds.length-nOver}.</b>`}
+ $("mvpunch").innerHTML=nOver===0?"Every carton survived this trip.":nOver===ds.length?"Every carton went off on this trip.":`Same trip, same thermometer readings, different fates. <b>No thermometer could tell these ${nOver} apart from the other ${ds.length-nOver}.</b>`;return truth}
 function seg(id,key,attr,cast){document.querySelectorAll("#"+id+" button").forEach(b=>b.addEventListener("click",()=>{st[key]=cast(b.dataset[attr]);document.querySelectorAll("#"+id+" button").forEach(x=>x.setAttribute("aria-pressed",x===b));run()}))}
 seg("org","org","o",String);seg("sen","sen","s",String);seg("smp","smp","m",Number);
 document.querySelectorAll("#ctrl input").forEach(e=>e.addEventListener("input",()=>{document.querySelectorAll("#presets .chip").forEach(c=>c.setAttribute("aria-pressed","false"));run()}));

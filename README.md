@@ -216,7 +216,7 @@ What this means:
 
 ## Version 1 and version 2
 
-| | Version 1 (preprint, 9 pages) | Version 2 (current, 20 pages) |
+| | Version 1 (working paper, 9 pages) | Version 2 (current, 20 pages) |
 |---|---|---|
 | Question | What limits a temperature monitor? | Why, and what would fix it? |
 | Theory | Growth models, applied | Six propositions: growth and its heat depend on the log only through one running total |
@@ -224,7 +224,7 @@ What this means:
 | Calorimetry | Not covered | One heat-flow test of a batch closes 69–94% of the gap |
 | Authors | Suryansh Pratap Singh | Suryansh Pratap Singh, Neeraj Tripathi |
 
-Version 1 is kept at [`docs/DairyGuard_Preprint_v1.pdf`](docs/DairyGuard_Preprint_v1.pdf).
+Version 1 is an earlier working paper, not peer reviewed and superseded by version 2. It is kept at [`docs/DairyGuard_v1_WorkingPaper.pdf`](docs/DairyGuard_v1_WorkingPaper.pdf).
 
 ## *Listeria* case study
 

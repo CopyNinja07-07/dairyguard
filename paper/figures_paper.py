@@ -211,7 +211,7 @@ def fig_story():
             ("B", "typical carton", 0.030, -7.7, 4.5, 1.55, GOLD),
             ("C", "more bacteria, fast strain", 0.034, -6.5, 2.7, 2.00, ORANGE)]
     lim = math.log10(3e4)
-    fig = plt.figure(figsize=(W2, 6.9))
+    fig = plt.figure(figsize=(W2, 6.4))
     gs = fig.add_gridspec(5, 1, height_ratios=[0.5, 1.05, 1.3, 1.0, 0.62], hspace=0.62)
     a0 = fig.add_subplot(gs[0]); a1 = fig.add_subplot(gs[1]); a2 = fig.add_subplot(gs[2], sharex=a1)
     a3 = fig.add_subplot(gs[3], sharex=a1); a4 = fig.add_subplot(gs[4])
@@ -301,7 +301,7 @@ def fig_clock():
     h0, l0 = 3.8, 1.7
     yA, yB = baranyi_path(TA, dt, B0, TM0, h0, l0), baranyi_path(TB, dt, B0, TM0, h0, l0)
     tA, tB = np.cumsum(mu_of(TA)) * dt, np.cumsum(mu_of(TB)) * dt
-    fig, axs = plt.subplots(1, 4, figsize=(W2, 2.35))
+    fig, axs = plt.subplots(1, 4, figsize=(W2, 2.02))
     c1, c2 = BLUE, ORANGE
     ax = axs[0]; ax.plot(t, TA, color=c1, lw=1.6, label="trip 1"); ax.plot(t, TB, color=c2, lw=1.6, ls=(0, (4, 2)), label="trip 2")
     ax.set_xlabel("Time/h"); ax.set_ylabel("Temperature/°C"); ax.set_ylim(0, 21); ax.legend(frameon=False, fontsize=8, loc="upper right", handlelength=2.0); clean(ax); tag(ax, "a", "Two different histories")
@@ -320,7 +320,7 @@ def fig_clock():
 # ---------------------------------------------------------------- Fig: rate law, shelf life, apparent activation energy
 def fig_rates():
     T = np.linspace(-2, 20, 300); R = 8.314
-    fig, axs = plt.subplots(1, 3, figsize=(W2, 2.08))
+    fig, axs = plt.subplots(1, 3, figsize=(W2, 1.98))
     ax = axs[0]
     for (b, tm, nm, c) in [(0.030, -7.7, "Spoilage (baseline)", BLUE), (0.0235, -2.3, "$\\it{Listeria}$", ORANGE)]:
         ax.plot(T, mu_of(T, b, tm), color=c, lw=1.6, ls="-" if c == BLUE else (0, (4, 2)), label=nm)
@@ -449,7 +449,7 @@ def fig_secondary():
     sys.path.insert(0, os.path.join(ROOT, "src")); import compare_secondary as C
     styles = {"sqrt": ("-", BLUE, "square-root"), "arrhenius": ((0, (4, 2)), ORANGE, "Arrhenius"),
               "q10": ((0, (1.5, 1.2)), GREEN, "constant Q$_{10}$"), "davey": ((0, (6, 1.5, 1.5, 1.5)), PINK, "Arrhenius–Davey")}
-    fig, axs = plt.subplots(1, 3, figsize=(W2, 2.28), gridspec_kw={"width_ratios": [1, 1, 0.9]})
+    fig, axs = plt.subplots(1, 3, figsize=(W2, 2.12), gridspec_kw={"width_ratios": [1, 1, 0.9]})
     for ax, (nm, T, mu), L in zip(axs[:2], [("Spoilage flora (pasteurised milk)", sp.temp_C.values, sp.max_rate_log10_per_h.values * m_.log(10)),
                                           ("L. monocytogenes (fitting set)", lis["T"].values, lis.max_rate_log10_per_h.values * m_.log(10))], "ab"):
         ax.scatter(T, mu, s=9, color=MUTED, lw=0, zorder=3)
@@ -539,7 +539,7 @@ def fig_calorimetry():
     H = 120; t = np.arange(int(H / dt)) * dt
     progs = [(np.full(len(t), 20.0), "isothermal 20 °C", BLUE, "-"), (np.full(len(t), 12.0), "isothermal 12 °C", GREEN, (0, (4, 2))),
              (np.where(t < 30, 6.0, 22.0), "6 °C, then 22 °C", ORANGE, (0, (1.5, 1.5)))]
-    fig, axs = plt.subplots(1, 3, figsize=(W2, 2.35), gridspec_kw={"width_ratios": [1, 1, 1.15]})
+    fig, axs = plt.subplots(1, 3, figsize=(W2, 2.2), gridspec_kw={"width_ratios": [1, 1, 1.15]})
     Pmax = None; res = []
     for T, lab, c, ls in progs:
         P, tau = thermo(T); res.append((T, P, tau, lab, c, ls)); Pmax = max(Pmax or 0, P.max())
@@ -566,8 +566,33 @@ def fig_calorimetry():
     save(fig, "calorimetry.pdf")
 
 
+# ---------------------------------------------------------------- Fig: study pipeline and statistical procedures
+def fig_pipeline():
+    fig, ax = plt.subplots(figsize=(W2, 2.75)); ax.set_xlim(0, 100); ax.set_ylim(0, 60); ax.axis("off")
+    top = [("Choose run\nand setting", "#f4f4f4", INK2), ("Generate\n4000 trips", "#fdf1ea", ORANGE),
+           ("Draw each\ntrip's biology", "#fdf1ea", ORANGE), ("Grow bacteria;\nlabel each trip", "#fdf1ea", ORANGE),
+           ("Sensor error\nand sampling", "#eef3fa", BLUE), ("Scores: CSL,\nrules, oracle,\nprobability", "#eef3fa", BLUE),
+           ("Evaluate:\nAUC, Brier,\nECE", "#eef7f1", GREEN)]
+    bot = [("Labels y and\nscores s", "#f4f4f4", INK2), ("AUC by the\nMann–Whitney\nstatistic", "#eef3fa", BLUE),
+           ("Bootstrap,\n200 resamples:\nAUC interval", "#eef3fa", BLUE), ("Paired bootstrap,\n400 resamples:\nAUC difference", "#eef3fa", BLUE),
+           ("Brier score and\ncalibration error", "#eef7f1", GREEN), ("Growth-rate fits:\nBf, Af, AICc,\ncross-validation", "#fdf1ea", ORANGE)]
+    def row(items, y, h, tagl, title):
+        n = len(items); gap = 2.2; w = (100 - gap * (n - 1)) / n
+        for i, (t, fc, ec) in enumerate(items):
+            x = i * (w + gap); _box(ax, x, y, w, h, t, fc, ec, fs=7)
+            if i: _arr(ax, x - gap + 0.15, y + h / 2, x - 0.15, y + h / 2)
+        ax.text(0, y + h + 3.2, tagl, fontsize=8.5, fontweight="bold", color=INK)
+        ax.text(4, y + h + 3.2, title, fontsize=8, color=INK2)
+        return w, gap
+    w, gap = row(top, 34, 13, "(a)", "Study pipeline, repeated for every setting of every run")
+    ax.annotate("", xy=(w / 2, 33.4), xytext=(6 * (w + gap) + w / 2, 33.4), arrowprops=dict(arrowstyle="-|>", lw=.7, color=MUTED, connectionstyle="arc3,rad=-0.12", shrinkA=0, shrinkB=0, mutation_scale=7))
+    ax.text(50, 27.6, "next setting or run", ha="center", fontsize=7, color=MUTED)
+    row(bot, 2, 13, "(b)", "Statistical procedures applied to each setting")
+    save(fig, "pipeline.pdf")
+
+
 if __name__ == "__main__":
     fig_design(); fig_combase(); fig_lis(); fig_budget(); fig_runs()
     fig_story(); fig_clock(); fig_rates(); fig_sampling(); fig_errors(); fig_system()
-    fig_hierarchy(); fig_secondary(); fig_rivals(); fig_stats(); fig_calorimetry()
+    fig_hierarchy(); fig_secondary(); fig_rivals(); fig_stats(); fig_calorimetry(); fig_pipeline()
     print("paper figures ok:", sorted(os.listdir(OUT)))

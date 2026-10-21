@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>DairyGuard</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>DairyGuard</title><link rel="icon" href="dg-icon.svg" type="image/svg+xml"><link rel="icon" href="dg-icon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="dg-touch-icon.png">
 <meta name="description" content="Every night, milk crosses the city. DairyGuard asks what a temperature log can really tell us about whether it stayed safe.">
 <meta name="theme-color" content="#07090c">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -143,7 +143,7 @@ section.c p{color:var(--mut)}section.c p b{color:var(--ink);font-weight:600}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.fl{transition:none}.cue i{animation:none}}
 </style></head><body>
 
-<nav><div class="w"><b><img src="favicon.svg" alt="">DairyGuard</b><div class="lk"><a href="#journey">The journey</a><a href="#different">What's new</a><a href="#found">Findings</a><a href="#versions">v1 → v2</a><a href="#read">Read</a><a class="cta" href="explorer.html">Open the demo</a></div></div></nav>
+<nav><div class="w"><b><img src="dg-icon.svg" alt="">DairyGuard</b><div class="lk"><a href="#journey">The journey</a><a href="#different">What's new</a><a href="#found">Findings</a><a href="#versions">v1 → v2</a><a href="#read">Read</a><a class="cta" href="explorer.html">Open the demo</a></div></div></nav>
 
 <header class="hero">
 <canvas id="sky" aria-hidden="true"></canvas>
@@ -213,7 +213,7 @@ section.c p{color:var(--mut)}section.c p b{color:var(--ink);font-weight:600}
 <section class="c" id="versions"><span class="tag rv">How the study grew</span>
 <h2 class="rv">Version 1 asked what is lost. <span>Version 2 explains why, and how to win it back.</span></h2>
 <div class="ver">
-<div class="vcard rv"><span class="badge">V1 · PREPRINT</span><h3>The loss budget</h3><p>A simulated cold chain where the truth is always known. Accuracy is removed one source at a time to see what a temperature monitor is blind to.</p><div class="meta">9 pages · 50 references · Oct 2026</div><a class="btn" href="DairyGuard_Preprint_v1.pdf">Read v1</a></div>
+<div class="vcard rv"><span class="badge">V1 · WORKING PAPER</span><h3>The loss budget</h3><p>A simulated cold chain where the truth is always known. Accuracy is removed one source at a time to see what a temperature monitor is blind to.</p><div class="meta">9 pages · 50 references · Oct 2026 · not peer reviewed, superseded by v2</div><a class="btn" href="DairyGuard_v1_WorkingPaper.pdf">Read v1</a></div>
 <div class="vcard v2 rv"><span class="badge">V2 · CURRENT</span><h3>The kinetic theory</h3><p>Proves why the loss budget looks the way it does, compares the temperature laws used in industry, and shows that a calorimetric test of the milk recovers most of what the log misses.</p><div class="meta">20 pages · 70 references · with Dr. Neeraj Tripathi</div><a class="btn" href="DairyGuard_Research_Paper.pdf?v=2">Read v2</a></div>
 </div>
 <div class="cmp rv"><table>
@@ -274,7 +274,7 @@ section.c p{color:var(--mut)}section.c p b{color:var(--ink);font-weight:600}
 </div>
 </section>
 <footer class="ft"><div class="w">
-<div><a class="brand" href="#"><img src="favicon.svg" alt="">DairyGuard</a><p>© 2026 DairyGuard · Cold-chain intelligence · Open science</p></div>
+<div><a class="brand" href="#"><img src="dg-icon.svg" alt="">DairyGuard</a><p>© 2026 DairyGuard · Cold-chain intelligence · Open science</p></div>
 <div class="fl2"><a href="https://github.com/CopyNinja07-07/dairyguard">GitHub</a><a href="DairyGuard_Research_Paper.pdf?v=2">Paper</a><a href="DairyGuard_Monograph.pdf">Monograph</a><a href="explorer.html">Demo</a></div>
 <div class="fs"><span>Food first</span><i></i><span>Sanskrit: <b lang="sa">आहार</b> nourishment</span></div>
 </div></footer>
@@ -295,7 +295,7 @@ function buildSky(){SW=sky.clientWidth;SH=sky.clientHeight;sky.width=SW*DPR;sky.
  stars=[];for(var i=0;i<140;i++)stars.push([r()*SW,r()*SH*.6,r()*1.2+.2,r()*6.28]);
  clouds=[];for(var j=0;j<9;j++)clouds.push([r()*SW,SH*(.08+r()*.28),120+r()*260,30+r()*40,(r()-.5)*.08])}
 buildSky();addEventListener('resize',function(){buildSky();rs()});
-var LOGO=new Image();LOGO.src="favicon.svg";var shield=new Path2D("M0 -26 L22 -19 V-2 C22 12 12 21 0 26 C-12 21 -22 12 -22 -2 V-19 Z");
+var LOGO=new Image();LOGO.src="dg-icon.svg";var shield=new Path2D("M0 -26 L22 -19 V-2 C22 12 12 21 0 26 C-12 21 -22 12 -22 -2 V-19 Z");
 function drawSky(ts){var t=ts/1000;g.clearRect(0,0,SW,SH);
  var bgG=g.createLinearGradient(0,0,0,SH);bgG.addColorStop(0,'#05070a');bgG.addColorStop(.7,'#0b1016');bgG.addColorStop(1,'#111820');g.fillStyle=bgG;g.fillRect(0,0,SW,SH);
  stars.forEach(function(s){g.globalAlpha=.25+.35*Math.abs(Math.sin(t*.6+s[3]));g.fillStyle='#cfd6e0';g.fillRect(s[0],s[1],s[2],s[2])});g.globalAlpha=1;
