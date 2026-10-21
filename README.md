@@ -9,9 +9,9 @@
 
 A simulation study of the cold chain for milk. We built a virtual world of thousands of milk deliveries, so that we always know the true outcome, and used it to find out what limits our ability to predict spoilage from a temperature record: the thermometer, how often we read it, the rule we use, or something no instrument can see.
 
-**[Website](https://copyninja07-07.github.io/dairyguard/) · [Live demo](https://copyninja07-07.github.io/dairyguard/explorer.html) · [Research paper v2 (PDF)](docs/DairyGuard_Research_Paper.pdf) · [Monograph (PDF)](docs/DairyGuard_Monograph.pdf)**
+**[Website](https://copyninja07-07.github.io/dairyguard/) · [Live demo](https://copyninja07-07.github.io/dairyguard/explorer.html) · [Research paper v2 (PDF)](docs/DairyGuard-Research-Paper.pdf) · [Monograph (PDF)](docs/DairyGuard-Monograph.pdf)**
 
-**Contents:** [The short version](#the-short-version) · [Problem](#problem) · [Approach](#approach-in-plain-words) · [Architecture](#architecture) · [Quickstart](#quickstart) · [The model](#the-model) · [The simulated world](#the-simulated-world) · [How methods are judged](#how-methods-are-judged) · [Is the model believable?](#is-the-model-believable) · [Results](#results) · [Listeria case study](#listeria-case-study) · [Data](#data-and-parameters) · [Repository layout](#repository-layout) · [Limitations](#limitations) · [Next steps](#next-steps) · [Glossary](#glossary) · [Cite](#cite-and-licence)
+**Contents:** [The short version](#the-short-version) · [Problem](#problem) · [Approach](#approach-in-plain-words) · [Architecture](#architecture) · [Quickstart](#quickstart) · [The model](#the-model) · [The simulated world](#the-simulated-world) · [How methods are judged](#how-methods-are-judged) · [Is the model believable?](#is-the-model-believable) · [Results](#results) · [Version 1 and version 2](#version-1-and-version-2) · [Listeria case study](#listeria-case-study) · [Data](#data-and-parameters) · [Repository layout](#repository-layout) · [Limitations](#limitations) · [Next steps](#next-steps) · [Glossary](#glossary) · [Cite](#cite-and-licence)
 
 ---
 
@@ -109,19 +109,19 @@ Python 3.10 or newer is needed.
 
 Four formulas do all the work. Each is described in words first.
 
-| # | In words | Where |
+| # | In words | Code |
 |---|---|---|
-| 1 | **Temperature sets the growth speed.** Take the temperature, add an offset so that growth stops at the right place, multiply by a constant, and square the result. | `mu_sqrt` in `src/dg_kinetics.py` |
-| 2 | **The detailed growth model (the answer key).** Cells first "wake up" (the lag phase), then multiply again and again, then level off near a ceiling. It handles any temperature history, because it takes the temperature at every minute. | `truth_labels` in `src/simulate.py` |
-| 3 | **Shelf life at a steady temperature.** A closed-form shortcut: time spent waking up plus time spent growing to the spoilage limit. A small chip can compute it in one line. | `sl_gompertz` in `src/dg_kinetics.py` |
-| 4 | **Consumed shelf life (CSL).** Each minute of a trip uses up a small fraction of the milk's life. Add the fractions up. At 1 (100%) the milk is predicted to have spoiled. | `scores_fixed` in `src/simulate.py` |
+| 1 | **Temperature sets the growth speed.** Take the temperature, add an offset so that growth stops at the right place, multiply by a constant, and square the result. | `src/dg_kinetics.py` |
+| 2 | **The detailed growth model (the answer key).** Cells first "wake up" (the lag phase), then multiply again and again, then level off near a ceiling. It handles any temperature history, because it takes the temperature at every minute. | `src/simulate.py` |
+| 3 | **Shelf life at a steady temperature.** A closed-form shortcut: time spent waking up plus time spent growing to the spoilage limit. A small chip can compute it in one line. | `src/dg_kinetics.py` |
+| 4 | **Consumed shelf life (CSL).** Each minute of a trip uses up a small fraction of the milk's life. Add the fractions up. At 1 (100%) the milk is predicted to have spoiled. | `src/simulate.py` |
 
 In symbols, for readers who like them:
 
 ```
 sqrt(mu) = b * (T - Tmin)                      growth speed mu at temperature T
 SL(T)    = h0/mu + A/(mu10*e) * [1 - ln(-ln(L/A))]     shelf life at a steady T
-CSL      = sum( dt / SL(T_i) )                 predict spoiled when CSL >= 1
+CSL      = sum( dt / SL(T) ) over the readings  predict spoiled when CSL >= 1
 ```
 
 Why the temperature matters so much, using the reference milk bacteria (growth stops near -7.7 °C):
@@ -224,7 +224,7 @@ What this means:
 | Calorimetry | Not covered | One heat-flow test of a batch closes 69–94% of the gap |
 | Authors | Suryansh Pratap Singh | Suryansh Pratap Singh and Prof. (Dr.) Neeraj Tripathi |
 
-Version 1 is an earlier working paper, not peer reviewed and superseded by version 2. It is kept at [`docs/DairyGuard_v1_WorkingPaper.pdf`](docs/DairyGuard_v1_WorkingPaper.pdf).
+Version 1 is an earlier working paper, not peer reviewed and superseded by version 2. It is kept at [`docs/DairyGuard-v1-Working-Paper.pdf`](docs/DairyGuard-v1-Working-Paper.pdf). The [live demo](https://copyninja07-07.github.io/dairyguard/explorer.html) shows both models judging the same 60 cartons side by side.
 
 ## *Listeria* case study
 
