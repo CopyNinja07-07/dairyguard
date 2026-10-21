@@ -1,6 +1,6 @@
-"""Benchmark v2.
+"""The DairyGuard benchmark: scores every prediction rule on the same simulated trips.
 
-Adds to v1:
+Includes:
   * thermal-inertia axis (low-mass pouch vs insulated crate)
   * PAIRED bootstrap contrasts on the same trips (valid CIs for differences)
   * uncertainty-aware score: Monte-Carlo posterior P(spoiled | measured history)
@@ -85,7 +85,7 @@ def calibration(P, y, bins=10):
     return brier, float(ece)
 
 
-def run_v2(N=4000, seed=11, out="results_v2"):
+def run(N=4000, seed=11, out="results"):
     import os; os.makedirs(out, exist_ok=True)
     rng = np.random.default_rng(seed)
     rng2 = np.random.default_rng(seed + 1000)    # separate stream for the additional integrators
@@ -172,5 +172,5 @@ def run_v2(N=4000, seed=11, out="results_v2"):
 
 if __name__ == "__main__":
     N = int(sys.argv[1]) if len(sys.argv) > 1 else 4000
-    out = sys.argv[2] if len(sys.argv) > 2 else "results_v2"
-    run_v2(N=N, out=out)
+    out = sys.argv[2] if len(sys.argv) > 2 else "results"
+    run(N=N, out=out)

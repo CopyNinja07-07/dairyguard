@@ -1,4 +1,4 @@
-"""Writes report/numbers.tex: LaTeX macros for every number quoted in the reports and monograph, read from results/summary.json and the validation JSON files."""
+"""Writes generated/numbers.tex: LaTeX macros for every number quoted in the technical report, read from results/summary.json and the validation JSON files."""
 import json, os
 S = json.load(open("results/summary.json"))
 V = {k: json.load(open(f"results/validation_{k}.json")) for k in ("lin", "combase", "lis")}
@@ -36,4 +36,4 @@ for thr, tag in (("A_3e4", "A"), ("B_1e6", "B")):
     for v, vt in (("MC matched", "M"), ("point", "P")):
         x = cc[(cc.thr == thr) & cc.variant.str.startswith(v)].ECE; mac(f"NumLisEce{tag}{vt}Min", "%.2f" % x.min()); mac(f"NumLisEce{tag}{vt}Max", "%.2f" % x.max())
 pv = a.prevalence; mac("NumLisPrevMin", "%.2f" % pv.min()); mac("NumLisPrevMax", "%.2f" % pv.max())
-open("report/numbers.tex", "w").write("\n".join(L) + "\n"); print(len(L), "macros")
+open("generated/numbers.tex", "w").write("\n".join(L) + "\n"); print(len(L), "macros")

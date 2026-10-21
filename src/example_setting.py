@@ -5,7 +5,7 @@ import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 import simulate as S
-import benchmark_v2 as B
+import benchmark as B
 from dg_kinetics import make_sl_lookup
 
 rng = np.random.default_rng(2026)

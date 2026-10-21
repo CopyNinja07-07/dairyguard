@@ -1,0 +1,8 @@
+{
+  "title": "DairyGuard: what a temperature log can and cannot tell about milk spoilage",
+  "upload_type": "software",
+  "description": "Open code, data and results for DairyGuard: a Monte Carlo benchmark of 240,000 simulated milk deliveries that measures how much prediction accuracy a cold-chain temperature monitor loses to unobserved biology, sensor error, sampling interval and decision rule, with a generalized-time kinetic theory and a calorimetric extension. Full write-up: DairyGuard Technical Report DG-TR-01 (not peer reviewed).",
+  "creators": [{"name": "Singh, Suryansh Pratap", "affiliation": "Shri Mata Vaishno Devi University"}],
+  "license": "MIT",
+  "keywords": ["cold chain", "predictive microbiology", "non-isothermal kinetics", "generalized time", "milk", "shelf life", "calorimetry"]
+}

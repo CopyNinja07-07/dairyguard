@@ -2,7 +2,7 @@
 
 ComBase reports maximum growth rates in log10 units (log10 CFU/mL per hour). The model works in natural-log
 units, so every rate must be multiplied by ln(10) before it is fitted. These tests check that this happens,
-and that the numbers quoted on the website, in the demo and in the monograph still follow from the result files."""
+and that the numbers quoted on the website, in the demo and in the technical report still follow from the result files."""
 import json
 import math
 import os
@@ -63,7 +63,7 @@ def test_headline_calorimetry_fraction():
 
 
 def test_numbers_file_matches_results():
-    tex = open(os.path.join(ROOT, "report", "numbers.tex")).read()
+    tex = open(os.path.join(ROOT, "generated", "numbers.tex")).read()
     mac = dict(re.findall(r"\\newcommand\{\\(\w+)\}\{([^}]*)\}", tex))
     base = J("results", "summary.json")["base"]
     assert mac["NumBaseGapMin"] == "%.2f" % base["biology_gap"]["min"]

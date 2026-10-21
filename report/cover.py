@@ -1,4 +1,4 @@
-"""Draws the front and back covers of the monograph (book/cover.pdf, book/backcover.pdf)."""
+"""Draws the front and back covers of the technical report (report/cover.pdf, report/backcover.pdf)."""
 import math
 import os
 import random
@@ -65,7 +65,7 @@ def night(c, seed=11, beam=True, logo=True):
 def front(path):
     c = canvas.Canvas(path, pagesize=A4); c.setTitle("Beyond the 4 °C Alarm"); c.setAuthor("Suryansh Pratap Singh")
     night(c)
-    c.setFillColor(AMBER); c.setFont("Mono", 8.5); c.drawString(M, H - M, "A MONOGRAPH  ·  DAIRYGUARD RESEARCH")
+    c.setFillColor(AMBER); c.setFont("Mono", 8.5); c.drawString(M, H - M, "TECHNICAL REPORT DG-TR-01  ·  DAIRYGUARD")
     c.setFillColor(PAPER); c.setFont("Cond-Bold", 46); c.drawString(M, 250, "BEYOND THE")
     c.setFillColor(AMBER); c.drawString(M, 202, "4 °C ALARM")
     c.setFillColor(GREY); c.setFont("Serif", 13.5); c.drawString(M, 172, "What a temperature log can and cannot tell us about spoiling milk")
@@ -73,7 +73,7 @@ def front(path):
     c.setFillColor(PAPER); c.setFont("Serif", 12.5); c.drawString(M, 74, "Suryansh Pratap Singh")
     c.setFillColor(GREY); c.setFont("Serif-Italic", 9.5)
     c.drawString(M, 59, "Shri Mata Vaishno Devi University")
-    c.drawRightString(W - M, 59, "Second edition · October 2026")
+    c.drawRightString(W - M, 59, "October 2026 · not peer reviewed")
     c.showPage(); c.save()
 
 
@@ -92,7 +92,8 @@ def back(path):
     for line in ("240,000 simulated deliveries. One question: when a milk monitor is wrong,",
                  "what is it wrong about? The answer is not the thermometer. It is the",
                  "biology inside the carton, which no sensor can see, and which one",
-                 "calorimetric test of the batch could largely recover.",
+                 "calorimetric test of the batch could largely recover,",
+                 "as the simulation shows. Real milk is the next test.",
                  "",
                  "Open code, open data, every number reproducible from one command."):
         c.drawString(M, y, line); y -= 17

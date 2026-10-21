@@ -16,7 +16,7 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(__file__))
 import simulate as S
 from dg_kinetics import sl_gompertz, make_sl_lookup, mu_sqrt
-from benchmark_v2 import auc_fast, paired_diff, TAU_H, CVS, N0_RANGE
+from benchmark import auc_fast, paired_diff, TAU_H, CVS, N0_RANGE
 
 T_REF, N_DET, CV_DET = 20.0, 1e5, 0.05
 

@@ -34,9 +34,9 @@
 \setlength{\heavyrulewidth}{0.9pt}\setlength{\lightrulewidth}{0.45pt}
 \setlength{\aboverulesep}{0pt}\setlength{\belowrulesep}{0pt}
 \renewcommand{\arraystretch}{1.22}
-\input{../report/numbers.tex}
-\input{../report/tables.tex}
-\graphicspath{{../report/fig/}{fig/}}
+\input{../generated/numbers.tex}
+\input{../generated/tables.tex}
+\graphicspath{{../generated/fig/}{fig/}}
 % headings
 \titleformat{\chapter}[display]{\normalfont\sffamily\color{dgnight}}{\fontsize{11}{13}\selectfont\bfseries\color{dgamberdk}\textls[250]{\MakeUppercase{\chaptertitlename}}\hspace{6pt}{\fontsize{40}{40}\selectfont\color{dgamber}\thechapter}}{8pt}{\raggedright\fontsize{27}{32}\selectfont\bfseries}[\vspace{6pt}{\color{dgamber}\rule{48pt}{3pt}}]
 \titlespacing*{\chapter}{0pt}{0pt}{22pt}
@@ -77,14 +77,14 @@
 \thispagestyle{empty}
 \vspace*{\fill}
 {\small\noindent Suryansh Pratap Singh\\
-\textit{Beyond the 4\,\textdegree C Alarm: What a Temperature Log Can and Cannot Tell About Milk Spoilage.} Monograph, October 2026.\\[6pt]
+\textit{Beyond the 4\,\textdegree C Alarm: What a Temperature Log Can and Cannot Tell About Milk Spoilage.} DairyGuard Technical Report DG-TR-01, October 2026. This report has not been peer reviewed.\\[6pt]
+\textbf{Evidence status.} Chapter~4 and the proofs are mathematical results that hold within the stated models. Chapters~5, 9, 10 and 11, and Section~\ref{sec:rivalres}, report simulations: their numbers describe a virtual cold chain built from published parameters, not field measurements. Chapter~7 and the first half of Chapter~8 compare the models with real published growth data. No new laboratory measurements were made.\\[6pt]
 Code, data, simulation results and the source of this text: \url{https://github.com/CopyNinja07-07/dairyguard}. Every number in the text, tables and figures is generated from the result files by script, with fixed random seeds, and can be reproduced with \texttt{make all}.\\[6pt]
-Chapters~4, 8 and 11 are based on joint work with Prof.\ (Dr.) Neeraj Tripathi, School of Electronics and Communication Engineering, Shri Mata Vaishno Devi University.\\[6pt]
 Released under the MIT licence. ComBase records remain subject to the ComBase terms of use.\par}
 
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
-A cold-chain monitor records temperature, but whether milk spoils also depends on which bacteria it carries, how many and how ready they are to grow, none of which a thermometer observes. This monograph asks how much of the error in predicting spoilage from a temperature record is caused by that unobserved biology, how much by the sensor, how much by the sampling interval and how much by the choice of decision rule.
+A cold-chain monitor records temperature, but whether milk spoils also depends on which bacteria it carries, how many and how ready they are to grow, none of which a thermometer observes. This report asks how much of the error in predicting spoilage from a temperature record is caused by that unobserved biology, how much by the sensor, how much by the sampling interval and how much by the choice of decision rule.
 
 The question is answered with an open Monte Carlo benchmark of 240\,000 simulated deliveries. A Baranyi--Roberts growth model with a square-root temperature law stands in for real milk, and a closed-form Gompertz shelf-life accumulator, cheap enough to run on a microcontroller, tries to predict it from noisy, sampled records. Every rule is judged by its ability to rank spoiled above unspoiled trips, measured by the area under the receiver operating characteristic curve (AUC), with paired bootstrap comparisons on identical trips and an oracle that knows each trip's biology. Parameters are tied to published experiments and to the ComBase database. The model reproduces a published fluctuating-temperature experiment within \NumLinErrAbs\,\%, fits \NumCbNfit{} ComBase records of natural spoilage flora, and predicts \NumLisHeld{} held-out growth rates of \textit{Listeria monocytogenes} with an accuracy factor of \NumLisAccHeld.
 
@@ -161,7 +161,7 @@ Temperature loggers are now cheap enough to travel with every crate \cite{badiam
 \section{Why the question matters}
 Post-pasteurisation contamination with psychrotrophic bacteria causes roughly half to three-fifths of fluid-milk spoilage in the United States \cite{martin2021}, and Gram-negative psychrotrophs that enter after pasteurisation are the main reason high-temperature short-time milk spoils early \cite{ranieri2009}. Foodborne disease more broadly causes an estimated 600 million illnesses and 420\,000 deaths a year, 175\,000 of them in the WHO South-East Asia region \cite{who2015}. These deaths are dominated by agents other than milk-borne bacteria and are quoted only as context; this work models growth, not disease.
 
-The limits a monitor reports against are process-hygiene criteria. The Food Safety and Standards Authority of India (FSSAI) sets an aerobic plate count of $3\times10^4$\,CFU\,mL$^{-1}$ for pasteurised milk \cite{fssai2024}, and quality deteriorates noticeably near $10^6$\,CFU\,mL$^{-1}$ \cite{martin2021,lin2016}; both are used here. A recent review of fresh dairy concludes that few studies predict the end of shelf life, that endpoint definitions are inconsistent, that few models are validated beyond their development data, and that probabilities are preferable to single verdicts \cite{lima2026}. Without a quantitative account of where accuracy is lost, two opposite mistakes are made: money is spent on precise thermometers that cannot improve the prediction, and alarms are believed that are wrong a large fraction of the time.
+The limits a monitor reports against are process-hygiene criteria. The Food Safety and Standards Authority of India (FSSAI) sets an aerobic plate count of $3\times10^4$\,CFU\,mL$^{-1}$ for pasteurised milk \cite{fssai2024}, and quality deteriorates noticeably near $10^6$\,CFU\,mL$^{-1}$ \cite{martin2021,lin2016}; both are used here. Throughout this report, a trip is called \emph{spoiled} when the modelled count crosses the stated limit; this is a microbial-limit exceedance, not a sensory judgement or a safety verdict. A recent review of fresh dairy concludes that few studies predict the end of shelf life, that endpoint definitions are inconsistent, that few models are validated beyond their development data, and that probabilities are preferable to single verdicts \cite{lima2026}. Without a quantitative account of where accuracy is lost, two opposite mistakes are made: money is spent on precise thermometers that cannot improve the prediction, and alarms are believed that are wrong a large fraction of the time.
 
 \section{Approach}
 A real cold chain never reveals the truth for every carton, so the question cannot be answered from field data alone. The approach taken here is a controlled simulation in which the truth is always known. Thousands of deliveries are generated with realistic temperature excursions and realistic variation in the bacteria; a reference model decides which cartons truly passed the limit; and a monitor that sees only a sensed, sampled temperature record tries to tell them apart. Information is then removed one source at a time, from an oracle that knows everything to a low-cost probe read once an hour, and the accuracy lost at each step is measured on the same trips. The result is a \emph{loss budget}: a single table that states how much each source of error costs. Every parameter is tied to a published study, a public database or an explicit assumption, and the model is checked against real growth data before any result is read.
@@ -176,7 +176,7 @@ A real cold chain never reveals the truth for every carton, so the question cann
 \item How much of the loss to biology can a calorimetric measurement of the batch recover?
 \end{enumerate}
 
-\section{Structure of the monograph}
+\section{Structure of the report}
 Chapter~\ref{ch:background} reviews the microbiology of milk spoilage, predictive microbiology and existing approaches to cold-chain monitoring. Chapter~\ref{ch:models} sets out the growth models and the edge estimator, and Chapter~\ref{ch:kin} develops their kinetic theory. Chapter~\ref{ch:bench} describes the benchmark and Chapter~\ref{ch:stats} its statistical methods. Chapter~\ref{ch:val} validates the model against published and ComBase data, and Chapter~\ref{ch:laws} compares temperature laws. Chapter~\ref{ch:results} reports the results, Chapter~\ref{ch:listeria} the \textit{Listeria} case study, Chapter~\ref{ch:calo} the calorimetric route to the missing biology, and Chapter~\ref{ch:design} the design of a monitor and the software. Chapter~\ref{ch:disc} discusses the findings and their limits, and Chapter~\ref{ch:concl} concludes. The appendices list the parameters with their provenance, the data and the procedure for reproducing every result.
 
 %======================================================================
@@ -296,7 +296,7 @@ Figure~\ref{fig:story} shows the central difficulty on one 72-h delivery. Three 
 \chapter{Non-isothermal growth kinetics}\label{ch:kin}
 \hook{Why does a cheap degree-hour count come so close to a growth model, and why can no thermometer fix the rest? The answer is one accumulated number.}
 \begin{summary}
-Growth in a changing temperature is a non-isothermal kinetic process, the same mathematical problem that thermal analysis has studied for sixty years. Under the square-root law, both growth models depend on the temperature history only through a generalized time, the integral of the growth rate. Every simple integrator is an approximation of that integral, and error propagation shows that biology outweighs sensor error about sevenfold. This chapter, Chapter~8 and Chapter~11 are based on joint work with Prof.\ (Dr.) Neeraj Tripathi.
+Growth in a changing temperature is a non-isothermal kinetic process, the same mathematical problem that thermal analysis has studied for sixty years. Under the square-root law, both growth models depend on the temperature history only through a generalized time, the integral of the growth rate. Every simple integrator is an approximation of that integral, and error propagation shows that biology outweighs sensor error about sevenfold.
 \end{summary}
 \section{Relation to Arrhenius kinetics and the apparent activation energy}
 In thermal analysis the rate constant usually follows Arrhenius, $k(T)=A\exp(-E/RT)$ \cite{arrhenius1889}. Ratkowsky et al.\ found that bacterial growth rates bend away from an Arrhenius line and are described better by Eq.~\eqref{eq:sqrt} \cite{ratkowsky1982}. The two laws can be compared through the apparent activation energy, defined as for any rate,
@@ -309,7 +309,7 @@ with $T_K$ the absolute temperature. For spoilage flora with $T_{\min}=-7.7$\deg
 \caption{Temperature dependence of growth. (a) Square-root law for spoilage flora (baseline, solid line) and \textit{L.~monocytogenes} (ComBase fit, dashed line). (b) Shelf life at a steady temperature, $\SL=K/\mu$, for the $3\times10^4$\,CFU\,mL$^{-1}$ limit (logarithmic axis). (c) Equivalent Arrhenius activation energy from Eq.~\eqref{eq:ea}}\label{fig:rates}\end{figure}
 
 \section{Reduction to a generalized time}
-The central observation of this paper is that the growth equations care about temperature only through one accumulated quantity.
+The central observation of this report is that the growth equations care about temperature only through one accumulated quantity.
 
 \begin{definition}[Biological time]
 For a temperature history $T(\cdot)$, the biological time elapsed by $t$ is $\tau(t)=\int_0^t \mu(T(s))\dd s$.
@@ -727,7 +727,7 @@ so the detection time combines the lot's own growth rate with its lag and starti
 \begin{equation}\label{eq:cslcal}
 S_{\mathrm{cal}}=\frac{1}{t_{\mathrm{det}}}\int_0^t\mu_{\mathrm{nom}}\big(T(s)\big)\dd s ,
 \end{equation}
-ranks trips by an estimate of $\tau/K$ in which the lot's rate scale and budget have been measured rather than assumed. What remains unmeasured is only the change of shape of $\mu(T)$ between $T_{\mathrm{ref}}$ and the storage temperature, which comes from the spread of $T_{\min}$. \secref{sec:calores} quantifies how much of the biological loss this recovers.
+ranks trips by an estimate of $\tau/K$ in which the lot's rate scale and budget have been measured rather than assumed. As written, $S_{\mathrm{cal}}$ has units of h$^{-1}$; multiplying by the constant $1/\mu_{\mathrm{nom}}(T_{\mathrm{ref}})$ gives the dimensionless ratio $\tau_{\mathrm{nom}}(t)/[\mu_{\mathrm{nom}}(T_{\mathrm{ref}})\,t_{\mathrm{det}}]$. If the lot's rate law has the nominal shape, $\mu_{\mathrm{lot}}=c\,\mu_{\mathrm{nom}}$, Eq.~\eqref{eq:tdet} turns this ratio into $\tau_{\mathrm{lot}}(t)/\tau^*$, the fraction of the lot's own budget up to detection that the trip has used. A constant factor does not change a ranking, so the AUC is the same for either form. What remains unmeasured is only the change of shape of $\mu(T)$ between $T_{\mathrm{ref}}$ and the storage temperature, which comes from the spread of $T_{\min}$. \secref{sec:calores} quantifies how much of the biological loss this recovers.
 
 
 \begin{figure}[!htbp]\centering\includegraphics[width=\textwidth]{calorimetry}
@@ -775,7 +775,7 @@ Figure~\ref{fig:system} shows how the estimator runs on a logger. A probe readin
 \caption[Processing on the logger]{Processing on the logger, with example values 40\,min after a truck door was left open. Steps 2--5 run on the device; parameter fitting and the shelf-life table are prepared offline}\label{fig:system}\end{figure}
 
 \section{Software}
-The repository is organised in layers. A kinetics module implements Eqs.~\eqref{eq:sqrt}--\eqref{eq:csl}; a simulator implements Chapter~\ref{ch:bench}; the benchmark computes scores, AUCs, paired bootstraps and calibration; validation scripts reproduce Chapter~\ref{ch:val}; and scripts write every number, table and figure of the paper and of this monograph from the result files. Numerical work uses NumPy, SciPy and Matplotlib \cite{harris2020,virtanen2020,hunter2007}. Fourteen automated tests (Table~\ref{tab:tests}) run on every change. Parts of the simulation code were developed with an AI coding assistant; all of it is covered by the tests and was checked by the author.
+The repository is organised in layers. A kinetics module implements Eqs.~\eqref{eq:sqrt}--\eqref{eq:csl}; a simulator implements Chapter~\ref{ch:bench}; the benchmark computes scores, AUCs, paired bootstraps and calibration; validation scripts reproduce Chapter~\ref{ch:val}; and scripts write every number, table and figure of this report from the result files. Numerical work uses NumPy, SciPy and Matplotlib \cite{harris2020,virtanen2020,hunter2007}. Nineteen automated tests (Table~\ref{tab:tests}) run on every change. Parts of the simulation code were developed with an AI coding assistant; all of it is covered by the tests and was checked by the author.
 
 \begin{table}[!htbp]\centering\footnotesize
 \caption{Automated tests}\label{tab:tests}
@@ -785,10 +785,11 @@ Kinetics (4) & Gompertz agrees with exponential growth; reference and estimator 
 Validation (3) & Fitted parameters are plausible; the constant-4\degC{} and two-excursion times of Lin et al.\ are reproduced within 10\,\%\\
 Statistics (6) & Fast AUC matches a reference implementation; known AUC values are recovered; the paired difference of identical scores is zero; a real improvement is detected; the probability rises with temperature; calibration of perfect and poor forecasts\\
 Parity (1) & The browser kernel matches the Python kernel\\
+Units and headlines (5) & ComBase rates are converted from decimal to natural logarithms before fitting; shelf life scales correctly with the rate; the headline numbers follow from the result files\\
 \bottomrule\end{tabular}\end{table}
 
 \section{Browser demonstrator}
-A public demonstrator runs the same kernel in the browser (\url{https://copyninja07-07.github.io/dairyguard/explorer.html}); a parity test ensures that it reproduces the Python implementation. A user chooses or draws a trip, such as a shop door left open or a failed truck refrigerator, and sees the probability that the milk has passed the limit, the simulated fate of 60 cartons and the comparison with a single alarm. The demonstrator is software only; a hardware logger is future work.
+A public demonstrator runs the same kernel in the browser (\url{https://copyninja07-07.github.io/dairyguard/explorer.html}); a parity test ensures that it reproduces the Python implementation. A user chooses or draws a trip, such as a shop door left open or a failed truck refrigerator, and sees the probability that the milk has passed the limit, the simulated growth in 60 cartons that share the same log, the fraction of shelf life used with its biological spread, simulated heat-flow curves of three batches with their detection times, and the comparison of the log alone with the log plus a calorimetric test. Every model in the demonstrator answers the same request, a temperature log and any tests at loading, so a future model can be added beside the present one and compared on the same trip. The demonstrator is software only.
 
 %======================================================================
 \chapter{Discussion}\label{ch:disc}
@@ -826,10 +827,10 @@ In an open benchmark of 240\,000 trips anchored to published and ComBase data, u
 \item Growth reads the temperature history only through a generalized time, which explains every loss; the square-root law is never outperformed by Arrhenius or $Q_{10}$ rules.
 \item A single calorimetric detection time of the batch recovers \CalFracMin--\CalFracMax\,\% of the loss to biology.
 \end{enumerate}
-Four directions follow: measurements of real logger data from Indian dairy routes to replace the assumed excursion model; challenge tests with natural flora under fluctuating temperature, with new plate counts; calorimetric experiments on milk under stepwise temperature programmes, to test the master curve and measure detection times of real batches; and a hardware logger running the estimator.
+The next stage of the project, a hybrid neural model trained on real growth data and on new laboratory measurements, is set out in DairyGuard White Paper WP-01. Four directions follow: measurements of real logger data from Indian dairy routes to replace the assumed excursion model; challenge tests with natural flora under fluctuating temperature, with new plate counts; calorimetric experiments on milk under stepwise temperature programmes, to test the master curve and measure detection times of real batches; and a hardware logger running the estimator.
 
 \section*{Acknowledgements}
-The author thanks Prof.\ (Dr.) Neeraj Tripathi (School of Electronics and Communication Engineering, Shri Mata Vaishno Devi University), faculty guide of this project and co-author of the kinetic and calorimetric work, and the ComBase consortium and the laboratories whose published growth records made this study possible.
+The author thanks the ComBase consortium and the laboratories whose published growth records made this study possible.
 
 %======================================================================
 \appendix
@@ -866,8 +867,9 @@ Command & Effect\\\midrule
 \texttt{make test} & run the 19 automated tests\\
 \texttt{make runs} & run the five benchmark runs (about three hours on two cores)\\
 \texttt{make validate} & reproduce the validation of Chapter~\ref{ch:val}\\
-\texttt{make paper} & write all numbers, tables and figures and build the paper\\
-\texttt{make book} & build this monograph\\
+\texttt{make generated} & write all numbers, tables and figures from the result files\\
+\texttt{make report} & build this report\\
+\texttt{make whitepaper} & build White Paper WP-01\\
 \texttt{make all} & everything above\\
 \bottomrule\end{tabular}\end{center}
 Every number quoted in the text is read from the result files by a script and written into the document as a macro; none is typed by hand.

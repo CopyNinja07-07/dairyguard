@@ -1,5 +1,5 @@
 """Write LaTeX tables and analytic numbers for the manuscript from the result files and the data.
-Run from the repository root: python report/make_tables.py  ->  report/tables.tex, report/datatables.tex"""
+Run from the repository root: python generated/make_tables.py  ->  generated/tables.tex, generated/datatables.tex"""
 import os
 import math
 import json
@@ -287,7 +287,7 @@ None (log only) & """ + f"{cw.nominal.min():.3f}--{cw.nominal.max():.3f} & {cw.n
 """ + _r("budget", "True lag and starting load") + "\n" + _r("ratelaw", "True rate law ($b$, $T_{\\min}$)") + "\n" + "\n".join(crow) + "\n" + r"""All biology (oracle) & 1.000 & 1.000 & 100\\
 \bottomrule\end{tabular}\end{table}"""
 
-# ---------------------------------------------------------------- monograph appendix tables
+# ---------------------------------------------------------------- technical report appendix tables
 def _tex(x):
     x = str(x)
     for a, b in (("\\", "/"), ("&", "\\&"), ("%", "\\%"), ("_", "\\_\\allowbreak{}"), ("#", "\\#"), ("^", "\\^{}"), ("~", "$\\sim$"), ("+/-", "$\\pm$")):
@@ -317,9 +317,9 @@ $T$/\textdegree C & $\mu_{\max}$/h$^{-1}$ & $T$/\textdegree C & $\mu_{\max}$/h$^
 
 import re as _re
 def _shade(x): return _re.sub(r"\\toprule(?!\\rowcolor)", r"\\toprule\\rowcolor{dghead}", x)
-open(R("report", "tables.tex"), "w").write(_shade("\n".join(out) + "\n" + "\n\n".join(["\\newcommand{\\TabAUC}{" + tab_auc + "}", "\\newcommand{\\TabParams}{" + tab_params + "}", "\\newcommand{\\TabSpRecords}{" + tab_sp + "}", "\\newcommand{\\TabCalo}{" + tab_calo + "}", "\\newcommand{\\TabBudget}{" + tab_budget + "}", "\\newcommand{\\TabContrasts}{" + tab_con + "}", "\\newcommand{\\TabCal}{" + tab_cal + "}", "\\newcommand{\\TabDataComp}{" + dat_comp + "}", "\\newcommand{\\TabSecondary}{" + tab_sec + "}", "\\newcommand{\\TabRivals}{" + tab_rv + "}"]) + "\n"))
-open(R("report", "datatables.tex"), "w").write(_shade(dat_sp) + "\n")
-open(R("report", "datatables_lis.tex"), "w").write(_shade(dat_lis) + "\n")
+open(R("generated", "tables.tex"), "w").write(_shade("\n".join(out) + "\n" + "\n\n".join(["\\newcommand{\\TabAUC}{" + tab_auc + "}", "\\newcommand{\\TabParams}{" + tab_params + "}", "\\newcommand{\\TabSpRecords}{" + tab_sp + "}", "\\newcommand{\\TabCalo}{" + tab_calo + "}", "\\newcommand{\\TabBudget}{" + tab_budget + "}", "\\newcommand{\\TabContrasts}{" + tab_con + "}", "\\newcommand{\\TabCal}{" + tab_cal + "}", "\\newcommand{\\TabDataComp}{" + dat_comp + "}", "\\newcommand{\\TabSecondary}{" + tab_sec + "}", "\\newcommand{\\TabRivals}{" + tab_rv + "}"]) + "\n"))
+open(R("generated", "datatables.tex"), "w").write(_shade(dat_sp) + "\n")
+open(R("generated", "datatables_lis.tex"), "w").write(_shade(dat_lis) + "\n")
 
 print("analytic:", dict(sd_b=sd_b, sd_T=round(sd_T, 3), sd_K=round(sd_K, 3), sd_bio=round(sd_bio, 3), sd_ds=round(sd_ds, 3), sd_pt=round(sd_pt, 3), K=round(K_nom, 2), riem=round(riem, 3)))
 print("lis records", len(lis), "sources", len(srcs))
