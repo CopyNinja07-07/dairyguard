@@ -13,25 +13,8 @@ Three developments make the question urgent now. First, temperature loggers have
 
 \textit{Uncertainty analyses.} The nearest studies are Monte Carlo analyses of shelf-life simulations \cite{nauta2000}. For fluid milk, the dairy group at Cornell University modelled spoilage from Gram-negative post-pasteurisation contamination \cite{lau2022} and from psychrotolerant spore-formers \cite{buehler2018}, and deployed the latter as a supply-chain tool \cite{qian2023}. For frozen food, kinetic uncertainty and temperature variability were propagated through nested Monte Carlo loops \cite{giannakourou2020}. In all of them temperature enters as an uncertain input drawn from a distribution.
 
-\textit{Monitoring.} Time--temperature indicators integrate an Arrhenius rate with a fixed activation energy \cite{taoukis1989}, and Fu et al.\ related them to the growth of \textit{Pseudomonas fragi} in dairy products, noting that prior temperature history lengthened the lag \cite{fu1991}; dynamic shelf-life prediction for fish \cite{koutsoumanis2001} led to the Safety Monitoring and Assurance System \cite{koutsoumanis2005}; field studies compare dynamic and printed shelf life \cite{goransson2018}; mean kinetic temperature estimates remaining shelf life \cite{kim2020}; neural networks estimate product temperature from vehicle data \cite{zou2023}; heat-transfer simulation quantifies the cost of cold-chain failures \cite{muller2026,ndraha2018}; and a recent framework couples a growth model with machine-learning components for milk \cite{sofat2026}. Table~\ref{tab:approaches} sets these approaches side by side.
+\textit{Monitoring.} Time--temperature indicators integrate an Arrhenius rate with a fixed activation energy \cite{taoukis1989}, and Fu et al.\ related them to the growth of \textit{Pseudomonas fragi} in dairy products, noting that prior temperature history lengthened the lag \cite{fu1991}; dynamic shelf-life prediction for fish \cite{koutsoumanis2001} led to the Safety Monitoring and Assurance System \cite{koutsoumanis2005}; field studies compare dynamic and printed shelf life \cite{goransson2018}; mean kinetic temperature estimates remaining shelf life \cite{kim2020}; neural networks estimate product temperature from vehicle data \cite{zou2023}; heat-transfer simulation quantifies the cost of cold-chain failures \cite{muller2026,ndraha2018}; and a recent framework couples a growth model with machine-learning components for milk \cite{sofat2026}.
 
-\begin{table*}[!t]\centering\footnotesize
-\caption{Approaches to predicting spoilage or quality from a temperature history, and what each leaves open for a temperature monitor}\label{tab:approaches}
-\setlength{\tabcolsep}{3.2pt}
-\begin{tabular}{@{}p{2.9cm}p{2.3cm}p{2.4cm}p{2.2cm}p{2.1cm}p{4.2cm}@{}}\toprule\rowcolor{dghead}
-Approach & Input & Temperature law & Biological variability & Output & Open question for a monitor\\\midrule
-Fixed threshold alarm & logged temperature & none & ignored & alarm & how often the alarm is wrong\\
-Degree-hours, time above a threshold & logged temperature & linear or step & ignored & index & how close to a growth model it comes\\
-Time--temperature indicator, mean kinetic temperature \cite{taoukis1989,kim2020} & logged or physical integral & Arrhenius, fixed $E_a$ & ignored & equivalent temperature & cost of a wrong $E_a$; biology\\
-Dynamic shelf life, SMAS \cite{koutsoumanis2001,koutsoumanis2005} & logged temperature & square-root & nominal & remaining life & loss to biology, sensor, sampling\\
-Isothermal calorimetry \cite{wadso2011,haman2019,fricke2020} & heat flow at constant $T$ & measured, Arrhenius & measured per sample & rate, detection time & not available in transit\\
-Monte Carlo spoilage models \cite{lau2022,buehler2018,qian2023} & simulated temperature & square-root & sampled & share of units spoiled & what is left once temperature is logged\\
-Nested uncertainty \cite{giannakourou2020} & simulated temperature & Arrhenius & sampled & shelf-life distribution & monitor accuracy\\
-Product-temperature estimation \cite{zou2023} & vehicle and door data & $Q_{10}$ & ignored & product temperature & effect on ranking of spoiled units\\
-Heat-transfer coupling \cite{muller2026} & simulated failures & primary + secondary & nominal & shelf-life loss & monitor accuracy\\
-Decision intelligence \cite{sofat2026} & sensor stream & growth model + learning & partly & decision & decomposition of error\\
-\textbf{This work} & \textbf{sensed, sampled log} & \textbf{square-root, compared with Arrhenius and $Q_{10}$} & \textbf{sampled, with oracle} & \textbf{AUC loss budget, probability} & --\\
-\bottomrule\end{tabular}\end{table*}
 
 \subsection{Closest prior work in detail}\label{sec:closest}
 Table~\ref{tab:closest} describes the studies closest to ours in more detail: the data they use, their models, how they treat uncertainty, what they found and what they leave open. Table~\ref{tab:criteria} then scores them on eight criteria that a monitor-centred analysis needs, and Table~\ref{tab:findings} sets their numerical findings beside ours. The distinction is one of viewpoint. The sensitivity analyses ask \emph{which unknown input moves the outcome most}; when temperature is unknown it dominates, as they find. We ask \emph{what is left once temperature is logged}; the answer is mostly biology. The two findings fit together.
@@ -280,9 +263,10 @@ Isothermal calorimetry follows microbial growth through the heat flow $P$ of a s
 
 \begin{proposition}[Calorimetric master curve]\label{prop:calo}
 Let $Y_Q$ be constant and let the growth follow Eqs.~\eqref{eq:bar}--\eqref{eq:barq}. Then, for any temperature programme,
-\begin{equation}\label{eq:calo}
-\frac{P(t)}{\mu\big(T(t)\big)}=Y_QV\,G\big(\tau(t)\big),\qquad Q(t)=\int_0^tP\dd s=Y_QV\big[N(\tau(t))-N_0\big],
-\end{equation}
+\begin{gather}
+\frac{P(t)}{\mu\big(T(t)\big)}=Y_QV\,G\big(\tau(t)\big),\label{eq:calo}\\
+Q(t)=\int_0^tP\dd s=Y_QV\big[N(\tau(t))-N_0\big],\nonumber
+\end{gather}
 where $G(\tau)=N\frac{q}{1+q}(1-N/N_{\max})$ is evaluated on the solution with $\mu\equiv1$. The calorimetric conversion $\alpha=Q/Q_\infty=(N-N_0)/(N_{\max}-N_0)$ therefore obeys $\dd\alpha/\dd\tau=f(\alpha)$ with a model function $f$ that does not depend on the temperature programme.
 \end{proposition}
 
@@ -378,10 +362,8 @@ A \emph{single alarm} is the special case of one draw at nominal values, $\hat p
 \begin{figure*}[!t]\centering\includegraphics{design}
 \caption{Design of the benchmark. Upper row: the simulated truth, hidden from the monitor, which turns a trip's temperature and biology into a true label. Lower row: what the monitor sees and computes from a sensed, sampled record. Removing information step by step gives the loss budget}\label{fig:design}\end{figure*}
 \subsection{Overview}
-Figure~\ref{fig:design} shows the design: a simulated world supplies the truth, and a monitor that sees only a sensed, sampled record tries to recover it. Figure~\ref{fig:flow} shows the pipeline from published data to the reported numbers. Every parameter has a recorded source (Table~\ref{tab:sources}); values without one are marked as assumed.
+Figure~\ref{fig:design} shows the design: a simulated world supplies the truth, and a monitor that sees only a sensed, sampled record tries to recover it. Every parameter has a recorded source (Table~\ref{tab:sources}); values without one are marked as assumed.
 
-\begin{figure}[!htbp]\centering\includegraphics{flow}
-\caption{Flowchart of the study, from trip generation and biology to sensing, scoring and statistical evaluation}\label{fig:flow}\end{figure}
 
 \begin{table*}[!t]\centering\footnotesize
 \caption{Where the data and parameters come from.}\label{tab:sources}
@@ -474,10 +456,8 @@ The benchmark is a factorial simulation experiment. For every run and setting it
 ComBase reports maximum rates in log$_{10}$ units; we convert with $\mu=\mu_{10}\ln10$ and fit Eq.~\eqref{eq:ols}. For \textit{Listeria}, records with no added factors form the fitting set and records with other stated conditions (sterilised or previously heated milk, added salts or acids) form the held-out set; we report $B_f$ and $A_f$ (Eq.~\eqref{eq:bfaf}) on both.
 
 \section{Statistical methodology}\label{sec:stats}
-The study makes three kinds of statistical statement: how well a score ranks spoiled against unspoiled trips, whether one score ranks better than another on the same trips, and how well a probability is calibrated. A fourth kind, how well a temperature law fits measured growth rates, was used above. Figure~\ref{fig:statflow} summarises the procedures; this section defines them and justifies the sample sizes.
+The study makes three kinds of statistical statement: how well a score ranks spoiled against unspoiled trips, whether one score ranks better than another on the same trips, and how well a probability is calibrated. A fourth kind, how well a temperature law fits measured growth rates, was used above. This section defines the procedures and justifies the sample sizes.
 
-\begin{figure}[!htbp]\centering\includegraphics{statflow}
-\caption{Statistical procedures of the study, from the per-trip labels and scores to point estimates, intervals, paired comparisons, calibration and growth-rate fits}\label{fig:statflow}\end{figure}
 
 \subsection{The estimand: area under the ROC curve}
 Let $S_1$ be the score of a randomly chosen spoiled trip and $S_0$ that of a randomly chosen unspoiled trip. The quantity of interest is
@@ -587,7 +567,7 @@ An oracle that knows each trip's true biology and temperature separates spoiled 
 \caption{Loss budget for (a) a low-mass pouch and (b) an insulated crate (limit $3\times10^4$\,CFU\,mL$^{-1}$, $cv=0.10$). The top row is the oracle with true biology and true temperature; the rows below remove information step by step. Bars are 95\,\% bootstrap intervals}\label{fig:budget}\end{figure}
 
 \subsection{Against simple rules (RQ3)}
-Table~\ref{tab:auc} in the Appendix gives the AUC of every score in every baseline setting. On identical trips the kinetic score beats time above 5\degC{} in \NumBaseFiveSig{} of 12 settings and maximum temperature in \NumBaseMaxSig. Against degree-hours above 4\degC, a rule that needs no growth model, the gain is positive with an interval excluding zero in \NumBaseGainSig{} of 12 settings but small: \NumBaseGainMin--\NumBaseGainMax{} AUC in the baseline run and up to \NumLagGainMax{} when extra lag is present (Table~\ref{tab:contrasts}). Corollary~\ref{cor:dh} explains why: degree-hours are the first-order term of the same clock.
+The AUC of every score in every setting is given with the code (\texttt{results/*/auc\_results.csv}). On identical trips the kinetic score beats time above 5\degC{} in \NumBaseFiveSig{} of 12 settings and maximum temperature in \NumBaseMaxSig. Against degree-hours above 4\degC, a rule that needs no growth model, the gain is positive with an interval excluding zero in \NumBaseGainSig{} of 12 settings but small: \NumBaseGainMin--\NumBaseGainMax{} AUC in the baseline run and up to \NumLagGainMax{} when extra lag is present (Table~\ref{tab:contrasts}). Corollary~\ref{cor:dh} explains why: degree-hours are the first-order term of the same clock.
 
 
 \subsection{Sensors and sampling (RQ2)}
@@ -650,13 +630,11 @@ Figure~\ref{fig:system} shows the architecture we propose for a logger. A temper
 \caption{Block diagram of a DairyGuard monitor, read in the order of the arrows (steps 1--6), with the value each step would hold 40\,min after a truck door was left open. Steps 2--5 run on the logger; the shelf-life table and the parameter sets are prepared once, offline}\label{fig:system}\end{figure*}
 
 \subsection{Software}
-The repository is organised in layers. A kinetics module implements Eqs.~\eqref{eq:sqrt}--\eqref{eq:csl}; a simulator implements \secref{sec:method}; the benchmark computes scores, AUCs, paired bootstraps and calibration; validation scripts reproduce \secref{sec:val}; and every number in this paper is written into the manuscript by a script from the result files. Numerical work uses NumPy and SciPy \cite{harris2020,virtanen2020}, and all graphs and diagrams were drawn with Matplotlib \cite{hunter2007}. Fourteen automated tests, listed in Table~\ref{tab:tests} of the Appendix, run on every change. Parts of the simulation and analysis code were written with the help of an AI coding assistant; every function is covered by the automated tests and was checked by the authors.
+The repository is organised in layers. A kinetics module implements Eqs.~\eqref{eq:sqrt}--\eqref{eq:csl}; a simulator implements \secref{sec:method}; the benchmark computes scores, AUCs, paired bootstraps and calibration; validation scripts reproduce \secref{sec:val}; and every number in this paper is written into the manuscript by a script from the result files. Numerical work uses NumPy and SciPy \cite{harris2020,virtanen2020}, and all graphs and diagrams were drawn with Matplotlib \cite{hunter2007}. Fourteen automated tests run on every change: four check the kinetics, three the validation, six the statistics and one that the browser kernel matches the Python kernel. Parts of the simulation and analysis code were written with the help of an AI coding assistant; every function is covered by the automated tests and was checked by the authors.
 
 \subsection{Browser demonstrator}
-A public web demonstrator runs the same kernel in the browser (Fig.~\ref{fig:demo}); a parity test guarantees that it gives the same numbers as the Python code. A user picks a trip, such as a shop door left open or a failed truck refrigerator, or draws one, and sees the probability that the milk has passed the limit, the 60 cartons of a truck coloured by their simulated fate, and the comparison with a simple alarm. The demonstrator is software only; a hardware logger is future work.
+A public web demonstrator runs the same kernel in the browser (\url{https://copyninja07-07.github.io/dairyguard/explorer.html}); a parity test guarantees that it gives the same numbers as the Python code. A user picks a trip, such as a shop door left open or a failed truck refrigerator, or draws one, and sees the probability that the milk has passed the limit, the 60 cartons of a truck coloured by their simulated fate, and the comparison with a simple alarm. The demonstrator is software only; a hardware logger is future work.
 
-\begin{figure}[!htbp]\centering\includegraphics[width=84mm]{demo.jpg}
-\caption{The browser demonstrator for a trip in which the truck refrigerator failed: the monitor reports a probability of passing the limit instead of a single alarm}\label{fig:demo}\end{figure}
 
 \section{Discussion}\label{sec:disc}
 \subsection{Implications for monitor design}

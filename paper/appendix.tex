@@ -2,25 +2,6 @@
 \section{Data tables}\label{app:data}
 The 51 records of spoilage flora are listed in Table~\ref{tab:dsp}. The 99 \textit{L.~monocytogenes} records, with their set (fitting or held out) and source, are listed in \ListeriaRef, and the complete compilation of \DatNFull{} records is in the repository.
 \input{datatables.tex}
-\ifarxiv\input{datatables_lis.tex}\fi
-
-
-\section{Supplementary results}\label{app:auc}
-Table~\ref{tab:auc} lists the AUC of the five scores in every setting of the baseline run, and Table~\ref{tab:tests} the automated tests of the software.
-
-\TabAUC
-
-\begin{table}[!htbp]\centering\footnotesize
-\caption{Automated tests of the software}\label{tab:tests}
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}lp{6.0cm}@{}}\toprule\rowcolor{dghead}
-Group & What is checked\\\midrule
-Kinetics (4) & Gompertz agrees with exponential growth; reference and estimator agree at constant $T$ with equal parameters; look-up table matches closed form; shelf life falls with temperature\\
-Validation (3) & Fitted parameters are sensible; Lin's constant-4\degC{} and two-excursion times reproduced within 10\,\%\\
-Statistics (6) & Fast AUC matches reference; known AUC values; paired difference of identical scores is zero; a real improvement is detected; probability rises with temperature; calibration of perfect and bad forecasts\\
-Parity (1) & Browser kernel matches the Python kernel\\
-\bottomrule\end{tabular}\end{table}
-
 
 
 \section{Proofs}\label{app:proofs}

@@ -216,7 +216,7 @@ What this means:
 
 ## Version 1 and version 2
 
-| | Version 1 (preprint, 9 pages) | Version 2 (current, 25 pages) |
+| | Version 1 (preprint, 9 pages) | Version 2 (current, 20 pages) |
 |---|---|---|
 | Question | What limits a temperature monitor? | Why, and what would fix it? |
 | Theory | Growth models, applied | Six propositions: growth and its heat depend on the log only through one running total |

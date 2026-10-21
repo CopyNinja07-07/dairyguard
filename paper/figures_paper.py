@@ -172,31 +172,6 @@ def _arr(ax, x0, y0, x1, y1, c=INK2):
     ax.annotate("", xy=(x1, y1), xytext=(x0, y0), arrowprops=dict(arrowstyle="-|>", lw=.8, color=c, shrinkA=1, shrinkB=1, mutation_scale=7))
 
 
-# ---------------------------------------------------------------- flowchart of the benchmark
-def fig_flow():
-    fig, ax = plt.subplots(figsize=(W1, 6.6)); ax.set_xlim(0, 60); ax.set_ylim(-12, 128); ax.axis("off")
-    steps = [("Choose a run and a setting\n(limit, product, $cv$)", "#f4f4f4", INK2),
-             ("Generate 4000 trips:\nwarm spells, product\nthermal response", "#fdf1ea", ORANGE),
-             ("Draw each trip's biology:\nb, T$_{\\min}$, h$_0$, N$_0$", "#fdf1ea", ORANGE),
-             ("Grow bacteria along the\ntrace; label = limit passed\nby the horizon?", "#fdf1ea", ORANGE),
-             ("Add sensor error and\nsample every 1, 15 or 60 min", "#eef3fa", BLUE),
-             ("Compute scores: CSL,\nsimple rules, oracle,\nprobability", "#eef3fa", BLUE),
-             ("Evaluate: AUC, bootstrap,\nBrier score, ECE", "#eef7f1", GREEN)]
-    y = 126; ys = []
-    for txt, fc, ec in steps:
-        _box(ax, 5, y - 11, 52, 11, txt, fc, ec); ys.append(y); y -= 15.2
-    for i in range(len(ys) - 1): _arr(ax, 31, ys[i] - 11.4, 31, ys[i + 1] + 0.4)
-    yd = ys[-1] - 20
-    ax.add_patch(plt.Polygon([[31, yd + 6.5], [50, yd], [31, yd - 6.5], [12, yd]], closed=True, fc="#fff8e6", ec=GOLD, lw=.8))
-    ax.text(31, yd, "all settings\nand runs done?", ha="center", va="center", fontsize=8, color=INK)
-    _arr(ax, 31, ys[-1] - 11.4, 31, yd + 6.7)
-    ax.plot([12, 1.5, 1.5], [yd, yd, ys[1] - 5.5], color=INK2, lw=.8); _arr(ax, 1.5, ys[1] - 5.5, 4.8, ys[1] - 5.5)
-    ax.text(3, yd + 1.5, "no", fontsize=8, color=INK2)
-    _box(ax, 12, yd - 21, 38, 8, "Tables and figures", "#f4f4f4", INK2)
-    _arr(ax, 31, yd - 6.7, 31, yd - 12.8); ax.text(32.5, yd - 10.5, "yes", fontsize=8, color=INK2)
-    save(fig, "flow.pdf")
-
-
 # ---------------------------------------------------------------- software architecture
 # ================================================================= explanatory figures
 B0, TM0 = 0.030, -7.7
@@ -236,7 +211,7 @@ def fig_story():
             ("B", "typical carton", 0.030, -7.7, 4.5, 1.55, GOLD),
             ("C", "more bacteria, fast strain", 0.034, -6.5, 2.7, 2.00, ORANGE)]
     lim = math.log10(3e4)
-    fig = plt.figure(figsize=(W2, 8.0))
+    fig = plt.figure(figsize=(W2, 6.9))
     gs = fig.add_gridspec(5, 1, height_ratios=[0.5, 1.05, 1.3, 1.0, 0.62], hspace=0.62)
     a0 = fig.add_subplot(gs[0]); a1 = fig.add_subplot(gs[1]); a2 = fig.add_subplot(gs[2], sharex=a1)
     a3 = fig.add_subplot(gs[3], sharex=a1); a4 = fig.add_subplot(gs[4])
@@ -345,7 +320,7 @@ def fig_clock():
 # ---------------------------------------------------------------- Fig: rate law, shelf life, apparent activation energy
 def fig_rates():
     T = np.linspace(-2, 20, 300); R = 8.314
-    fig, axs = plt.subplots(1, 3, figsize=(W2, 2.2))
+    fig, axs = plt.subplots(1, 3, figsize=(W2, 2.08))
     ax = axs[0]
     for (b, tm, nm, c) in [(0.030, -7.7, "Spoilage (baseline)", BLUE), (0.0235, -2.3, "$\\it{Listeria}$", ORANGE)]:
         ax.plot(T, mu_of(T, b, tm), color=c, lw=1.6, ls="-" if c == BLUE else (0, (4, 2)), label=nm)
@@ -474,7 +449,7 @@ def fig_secondary():
     sys.path.insert(0, os.path.join(ROOT, "src")); import compare_secondary as C
     styles = {"sqrt": ("-", BLUE, "square-root"), "arrhenius": ((0, (4, 2)), ORANGE, "Arrhenius"),
               "q10": ((0, (1.5, 1.2)), GREEN, "constant Q$_{10}$"), "davey": ((0, (6, 1.5, 1.5, 1.5)), PINK, "Arrhenius–Davey")}
-    fig, axs = plt.subplots(1, 3, figsize=(W2, 2.4), gridspec_kw={"width_ratios": [1, 1, 0.9]})
+    fig, axs = plt.subplots(1, 3, figsize=(W2, 2.28), gridspec_kw={"width_ratios": [1, 1, 0.9]})
     for ax, (nm, T, mu), L in zip(axs[:2], [("Spoilage flora (pasteurised milk)", sp.temp_C.values, sp.max_rate_log10_per_h.values * m_.log(10)),
                                           ("L. monocytogenes (fitting set)", lis["T"].values, lis.max_rate_log10_per_h.values * m_.log(10))], "ab"):
         ax.scatter(T, mu, s=9, color=MUTED, lw=0, zorder=3)
@@ -551,22 +526,6 @@ def fig_stats():
     save(fig, "stats.pdf")
 
 
-def fig_statflow():
-    fig, ax = plt.subplots(figsize=(W1, 3.9)); ax.set_xlim(0, 60); ax.set_ylim(0, 92); ax.axis("off")
-    steps = [("4000 trips per setting:\ntrue label y and score s", "#f4f4f4", INK2),
-             ("Rank scores; AUC by the\nMann–Whitney statistic", "#eef3fa", BLUE),
-             ("Resample trips 200 times:\npercentile interval of AUC", "#eef3fa", BLUE),
-             ("Resample the same trips 400\ntimes for two scores: paired\ninterval of the AUC difference", "#eef3fa", BLUE),
-             ("Probabilities: Brier score and\nexpected calibration error", "#eef7f1", GREEN),
-             ("Growth-rate fits: bias and\naccuracy factors, AICc,\ncross-validation", "#fdf1ea", ORANGE)]
-    y = 90
-    for i, (t, fc, ec) in enumerate(steps):
-        _box(ax, 3, y - 12, 54, 12, t, fc, ec); 
-        if i: _arr(ax, 30, y + 2.6, 30, y + 0.4)
-        y -= 15
-    save(fig, "statflow.pdf")
-
-
 # ---------------------------------------------------------------- Fig: calorimetric master curve and value of a calorimetric measurement
 def fig_calorimetry():
     dt = 1 / 60; h0, l0, ym = 3.8, 1.7, 9.0
@@ -609,6 +568,6 @@ def fig_calorimetry():
 
 if __name__ == "__main__":
     fig_design(); fig_combase(); fig_lis(); fig_budget(); fig_runs()
-    fig_story(); fig_clock(); fig_rates(); fig_sampling(); fig_errors(); fig_system(); fig_flow()
-    fig_hierarchy(); fig_secondary(); fig_rivals(); fig_stats(); fig_statflow(); fig_calorimetry()
+    fig_story(); fig_clock(); fig_rates(); fig_sampling(); fig_errors(); fig_system()
+    fig_hierarchy(); fig_secondary(); fig_rivals(); fig_stats(); fig_calorimetry()
     print("paper figures ok:", sorted(os.listdir(OUT)))

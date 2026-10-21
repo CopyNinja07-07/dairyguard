@@ -1,13 +1,13 @@
 \documentclass[10pt,twocolumn,twoside,a4paper]{article}
-\usepackage[a4paper,left=17mm,right=17mm,top=20mm,bottom=18mm,columnsep=6mm,headsep=6mm]{geometry}
+\usepackage[a4paper,left=15mm,right=15mm,top=18mm,bottom=17mm,columnsep=5.5mm,headsep=5mm]{geometry}
 \newif\ifarxiv\arxivtrue
 \input{preamble.tex}
 \titleformat{\section}[block]{\needspace{7\baselineskip}\normalfont\fontsize{12.5}{15}\bfseries\color{dgblue}}{}{0em}{}[{\vspace{2pt}\color{dgblue}\titlerule[1.1pt]}]
 \titleformat{\subsection}{\needspace{4\baselineskip}\normalfont\bfseries\normalsize\color{black}}{}{0em}{}
-\titlespacing*{\section}{0pt}{3.4ex plus .6ex}{1.4ex}
+\titlespacing*{\section}{0pt}{2.8ex plus .5ex}{1.2ex}
 \titlespacing*{\subsection}{0pt}{1.6ex plus .3ex}{0.4ex}
 \newcommand{\secref}[1]{\emph{\nameref{#1}}}
-\newcommand{\ListeriaRef}{Table~\ref{tab:dlis}}
+\newcommand{\ListeriaRef}{the repository (\texttt{data/combase\_milk\_records.csv})}
 \fancyhead[LE]{\footnotesize\thepage\hfill S.\,P.~Singh, N.~Tripathi}\fancyhead[RO]{\footnotesize How much can a temperature log tell us about spoiling milk?\hfill\thepage}
 \hypersetup{pdftitle={How much can a temperature log tell us about spoiling milk? Non-isothermal growth kinetics and a loss budget for cold-chain monitoring},pdfauthor={Suryansh Pratap Singh; Neeraj Tripathi}}
 \begin{document}
