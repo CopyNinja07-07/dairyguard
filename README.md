@@ -222,7 +222,7 @@ What this means:
 | Theory | Growth models, applied | Six propositions: growth and its heat depend on the log only through one running total |
 | Temperature laws | Square-root rule | Four laws compared on real records; Arrhenius and Q10 rules tested on 240,000 trips |
 | Calorimetry | Not covered | One heat-flow test of a batch closes 69–94% of the gap |
-| Authors | Suryansh Pratap Singh | Suryansh Pratap Singh, Neeraj Tripathi |
+| Authors | Suryansh Pratap Singh | Suryansh Pratap Singh and Prof. (Dr.) Neeraj Tripathi |
 
 Version 1 is an earlier working paper, not peer reviewed and superseded by version 2. It is kept at [`docs/DairyGuard_v1_WorkingPaper.pdf`](docs/DairyGuard_v1_WorkingPaper.pdf).
 
@@ -312,4 +312,4 @@ dairyguard/
 
 Citation details are in [`CITATION.cff`](CITATION.cff). Released under the MIT licence.
 
-**Authors:** Suryansh Pratap Singh (code, simulation and both papers) and Neeraj Tripathi (co-author of version 2), Shri Mata Vaishno Devi University.
+**Authors:** Suryansh Pratap Singh (code, simulation and both papers) and Prof. (Dr.) Neeraj Tripathi, School of Electronics and Communication Engineering, co-author and faculty guide for version 2. Both at Shri Mata Vaishno Devi University.
