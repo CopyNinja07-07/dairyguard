@@ -19,6 +19,7 @@
 \usepackage[font={footnotesize},labelfont=bf,labelsep=space,justification=justified,singlelinecheck=false,figurename=Fig.,skip=4pt]{caption}
 \captionsetup[table]{labelsep=newline,position=top}
 \usepackage{titlesec}
+\usepackage{needspace}
 \usepackage{enumitem}
 \usepackage{fancyhdr}
 \usepackage[most]{tcolorbox}
@@ -46,7 +47,8 @@
 \setlist{nosep,leftmargin=1.3em}
 \setlength{\parindent}{1.1em}
 \setlength{\parskip}{0pt}
-\renewcommand{\topfraction}{0.9}\renewcommand{\floatpagefraction}{0.8}\renewcommand{\dbltopfraction}{0.9}\renewcommand{\dblfloatpagefraction}{0.8}
+\renewcommand{\topfraction}{0.92}\renewcommand{\bottomfraction}{0.6}\renewcommand{\textfraction}{0.06}\renewcommand{\floatpagefraction}{0.88}\renewcommand{\dbltopfraction}{0.92}\renewcommand{\dblfloatpagefraction}{0.88}
+\setcounter{topnumber}{3}\setcounter{bottomnumber}{2}\setcounter{totalnumber}{5}\setcounter{dbltopnumber}{3}
 \setlength{\textfloatsep}{10pt plus 2pt minus 2pt}\setlength{\dbltextfloatsep}{10pt plus 2pt minus 2pt}
 \newcommand{\CSL}{\mathrm{CSL}}
 \newcommand{\SL}{\mathrm{SL}}

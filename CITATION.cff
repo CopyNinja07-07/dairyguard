@@ -6,7 +6,7 @@ authors:
   - family-names: "Singh"
     given-names: "Suryansh Pratap"
     affiliation: "Department of Mathematics and Computing, Shri Mata Vaishno Devi University"
-date-released: 2026-10-20
+date-released: 2026-10-21
 license: MIT
 repository-code: "https://github.com/CopyNinja07-07/dairyguard"
 keywords: [cold chain, predictive microbiology, non-isothermal kinetics, milk, shelf life, benchmark, calibration]
@@ -16,5 +16,7 @@ preferred-citation:
   authors:
     - family-names: "Singh"
       given-names: "Suryansh Pratap"
+    - family-names: "Tripathi"
+      given-names: "Neeraj"
   year: 2026
   status: preprint

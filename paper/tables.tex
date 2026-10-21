@@ -1,6 +1,97 @@
+\newcommand{\AnSdB}{0.20}
+\newcommand{\AnSdT}{0.26}
+\newcommand{\AnSdK}{0.08}
+\newcommand{\AnSdBio}{0.33}
+\newcommand{\AnSdDS}{0.049}
+\newcommand{\AnSdPT}{0.015}
+\newcommand{\AnRatio}{7}
+\newcommand{\AnKnom}{10.2}
+\newcommand{\AnRiem}{0.026}
+\newcommand{\AnOneDeg}{17}
+\newcommand{\AnMuFour}{0.123}
+\newcommand{\AnMuThirteen}{0.386}
+\newcommand{\AnR}{2.4}
+\newcommand{\AnPredDS}{0.002}
+\newcommand{\AnObsDS}{0.010}
+\newcommand{\AnPredPT}{0.000}
+\newcommand{\AnObsPT}{0.001}
+\newcommand{\SecEaSp}{92}
+\newcommand{\SecEaLis}{130}
+\newcommand{\SecQtenSp}{4.0}
+\newcommand{\SecQtenLis}{7.1}
+\newcommand{\RvFitAhead}{52}
+\newcommand{\RvFitSig}{28}
+\newcommand{\RvFitNeg}{0}
+\newcommand{\RvWadAhead}{57}
+\newcommand{\RvWadSig}{35}
+\newcommand{\RvWadNeg}{0}
+\newcommand{\RvQtenAhead}{48}
+\newcommand{\RvQtenSig}{15}
+\newcommand{\RvQtenNeg}{0}
 \newcommand{\DatNFull}{373}
-\newcommand{\DatNLis}{102}
+\newcommand{\DatNLis}{99}
 \newcommand{\DatNSp}{51}
+\newcommand{\CalNomMin}{0.59}
+\newcommand{\CalNomMax}{0.71}
+\newcommand{\CalNomMean}{0.66}
+\newcommand{\CalBudMin}{0.60}
+\newcommand{\CalBudMax}{0.75}
+\newcommand{\CalBudMean}{0.68}
+\newcommand{\CalRateMin}{0.97}
+\newcommand{\CalRateMax}{0.99}
+\newcommand{\CalRateMean}{0.98}
+\newcommand{\CalCalMin}{0.91}
+\newcommand{\CalCalMax}{0.98}
+\newcommand{\CalCalMean}{0.94}
+\newcommand{\CalOrcMin}{1.00}
+\newcommand{\CalOrcMax}{1.00}
+\newcommand{\CalOrcMean}{1.00}
+\newcommand{\CalFracMin}{69}
+\newcommand{\CalFracMax}{94}
+\newcommand{\CalFracMean}{82}
+\newcommand{\CalGainBudMin}{0.01}
+\newcommand{\CalGainBudMax}{0.04}
+\newcommand{\CalGainBudSig}{11}
+\newcommand{\CalGainRateMin}{0.26}
+\newcommand{\CalGainRateMax}{0.40}
+\newcommand{\CalGainRateSig}{12}
+\newcommand{\CalGainCalMin}{0.21}
+\newcommand{\CalGainCalMax}{0.38}
+\newcommand{\CalGainCalSig}{12}
+\newcommand{\CalRestMin}{0.02}
+\newcommand{\CalRestMax}{0.09}
+\newcommand{\CalRestSig}{12}
+\newcommand{\CalTdetMed}{16}
+\newcommand{\CalTdetLo}{11}
+\newcommand{\CalTdetHi}{24}
+\newcommand{\CalSensAMin}{0.91}
+\newcommand{\CalSensAMax}{0.98}
+\newcommand{\CalSensAFrac}{82}
+\newcommand{\CalSensBMin}{0.82}
+\newcommand{\CalSensBMax}{0.96}
+\newcommand{\CalSensBFrac}{66}
+\newcommand{\CalSensCMin}{0.96}
+\newcommand{\CalSensCMax}{0.99}
+\newcommand{\CalSensCFrac}{92}
+\newcommand{\TabAUC}{\begin{table*}[!t]\centering\footnotesize
+\caption{AUC of the five scores from a DS18B20 record sampled every 15\,min (baseline run, 4\,000 trips per row). The best score in each row is in bold. The last two columns give the same kinetic score with an ideal sensor sampled every minute, and the oracle that knows each trip's biology.}\label{tab:auc}
+\begin{tabular}{@{}lllccccccc@{}}\toprule\rowcolor{dghead}
+Limit & Product & $cv$ & CSL & Degree-h $>4$\,\textdegree C & Time $>5$\,\textdegree C & Time $>8$\,\textdegree C & $T_{\max}$ & Ideal, 1 min & Oracle\\\midrule
+A & Pouch & 0.00 & \textbf{0.705} & 0.690 & 0.635 & 0.569 & 0.629 & 0.718 & 1.000\\
+A & Pouch & 0.10 & \textbf{0.651} & 0.634 & 0.599 & 0.557 & 0.591 & 0.659 & 1.000\\
+A & Pouch & 0.25 & \textbf{0.620} & 0.619 & 0.591 & 0.561 & 0.602 & 0.627 & 1.000\\
+A & Crate & 0.00 & \textbf{0.722} & 0.711 & 0.701 & 0.586 & 0.638 & 0.732 & 1.000\\
+A & Crate & 0.10 & \textbf{0.674} & 0.666 & 0.657 & 0.577 & 0.611 & 0.687 & 1.000\\
+A & Crate & 0.25 & \textbf{0.599} & 0.596 & 0.592 & 0.541 & 0.571 & 0.603 & 1.000\\
+\midrule
+B & Pouch & 0.00 & \textbf{0.710} & 0.686 & 0.636 & 0.564 & 0.587 & 0.723 & 1.000\\
+B & Pouch & 0.10 & \textbf{0.656} & 0.634 & 0.606 & 0.539 & 0.564 & 0.670 & 1.000\\
+B & Pouch & 0.25 & \textbf{0.604} & 0.594 & 0.565 & 0.531 & 0.549 & 0.608 & 1.000\\
+B & Crate & 0.00 & \textbf{0.708} & 0.696 & 0.687 & 0.600 & 0.629 & 0.724 & 1.000\\
+B & Crate & 0.10 & \textbf{0.676} & 0.670 & 0.663 & 0.585 & 0.611 & 0.686 & 1.000\\
+B & Crate & 0.25 & \textbf{0.603} & 0.595 & 0.591 & 0.538 & 0.552 & 0.608 & 1.000\\
+\bottomrule\end{tabular}\end{table*}}
+
 \newcommand{\TabParams}{{\scriptsize\setlength{\tabcolsep}{3pt}
 \begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.7cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash}p{6.6cm}@{}}
 \caption[Model parameters and provenance]{Model parameters, their values and their provenance, as recorded in \texttt{data/params.csv}. SOURCED: taken from a cited study; FITTED: estimated from data in this work; ASSUMED: no direct source}\label{tab:params}\\\toprule\rowcolor{dghead}
@@ -60,27 +151,22 @@ $T$/\textdegree C & $\mu_{\max}$/h$^{-1}$ & $T$/\textdegree C & $\mu_{\max}$/h$^
 6.6 & 0.0562 & 10.7 & 0.0740 & 14.9 & 0.1200\\
 \bottomrule\end{tabular}\end{table}}
 
-\newcommand{\TabAUC}{\begin{table*}[t]\centering\footnotesize
-\caption{AUC of the five scores from a DS18B20 record sampled every 15\,min (baseline run, 4\,000 trips per row). The best score in each row is in bold. The last two columns give the same kinetic score with an ideal sensor sampled every minute, and the oracle that knows each trip's biology}\label{tab:auc}
-\begin{tabular}{@{}lllccccccc@{}}\toprule\rowcolor{dghead}
-Limit & Product & $cv$ & CSL & Degree-h $>4$\,\textdegree C & Time $>5$\,\textdegree C & Time $>8$\,\textdegree C & $T_{\max}$ & Ideal, 1 min & Oracle\\\midrule
-A & Pouch & 0.00 & \textbf{0.705} & 0.690 & 0.635 & 0.569 & 0.629 & 0.718 & 1.000\\
-A & Pouch & 0.10 & \textbf{0.651} & 0.634 & 0.599 & 0.557 & 0.591 & 0.659 & 1.000\\
-A & Pouch & 0.25 & \textbf{0.620} & 0.619 & 0.591 & 0.561 & 0.602 & 0.627 & 1.000\\
-A & Crate & 0.00 & \textbf{0.722} & 0.711 & 0.701 & 0.586 & 0.638 & 0.732 & 1.000\\
-A & Crate & 0.10 & \textbf{0.674} & 0.666 & 0.657 & 0.577 & 0.611 & 0.687 & 1.000\\
-A & Crate & 0.25 & \textbf{0.599} & 0.596 & 0.592 & 0.541 & 0.571 & 0.603 & 1.000\\
-\midrule
-B & Pouch & 0.00 & \textbf{0.710} & 0.686 & 0.636 & 0.564 & 0.587 & 0.723 & 1.000\\
-B & Pouch & 0.10 & \textbf{0.656} & 0.634 & 0.606 & 0.539 & 0.564 & 0.670 & 1.000\\
-B & Pouch & 0.25 & \textbf{0.604} & 0.594 & 0.565 & 0.531 & 0.549 & 0.608 & 1.000\\
-B & Crate & 0.00 & \textbf{0.708} & 0.696 & 0.687 & 0.600 & 0.629 & 0.724 & 1.000\\
-B & Crate & 0.10 & \textbf{0.676} & 0.670 & 0.663 & 0.585 & 0.611 & 0.686 & 1.000\\
-B & Crate & 0.25 & \textbf{0.603} & 0.595 & 0.591 & 0.538 & 0.552 & 0.608 & 1.000\\
-\bottomrule\end{tabular}\end{table*}}
+\newcommand{\TabCalo}{\begin{table}[!htbp]\centering\footnotesize
+\caption{Value of a measurement of the biology (baseline run, DS18B20 record sampled every 15\,min, 12 settings of 4\,000 trips). Gap closed: share of the oracle-minus-log-only AUC difference recovered}\label{tab:calo}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{3.9cm}ccc@{}}\toprule\rowcolor{dghead}
+Information added to the log & AUC range & Mean & Gap closed/\%\\\midrule
+None (log only) & 0.591--0.707 & 0.657 & 0\\
+True lag and starting load & 0.596--0.747 & 0.679 & 1--14\\
+True rate law ($b$, $T_{\min}$) & 0.970--0.994 & 0.983 & 90--99\\
+Calorimetric detection time, $T_{\mathrm{ref}}=20$\,\textdegree C, 5\,\% error & 0.907--0.976 & 0.941 & 69--94\\
+Calorimetric detection time, $T_{\mathrm{ref}}=20$\,\textdegree C, 15\,\% error & 0.821--0.958 & 0.891 & 41--90\\
+Calorimetric detection time, $T_{\mathrm{ref}}=10$\,\textdegree C, 5\,\% error & 0.957--0.989 & 0.973 & 86--97\\
+All biology (oracle) & 1.000 & 1.000 & 100\\
+\bottomrule\end{tabular}\end{table}}
 
-\newcommand{\TabBudget}{\begin{table}[t]\centering\footnotesize
-\caption{Loss budget: mean AUC over the 12 settings of each run as information is removed, and the range of the biology gap (oracle minus ideal sensor)}\label{tab:budget}
+\newcommand{\TabBudget}{\begin{table}[!htbp]\centering\footnotesize
+\caption{Loss budget: mean AUC over the 12 settings of each run as information is removed, and the range of the biology gap (oracle minus ideal sensor).}\label{tab:budget}
 \setlength{\tabcolsep}{3.2pt}
 \begin{tabular}{@{}lcccccc@{}}\toprule\rowcolor{dghead}
 Run & Oracle & Ideal & PT1000 & DS18B20 & DS18B20 & Biology gap\\
@@ -92,8 +178,8 @@ Milk flora & 1.000 & 0.664 & 0.663 & 0.654 & 0.653 & 0.28--0.40\\
 \textit{Listeria} & 0.950 & 0.738 & 0.737 & 0.725 & 0.726 & 0.09--0.34\\
 \bottomrule\end{tabular}\end{table}}
 
-\newcommand{\TabContrasts}{\begin{table*}[t]\centering\footnotesize
-\caption{Paired AUC differences on identical trips: minimum/maximum over the 12 settings of each run, with the number of settings (of 12) whose 95\,\% paired-bootstrap interval excludes zero in brackets}\label{tab:contrasts}
+\newcommand{\TabContrasts}{\begin{table*}[!t]\centering\footnotesize
+\caption{Paired AUC differences on identical trips: minimum/maximum over the 12 settings of each run, with the number of settings (of 12) whose 95\,\% paired-bootstrap interval excludes zero in brackets.}\label{tab:contrasts}
 \begin{tabular}{@{}lccccc@{}}\toprule\rowcolor{dghead}
 Contrast & Baseline & Extra lag & Low load & Milk flora & \textit{Listeria}\\\midrule
 CSL $-$ degree-h & 0.001/0.023 (10) & 0.006/0.037 (12) & 0.001/0.023 (8) & 0.004/0.025 (10) & 0.002/0.023 (8)\\
@@ -103,8 +189,8 @@ PT1000 $-$ DS18B20 & 0.003/0.015 (9) & 0.003/0.013 (7) & 0.005/0.018 (10) & 0.00
 Adaptive $-$ 1\,min & -0.006/0.005 (0) & -0.006/0.006 (0) & -0.008/0.009 (1) & -0.007/0.006 (0) & -0.006/0.009 (0)\\
 \bottomrule\end{tabular}\end{table*}}
 
-\newcommand{\TabCal}{\begin{table*}[t]\centering\footnotesize
-\caption{Calibration: range of expected calibration error over the 12 settings, and mean Brier score, for each run. Lower is better}\label{tab:cal}
+\newcommand{\TabCal}{\begin{table*}[!t]\centering\footnotesize
+\caption{Calibration: range of expected calibration error over the 12 settings, and mean Brier score, for each run. Lower is better.}\label{tab:cal}
 \begin{tabular}{@{}lccccc@{}}\toprule\rowcolor{dghead}
 Variant & Baseline & Extra lag & Low load & Milk flora & \textit{Listeria}\\\midrule
 Probability, matched prior & 0.03--0.07 / 0.231 & 0.01--0.07 / 0.236 & 0.02--0.11 / 0.233 & 0.02--0.09 / 0.234 & 0.08--0.41 / 0.216\\
@@ -112,8 +198,8 @@ Probability, overconfident & 0.04--0.13 / 0.237 & 0.05--0.13 / 0.244 & 0.02--0.1
 Single alarm & 0.33--0.43 / 0.380 & 0.34--0.44 / 0.391 & 0.34--0.44 / 0.386 & 0.34--0.43 / 0.385 & 0.34--0.45 / 0.400\\
 \bottomrule\end{tabular}\end{table*}}
 
-\newcommand{\TabDataComp}{\begin{table}[t]\centering\footnotesize
-\caption{Composition of the compiled ComBase milk database by organism. $n$: records; Rate: maximum growth rate stated; Curve: growth curve only; None: no growth reported; N/T: rate not transcribed}\label{tab:dcomp}
+\newcommand{\TabDataComp}{\begin{table}[!htbp]\centering\footnotesize
+\caption{Composition of the compiled ComBase milk database by organism. $n$: records; Rate: maximum growth rate stated; Curve: growth curve only; None: no growth reported; N/T: rate not transcribed.}\label{tab:dcomp}
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{@{}lccccc@{}}\toprule\rowcolor{dghead}
 Organism & $n$ & Rate & Curve & None & N/T\\\midrule
@@ -129,3 +215,28 @@ Lactic acid bacteria & 1 & 0 & 1 & 0 & 0\\
 Other & 1 & 0 & 1 & 0 & 0\\
 \midrule Total & 373 & 179 & 131 & 20 & 43\\
 \bottomrule\end{tabular}\end{table}}
+
+\newcommand{\TabSecondary}{\begin{table*}[!t]\centering\footnotesize
+\caption{Four secondary models fitted to the ComBase milk records. RMSE and cross-validated (leave one temperature out) RMSE of $\ln\mu$; AICc (best in bold); accuracy factor $A_f$ on the fitting data; bias and accuracy factors when the model is fitted at $T\ge8$\,\textdegree C and used to predict the records below 8\,\textdegree C; $A_f$ on the 53 \textit{Listeria} records held out by condition. Data from ComBase \cite{combase}}\label{tab:secondary}
+\begin{tabular}{@{}llccccccc@{}}\toprule\rowcolor{dghead}
+Data & Model & RMSE & AICc & CV RMSE & $A_f$ & Cold $B_f$ & Cold $A_f$ & Held-out $A_f$\\\midrule
+Spoilage flora & Square-root & 0.188 & \textbf{-166.2} & 0.197 & 1.13 & 1.01 & 1.19 & --\\
+ & Arrhenius & 0.202 & -159.0 & 0.214 & 1.15 & 1.16 & 1.23 & --\\
+ & Constant $Q_{10}$ & 0.204 & -158.0 & 0.216 & 1.15 & 1.18 & 1.24 & --\\
+ & Arrhenius--Davey & 0.187 & -164.3 & 0.203 & 1.13 & 1.13 & 1.22 & --\\
+\midrule
+\textit{L.~monocytogenes} & Square-root & 0.375 & \textbf{-85.9} & 0.448 & 1.33 & 1.15 & 1.51 & 1.37\\
+ & Arrhenius & 0.381 & -84.4 & 0.431 & 1.33 & 1.46 & 1.74 & 1.39\\
+ & Constant $Q_{10}$ & 0.383 & -84.1 & 0.430 & 1.33 & 1.49 & 1.76 & 1.39\\
+ & Arrhenius--Davey & 0.373 & -84.3 & 0.549 & 1.33 & 0.84 & 1.61 & 1.38\\
+\bottomrule\end{tabular}\end{table*}}
+
+\newcommand{\TabRivals}{\begin{table*}[!t]\centering\footnotesize
+\caption{The CSL score against single-parameter integrators on identical trips (DS18B20, 15\,min): minimum/maximum paired AUC difference over the 12 settings of each run, with the number of settings whose 95\,\% paired-bootstrap interval excludes zero in brackets}\label{tab:rivals}
+\begin{tabular}{@{}lccccc@{}}\toprule\rowcolor{dghead}
+Contrast & Baseline & Extra lag & Low load & Milk flora & \textit{Listeria}\\\midrule
+CSL $-$ Arrhenius, fitted $E_a$ & $-$0.002/0.008 (4) & 0.001/0.021 (11) & $-$0.001/0.008 (2) & $-$0.002/0.010 (5) & $-$0.000/0.028 (6)\\
+CSL $-$ Arrhenius, 120 kJ\,mol$^{-1}$ & $-$0.002/0.019 (5) & 0.002/0.038 (11) & 0.000/0.016 (5) & 0.001/0.023 (8) & $-$0.001/0.022 (6)\\
+CSL $-$ $Q_{10}=3$ & $-$0.002/0.005 (3) & 0.000/0.014 (9) & $-$0.001/0.005 (1) & $-$0.002/0.005 (2) & $-$0.000/0.003 (0)\\
+Arrhenius, fitted $-$ degree-h & 0.003/0.015 (10) & 0.003/0.017 (11) & 0.001/0.015 (8) & 0.002/0.020 (6) & $-$0.011/0.006 (2)\\
+\bottomrule\end{tabular}\end{table*}}

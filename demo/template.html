@@ -104,7 +104,7 @@ td.num,th.num{text-align:right;font-family:var(--fm)}
 .refs{display:flex;flex-wrap:wrap;gap:8px}.refs a{font-size:13px;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:99px;padding:7px 12px;background:var(--bg2)}.refs a:hover{border-color:var(--sig)}
 </style></head><body>
 
-<nav><div class="w"><b><img src="favicon.svg" alt="">DairyGuard</b><div class="lk"><a href="index.html">Site</a><a href="DairyGuard_Research_Paper.pdf">Paper</a><a href="https://github.com/CopyNinja07-07/dairyguard">Code</a></div></div></nav>
+<nav><div class="w"><b><img src="favicon.svg" alt="">DairyGuard</b><div class="lk"><a href="index.html">Site</a><a href="DairyGuard_Research_Paper.pdf?v=2">Paper</a><a href="https://github.com/CopyNinja07-07/dairyguard">Code</a></div></div></nav>
 
 <div class="w">
 <header class="hero">
@@ -190,17 +190,19 @@ td.num,th.num{text-align:right;font-family:var(--fm)}
 <h2>Built from the ground up, <span>checked at every step.</span></h2>
 <div class="stats">
 <div><b>240,000</b><span>simulated milk deliveries, each tracked minute by minute</span></div>
-<div><b>50</b><span>published studies, datasets and standards cited, every one with a working link</span></div>
+<div><b>70</b><span>published studies, datasets and standards cited, every one with a working link</span></div>
 <div><b>373</b><span>real bacterial growth records in milk compiled from ComBase and released</span></div>
 <div><b>4%</b><span>error when predicting a real lab experiment it never saw</span></div>
 <div><b>14</b><span>automated tests run on every change</span></div>
-<div><b>~1,700</b><span>lines of code: simulator, statistics, demo, paper and monograph</span></div>
+<div><b>69–94%</b><span>of the lost accuracy won back by one heat-flow test of the batch (new in v2)</span></div>
+<div><b>~2,300</b><span>lines of code: simulator, statistics, demo, paper and monograph</span></div>
 </div>
 <div class="steps2">
 <div><i>01</i><b>Read the science</b><span>From the Ratkowsky growth law and Baranyi&ndash;Roberts model to FSSAI milk standards and the Cornell spoilage models.</span></div>
 <div><i>02</i><b>Built a world</b><span>A simulator of trucks, shops and fridges where the true answer is always known.</span></div>
 <div><i>03</i><b>Checked it against reality</b><span>A published lab experiment and 150 real growth records from ComBase.</span></div>
 <div><i>04</i><b>Ran the experiment</b><span>Five simulated worlds, 12 settings each, 4,000 deliveries per setting.</span></div>
+<div><i>05</i><b>Explained it</b><span>Version 2 proves why the results come out this way, using the generalized time of thermal analysis, and tests a calorimetric fix.</span></div>
 </div>
 <h3 style="font-size:22px;margin:34px 0 12px">Built on</h3>
 <div class="refs">
@@ -218,16 +220,22 @@ td.num,th.num{text-align:right;font-family:var(--fm)}
 <a href="https://doi.org/10.1016/j.foodcont.2026.112100">M&uuml;ller et al. 2026 · <i>Food Control</i></a>
 <a href="https://doi.org/10.1016/j.jfp.2026.100754">Tashiguano et al. 2026 · <i>J. Food Prot.</i></a>
 <a href="https://doi.org/10.1016/j.jfoodeng.2023.111518">Zou et al. 2023 · <i>J. Food Eng.</i></a>
+<a href="https://doi.org/10.1007/s10973-013-2939-0">M&aacute;lek et al. 2013 · <i>J. Therm. Anal. Calorim.</i></a>
+<a href="https://doi.org/10.1016/0040-6031(86)87053-8">Ozawa 1986 · <i>Thermochim. Acta</i></a>
+<a href="https://doi.org/10.1007/s10973-010-1140-y">Wads&ouml; et al. 2011 · <i>J. Therm. Anal. Calorim.</i></a>
+<a href="https://doi.org/10.1007/s10973-020-09986-0">Fricke et al. 2020 · <i>J. Therm. Anal. Calorim.</i></a>
+<a href="https://doi.org/10.1016/S0040-6031(00)00782-6">Riva et al. 2001 · <i>Thermochim. Acta</i></a>
+<a href="https://doi.org/10.1111/j.1365-2621.1991.tb04736.x">Fu et al. 1991 · <i>J. Food Sci.</i></a>
 <a href="https://www.combase.cc">ComBase growth database</a>
 <a href="https://fssai.gov.in/upload/uploadfiles/files/Appendix%20B(1).pdf">FSSAI microbiological standards</a>
-<a href="DairyGuard_Monograph.pdf">All 50 references in the monograph</a>
+<a href="DairyGuard_Research_Paper.pdf?v=2">All 70 references in the paper</a>
 </div>
 </section>
 
 <section class="s"><span class="tag">Fine print</span>
 <h2>What this <span>does not</span> tell you.</h2>
 <ul class="fine">
-<li>The trucks and fridges are simulated. Real delivery logs and new lab counts are the next step.</li>
+<li>The trucks, fridges and heat-flow tests are simulated. Real delivery logs, calorimeter measurements on milk and new lab counts are the next step.</li>
 <li>It estimates how much bacteria grew, not whether anyone gets sick. It is not a food-safety verdict: if milk smells or looks off, do not drink it.</li>
 <li>About half of the simulated trips spoil by design, so the percentages are not real-world rates.</li>
 </ul>
@@ -235,7 +243,7 @@ td.num,th.num{text-align:right;font-family:var(--fm)}
 </div>
 <footer class="ft"><div class="w">
 <div><a class="brand" href="index.html"><img src="favicon.svg" alt="">DairyGuard</a><p>© 2026 DairyGuard · Cold-chain intelligence · Open science</p></div>
-<div class="fl2"><a href="https://github.com/CopyNinja07-07/dairyguard">GitHub</a><a href="DairyGuard_Research_Paper.pdf">Paper</a><a href="DairyGuard_Monograph.pdf">Monograph</a><a href="index.html">Site</a></div>
+<div class="fl2"><a href="https://github.com/CopyNinja07-07/dairyguard">GitHub</a><a href="DairyGuard_Research_Paper.pdf?v=2">Paper</a><a href="DairyGuard_Monograph.pdf">Monograph</a><a href="index.html">Site</a></div>
 <div class="fs"><span>Food first</span><i></i><span>Sanskrit: <b lang="sa">आहार</b> nourishment</span></div>
 </div></footer>
 

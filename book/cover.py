@@ -73,7 +73,7 @@ def front(path):
     c.setFillColor(PAPER); c.setFont("Serif", 12.5); c.drawString(M, 74, "Suryansh Pratap Singh")
     c.setFillColor(GREY); c.setFont("Serif-Italic", 9.5)
     c.drawString(M, 59, "Shri Mata Vaishno Devi University")
-    c.drawRightString(W - M, 59, "First edition · October 2026")
+    c.drawRightString(W - M, 59, "Second edition · October 2026")
     c.showPage(); c.save()
 
 
@@ -91,8 +91,8 @@ def back(path):
     c.setFillColor(GREY); c.setFont("Serif", 11.5)
     for line in ("240,000 simulated deliveries. One question: when a milk monitor is wrong,",
                  "what is it wrong about? The answer is not the thermometer. It is the",
-                 "biology inside the carton, which no sensor can see, and which is where",
-                 "the next measurement should go.",
+                 "biology inside the carton, which no sensor can see, and which one",
+                 "calorimetric test of the batch could largely recover.",
                  "",
                  "Open code, open data, every number reproducible from one command."):
         c.drawString(M, y, line); y -= 17

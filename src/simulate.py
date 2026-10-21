@@ -35,6 +35,19 @@ if os.environ.get("DG_PARAMS") == "lis":   # keys kept so the pipeline is unchan
 SENSORS = {"DS18B20": (0.5, 0.05, 0.0625), "PT1000": (0.15, 0.03, 0.03125), "ideal": (0.0, 0.0, 0.0)}
 PEAKS, PW = np.array([12, 14.3, 17.5, 30.7]), np.array([.30, .25, .30, .15])
 METHODS = ("CSL", "maxT", "t_above_8C", "t_above_5C", "deg_hours_4C")
+# Additional single-parameter integrators with a fixed temperature law (evaluated with a separate random stream so that
+# the results of METHODS are unchanged). Arrhenius activation energies: fitted to the ComBase records of the run's
+# organism (src/compare_secondary.py; spoilage flora 92 kJ/mol, L. monocytogenes 130 kJ/mol) and 120 kJ/mol reported for
+# spoilage of carrot juice by isothermal calorimetry (Wadso et al. 2011); Q10 = 3 as in Zou et al. 2023.
+EA_FIT = 130.1e3 if os.environ.get("DG_PARAMS") == "lis" else 92.3e3
+EXTRA = {"arrhenius_fit": ("arr", EA_FIT), "arrhenius_120kJ": ("arr", 120e3), "q10_3": ("q10", 3.0)}
+
+
+def extra_rate(T, kind, par, Tref=4.0):
+    T = np.asarray(T, float)
+    if kind == "arr":
+        return np.exp(-par / 8.314 * (1 / (T + 273.15) - 1 / (Tref + 273.15)))
+    return par ** ((T - Tref) / 10.0)
 MIN_PREV = 0.02                      # skip scenarios where one class is under 2 percent
 
 
@@ -133,7 +146,8 @@ def scores_fixed(Tp, steps, sensor, s_min, sl, rng):
     dt = s_min / 60.0
     return {"CSL": (dt / sl(meas)).sum(1), "maxT": meas.max(1),
             "t_above_8C": (meas > 8.0).sum(1) * dt, "t_above_5C": (meas > 5.0).sum(1) * dt,
-            "deg_hours_4C": np.maximum(meas - 4.0, 0).sum(1) * dt, "n_samples": np.full(n, len(idx))}
+            "deg_hours_4C": np.maximum(meas - 4.0, 0).sum(1) * dt, "n_samples": np.full(n, len(idx)),
+            **{k: (extra_rate(meas, *v) * dt).sum(1) for k, v in EXTRA.items()}}
 
 
 def scores_adaptive(Tp, steps, sensor, sl, rng, base_min=15):
@@ -155,6 +169,7 @@ def scores_adaptive(Tp, steps, sensor, sl, rng, base_min=15):
     ta = np.zeros(n)
     ta5 = np.zeros(n)
     dh = np.zeros(n)
+    ex = {k: np.zeros(n) for k in EXTRA}
     for i in range(steps):
         due = i >= nxt
         if due.any():
@@ -169,7 +184,9 @@ def scores_adaptive(Tp, steps, sensor, sl, rng, base_min=15):
         ta += (held > 8.0) / 60
         ta5 += (held > 5.0) / 60
         dh += np.maximum(held - 4.0, 0) / 60
-    return {"CSL": csl, "maxT": mx, "t_above_8C": ta, "t_above_5C": ta5, "deg_hours_4C": dh, "n_samples": ns}
+        for k, v in EXTRA.items():
+            ex[k] += extra_rate(held, *v) / 60
+    return {"CSL": csl, "maxT": mx, "t_above_8C": ta, "t_above_5C": ta5, "deg_hours_4C": dh, "n_samples": ns, **ex}
 
 
 def auc(score, label):

@@ -38,7 +38,7 @@
 \input{../paper/tables.tex}
 \graphicspath{{../paper/fig/}{fig/}}
 % headings
-\titleformat{\chapter}[display]{\normalfont\sffamily\color{dgnight}}{\fontsize{11}{13}\selectfont\bfseries\color{dgamberdk}\textls[250]{\MakeUppercase{\chaptertitlename}}\hspace{6pt}{\fontsize{40}{40}\selectfont\color{dgamber}\thechapter}}{8pt}{\fontsize{27}{32}\selectfont\bfseries}[\vspace{6pt}{\color{dgamber}\rule{48pt}{3pt}}]
+\titleformat{\chapter}[display]{\normalfont\sffamily\color{dgnight}}{\fontsize{11}{13}\selectfont\bfseries\color{dgamberdk}\textls[250]{\MakeUppercase{\chaptertitlename}}\hspace{6pt}{\fontsize{40}{40}\selectfont\color{dgamber}\thechapter}}{8pt}{\raggedright\fontsize{27}{32}\selectfont\bfseries}[\vspace{6pt}{\color{dgamber}\rule{48pt}{3pt}}]
 \titlespacing*{\chapter}{0pt}{0pt}{22pt}
 \titleformat{\section}{\needspace{5\baselineskip}\normalfont\sffamily\large\bfseries\color{dgnight}}{\color{dgamberdk}\thesection}{0.8em}{}
 \titleformat{\subsection}{\needspace{4\baselineskip}\normalfont\sffamily\normalsize\bfseries\color{dgblue}}{\thesubsection}{0.8em}{}
@@ -48,6 +48,7 @@
 \newcommand{\pullquote}[1]{\par\vspace{8pt}\noindent\begin{tikzpicture}\node[text width=0.86\textwidth,align=left,inner sep=0pt]{\fontsize{14.5}{20}\selectfont\itshape\color{dgnight}#1};\draw[dgamber,line width=3pt]([xshift=-10pt]current bounding box.north west)--([xshift=-10pt]current bounding box.south west);\end{tikzpicture}\par\vspace{10pt}}
 \setlist{nosep,leftmargin=1.5em,topsep=3pt}
 \setlength{\parindent}{1.2em}
+\setlength{\emergencystretch}{2em}
 \renewcommand{\topfraction}{0.9}\renewcommand{\bottomfraction}{0.6}\renewcommand{\textfraction}{0.08}\renewcommand{\floatpagefraction}{0.85}
 \setcounter{topnumber}{3}\setcounter{totalnumber}{5}
 \pagestyle{fancy}\fancyhf{}
@@ -64,8 +65,10 @@
 \newcommand{\secref}[1]{Sect.~\ref{#1}}
 \newtcolorbox{summary}{enhanced,breakable,colback=white,colframe=white,boxrule=0pt,borderline west={3pt}{0pt}{dgamber},arc=0pt,left=10pt,right=6pt,top=4pt,bottom=4pt,fontupper=\small\sffamily,before skip=4pt,after skip=14pt,title={\sffamily\bfseries\scriptsize\textls[200]{KEY POINTS}},coltitle=dgamberdk,colbacktitle=white,toptitle=0pt,bottomtitle=2pt}
 \newtcolorbox{keyresults}[1][]{enhanced,breakable,colback=dgnight,colframe=dgnight,coltext=white,boxrule=0pt,arc=2pt,left=10pt,right=10pt,top=6pt,bottom=8pt,fontupper=\small\sffamily,before skip=8pt,after skip=12pt,title={\sffamily\bfseries\scriptsize\textls[200]{PRINCIPAL FINDINGS}#1},coltitle=dgamber,colbacktitle=dgnight}
-\newcommand{\stat}[3]{\begin{tcolorbox}[enhanced,colback=dgpale,colframe=dgpale,arc=2pt,boxrule=0pt,borderline north={3pt}{0pt}{dgamber},left=8pt,right=8pt,top=8pt,bottom=8pt,height=3.25cm,valign=top]{\sffamily\fontsize{23}{27}\selectfont\bfseries\color{dgnight}#1\par}\vspace{4pt}{\sffamily\small\bfseries\color{dgamberdk}#2\par}\vspace{3pt}{\raggedright\sffamily\footnotesize\color{dggrey}#3\par}\end{tcolorbox}}
+\newcommand{\stat}[3]{\begin{tcolorbox}[enhanced,colback=dgpale,colframe=dgpale,arc=2pt,boxrule=0pt,borderline north={3pt}{0pt}{dgamber},left=8pt,right=8pt,top=8pt,bottom=8pt,height=2.85cm,valign=top]{\sffamily\fontsize{21}{25}\selectfont\bfseries\color{dgnight}#1\par}\vspace{4pt}{\sffamily\small\bfseries\color{dgamberdk}#2\par}\vspace{3pt}{\raggedright\sffamily\footnotesize\color{dggrey}#3\par}\end{tcolorbox}}
+\theoremstyle{plain}\newtheorem{proposition}{Proposition}\newtheorem{corollary}{Corollary}
 \theoremstyle{definition}\newtheorem{definition}{Definition}[chapter]
+\newenvironment{worked}{\par\smallskip\noindent\textit{Numerical example.}\enspace}{\par\smallskip}
 \hypersetup{pdftitle={Beyond the 4 °C Alarm: What a Temperature Log Can and Cannot Tell About Milk Spoilage},pdfauthor={Suryansh Pratap Singh}}
 \begin{document}
 \frontmatter
@@ -76,6 +79,7 @@
 {\small\noindent Suryansh Pratap Singh\\
 \textit{Beyond the 4\,\textdegree C Alarm: What a Temperature Log Can and Cannot Tell About Milk Spoilage.} Monograph, October 2026.\\[6pt]
 Code, data, simulation results and the source of this text: \url{https://github.com/CopyNinja07-07/dairyguard}. Every number in the text, tables and figures is generated from the result files by script, with fixed random seeds, and can be reproduced with \texttt{make all}.\\[6pt]
+Chapters~4, 8 and 11 are based on joint work with Neeraj Tripathi, reported in version 2 of the DairyGuard paper.\\[6pt]
 Released under the MIT licence. ComBase records remain subject to the ComBase terms of use.\par}
 
 \chapter*{Abstract}
@@ -84,7 +88,7 @@ A cold-chain monitor records temperature, but whether milk spoils also depends o
 
 The question is answered with an open Monte Carlo benchmark of 240\,000 simulated deliveries. A Baranyi--Roberts growth model with a square-root temperature law stands in for real milk, and a closed-form Gompertz shelf-life accumulator, cheap enough to run on a microcontroller, tries to predict it from noisy, sampled records. Every rule is judged by its ability to rank spoiled above unspoiled trips, measured by the area under the receiver operating characteristic curve (AUC), with paired bootstrap comparisons on identical trips and an oracle that knows each trip's biology. Parameters are tied to published experiments and to the ComBase database. The model reproduces a published fluctuating-temperature experiment within \NumLinErrAbs\,\%, fits \NumCbNfit{} ComBase records of natural spoilage flora, and predicts \NumLisHeld{} held-out growth rates of \textit{Listeria monocytogenes} with an accuracy factor of \NumLisAccHeld.
 
-Unobserved biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC, an order of magnitude more than anything an engineer controls. A platinum resistance sensor instead of a low-cost digital probe gains at most \NumBaseSensMax; hourly sampling is indistinguishable from minute-by-minute sampling in \NumBaseSampNull{} of 12 settings; and a growth-model score improves on a plain degree-hour count by at most \NumLagGainMax. A Monte Carlo probability is far better calibrated than a single alarm. The same pattern holds in five parameter sets, including a hazard case study for \textit{Listeria}. For this problem, the accuracy of a temperature monitor is limited by biology, not by the thermometer, and effort is better spent on measuring the product than on measuring its temperature more precisely.
+Unobserved biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC, an order of magnitude more than anything an engineer controls. A platinum resistance sensor instead of a low-cost digital probe gains at most \NumBaseSensMax; hourly sampling is indistinguishable from minute-by-minute sampling in \NumBaseSampNull{} of 12 settings; and a growth-model score improves on a plain degree-hour count by at most \NumLagGainMax. A Monte Carlo probability is far better calibrated than a single alarm. The same pattern holds in five parameter sets, including a hazard case study for \textit{Listeria}. Treating growth as a non-isothermal kinetic process explains these results: under the square-root law the growth models, and the heat released by a growing culture, depend on the temperature history only through a generalized time, analogous to Ozawa's generalized time in thermal analysis. Error propagation predicts the size of each loss before any simulation is run; no Arrhenius or $Q_{10}$ integrator outperforms the square-root integrator in any of 60 settings; and an isothermal calorimetric detection time of the batch, combined with the log, recovers \CalFracMin--\CalFracMax\,\% of the loss to biology. For this problem, the accuracy of a temperature monitor is limited by biology, not by the thermometer, and effort is better spent on measuring the product than on measuring its temperature more precisely.
 
 
 \chapter*{The study in numbers}
@@ -94,11 +98,13 @@ Unobserved biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC, an order of magni
 \stat{240\,000}{simulated deliveries}{five parameter sets, 12 settings each, every trip read with every sensor, sampling rule and score}
 \stat{\NumBaseGapMin--\NumBaseGapMax}{AUC lost to unseen biology}{strain, starting load and lag: what no thermometer can measure}
 \stat{\NumBaseSampNull\ of 12}{settings where hourly = every minute}{reading the temperature once an hour lost nothing measurable}
+\stat{0 of 60}{settings where Arrhenius or $Q_{10}$ wins}{the formulas behind many shelf-life labels never beat the square-root rule}
 \end{minipage}\hfill
 \begin{minipage}[t]{0.485\textwidth}
 \stat{$\le$\,\NumBaseSensMax}{AUC gained by a lab-grade sensor}{a PT1000 platinum probe against a low-cost DS18B20}
 \stat{$\le$\,\NumLagGainMax}{AUC a growth model adds over degree-hours}{a simple degree-hour count captures most of the value}
 \stat{\NumBaseEceMMin--\NumBaseEceMMax}{calibration error of a probability}{against \NumBaseEcePMin--\NumBaseEcePMax\ for a single red-or-green alarm}
+\stat{\CalFracMin--\CalFracMax\,\%}{of the lost accuracy won back}{by one calorimetric test of the batch at dispatch, combined with the log}
 \end{minipage}
 
 \vspace{-4pt}\section*{Five things to take away}
@@ -107,7 +113,7 @@ Unobserved biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC, an order of magni
 \item \textbf{Cheap hardware is enough.} A $\pm0.5$\degC{} digital probe read every 15--60 minutes loses almost nothing.
 \item \textbf{Simple rules come close, if they are the right ones.} Degree-hours nearly match a growth model; the maximum temperature and time above 8\degC{} do not.
 \item \textbf{Say ``how likely'', not ``spoiled''.} A probability is honest about what the log cannot know and is far better calibrated than an alarm.
-\item \textbf{Measure the milk, not just the air around it.} The next gain in accuracy will come from data on the product itself.
+\item \textbf{Measure the milk, not just the air around it.} One calorimetric test of the batch recovers most of what the log misses.
 \end{enumerate}
 
 \tableofcontents
@@ -166,10 +172,12 @@ A real cold chain never reveals the truth for every carton, so the question cann
 \item How much is lost to the sensor and to the sampling interval, and how much does a better sensor or faster sampling recover?
 \item Does a growth-model score rank trips better than simple rules such as degree-hours, time above a threshold or the maximum temperature?
 \item Is a probability better calibrated than a single alarm?
+\item Why do the losses fall as they do, and does the choice of temperature law matter?
+\item How much of the loss to biology can a calorimetric measurement of the batch recover?
 \end{enumerate}
 
 \section{Structure of the monograph}
-Chapter~\ref{ch:background} reviews the microbiology of milk spoilage, predictive microbiology and existing approaches to cold-chain monitoring. Chapter~\ref{ch:models} sets out the growth models and the edge estimator. Chapter~\ref{ch:bench} describes the benchmark and Chapter~\ref{ch:stats} its statistical methods. Chapter~\ref{ch:val} validates the model against published and ComBase data. Chapter~\ref{ch:results} reports the results, Chapter~\ref{ch:listeria} the \textit{Listeria} case study, and Chapter~\ref{ch:design} the design of a monitor and the software. Chapter~\ref{ch:disc} discusses the findings and their limits, and Chapter~\ref{ch:concl} concludes. The appendices list the parameters with their provenance, the data and the procedure for reproducing every result.
+Chapter~\ref{ch:background} reviews the microbiology of milk spoilage, predictive microbiology and existing approaches to cold-chain monitoring. Chapter~\ref{ch:models} sets out the growth models and the edge estimator, and Chapter~\ref{ch:kin} develops their kinetic theory. Chapter~\ref{ch:bench} describes the benchmark and Chapter~\ref{ch:stats} its statistical methods. Chapter~\ref{ch:val} validates the model against published and ComBase data, and Chapter~\ref{ch:laws} compares temperature laws. Chapter~\ref{ch:results} reports the results, Chapter~\ref{ch:listeria} the \textit{Listeria} case study, Chapter~\ref{ch:calo} the calorimetric route to the missing biology, and Chapter~\ref{ch:design} the design of a monitor and the software. Chapter~\ref{ch:disc} discusses the findings and their limits, and Chapter~\ref{ch:concl} concludes. The appendices list the parameters with their provenance, the data and the procedure for reproducing every result.
 
 %======================================================================
 \chapter{Background}\label{ch:background}
@@ -284,6 +292,139 @@ Figure~\ref{fig:story} shows the central difficulty on one 72-h delivery. Three 
 
 \begin{figure}[!htbp]\centering\includegraphics[width=\textwidth]{story}
 \caption[One delivery, three cartons]{One delivery, three cartons. (a) Stages of the trip. (b) Ambient air and product temperature with three excursions and hourly logger readings. (c) Simulated counts in three cartons with the same history but different starting load and lag. (d) Cumulative shelf life computed by the monitor; warm spells consume shelf life faster. (e) One prediction for three cartons whose true fates differ}\label{fig:story}\end{figure}
+
+\chapter{Non-isothermal growth kinetics}\label{ch:kin}
+\hook{Why does a cheap degree-hour count come so close to a growth model, and why can no thermometer fix the rest? The answer is one accumulated number.}
+\begin{summary}
+Growth in a changing temperature is a non-isothermal kinetic process, the same mathematical problem that thermal analysis has studied for sixty years. Under the square-root law, both growth models depend on the temperature history only through a generalized time, the integral of the growth rate. Every simple integrator is an approximation of that integral, and error propagation shows that biology outweighs sensor error about sevenfold. This chapter and the next two are based on joint work with Neeraj Tripathi.
+\end{summary}
+\section{Relation to Arrhenius kinetics and the apparent activation energy}
+In thermal analysis the rate constant usually follows Arrhenius, $k(T)=A\exp(-E/RT)$ \cite{arrhenius1889}. Ratkowsky et al.\ found that bacterial growth rates bend away from an Arrhenius line and are described better by Eq.~\eqref{eq:sqrt} \cite{ratkowsky1982}. The two laws can be compared through the apparent activation energy, defined as for any rate,
+\begin{equation}\label{eq:ea}
+E_{\mathrm{app}}(T)=R\,T_K^{2}\,\frac{\dd\ln\mu}{\dd T}=\frac{2R\,T_K^{2}}{T-T_{\min}},
+\end{equation}
+with $T_K$ the absolute temperature. For spoilage flora with $T_{\min}=-7.7$\degC{} it falls from 109\,kJ\,mol$^{-1}$ at 4\degC{} to 84 at 8\degC{} and 66 at 13\degC; for \textit{Listeria} ($T_{\min}=-2.3$\degC) from 203 to 89\,kJ\,mol$^{-1}$ (Fig.~\ref{fig:rates}c). An isoconversional analysis of growth data would therefore report an activation energy that varies with temperature, which is the usual signature of a process that is not a single Arrhenius step \cite{vyazovkin2011}. For the monitor this matters because a time--temperature indicator or a mean-kinetic-temperature rule built on one fixed $E$ \cite{taoukis1989,kim2020} treats warm spells differently from the bacteria.
+
+\begin{figure}[!htbp]\centering\includegraphics[width=\textwidth]{rates}
+\caption{Temperature dependence of growth. (a) Square-root law for spoilage flora (baseline, solid line) and \textit{L.~monocytogenes} (ComBase fit, dashed line). (b) Shelf life at a steady temperature, $\SL=K/\mu$, for the $3\times10^4$\,CFU\,mL$^{-1}$ limit (logarithmic axis). (c) Equivalent Arrhenius activation energy from Eq.~\eqref{eq:ea}}\label{fig:rates}\end{figure}
+
+\section{Reduction to a generalized time}
+The central observation of this paper is that the growth equations care about temperature only through one accumulated quantity.
+
+\begin{definition}[Biological time]
+For a temperature history $T(\cdot)$, the biological time elapsed by $t$ is $\tau(t)=\int_0^t \mu(T(s))\dd s$.
+\end{definition}
+
+\begin{proposition}[Generalized-time reduction]\label{prop:clock}
+Let $\mu(T)$ drive both Eqs.~\eqref{eq:bar}--\eqref{eq:barq}. Then $y$ and $q$ depend on the history only through $\tau(t)$: there are functions $Y,Q$ with $y(t)=Y(\tau(t))$, $q(t)=Q(\tau(t))$, where $Y,Q$ solve the same equations with $\mu\equiv1$. In particular $q(t)=q_0\mathrm{e}^{\tau(t)}$, the time at which $N$ reaches $N_L$ is the first $t$ with $\tau(t)\ge\tau^*$, and $\tau^*$ depends only on $(h_0,N_0,N_{\max},N_L)$, not on temperature.
+\end{proposition}
+
+The construction is the same as Ozawa's generalized time in thermal analysis, $\theta=\int_0^t\exp(-E_a/RT)\dd s$, which condenses any thermal history into the time an isothermal experiment at infinite temperature would need to reach the same conversion \cite{ozawa1965,ozawa1970,ozawa1986}. In that notation the kinetic equation $\dd\alpha/\dd t=A\exp(-E_a/RT)f(\alpha)$ becomes $\dd\alpha/\dd\theta=Af(\alpha)$, and plots of the rate against conversion in generalized time are master plots that do not depend on the temperature programme \cite{malek2013,koga2013}. Proposition~\ref{prop:clock} is the same statement for bacterial growth: the right-hand side of Eqs.~\eqref{eq:bar}--\eqref{eq:barq} divided by $\mu$ is the kinetic model function, $\tau$ is the generalized time with the square-root law in place of the Arrhenius factor, and the count plotted against $\tau$ is a master curve. Figure~\ref{fig:clock} checks the proposition numerically: two very different histories with the same biological time give different growth paths in elapsed time but exactly the same curve in biological time.
+
+\begin{figure}[!htbp]\centering\includegraphics[width=\textwidth]{clock}
+\caption{The generalized-time reduction (Proposition~\ref{prop:clock}) shown numerically with the Baranyi--Roberts model. (a) Two thermal histories with the same total biological time: a steady 5.5\degC{} (trip 1, solid line) and 4\degC{} with a 6-h spell at 13\degC{} (trip 2, dashed line). (b) Biological time $\tau$. (c) Bacterial counts against elapsed time. (d) Bacterial counts against biological time; the two curves coincide}\label{fig:clock}\end{figure}
+
+
+\begin{proposition}[The accumulator is a function of generalized time]\label{prop:csl}
+With continuous readings, $\CSL(t)=\tau(t)/K$. Hence the Gompertz accumulator and the Baranyi--Roberts reference are both monotone functions of the same biological time, and they cross their limits at $\tau=K$ and $\tau=\tau^*$ respectively.
+\end{proposition}
+
+
+
+A proof of each proposition is given in Appendix~\ref{app:proofs}.
+
+\section{Degree-hours as a first-order approximation}
+\begin{corollary}[Degree-hours as a first-order approximation]\label{cor:dh}
+Expand $\mu$ about a reference $T_r$. Under Eq.~\eqref{eq:sqrt},
+\begin{multline}\label{eq:dh}
+\CSL=\frac{b^2}{K}\Big[(T_r-T_{\min})^2\,t+2(T_r-T_{\min})\!\int_0^t\!(T-T_r)\dd s\\+\int_0^t(T-T_r)^2\dd s\Big].
+\end{multline}
+\end{corollary}
+For trips of equal length the first term is common to all trips, the second is a signed degree-hour count about $T_r$, and the third gives extra emphasis to large excursions. With $T_r=4$\degC, an excursion to 13\degC{} gets $(9)^2=81$ from the quadratic term against $2\times11.7\times9=211$ from the linear term, so degree-hours capture about 72\,\% of its cost; for an excursion to 30.7\degC{} they capture only 47\,\%. A degree-hour count should therefore rank trips almost as well as $\CSL$, losing a little on hot excursions, which is what the simulation finds (Chapter~\ref{ch:results}).
+
+
+\section{Fixed-law integrators as generalized times}\label{sec:mkt}
+Every single-parameter temperature integrator is a generalized time with some rate law. A time--temperature indicator or mean kinetic temperature (MKT) uses the Arrhenius factor with a fixed $E_a$ \cite{taoukis1989,kim2020},
+\begin{gather}
+\theta_E=\int_0^t\exp\!\left[-\frac{E_a}{R}\left(\frac{1}{T_K}-\frac{1}{T_{\mathrm{ref}}}\right)\right]\dd s,\label{eq:mkt}\\
+T_{\mathrm{MKT}}=\frac{E_a/R}{E_a/(RT_{\mathrm{ref}})-\ln(\theta_E/t)},\nonumber
+\end{gather}
+a $Q_{10}$ rule uses $Q_{10}^{(T-T_{\mathrm{ref}})/10}$, and degree-hours use $(T-T_{\mathrm{ref}})^+$. For trips of equal duration $T_{\mathrm{MKT}}$ is a monotone function of $\theta_E$, so it ranks trips in the same order. Any of these integrators therefore differs from $\CSL$ only in the weight it gives an hour at temperature $T$ relative to an hour at the reference. Table~\ref{tab:weights} lists these weights. Around a warm spell to 13\degC{} the laws differ by less than a factor of two, but for a 30\degC{} excursion the Arrhenius weights are three to nine times the square-root weight. An Arrhenius integrator therefore over-penalises hot, short spells relative to the growth they cause, and the larger its $E_a$ the more it does so; this is the mechanism behind the benchmark result in Chapter~\ref{ch:results}.
+
+\begin{table}[!htbp]\centering\footnotesize
+\caption{Weight of one hour at temperature $T$ relative to one hour at 4\degC{} under each temperature law (spoilage flora; square-root law with $T_{\min}=-7.7$\degC)}\label{tab:weights}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lcccc@{}}\toprule\rowcolor{dghead}
+$T$/\textdegree C & Square-root & \shortstack{Arrhenius\\\SecEaSp\,kJ\,mol$^{-1}$} & \shortstack{Arrhenius\\120\,kJ\,mol$^{-1}$} & $Q_{10}=3$\\\midrule
+8 & 1.80 & 1.77 & 2.10 & 1.55\\
+13 & 3.13 & 3.52 & 5.14 & 2.69\\
+17.5 & 4.64 & 6.43 & 11.2 & 4.41\\
+30.7 & 10.8 & 33.8 & 97.2 & 18.8\\
+\bottomrule\end{tabular}\end{table}
+
+\section{Sampling error}
+A sampled record replaces $\int\mu\dd t$ by a left Riemann sum. The error has a clean bound.
+
+\begin{proposition}[Sampling bound]\label{prop:riemann}
+Let readings be taken every $\Delta t$ and held until the next reading. (a) For any history, $|\CSL_{\Delta t}-\CSL|\le \Delta t\,V/K$, where $V$ is the total variation of $\mu(T(t))$ over the trip. (b) For a single rectangular excursion from $T_0$ to $T_1$, $|\CSL_{\Delta t}-\CSL|<\Delta t\,[\mu(T_1)-\mu(T_0)]/K$, whatever its timing. (c) If the excursion's timing is uniform relative to the sampling grid, the error has mean zero and standard deviation $\Delta t\,[\mu(T_1)-\mu(T_0)]/(K\sqrt6)$.
+\end{proposition}
+
+\begin{figure}[!htbp]\centering\includegraphics{sampling}
+\caption{Why hourly readings are enough (Proposition~\ref{prop:riemann}). True growth rate during a 70-min warm spell to 13\degC{} (solid line) and the rate assumed from hourly readings held until the next reading (dashed line, dots). The hatched area on the rising side is missed and the dotted area on the falling side is over-counted; the two largely cancel}\label{fig:sampling}\end{figure}
+
+Figure~\ref{fig:sampling} shows the mechanism on a single warm spell.
+
+\begin{worked}
+Hourly sampling of a 1-h excursion from 4 to 13\degC{} changes $\CSL$ by less than $(\AnMuThirteen-\AnMuFour)/\AnKnom=\AnRiem$, that is under 3\,\% of the shelf life, and on average by zero (standard deviation 0.011). Product thermal mass smooths the excursion further and makes the error smaller still.
+\end{worked}
+
+
+\section{Propagation of sensor error}
+\begin{proposition}[Sensor propagation]\label{prop:sensor}
+Let the sensor read $\tilde T=T+\beta+\varepsilon+e_q$ with a per-trip offset $\beta$, zero-mean noise $\varepsilon$ of variance $\sigma_n^2$ and quantisation error $e_q\sim\mathcal U(-\delta_q/2,\delta_q/2)$. To first order, for a trip near a steady temperature $\bar T$,
+\begin{equation}\label{eq:sensor}
+\Delta\ln\CSL\approx\frac{2\beta}{\bar T-T_{\min}},\qquad \mathrm{E}\,\Delta\CSL_{\varepsilon}=\frac{b^2}{K}\,\sigma_n^2\,t,
+\end{equation}
+and the noise and quantisation terms average out over $n$ readings as $1/\sqrt n$.
+\end{proposition}
+For a DS18B20 with offset uniform within $\pm0.5$\degC{} \cite{ds18b20}, $\mathrm{sd}(\beta)=0.5/\sqrt3=0.29$\degC, so $\mathrm{sd}(\ln\CSL)=\AnSdDS$; for a Class~A PT1000 within $\pm0.15$\degC{} \cite{iec60751}, \AnSdPT. Noise of 0.05\degC{} adds a bias of $\sigma_n^2/(\bar T-T_{\min})^2\approx2\times10^{-5}$, which is negligible.
+
+\section{Propagation of biological variability}
+Taking logarithms of $\CSL=(b^2/K)\int(T-T_{\min})^2\dd t$,
+\begin{equation}\label{eq:lncsl}
+\ln\CSL=2\ln b+\ln\!\int(T-T_{\min})^2\dd t-\ln K .
+\end{equation}
+Each unseen biological quantity enters additively on the log scale, and the delta method gives the contributions in Table~\ref{tab:anbudget}: a strain-to-strain $cv$ of 0.10 in $b$ gives $2\times0.10=\AnSdB$; a spread $\sigma_T=1.5$\,K in $T_{\min}$ gives $2\sigma_T/(\bar T-T_{\min})=\AnSdT$; and the spread of $h_0$ and $N_0$ gives \AnSdK{} through $K$. In quadrature the biology contributes \AnSdBio, about \AnRatio{} times the DS18B20 offset.
+
+\begin{table}[!htbp]\centering\footnotesize
+\caption{First-order error budget for $\ln\CSL$ at $\bar T=4$\degC{} (baseline biology).}\label{tab:anbudget}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llc@{}}\toprule\rowcolor{dghead}
+Source & Formula & sd of $\ln\CSL$\\\midrule
+Growth-rate slope $b$ ($cv$ 0.10) & $2\,cv$ & \AnSdB\\
+Minimum temperature ($\sigma_T$ 1.5\,K) & $2\sigma_T/(\bar T-T_{\min})$ & \AnSdT\\
+Lag and starting load ($h_0$, $N_0$) & sd of $\ln K$ & \AnSdK\\
+\textbf{Biology, combined} & quadrature & \textbf{\AnSdBio}\\\midrule
+DS18B20 offset ($\pm0.5$\degC) & $2\,\mathrm{sd}(\beta)/(\bar T-T_{\min})$ & \AnSdDS\\
+PT1000 offset ($\pm0.15$\degC) & same & \AnSdPT\\
+Hourly sampling, 1-h excursion & Prop.~\ref{prop:riemann}(c) & 0.011\\
+\bottomrule\end{tabular}\end{table}
+
+
+\section{From estimation error to ranking accuracy}
+Figure~\ref{fig:errors}a shows the budget of Table~\ref{tab:anbudget} graphically. Error in $\ln\CSL$ matters only through how often it swaps the order of a spoiled and an unspoiled trip. A simple model makes this precise.
+\begin{proposition}[Binormal AUC]\label{prop:auc}
+Let a trip's true log-margin be $z\sim\mathcal N(0,\sigma_z^2)$, spoiled iff $z>0$, and let the score be $s=z+e$ with independent $e\sim\mathcal N(0,\sigma_\mathrm{e}^2)$. Then, with $r=\sigma_e/\sigma_z$,
+\begin{equation}\label{eq:binorm}
+\AUC(r)=\frac12+\frac2\pi\arcsin\frac{1}{\sqrt{2(1+r^2)}} .
+\end{equation}
+\end{proposition}
+$\AUC$ falls from 1 at $r=0$ to $\tfrac12$ as $r\to\infty$, and its slope flattens as $r$ grows. Inverting Eq.~\eqref{eq:binorm} at the simulated AUC of an ideal sensor gives a noise-to-signal ratio of about \AnR{} for biology alone. Adding the DS18B20 offset of Table~\ref{tab:anbudget} then moves $r$ only slightly, and Eq.~\eqref{eq:binorm} predicts a loss of \AnPredDS{} AUC; the simulation finds \AnObsDS. The model is cruder than the simulation, treating every error as Gaussian on one scale, but both put the sensor loss more than an order of magnitude below the biology loss.
+
+
+\begin{figure}[!htbp]\centering\includegraphics[width=\textwidth]{errors}
+\caption{Error budget and its effect on ranking. (a) First-order standard deviation of $\ln\CSL$ at 4\degC{} for each source (Table~\ref{tab:anbudget}); the upper four bars are biological, the lower three are instrumental. (b) Binormal relation between noise-to-signal ratio and AUC, Eq.~\eqref{eq:binorm}, with the oracle and a monitor with a perfect thermometer marked}\label{fig:errors}\end{figure}
+
 
 %======================================================================
 \chapter{The benchmark}\label{ch:bench}
@@ -404,7 +545,11 @@ Secondary models are fitted by ordinary least squares on $\sqrt{\mu}$, with 95\,
 \begin{equation}\label{eq:bfaf}
 B_f=10^{\frac1n\sum\log_{10}(\hat\mu_i/\mu_i)},\qquad A_f=10^{\frac1n\sum|\log_{10}(\hat\mu_i/\mu_i)|},
 \end{equation}
-where $B_f=1$ means no bias and $A_f-1$ is the typical relative error.
+where $B_f=1$ means no bias and $A_f-1$ is the typical relative error. Competing laws are compared by the small-sample Akaike criterion \cite{akaike1974,hurvich1989},
+\begin{equation}\label{eq:aicc}
+\mathrm{AICc}=n\ln\frac{\mathrm{RSS}}{n}+2k+\frac{2k(k+1)}{n-k-1},
+\end{equation}
+where RSS is the residual sum of squares of $\ln\mu$ and $k$ the number of parameters, and by cross-validation in which all records at one temperature are left out in turn.
 
 %======================================================================
 \chapter{Validation against real data}\label{ch:val}
@@ -434,6 +579,39 @@ ComBase milk records with a stated growth rate for \textit{L.~monocytogenes} at 
 A ComBase search with milk as the food matrix returned about 480 records, of which \DatNFull{} were compiled (Table~\ref{tab:dcomp}), together with the \DatNSp{} records of spoilage flora. Records without a stated rate were not used for fitting. All compiled records are released with the code.
 
 \TabDataComp
+
+\chapter{Temperature laws compared}\label{ch:laws}
+\hook{Shelf-life labels and indicators often assume an Arrhenius law. Does the choice of law matter once the biology is unknown?}
+\begin{summary}
+Four temperature laws fit ComBase growth records about equally well inside the range of the data, but only the square-root law predicts growth in the cold without bias. On 240\,000 trips, no Arrhenius or $Q_{10}$ integrator outperforms the square-root integrator in any of 60 settings, although the margins are small.
+\end{summary}
+\section{Four laws fitted to ComBase records}
+Five secondary models are common in food microbiology and thermal analysis. The square-root law, Eq.~\eqref{eq:sqrt}, is used throughout; for the whole biokinetic range it is extended to $\sqrt{\mu}=b(T-T_{\min})\{1-\exp[c(T-T_{\max})]\}$ \cite{ratkowsky1982}, which reduces to Eq.~\eqref{eq:sqrt} well below the maximum temperature $T_{\max}$. The Arrhenius law and its three-parameter extension by Davey are
+\begin{gather}
+\ln\mu=\ln A_0-\frac{E_a}{RT_K},\label{eq:arr}\\
+\ln\mu=C_0+\frac{C_1}{T_K}+\frac{C_2}{T_K^2},\label{eq:davey}
+\end{gather}
+with $T_K$ the absolute temperature. A constant temperature coefficient gives the exponential law
+\begin{equation}\label{eq:q10law}
+\ln\mu=a+cT,\qquad Q_{10}=\mathrm{e}^{10c},
+\end{equation}
+and the cardinal-temperature model of Rosso et al.\ describes the rate through $T_{\min}$, the optimum and $T_{\max}$ \cite{rosso1993}. Below the optimum, which is the only range relevant to a cold chain, the cardinal model and the extended square-root law reduce to curves of the same shape as Eq.~\eqref{eq:sqrt}, so we compare the four laws of Eqs.~\eqref{eq:sqrt} and \eqref{eq:arr}--\eqref{eq:q10law}.
+
+Each law was fitted by ordinary least squares, the square-root law on $\sqrt{\mu}$ and the others on $\ln\mu$, to the \NumCbN{} ComBase records of spoilage flora in pasteurised milk and to the 46 \textit{L.~monocytogenes} fitting records (Table~\ref{tab:secondary}, Fig.~\ref{fig:secondary}). The statistics used are defined in Chapter~\ref{ch:stats}. Within the range of the data all four laws fit about equally well, and the square-root law has the lowest AICc for both organisms. The decisive difference appears in the cold. When each law is fitted to the records at or above 8\degC{} and used to predict the records below 8\degC, the square-root law is almost unbiased (bias factor 1.01 for spoilage flora and 1.15 for \textit{Listeria}), while the Arrhenius and constant-$Q_{10}$ laws overpredict by 16--18\,\% and 46--49\,\%. The curvature of Eq.~\eqref{eq:sqrt} on an Arrhenius plot is exactly what Ratkowsky et al.\ observed \cite{ratkowsky1982}. Fitted over the whole range, Eq.~\eqref{eq:arr} gives $E_a=\SecEaSp$\,kJ\,mol$^{-1}$ for spoilage flora and \SecEaLis\,kJ\,mol$^{-1}$ for \textit{Listeria}, of the same order as the 120\,kJ\,mol$^{-1}$ measured calorimetrically for carrot-juice spoilage \cite{wadso2011}; the corresponding constant $Q_{10}$ values are \SecQtenSp{} and \SecQtenLis. On held-out \textit{Listeria} records all four laws perform alike, so the advantage of the square-root law is specific to extrapolation into the cold, which is where a cold chain operates.
+
+{\renewcommand{\footnotesize}{\scriptsize}\TabSecondary}
+
+\begin{figure}[!htbp]\centering\includegraphics[width=\textwidth]{secondary}
+\caption{Secondary models fitted to ComBase records. (a) Spoilage flora in pasteurised milk and (b) \textit{L.~monocytogenes}: growth rates (points) with the square-root (solid), Arrhenius (dashed), constant-$Q_{10}$ (dotted) and Arrhenius--Davey (dash-dotted) fits. (c) Accuracy factor for the records below 8\degC{} when each law is fitted at or above 8\degC; plain bars spoilage flora, hatched bars \textit{Listeria}. Data from ComBase \cite{combase}}\label{fig:secondary}\end{figure}
+
+\section{Against Arrhenius and $Q_{10}$ integrators }\label{sec:rivalres}
+The rules most often used in practice to summarise a temperature log are a mean kinetic temperature, that is an Arrhenius integrator with a fixed activation energy, and a $Q_{10}$ rule. We compared the square-root integrator CSL with three of them on identical trips: Arrhenius with the activation energy fitted to the ComBase records of the run's organism (\SecEaSp\,kJ\,mol$^{-1}$ for spoilage flora, \SecEaLis\,kJ\,mol$^{-1}$ for \textit{Listeria}), Arrhenius with the 120\,kJ\,mol$^{-1}$ measured calorimetrically for a food-spoilage process \cite{wadso2011}, and $Q_{10}=3$ \cite{zou2023} (Table~\ref{tab:rivals}, Fig.~\ref{fig:rivals}). No integrator was significantly ahead of CSL in any of the 60 settings. CSL was ahead of the fitted Arrhenius integrator in \RvFitAhead{} of 60 settings, significantly so in \RvFitSig; ahead of the 120\,kJ\,mol$^{-1}$ integrator in \RvWadAhead{} (\RvWadSig{} significant); and ahead of the $Q_{10}$ rule in \RvQtenAhead{} (\RvQtenSig{} significant). By the sign test these proportions are far from what chance would give ($p<10^{-5}$ for each), with the caveat on dependence noted in Chapter~\ref{ch:stats}. The advantage is largest when extra lag follows temperature shifts, where CSL leads in every setting by up to 0.038 AUC, and it grows with the activation energy, as Table~\ref{tab:weights} predicts. The margins are nevertheless small, of the order of 0.01 AUC: every integrator is a generalized time, and all are limited far more by unobserved biology than by their temperature law.
+
+{\renewcommand{\footnotesize}{\scriptsize}\TabRivals}
+
+\begin{figure}[!htbp]\centering\includegraphics[width=\textwidth]{rivals}
+\caption{Paired AUC differences between the square-root integrator CSL and (a) an Arrhenius integrator with the activation energy fitted to ComBase records, (b) an Arrhenius integrator with $E_a=120$\,kJ\,mol$^{-1}$, (c) a $Q_{10}=3$ rule and (d) degree-hours, on identical trips (DS18B20, 15\,min). Bars span the 12 settings of each run and open circles mark the median; the numbers give the settings whose 95\,\% paired-bootstrap interval excludes zero. Positive values favour CSL}\label{fig:rivals}\end{figure}
+
 
 %======================================================================
 \chapter{Results}\label{ch:results}
@@ -487,6 +665,24 @@ A single alarm with nominal parameters is badly calibrated against the construct
 \begin{figure}[!htbp]\centering\includegraphics[width=\textwidth]{calibration.png}
 \caption[Calibration of probabilities and alarms]{Brier score and expected calibration error of the Monte Carlo probability with a matched prior, with an overconfident prior, and of a single alarm with nominal parameters (baseline run, limit $3\times10^4$\,CFU\,mL$^{-1}$). Lower is better}\label{fig:cal}\end{figure}
 
+\section{Mathematics and simulation agree}
+Table~\ref{tab:agree} sets each analytic prediction of Chapter~\ref{ch:kin} beside the corresponding simulated result. They were obtained independently: the propositions use only the model equations and parameter ranges, and the simulation uses none of the propositions.
+
+\begin{table}[!htbp]\centering\scriptsize
+\caption{Analytic predictions (Chapter~\ref{ch:kin}) against simulated results (baseline run unless stated).}\label{tab:agree}
+\begin{tabular}{@{}p{3.3cm}p{5.0cm}p{5.9cm}@{}}\toprule\rowcolor{dghead}
+Question & Mathematics predicts & Simulation finds\\\midrule
+Does an oracle rank perfectly? & Yes, both models read $\tau$ (Props.~\ref{prop:clock}, \ref{prop:csl}) & Oracle AUC 1.000 (baseline); below 1 only where structure differs (extra lag 0.988, \textit{Listeria} half-log)\\
+Biology versus sensor & sd of $\ln\CSL$: \AnSdBio{} against \AnSdDS, ratio about \AnRatio & Biology gap \NumBaseGapMin--\NumBaseGapMax{} AUC against DS18B20 loss of about 0.01\\
+Effect of sensor on AUC & Binormal model: \AnPredDS{} (Prop.~\ref{prop:auc}) & \AnObsDS{} (ideal $\to$ DS18B20, 1\,min)\\
+Degree-hours versus CSL & First-order term of the same generalized time (Cor.~\ref{cor:dh}) & CSL ahead by at most \NumLagGainMax{} AUC\\
+Hourly versus every-minute & Error $<\AnRiem$ per 1-h excursion, mean zero (Prop.~\ref{prop:riemann}) & $\NumBaseSampMin$ to $\NumBaseSampMax$ AUC; not detectable in \NumBaseSampNull{} of 12\\
+Which biology matters most & Rate parameters: sd \AnSdB{} ($b$) and \AnSdT{} ($T_{\min}$) against \AnSdK{} (lag, load) & True rate law adds \CalGainRateMin--\CalGainRateMax{} AUC; true lag and load \CalGainBudMin--\CalGainBudMax\\
+Calorimetric measurement & Detection time measures rate and budget together (Prop.~\ref{prop:calo}) & Closes \CalFracMin--\CalFracMax\,\% of the biology gap\\
+Value of a probability & sd of $\hat p\le0.056$ with $M=80$ & ECE \NumBaseEceMMin--\NumBaseEceMMax{} against \NumBaseEcePMin--\NumBaseEcePMax{} for an alarm\\
+\bottomrule\end{tabular}\end{table}
+
+
 %======================================================================
 \chapter{\textit{Listeria monocytogenes}: a hazard case study}\label{ch:listeria}
 \hook{For a pathogen that still grows in the refrigerator, a warm hour is even more expensive. The lesson stays the same.}
@@ -504,6 +700,51 @@ The half-log label requires a caveat. The limit then lies inside the lag-to-grow
 
 \section{Scope}
 This case study concerns growth, not illness. Risk of illness depends on dose, virulence, host susceptibility and the contamination event, none of which are modelled. The FSSAI criterion for \textit{L.~monocytogenes} in milk products is absence in 25\,mL \cite{fssai2024}, which no growth threshold represents.
+
+\chapter{Calorimetry: measuring what the log cannot see}\label{ch:calo}
+\hook{A thermometer cannot see the bacteria. A calorimeter can feel their heat.}
+\begin{summary}
+The heat released by a growing culture depends on the temperature programme only through the same generalized time, so heat-flow curves collapse onto one master curve. An isothermal calorimetric detection time of the batch measures the biology that dominates the loss budget; combined with the log, it recovers \CalFracMin--\CalFracMax\,\% of the gap to the oracle in the simulated benchmark.
+\end{summary}
+\section{Connection with isothermal calorimetry}\label{sec:calotheory}
+Isothermal calorimetry follows microbial growth through the heat flow $P$ of a sample \cite{wadso2011,fessas2017,schiraldi2019}. During growth the heat flow is taken as proportional to the rate at which cells are formed, $P=Y_Q V\,\dd N/\dd t$, where $Y_Q$ is the heat released per cell formed and $V$ the sample volume \cite{fessas2017,fricke2020}. Under the Baranyi--Roberts model, $\dd N/\dd t=N\,\dd y/\dd t=\mu(T)\,N\,\frac{q}{1+q}(1-N/N_{\max})$, and Proposition~\ref{prop:clock} turns this into a statement about calorimetric curves.
+
+\begin{proposition}[Calorimetric master curve]\label{prop:calo}
+Let $Y_Q$ be constant and let the growth follow Eqs.~\eqref{eq:bar}--\eqref{eq:barq}. Then, for any temperature programme,
+\begin{equation}\label{eq:calo}
+\frac{P(t)}{\mu\big(T(t)\big)}=Y_QV\,G\big(\tau(t)\big),\qquad Q(t)=\int_0^tP\dd s=Y_QV\big[N(\tau(t))-N_0\big],
+\end{equation}
+where $G(\tau)=N\frac{q}{1+q}(1-N/N_{\max})$ is evaluated on the solution with $\mu\equiv1$. The calorimetric conversion $\alpha=Q/Q_\infty=(N-N_0)/(N_{\max}-N_0)$ therefore obeys $\dd\alpha/\dd\tau=f(\alpha)$ with a model function $f$ that does not depend on the temperature programme.
+\end{proposition}
+
+Equation~\eqref{eq:calo} is the biological counterpart of the master plots of thermal analysis, $\dd\alpha/\dd\theta=Af(\alpha)$ \cite{malek2013,koga2013}: thermograms recorded under different programmes differ in elapsed time, but divided by $\mu(T)$ and plotted against $\tau$ they coincide (Fig.~\ref{fig:calorimetry}a,b). Two uses follow. First, a single non-isothermal calorimetric run, for example a stepwise programme, can be used to test the square-root generalized time and to estimate $b$ and $T_{\min}$ for a given product, in the same way as Ozawa's method uses runs at several heating rates \cite{ozawa1965,koga2013}; a calorimeter that measures at several temperatures at once \cite{wadso2011} gives $\mu(T)$ and hence $E_{\mathrm{app}}$, Eq.~\eqref{eq:ea}, directly.
+
+Second, calorimetry measures the biology that a temperature log cannot. Consider a sample of the lot incubated isothermally at $T_{\mathrm{ref}}$ until the heat flow exceeds a detection threshold, the detection-time method used to screen for contamination \cite{fricke2020}. If detection corresponds to a count $N_{\mathrm{det}}$, Proposition~\ref{prop:clock} gives
+\begin{equation}\label{eq:tdet}
+\mu_{\mathrm{lot}}(T_{\mathrm{ref}})\,t_{\mathrm{det}}=\tau^*(h_0,N_0,N_{\mathrm{det}}),
+\end{equation}
+so the detection time combines the lot's own growth rate with its lag and starting load, which are precisely the quantities that dominate the error budget of Table~\ref{tab:anbudget}. Because the limit is reached at $\tau=K$, and $K-\tau^*(N_{\mathrm{det}})$ depends only weakly on $h_0$ and $N_0$ once the lag is over, a monitor that divides the logged integral by the measured detection time,
+\begin{equation}\label{eq:cslcal}
+S_{\mathrm{cal}}=\frac{1}{t_{\mathrm{det}}}\int_0^t\mu_{\mathrm{nom}}\big(T(s)\big)\dd s ,
+\end{equation}
+ranks trips by an estimate of $\tau/K$ in which the lot's rate scale and budget have been measured rather than assumed. What remains unmeasured is only the change of shape of $\mu(T)$ between $T_{\mathrm{ref}}$ and the storage temperature, which comes from the spread of $T_{\min}$. \secref{sec:calores} quantifies how much of the biological loss this recovers.
+
+
+\begin{figure}[!htbp]\centering\includegraphics[width=\textwidth]{calorimetry}
+\caption{Calorimetry and the generalized time. (a) Simulated heat-flow curves of the same milk biology (baseline parameters, $h_0=3.8$, $N_0=50$\,CFU\,mL$^{-1}$) under isothermal programmes at 20\degC{} (solid) and 12\degC{} (dashed) and a step from 6 to 22\degC{} after 30\,h (dotted), with the heat flow taken as proportional to the rate of cell formation. (b) The same curves divided by $\mu(T)$ and plotted against the generalized time $\tau$; they coincide (Proposition~\ref{prop:calo}). (c) AUC over the 12 baseline settings when the log is combined with information on the biology: none, the true lag and starting load, the true rate law, an isothermal calorimetric detection time at 20\degC{} with 5\,\% measurement error, and all of it (oracle). Bars span the settings and circles mark the mean}\label{fig:calorimetry}\end{figure}
+
+\section{Value of a calorimetric measurement of the lot}\label{sec:calores}
+The loss budget says what is lost; Proposition~\ref{prop:calo} suggests how much of it a laboratory measurement could buy back. We regenerated the 12 baseline settings with a separate random stream (4\,000 trips each) and scored every trip from the same DS18B20 record, sampled every 15\,min, with four kinds of added information (Table~\ref{tab:calo}, Fig.~\ref{fig:calorimetry}c). Knowing each trip's true lag and starting load raises the AUC by only \CalGainBudMin--\CalGainBudMax. Knowing its true rate law ($b$ and $T_{\min}$) raises it by \CalGainRateMin--\CalGainRateMax, to \CalRateMin--\CalRateMax. This ordering is the one predicted by the first-order budget of Table~\ref{tab:anbudget}, in which the rate parameters contribute \AnSdB{} and \AnSdT{} to the spread of $\ln\CSL$ and lag and load only \AnSdK.
+
+A calorimetric detection time combines rate, lag and load in one number, Eq.~\eqref{eq:tdet}. We simulated an isothermal measurement of each trip's biology at $T_{\mathrm{ref}}=20$\degC{} to a detection level of $10^5$\,CFU\,mL$^{-1}$, with a lognormal measurement error of 5\,\%, and scored the trip by Eq.~\eqref{eq:cslcal}. The detection times have a median of \CalTdetMed\,h (5th--95th percentile \CalTdetLo--\CalTdetHi\,h), short enough for a sample taken at dispatch. The score reaches AUC \CalCalMin--\CalCalMax, against \CalNomMin--\CalNomMax{} for the log alone; the gain exceeds zero in all \CalGainCalSig{} settings, and the measurement closes \CalFracMin--\CalFracMax\,\% (mean \CalFracMean\,\%) of the gap to the oracle. With a 15\,\% measurement error the AUC is \CalSensBMin--\CalSensBMax{} (mean \CalSensBFrac\,\% of the gap), and with $T_{\mathrm{ref}}=10$\degC{} it is \CalSensCMin--\CalSensCMax{} (mean \CalSensCFrac\,\%). What remains, \CalRestMin--\CalRestMax{} AUC, is the change of shape of $\mu(T)$ between the reference and storage temperatures, which a single isothermal measurement cannot resolve.
+
+These numbers are an upper bound in one respect: each simulated trip carries the biology of its own sample, whereas in practice a sample represents a lot whose cartons differ among themselves. They also assume a constant heat yield per cell and a fixed detection count. Within these assumptions the result is clear: one isothermal calorimetric measurement is worth an order of magnitude more ranking accuracy than any improvement of the thermometer.
+
+\TabCalo
+
+\section{A role for calorimetry in the cold chain}
+Calorimetry cannot travel with a crate, and a temperature log cannot see the biology; the two are complementary. Proposition~\ref{prop:calo} shows that they measure the same generalized time from opposite sides: the log measures how much of it has elapsed, and an isothermal detection time measures, in the same units, how much of it the lot can afford. In the benchmark a single detection time at dispatch recovers most of the loss that no sensor can touch (\secref{sec:calores}). Isothermal microcalorimeters already detect contamination in hours \cite{fricke2020} and follow the shelf life of fresh produce \cite{haman2019}, and multi-temperature instruments give the temperature dependence of growth in one experiment \cite{wadso2011}. Three questions must be answered before the idea is used: how well one sample represents a lot, how stable the heat yield per cell is in milk, and how the detection count depends on the instrument and the sample volume. Each can be answered by a calorimetric experiment, and the generalized-time framework says which quantities such an experiment should report.
+
 
 %======================================================================
 \chapter{Monitor design and software}\label{ch:design}
@@ -576,17 +817,19 @@ For spoilage flora a warm hour is costly but the baseline rate is already high; 
 \chapter{Conclusions}\label{ch:concl}
 \hook{Measure the milk, not just the air around it.}
 \pullquote{A temperature log can say much about how much growth the milk could have had, and little about how much it did.}
-In an open benchmark of 240\,000 trips anchored to published and ComBase data, unobserved biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC; a degree-hour count comes within \NumLagGainMax{} of a growth model; sensor quality and sampling interval matter little; and a Monte Carlo probability is far better calibrated than an alarm. The answers to the four research questions are therefore:
+In an open benchmark of 240\,000 trips anchored to published and ComBase data, unobserved biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC; a degree-hour count comes within \NumLagGainMax{} of a growth model; sensor quality and sampling interval matter little; and a Monte Carlo probability is far better calibrated than an alarm. The answers to the six research questions are therefore:
 \begin{enumerate}[label=RQ\arabic*.,leftmargin=3em]
 \item Biology the log cannot see is the dominant loss in every run.
 \item A better sensor or faster sampling recovers at most about 0.02 AUC.
 \item A growth-model score clearly beats threshold and maximum rules but only narrowly beats degree-hours.
 \item A probability is far better calibrated than a single alarm.
+\item Growth reads the temperature history only through a generalized time, which explains every loss; the square-root law is never outperformed by Arrhenius or $Q_{10}$ rules.
+\item A single calorimetric detection time of the batch recovers \CalFracMin--\CalFracMax\,\% of the loss to biology.
 \end{enumerate}
-Four directions follow: measurements of real logger data from Indian dairy routes to replace the assumed excursion model; challenge tests with natural flora under fluctuating temperature, with new plate counts; methods that measure the biology of a lot cheaply at dispatch; and a hardware logger running the estimator. An extended study, which develops the kinetic theory behind these findings, is in preparation.
+Four directions follow: measurements of real logger data from Indian dairy routes to replace the assumed excursion model; challenge tests with natural flora under fluctuating temperature, with new plate counts; calorimetric experiments on milk under stepwise temperature programmes, to test the master curve and measure detection times of real batches; and a hardware logger running the estimator.
 
 \section*{Acknowledgements}
-The author thanks Dr.\ Neeraj Tripathi (School of Electronics and Communication Engineering, Shri Mata Vaishno Devi University) for guidance, and the ComBase consortium and the laboratories whose published growth records made this study possible.
+The author thanks Dr.\ Neeraj Tripathi (School of Electronics and Communication Engineering, Shri Mata Vaishno Devi University), co-author of the kinetic and calorimetric work, and the ComBase consortium and the laboratories whose published growth records made this study possible.
 
 %======================================================================
 \appendix
@@ -599,6 +842,22 @@ Every parameter of the simulation is listed in Table~\ref{tab:params} with its v
 Table~\ref{tab:dsp} lists the ComBase records of spoilage flora used in Chapter~\ref{ch:val}. The complete compilation of \DatNFull{} milk records, including the \DatNLis{} \textit{Listeria} records with their conditions and sources, is in the repository (\texttt{data/combase\_milk\_records.csv}).
 
 \TabSpRecords
+
+\chapter{Proofs}\label{app:proofs}
+\textbf{Proposition~\ref{prop:clock}.} Where $\mu>0$, $\tau(t)$ is strictly increasing and $\dd\tau=\mu\dd t$. Dividing Eqs.~\eqref{eq:bar}--\eqref{eq:barq} by $\mu$ gives $\dd y/\dd\tau=\frac{q}{1+q}(1-\mathrm{e}^{y-y_{\max}})$ and $\dd q/\dd\tau=q$, an autonomous system with no reference to $T$. Its solution $(Y,Q)$ from $(y_0,q_0)$ is unique (the right-hand side is Lipschitz), so $y(t)=Y(\tau(t))$ and $q(t)=q_0\mathrm{e}^{\tau(t)}$. Since $Y$ is increasing while $y<y_{\max}$, $N$ reaches $N_L$ exactly when $\tau$ reaches $\tau^*=Y^{-1}(\ln N_L)$, which depends on $(h_0,y_0,y_{\max},N_L)$ only. Intervals with $\mu=0$ ($T\le T_{\min}$) leave $\tau$, $y$ and $q$ unchanged. \hfill$\square$
+
+\textbf{Proposition~\ref{prop:csl}.} From Eq.~\eqref{eq:sl}, $1/\SL(T)=\mu(T)/K$, and the continuous limit of Eq.~\eqref{eq:csl} is $\int_0^t\mu(T(s))\dd s/K=\tau(t)/K$. \hfill$\square$
+
+\textbf{Corollary~\ref{cor:dh}.} Write $T-T_{\min}=(T_r-T_{\min})+(T-T_r)$, square, multiply by $b^2/K$ and integrate. \hfill$\square$
+
+\textbf{Proposition~\ref{prop:calo}.} With $P=Y_QV\,\dd N/\dd t$ and $\dd N/\dd t=N\,\dd y/\dd t$, Eq.~\eqref{eq:bar} gives $P=Y_QV\mu(T)N\frac{q}{1+q}(1-N/N_{\max})$. By Proposition~\ref{prop:clock}, $N$ and $q$ are functions of $\tau$ alone, so $P/\mu=Y_QVG(\tau)$. Integrating $P\dd t=Y_QV\dd N$ gives $Q$, and $\dd\alpha/\dd\tau=G(\tau)/(N_{\max}-N_0)$, which is a function of $\alpha$ because $\alpha$ is strictly increasing in $\tau$ while $N<N_{\max}$. \hfill$\square$
+
+\textbf{Proposition~\ref{prop:riemann}.} Let $g(t)=\mu(T(t))$. The error is $\frac1K\sum_i\int_{t_i}^{t_{i+1}}[g(t_i)-g(t)]\dd t$. (a) Each integrand is bounded by the oscillation of $g$ on $[t_i,t_{i+1}]$, which is at most the variation $V_i$ there, so the error is at most $\Delta t\sum_iV_i/K=\Delta tV/K$. (b) For a pulse of height $\Delta g=\mu(T_1)-\mu(T_0)$ starting at $s\in[t_i,t_{i+1})$ and ending at $e\in[t_j,t_{j+1})$, the start is undercounted by $(t_{i+1}-s)\Delta g$ and the end overcounted by $(t_{j+1}-e)\Delta g$; each lies in $[0,\Delta t\Delta g)$, so their difference lies in $(-\Delta t\Delta g,\Delta t\Delta g)$. (c) If the phases are independent and uniform, the two terms are independent $\mathcal U(0,\Delta t\Delta g)$ variables; their difference has mean 0 and variance $2(\Delta t\Delta g)^2/12$. \hfill$\square$
+
+\textbf{Proposition~\ref{prop:sensor}.} With $\mu=b^2(T-T_{\min})^2$, $\partial\ln\CSL/\partial\beta=2\int(T-T_{\min})\dd t/\int(T-T_{\min})^2\dd t$, which equals $2/(\bar T-T_{\min})$ for a steady trace. For noise, $\mathrm E(T+\varepsilon-T_{\min})^2=(T-T_{\min})^2+\sigma_n^2$; the cross term $2(T-T_{\min})\varepsilon$ has mean zero and its sum over $n$ independent readings has standard deviation proportional to $\sqrt n$, so its relative contribution falls as $1/\sqrt n$. Quantisation is handled in the same way with variance $\delta_q^2/12$. \hfill$\square$
+
+\textbf{Proposition~\ref{prop:auc}.} Take a spoiled trip $(z_1,s_1)$ and an unspoiled trip $(z_0,s_0)$. With $u=z_1$, $v=-z_0$ and $w=s_1-s_0=u+v+e_1-e_0$, $\AUC=\Pr(w>0\mid u>0,v>0)=4\Pr(u>0,v>0,w>0)$. The vector $(u,v,w)$ is zero-mean normal with $\mathrm{corr}(u,v)=0$ and $\mathrm{corr}(u,w)=\mathrm{corr}(v,w)=\sigma_z/\sqrt{2(\sigma_z^2+\sigma_\mathrm{e}^2)}=\rho$. The trivariate orthant probability is $\tfrac18+\tfrac{1}{4\pi}(\arcsin0+2\arcsin\rho)$, so $\AUC=\tfrac12+\tfrac{2}{\pi}\arcsin\rho$, which is Eq.~\eqref{eq:binorm}. \hfill$\square$
+
 
 \chapter{Reproducing the results}\label{app:repro}
 All results are generated from fixed random seeds. With Python 3.10 or later, the packages in \texttt{requirements.txt} and a LaTeX installation:

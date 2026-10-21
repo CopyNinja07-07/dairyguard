@@ -88,6 +88,7 @@ def calibration(P, y, bins=10):
 def run_v2(N=4000, seed=11, out="results_v2"):
     import os; os.makedirs(out, exist_ok=True)
     rng = np.random.default_rng(seed)
+    rng2 = np.random.default_rng(seed + 1000)    # separate stream for the additional integrators
     rows, paired, cal = [], [], []
     for tn, Nlim in S.THR.items():
         hz = S.label_horizon_h(Nlim)
@@ -117,6 +118,12 @@ def run_v2(N=4000, seed=11, out="results_v2"):
                         lo, hi = boot_ci(d[m], label, rng)
                         rows.append(dict(**key, sensor=sen, sampling=s, method=m, prevalence=prev,
                                          AUC=a, lo=lo, hi=hi, mean_samples=float(np.mean(d["n_samples"]))))
+                for (sen, s), d in sc.items():
+                    for m in S.EXTRA:
+                        a = auc_fast(d[m], label)
+                        lo, hi = boot_ci(d[m], label, rng2)
+                        rows.append(dict(**key, sensor=sen, sampling=s, method=m, prevalence=prev,
+                                         AUC=a, lo=lo, hi=hi, mean_samples=float(np.mean(d["n_samples"]))))
                 a = auc_fast(orc, label)
                 lo, hi = boot_ci(orc, label, rng)
                 rows.append(dict(**key, sensor="oracle", sampling=1, method="CSL_oracle", prevalence=prev,
@@ -138,6 +145,11 @@ def run_v2(N=4000, seed=11, out="results_v2"):
                     d0, lo, hi = paired_diff(x1, x2, label, rng)
                     paired.append(dict(**key, contrast=name, diff=d0, lo=lo, hi=hi,
                                        excludes_zero=bool(lo > 0 or hi < 0)))
+                for m in S.EXTRA:
+                    d0, lo, hi = paired_diff(base["CSL"], base[m], label, rng2)
+                    paired.append(dict(**key, contrast=f"CSL - {m}", diff=d0, lo=lo, hi=hi, excludes_zero=bool(lo > 0 or hi < 0)))
+                    d0, lo, hi = paired_diff(base[m], base["deg_hours_4C"], label, rng2)
+                    paired.append(dict(**key, contrast=f"{m} - degree_hours_4C", diff=d0, lo=lo, hi=hi, excludes_zero=bool(lo > 0 or hi < 0)))
                 # uncertainty-aware score on a realistic device record (DS18B20, 15 min)
                 idx = np.arange(0, steps, 15)
                 meas = S.measure(Tp[:, idx].astype(float), "DS18B20", rng, N)

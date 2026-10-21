@@ -13,6 +13,9 @@ validate:
 	$(PY) src/validate_lin.py
 	$(PY) src/validate_combase.py
 	$(PY) src/validate_combase_lis.py
+	$(PY) src/compare_secondary.py
+	DG_PARAMS=ref $(PY) src/example_setting.py
+	DG_PARAMS=ref $(PY) src/calorimetry_info.py
 summary:
 	$(PY) src/summarize_runs.py
 figures:

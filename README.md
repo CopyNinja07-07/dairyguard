@@ -9,7 +9,7 @@
 
 A simulation study of the cold chain for milk. We built a virtual world of thousands of milk deliveries, so that we always know the true outcome, and used it to find out what limits our ability to predict spoilage from a temperature record: the thermometer, how often we read it, the rule we use, or something no instrument can see.
 
-**[Website](https://copyninja07-07.github.io/dairyguard/) · [Live demo](https://copyninja07-07.github.io/dairyguard/explorer.html) · [Research paper (PDF)](docs/DairyGuard_Research_Paper.pdf) · [Monograph (PDF)](docs/DairyGuard_Monograph.pdf)**
+**[Website](https://copyninja07-07.github.io/dairyguard/) · [Live demo](https://copyninja07-07.github.io/dairyguard/explorer.html) · [Research paper v2 (PDF)](docs/DairyGuard_Research_Paper.pdf) · [Monograph (PDF)](docs/DairyGuard_Monograph.pdf)**
 
 **Contents:** [The short version](#the-short-version) · [Problem](#problem) · [Approach](#approach-in-plain-words) · [Architecture](#architecture) · [Quickstart](#quickstart) · [The model](#the-model) · [The simulated world](#the-simulated-world) · [How methods are judged](#how-methods-are-judged) · [Is the model believable?](#is-the-model-believable) · [Results](#results) · [Listeria case study](#listeria-case-study) · [Data](#data-and-parameters) · [Repository layout](#repository-layout) · [Limitations](#limitations) · [Next steps](#next-steps) · [Glossary](#glossary) · [Cite](#cite-and-licence)
 
@@ -22,6 +22,7 @@ A simulation study of the cold chain for milk. We built a virtual world of thous
 - We tested what limits prediction. **The biggest loss comes from what a thermometer cannot see:** which bacteria were in the milk and how many.
 - A more accurate thermometer helps only a little (at most 2 points out of 100). Reading the temperature every hour instead of every minute made no measurable difference in most settings.
 - So the money and effort are better spent on knowing the milk's starting condition, and on telling people the *chance* of spoilage instead of a plain red or green light.
+- **New in version 2:** the maths explains why. Growth, and even the heat that growing bacteria give off, depend on the temperature record only through one running total. The formulas used in many shelf-life labels (Arrhenius, Q10) never did better than the square-root rule, in any of 60 settings. And one heat-flow (calorimetry) test of a batch, added to the temperature log, won back **69 to 94%** of the accuracy the thermometer could not provide.
 
 All of this is in a simulation. See [Limitations](#limitations) before drawing conclusions.
 
@@ -213,6 +214,18 @@ What this means:
 - **Sensor and sampling matter little.** The better sensor gains at most 2 points. The adaptive rule gave no detectable advantage either.
 - **Say the uncertainty.** The probability forecast was better calibrated than a single alarm in every run (ECE about 0.02 to 0.11 against 0.34 to 0.45 for the spoilage runs), with one exception noted below.
 
+## Version 1 and version 2
+
+| | Version 1 (preprint, 9 pages) | Version 2 (current, 25 pages) |
+|---|---|---|
+| Question | What limits a temperature monitor? | Why, and what would fix it? |
+| Theory | Growth models, applied | Six propositions: growth and its heat depend on the log only through one running total |
+| Temperature laws | Square-root rule | Four laws compared on real records; Arrhenius and Q10 rules tested on 240,000 trips |
+| Calorimetry | Not covered | One heat-flow test of a batch closes 69–94% of the gap |
+| Authors | Suryansh Pratap Singh | Suryansh Pratap Singh, Neeraj Tripathi |
+
+Version 1 is kept at [`docs/DairyGuard_Preprint_v1.pdf`](docs/DairyGuard_Preprint_v1.pdf).
+
 ## *Listeria* case study
 
 *Listeria monocytogenes* is a dangerous germ that can grow in the cold. We studied how its **growth** responds to the same temperature histories, using targets of +0.5 and +1 log10 growth over the starting amount. These are round-number growth targets, **not** regulatory limits, and no illness is modelled.
@@ -240,6 +253,9 @@ dairyguard/
 │   ├── validate_lin.py       reproduces the published 2016 experiment
 │   ├── validate_combase.py   fits spoilage bacteria to ComBase records
 │   ├── validate_combase_lis.py   fits and tests Listeria
+│   ├── compare_secondary.py  compares four temperature laws on ComBase records
+│   ├── calorimetry_info.py   value of a calorimetric test of the batch
+│   ├── example_setting.py    one setting in full detail, for the statistics figure
 │   └── summarize_runs.py     condenses the five runs into results/summary.json
 ├── tests/                    14 automatic checks
 ├── results/                  saved output of the five runs
@@ -262,6 +278,7 @@ dairyguard/
 
 - **It is a simulation.** How often and how warm a truck gets are assumptions, not measurements from real trucks. The conclusions hold for this simulated world and need real logger data to confirm.
 - **Several biology numbers are assumed**, including strain spread, the waking-up time and the starting amount of bacteria. They are flagged in `data/params.csv`, and five different settings test how much the conclusions depend on them.
+- **The calorimetry tests are simulated.** No calorimeter measurement on milk has been made yet.
 - **Only temperature is modelled.** Other causes of spoilage are out of scope.
 - ***Listeria* is growth only.** No illness or dose is modelled, and the growth targets are not regulatory limits.
 - The *Listeria* held-out test splits by condition, not by study, which is easier than a split by study.
@@ -273,8 +290,7 @@ dairyguard/
 - Validate with real logger data from actual deliveries, to replace the assumed warm-event pattern.
 - Extend the growth records to more spoilage organisms.
 - Use full growth curves, not only maximum rates, to test the waking-up behaviour after temperature jumps.
-
-An extended study, which explains these results from the mathematics of growth under changing temperature, is in preparation.
+- Measure heat flow from real milk in a calorimeter under stepped temperatures, to test the master curve and the detection-time idea.
 
 ## Glossary
 
@@ -296,4 +312,4 @@ An extended study, which explains these results from the mathematics of growth u
 
 Citation details are in [`CITATION.cff`](CITATION.cff). Released under the MIT licence.
 
-**Author:** Suryansh Pratap Singh, Department of Mathematics and Computing, Shri Mata Vaishno Devi University.
+**Authors:** Suryansh Pratap Singh (code, simulation and both papers) and Neeraj Tripathi (co-author of version 2), Shri Mata Vaishno Devi University.
