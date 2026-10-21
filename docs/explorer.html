@@ -109,13 +109,17 @@ td.num,th.num{text-align:right;font-family:var(--fm)}
 .hb .r .t{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;margin-bottom:5px}.hb .r .t b{font:800 20px var(--fd)}
 .hb .tr2{height:10px;border-radius:99px;background:var(--bg3);overflow:hidden}.hb .tr2 i{display:block;height:100%;border-radius:99px;transition:width .6s cubic-bezier(.2,.7,.2,1)}
 .nerd{margin-top:16px}.nerd summary{cursor:pointer;font:600 14px var(--fb);color:var(--mut)}.nerd summary:hover{color:var(--ink)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:22px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:22px}
 .stats div{background:var(--bg2);padding:20px}.stats b{display:block;font:900 40px/1 var(--fd);color:var(--sig)}.stats span{display:block;margin-top:8px;font-size:13.5px;color:var(--mut)}
 .steps2{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:16px}
 .steps2 div{border:1px solid var(--line);border-radius:var(--r);padding:18px;min-width:0}
 .steps2 i{font:500 11px var(--fm);color:var(--sig);font-style:normal;letter-spacing:.14em}.steps2 b{display:block;font:800 22px var(--fd);text-transform:uppercase;margin:6px 0}.steps2 span{font-size:14px;color:var(--mut)}
 .refs{display:flex;flex-wrap:wrap;gap:8px}.refs a{font-size:13px;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:99px;padding:7px 12px;background:var(--bg2)}.refs a:hover{border-color:var(--sig)}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+#bgfx{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
+body>.w,body>footer{position:relative;z-index:1}
 </style></head><body>
+<canvas id="bgfx" aria-hidden="true"></canvas>
 
 <nav><div class="w"><b><img src="dg-icon.svg" alt="">DairyGuard</b><div class="lk"><a href="index.html">Site</a><a href="DairyGuard_Research_Paper.pdf?v=2">Paper</a><a href="https://github.com/CopyNinja07-07/dairyguard">Code</a></div></div></nav>
 
@@ -216,6 +220,7 @@ td.num,th.num{text-align:right;font-family:var(--fm)}
 <div><b>4%</b><span>error when predicting a real lab experiment it never saw</span></div>
 <div><b>14</b><span>automated tests run on every change</span></div>
 <div><b>69–94%</b><span>of the lost accuracy won back by one heat-flow test of the batch (new in v2)</span></div>
+<div><b>0 of 60</b><span>settings where the Arrhenius or Q<sub>10</sub> rules used in shelf-life labels beat our square-root rule</span></div>
 <div><b>~2,300</b><span>lines of code: simulator, statistics, demo, paper and monograph</span></div>
 </div>
 <div class="steps2">
@@ -392,6 +397,29 @@ D.variants.forEach(v=>{const o=document.createElement("option");o.value=v;o.text
 (function(){const L=D.lin;$("lint").innerHTML="<table><tr><th></th><th class='num'>Lab result</th><th class='num'>Our prediction</th></tr><tr><td>Hours to spoil, kept at 4 °C</td><td class='num'>≈ 90</td><td class='num'>"+L.h0_at_4C_const_h.toFixed(0)+"</td></tr><tr><td>Hours to spoil, after two warm spells</td><td class='num'>≈ 55</td><td class='num'>"+L.h0_at_4C_two_excursions_h.toFixed(0)+"</td></tr></table>";
  const S=D.lis;$("lisv").innerHTML="<b>Listeria</b>, the food-poisoning bacterium, was fitted on "+S.n_fit+" records and then tested on "+S.n_heldout+" it had never seen: predictions were within a factor of about "+S.heldout_bias_accuracy[1].toFixed(1)+". It speeds up <b>"+S.rate_ratio_13C_vs_4C.toFixed(1)+"×</b> between 4 and 13 °C, about twice as sharply as spoilage bacteria."})();
 run();explore();
+/* background: drifting bacteria that keep dividing, over a scrolling temperature trace */
+(function(){const c=$("bgfx"),g=c.getContext("2d"),red=matchMedia("(prefers-reduced-motion: reduce)").matches;let W,H,D=Math.min(2,devicePixelRatio||1),B=[],t0=performance.now();
+ function rs(){W=innerWidth;H=innerHeight;c.width=W*D;c.height=H*D;g.setTransform(D,0,0,D,0,0)}rs();addEventListener("resize",rs);
+ const R=rng(42),MAX=innerWidth<700?26:48;
+ function cell(x,y,a){return{x,y,a,va:(R()-.5)*.004,vx:(R()-.5)*.12,vy:(R()-.5)*.12,len:9+R()*5,age:R()*12,div:10+R()*14,warm:R()<.35,f:0}}
+ for(let i=0;i<MAX*.6;i++)B.push(cell(R()*innerWidth,R()*innerHeight,R()*6.28));
+ function temp(x,t){const u=x/W*6.28+t*.25;return .5+.22*Math.sin(u)+.12*Math.sin(2.3*u+1)+(Math.sin(u*.5+t*.07)>.92?.25:0)}
+ function frame(now){const t=(now-t0)/1000,dt=1/60;g.clearRect(0,0,W,H);
+  /* temperature trace */
+  const y0=H*.78,amp=H*.12;g.lineWidth=1.4;g.strokeStyle="rgba(94,195,255,.16)";g.beginPath();for(let x=0;x<=W;x+=8){const y=y0-amp*(temp(x,t)-.5)*2;x?g.lineTo(x,y):g.moveTo(x,y)}g.stroke();
+  g.fillStyle="rgba(242,181,68,.24)";for(let x=((t*40)%48);x<=W;x+=48){const y=y0-amp*(temp(x,t)-.5)*2;g.beginPath();g.arc(x,y,1.8,0,6.283);g.fill()}
+  /* bacteria */
+  const nb=[];for(const b of B){b.x+=b.vx+(R()-.5)*.15;b.y+=b.vy+(R()-.5)*.15;b.a+=b.va;b.age+=dt;b.f=Math.min(1,b.f+.01);
+   if(b.x<-20)b.x=W+20;if(b.x>W+20)b.x=-20;if(b.y<-20)b.y=H+20;if(b.y>H+20)b.y=-20;
+   const warmHere=temp(b.x,t)>.62,grow=warmHere?1.8:1;b.age+=dt*(grow-1);
+   const s=Math.min(1,b.age/b.div),L=b.len*(1+.6*s);
+   g.save();g.translate(b.x,b.y);g.rotate(b.a);g.globalAlpha=.24*b.f;g.fillStyle=b.warm||warmHere?"#f2b544":"#5ec3ff";
+   g.beginPath();g.roundRect(-L/2,-3,L,6,3);g.fill();if(s>.8){g.globalAlpha=.25*b.f;g.fillStyle="#07090c";g.fillRect(-.6,-3,1.2,6)}g.restore();
+   if(b.age>=b.div){if(B.length+nb.length<MAX){const k=cell(b.x+Math.cos(b.a)*L/4,b.y+Math.sin(b.a)*L/4,b.a+(R()-.5)*.4);k.age=0;k.f=.2;nb.push(k)}b.age=0;b.x-=Math.cos(b.a)*L/4;b.y-=Math.sin(b.a)*L/4}}
+  B.push(...nb);if(B.length>=MAX){B.sort((p,q)=>q.age-p.age);B.splice(0,Math.ceil(MAX*.15));for(let i=0;i<4;i++)B.push(cell(R()*W,R()*H,R()*6.28))}
+  if(!red&&!document.hidden)requestAnimationFrame(frame)}
+ requestAnimationFrame(frame);document.addEventListener("visibilitychange",()=>{if(!document.hidden&&!red)requestAnimationFrame(frame)});
+ if(!CanvasRenderingContext2D.prototype.roundRect){CanvasRenderingContext2D.prototype.roundRect=function(a,b,w,h){this.rect(a,b,w,h)}}})();
 let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{run();explore()},150)});
 </script>
 </body></html>
