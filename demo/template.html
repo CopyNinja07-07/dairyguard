@@ -383,7 +383,8 @@ run();explore();
  function newCycle(now){const T=4+R()*14,mu=Math.pow(0.03*(T+7.7),2),h0=2.5+R()*2.5;cyc={t0:now,T,mu,h0,dur:16+R()*6,y0:1.7,ymax:9};colony=[];pts=[]}
  function logN(tt){/* Baranyi closed form, tt in hours */const m=cyc.mu,A=tt+Math.log(Math.exp(-m*tt)+Math.exp(-cyc.h0)-Math.exp(-m*tt-cyc.h0))/m,y=cyc.y0*2.3026+m*A-Math.log(1+(Math.exp(m*A)-1)/Math.exp((cyc.ymax-cyc.y0)*2.3026));return y/2.3026}
  function note(now){const side=R()<.5?0:1,w=M>150?M:W;const x=side&&M>150?W-M+16+R()*(M-160):(M>150?16+R()*(M-160):R()*W*.8);
-  notes.push({s:EQ[Math.floor(R()*EQ.length)],x,y:80+R()*(H-160),t0:now,life:9+R()*5,rot:(R()-.5)*.05})}
+  let y=80+R()*(H-160);for(let k=0;k<8&&((x>W/2&&y>H*.48-170&&y<H*.48+30)||(x<W/2&&y>H*.42-120&&y<H*.42+130));k++)y=80+R()*(H-160);
+  notes.push({s:EQ[Math.floor(R()*EQ.length)],x,y,t0:now,life:9+R()*5,rot:(R()-.5)*.05})}
  function grid(t){const s=26,ox=-(t*3%s),oy=-(t*1.5%s);g.lineWidth=1;
   for(let x=ox;x<W;x+=s){g.strokeStyle=Math.round((x-ox)/s)%5?"rgba(94,195,255,.035)":"rgba(94,195,255,.07)";g.beginPath();g.moveTo(x,0);g.lineTo(x,H);g.stroke()}
   for(let y=oy;y<H;y+=s){g.strokeStyle=Math.round((y-oy)/s)%5?"rgba(94,195,255,.035)":"rgba(94,195,255,.07)";g.beginPath();g.moveTo(0,y);g.lineTo(W,y);g.stroke()}}
