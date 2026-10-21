@@ -1,50 +1,5 @@
-\documentclass[11pt,a4paper]{article}
-\usepackage[a4paper,left=25mm,right=25mm,top=24mm,bottom=24mm]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage{mathptmx}
-\usepackage[scaled=0.92]{helvet}
-\usepackage{microtype}
-\usepackage{amsmath,amssymb,bm}
-\usepackage{graphicx}
-\usepackage{booktabs,array,longtable}
-\usepackage{colortbl}
-\usepackage{xcolor}
-\definecolor{dgblue}{HTML}{1B3A5C}
-\definecolor{dghead}{HTML}{EDF0F4}
-\definecolor{dgpale}{HTML}{F3F5F8}
-\definecolor{dgnight}{HTML}{0B1320}
-\definecolor{dgamber}{HTML}{F2B544}
-\definecolor{dgamberdk}{HTML}{B9760F}
-\definecolor{dggrey}{HTML}{5B6573}
-\usepackage[font={small,sf},labelfont={bf,color=dgamberdk},labelsep=quad,justification=justified,singlelinecheck=false,skip=6pt]{caption}
-\captionsetup[table]{position=top}
-\usepackage{titlesec}
-\usepackage{enumitem}
-\usepackage{fancyhdr}
-\usepackage[most]{tcolorbox}
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,fit,calc,backgrounds}
-\usepackage{cite}
-\usepackage[colorlinks=true,allcolors=dgblue]{hyperref}
-\usepackage{xurl}
-\urlstyle{same}
-\arrayrulecolor{dgblue}
-\setlength{\heavyrulewidth}{0.9pt}\setlength{\lightrulewidth}{0.45pt}
-\renewcommand{\arraystretch}{1.22}
-\titleformat{\section}{\normalfont\sffamily\Large\bfseries\color{dgnight}}{\color{dgamberdk}\thesection}{0.7em}{}
-\titleformat{\subsection}{\normalfont\sffamily\normalsize\bfseries\color{dgblue}}{\thesubsection}{0.7em}{}
-\titlespacing*{\section}{0pt}{3.2ex plus .6ex}{1.2ex}
-\titlespacing*{\subsection}{0pt}{2.2ex plus .4ex}{0.7ex}
-\setlist{nosep,leftmargin=1.5em,topsep=3pt}
-\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
-\pagestyle{fancy}\fancyhf{}
-\fancyhead[L]{\small\sffamily\color{dggrey}DairyGuard White Paper WP-01 \textperiodcentered{} Architecture}
-\fancyhead[R]{\small\sffamily\bfseries\thepage}
-\renewcommand{\headrulewidth}{0pt}
-\newtcolorbox{keybox}[1]{enhanced,breakable,colback=dgpale,colframe=dgpale,boxrule=0pt,borderline west={3pt}{0pt}{dgamber},arc=0pt,left=10pt,right=8pt,top=6pt,bottom=6pt,fontupper=\small\sffamily,title={\sffamily\bfseries\scriptsize #1},coltitle=dgamberdk,colbacktitle=dgpale,toptitle=2pt,bottomtitle=0pt}
-\newcommand{\dd}{\,\mathrm{d}}
-\newcommand{\degC}{\,\textdegree C}
-\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\wpname}{DairyGuard White Paper WP-01 \textperiodcentered{} Architecture}
+\input{style.tex}
 \input{../generated/numbers.tex}
 \input{../generated/tables.tex}
 \hypersetup{pdftitle={DairyGuard Kinetic: architecture of an open cold-chain spoilage monitor},pdfauthor={Suryansh Pratap Singh}}
@@ -196,7 +151,7 @@ Path & Responsibility\\\midrule
 \section{Limits of this architecture, and what comes next}
 The architecture does what a log allows, and the evaluation shows where that stops. The monitor's probability is as well calibrated as a logistic model trained on 4\,000 labelled trips (calibration error \MsCrateDgEce{} against \MsCrateLrEce), but its estimate of the hours left is imprecise (median error \MsHlErr\,h against a median of \MsHlTrue\,h), because the time a batch can afford depends on biology the log does not record. Real growth rates differ between studies by \GlCvB{} in the square-root slope, and a flexible neural law fitted to growth rates alone does not predict unseen studies better than the classical laws. The constraint is therefore the data, not the model: the next step needs complete growth curves of real milk under changing temperatures, each paired with simple measurements of the batch at loading.
 
-DairyGuard's next model is being designed for that data. It keeps the generalized-time core of Section~4.4 and the monitor's interface of Section~6, and replaces the fixed between-batch spread with an estimate of each batch's biology learned from those measurements. It will be described in its own paper once it has been built and tested.
+DairyGuard's next model is being designed for that data. It keeps the generalized-time core of Section~4.4 and the monitor's interface of Section~6, and replaces the fixed between-batch spread with an estimate of each batch's biology learned from those measurements. Its blueprint, with the data plan and the tests it must pass fixed before any data are collected, is White Paper WP-02 \cite{wp02}.
 
 \section*{Acknowledgements}
 The author thanks the ComBase consortium and the laboratories whose published growth records made this work possible.
@@ -206,6 +161,7 @@ Parts of the code were developed with an AI coding assistant; every result is pr
 
 \begin{thebibliography}{99}\small\setlength{\itemsep}{1pt}
 \bibitem{book} Singh SP. Beyond the 4\,\textdegree C alarm: what a temperature log can and cannot tell about milk spoilage. Katra: the author; 2026. \url{https://github.com/CopyNinja07-07/dairyguard}
+\bibitem{wp02} Singh SP. DairyGuard Batch: blueprint of a batch-aware spoilage model. DairyGuard White Paper WP-02; 2026. \url{https://github.com/CopyNinja07-07/dairyguard}
 \bibitem{fssai} Food Safety and Standards Authority of India. Appendix B: microbiological requirements, version 2 (4 November 2024), Tables 2A and 2B. \url{https://fssai.gov.in/upload/uploadfiles/files/Appendix%20B(1).pdf}
 \bibitem{baranyi2004} Baranyi J, Tamplin ML. ComBase: a common database on microbial responses to food environments. J Food Prot. 2004;67:1967--71. \url{https://doi.org/10.4315/0362-028X-67.9.1967}
 \bibitem{combase} ComBase. Database of microbial responses to food environments. \url{https://www.combase.cc}

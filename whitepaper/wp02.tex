@@ -1,0 +1,216 @@
+\newcommand{\wpname}{DairyGuard White Paper WP-02 \textperiodcentered{} Blueprint}
+\input{style.tex}
+\input{../generated/numbers.tex}
+\hypersetup{pdftitle={DairyGuard Batch: blueprint of a batch-aware spoilage model},pdfauthor={Suryansh Pratap Singh}}
+\newtcolorbox{statusbox}{enhanced,colback=dgnight,colframe=dgnight,coltext=white,boxrule=0pt,arc=2pt,left=10pt,right=10pt,top=7pt,bottom=7pt,fontupper=\small\sffamily}
+\newcommand{\st}[1]{{\sffamily\scriptsize\bfseries\color{dgamberdk}#1}}
+\begin{document}
+\thispagestyle{empty}
+{\color{dgamber}\rule{\textwidth}{2pt}}\par\vspace{4pt}
+{\small\sffamily\color{dggrey}DAIRYGUARD WHITE PAPER WP-02 \hfill October 2026 \hfill DESIGN DOCUMENT}\par
+\vspace{22pt}
+{\sffamily\fontsize{26}{31}\selectfont\bfseries\color{dgnight}DairyGuard Batch\par}
+\vspace{6pt}
+{\sffamily\fontsize{14}{18}\selectfont\color{dgblue}Blueprint of a batch-aware spoilage model: the data we will collect, the architecture we will build, how it will be trained, and the tests it must pass\par}
+\vspace{14pt}
+{\sffamily\bfseries Suryansh Pratap Singh}\\
+{\small Department of Mathematics and Computing, Shri Mata Vaishno Devi University, India}
+\vspace{14pt}
+
+\begin{statusbox}
+{\color{dgamber}\bfseries STATUS: DESIGN, NOT YET BUILT.}\quad Nothing in this paper has been trained or measured. It is written \emph{before} the data exist, so that the data plan, the model and, above all, the tests it must pass are fixed in advance and cannot be tuned to the results. Changes after publication will be listed with their dates in the amendment log (Section~\ref{sec:amend}).
+\end{statusbox}
+
+\begin{keybox}{WHAT THIS DOCUMENT IS}
+White Paper WP-01 \cite{wp01} describes DairyGuard Kinetic, the monitor we have built and tested. Its own results show where it stops: the biology of each batch of milk, which a temperature log cannot see. This paper is the blueprint for the model that will address that gap, working name \textbf{DairyGuard Batch}. It sets out why it is needed, what it must do and not do, the data sources and how we will get access to them, the architecture layer by layer, the training plan, the evaluation protocol with pass and fail criteria, deployment, risks and timeline.
+\end{keybox}
+
+\section{Why a second model}\label{sec:why}
+DairyGuard Kinetic treats every batch as a draw from one fixed population. Four of its results show that this is now the limiting assumption \cite{book,wp01}.
+\begin{enumerate}
+\item In 240\,000 simulated deliveries, the unseen biology costs \NumBaseGapMin{} to \NumBaseGapMax{} AUC; a lab-grade thermometer recovers at most 0.02.
+\item On real ComBase data, the square-root slope varies between 11 \textit{Listeria} studies with a coefficient of variation of \GlCvB.
+\item Five growth laws, including a monotone neural ensemble, predict 20 held-out studies with accuracy factors between \GlLisArrAf{} and \GlLisSqrtAf. A more flexible law fitted to growth \emph{rates} alone does not help.
+\item The monitor's estimate of hours left at 4\degC{} has a median error of \MsHlErr\,h against a median of \MsHlTrue\,h. In simulation, one measurement of the batch closes 69--94\,\% of the accuracy gap.
+\end{enumerate}
+The conclusion is about data, not formulas: the next model must learn \emph{each batch's} biology, from complete growth curves under changing temperatures and from simple measurements taken when the batch is loaded.
+
+\section{Goals and non-goals}
+\begin{center}\small\begin{tabular}{@{}p{7.1cm}p{6.6cm}@{}}\toprule\rowcolor{dghead}
+The model will & The model will not\\\midrule
+predict the bacterial count of a specific batch along any temperature history, with a calibrated uncertainty band & give a food-safety verdict; the output is a count against a stated limit\\
+use a few cheap tests taken at loading to estimate the batch's hidden state & model illness, toxins or non-microbial spoilage\\
+keep DairyGuard Kinetic's generalized-time core and its output interface & replace physics with a large black-box network\\
+run where Kinetic runs: Python, command line, ESP32, browser & need a network connection to make a prediction\\
+\bottomrule\end{tabular}\end{center}
+
+\subsection*{Research questions}
+\begin{description}[leftmargin=2.2em,labelwidth=2em,font=\sffamily\bfseries\color{dgamberdk}]
+\item[Q1] Do real milk curves under temperature shifts collapse onto one curve in generalized time, as the Baranyi--Roberts model implies? If not, where and by how much do they depart?
+\item[Q2] Which cheap test taken at loading (initial plate count, dye-reduction time, pH, calorimetric detection time) best predicts a batch's growth?
+\item[Q3] On batches the model has never seen, how much of Kinetic's error does a batch-aware model remove?
+\end{description}
+
+\section{Data plan}\label{sec:data}
+\subsection{Sources and access}
+\begin{center}\small\begin{tabular}{@{}p{3.3cm}p{4.3cm}p{3.6cm}p{2.3cm}@{}}\toprule\rowcolor{dghead}
+Source & What it gives & How we get access & Status\\\midrule
+ComBase growth curves \cite{combase} & counts against time for milk and chilled foods, steady and some dynamic temperatures & public browser, free registration & \st{IN PROGRESS}\\
+Our ComBase collection & 373 milk records; 131 carry no stated rate and need a curve fit & already in the repository & \st{AVAILABLE}\\
+Published shift studies, e.g.\ \cite{lin2016} & counts of milk under fluctuating temperature & papers; raw counts requested from authors & \st{TO REQUEST}\\
+E1, E2, E3: our lab counts & curves of real Indian pasteurised milk, steady and shifting temperatures, day-one tests & university microbiology and biotechnology labs & \st{TO REQUEST}\\
+E4: calorimetry & heat-flow detection times of the same batches & partner lab with an isothermal microcalorimeter & \st{TO FIND}\\
+Temperature logs & the exact profile each sample saw & our ESP32 + DS18B20 controller, logged every minute & \st{HARDWARE READY}\\
+\bottomrule\end{tabular}\end{center}
+
+\subsection{Experiments}
+\begin{center}\small\begin{tabular}{@{}p{0.8cm}p{7.2cm}p{5.6cm}@{}}\toprule\rowcolor{dghead}
+& Design & Answers\\\midrule
+E1 & 3 batches of pasteurised milk at 4, 7, 10 and 15\degC; counts every 12--24\,h in duplicate until the stationary phase & steady-temperature curves with lag; within- and between-batch variation\\
+E2 & the same milk under a step up (4 to 12\degC), a step down, and 4--12\degC{} cycles & Q1\\
+E3 & 10 or more batches (brands, dates) under one realistic profile; day-one initial count, resazurin dye-reduction time, pH & Q2, Q3\\
+E4 & E3 batches in an isothermal microcalorimeter at 20\degC & the heat test on real milk\\
+\bottomrule\end{tabular}\end{center}
+Counts follow ISO 4833-1 \cite{iso4833}, with ISO 17410 \cite{iso17410} for psychrotrophs. E1--E3 need about 300 to 400 plate counts.
+
+\subsection{Data schema}
+Three tables, joined by keys, stored as CSV in the repository with a data card for each source.
+\begin{itemize}
+\item \code{curves}: \code{source, study, batch, sample\_id, time\_h, log10\_cfu, dilution, colonies, censored}
+\item \code{batches}: \code{batch, study, product, organism, day0\_log10\_cfu, dye\_time\_h, pH, t\_det\_h, notes}
+\item \code{temperatures}: \code{study, batch, time\_h, temp\_c} (the profile each sample experienced)
+\end{itemize}
+
+\subsection{Splits, fixed now}
+Data are split \emph{before} any model is fitted. ComBase curves are split by study (60\,\% train, 20\,\% validation, 20\,\% test). Lab batches are split by batch: at least three E3 batches are locked as the final test set and are not looked at until the evaluation of Section~\ref{sec:eval}. The split files are committed to the repository with a hash, so later changes are visible.
+
+\section{Architecture}\label{sec:arch}
+DairyGuard Batch has five layers (Fig.~\ref{fig:batch}). Layers 1, 2 and 4 extend DairyGuard Kinetic; layer 3 is new; layer 5 is switched on only if the data demand it.
+
+\begin{figure}[h]\centering
+\begin{tikzpicture}[node distance=5mm and 6mm,
+  box/.style={draw=dgblue,fill=dgpale,rounded corners=2pt,font=\sffamily\scriptsize,align=center,minimum height=12mm,text width=27mm},
+  new/.style={box,draw=dgamberdk,fill=dgamber!22},
+  opt/.style={box,dashed,fill=white},
+  io/.style={font=\sffamily\scriptsize,align=center,text width=24mm},
+  ar/.style={-Latex,dgblue,thick}]
+\node[io](log){\textbf{Temperature log}\\$T(t)$ from the sensor};
+\node[box,right=of log](tau){\textbf{1 Clock}\\$\tau_b(t)=e^{2\delta_b}\!\int\mu_\theta(T)\,dt$};
+\node[box,right=of tau](core){\textbf{4 Kinetic core}\\Baranyi in $\tau$\\closed form};
+\node[io,right=of core](out){\textbf{Output}\\$p(\log N\mid\text{log},x_b)$\\P(cross), hours left};
+\node[io,below=11mm of log](tests){\textbf{Day-one tests} $x_b$\\count, dye time, pH};
+\node[new,right=of tests](enc){\textbf{3 Batch encoder}\\$q_\phi(z_b\mid x_b)$};
+\node[box,right=of enc](prior){\textbf{2 Population}\\$z_b\sim\mathcal N(m,\Sigma)$};
+\node[opt,above=6mm of core](res){\textbf{5 Shift residual}\\$r_\psi$, only if Q1 fails};
+\draw[ar](log)--(tau);\draw[ar](tau)--(core);\draw[ar](core)--(out);
+\draw[ar](tests)--(enc);\draw[ar](prior)--(enc);
+\draw[ar](enc.north) to[out=90,in=-120] node[left,font=\sffamily\tiny,text=dgblue]{$\delta_b$} (tau.south);
+\draw[ar](enc.north east) to[out=60,in=-100] node[right=3pt,font=\sffamily\tiny,text=dgblue,pos=.35,fill=white,inner sep=1pt]{$h_b,\ N_{0b},\ N_{\max b}$} (core.south);
+\draw[ar,dashed](res)--(core);
+\end{tikzpicture}
+\caption{DairyGuard Batch. Blue layers extend DairyGuard Kinetic; the amber layer is new; the dashed layer is added only if experiment E2 shows that real curves depart from the generalized-time clock.}\label{fig:batch}
+\end{figure}
+
+\subsection{Layer 1: the clock}
+As in Kinetic, temperature enters only through generalized time. The population growth law $\mu_\theta(T)$ is the square-root law by default; the monotone neural law of WP-01 is kept as a candidate and adopted only if it wins on validation data. Each batch $b$ scales the clock by its own factor:
+\[\tau_b(t)=e^{2\delta_b}\int_0^t\mu_\theta\big(T(s)\big)\,ds,\]
+which is the same as giving batch $b$ its own square-root slope $b_b=b\,e^{\delta_b}$.
+
+\subsection{Layer 2: the population of batches}
+Each batch has a hidden state $z_b=(\delta_b,\ h_b,\ \log N_{0b},\ \log N_{\max b})$: rate scale, lag parameter, starting count and maximum count. Batches are drawn from a population, $z_b\sim\mathcal N(m,\Sigma)$, whose mean and covariance are learned across studies and batches. This is a hierarchical (mixed-effects) model \cite{gelman2007}: a batch with few counts is pulled towards the population, a well-measured batch is not. The fixed spread that Kinetic assumes becomes a learned $\Sigma$, and its correlations, for example between lag and rate, are estimated rather than assumed.
+
+\subsection{Layer 3: the batch encoder}
+Before any counts exist for a batch, the encoder estimates its state from day-one tests $x_b$:
+\[q_\phi(z_b\mid x_b)=\mathcal N\big(m+W x_b,\ \Sigma_{\mid x}\big).\]
+It starts linear, because there will be tens of batches, not thousands. A small network replaces $W$ only if it improves validation likelihood. The encoder answers Q2 directly: the share of $\Sigma$ that each test explains.
+
+\subsection{Layer 4: the kinetic core}
+In generalized time the Baranyi--Roberts equations no longer contain temperature, and they have a closed-form solution \cite{baranyi1993,baranyi1994}:
+\[y_b(\tau)=y_{0b}+A_b(\tau)-\ln\!\Big(1+\frac{e^{A_b(\tau)}-1}{e^{\,y_{\max b}-y_{0b}}}\Big),\qquad A_b(\tau)=\tau+\ln\!\big(e^{-\tau}+e^{-h_b}-e^{-\tau-h_b}\big),\]
+with $y=\ln N$. So for \emph{any} temperature history the core costs one integral and one formula: no ODE solver, cheap enough for a microcontroller. This is the practical payoff of the biological-clock result.
+
+\subsection{Layer 5: the shift residual (conditional)}
+If E2 shows that real curves do not collapse in generalized time after a shift (Q1), a small network $r_\psi(T,\dot T,q)$ is added to the physiological-state equation, $dq/dt=\mu(T)\,q+r_\psi$, with a penalty pulling it to zero. The core then needs an ODE solver for the residual part, as in universal differential equations \cite{rackauckas2020,chen2018}. The size of $r_\psi$ after training is itself the answer to Q1.
+
+\subsection{Observation model}
+Plate counts are noisy and censored. Each count is modelled as $\log_{10}N^{\mathrm{obs}}\sim\mathcal N(y_b/\ln10,\ \sigma^2)$, with $\sigma$ learned (expected 0.1--0.3 $\log_{10}$, from duplicate plates), and counts below the countable range treated as censored, not as zero.
+
+\subsection{Output}
+For a trip and a batch, the model returns the predictive distribution of $\log N$ over time, from which it reports exactly what DairyGuard Kinetic reports: shelf life used, probability the limit was crossed, hours left at 4\degC{} (typical and cautious) and a verdict. Without day-one tests, the encoder falls back to the population and the model reduces to a calibrated version of Kinetic.
+
+\section{Training plan}\label{sec:train}
+\begin{center}\small\begin{tabular}{@{}p{1.1cm}p{5.4cm}p{3.6cm}p{3.3cm}@{}}\toprule\rowcolor{dghead}
+Stage & What is fitted & Data & Pass condition\\\midrule
+0 & everything, on curves simulated by Kinetic with known parameters & synthetic & true parameters inside the 90\,\% intervals in about 90\,\% of cases\\
+1 & $\theta$, $m$, $\Sigma$, $\sigma$ & ComBase curves (train) & better validation likelihood than one shared batch\\
+2 & encoder $\phi$ & E1, E3 day-one tests and curves & better validation likelihood than the population alone\\
+3 & residual $\psi$, only if Q1 fails & shift curves, E2 & residual improves held-out shift curves\\
+\bottomrule\end{tabular}\end{center}
+\textbf{Method.} Stages 0--2 are fitted by maximising the marginal likelihood with batch states integrated out, using a Laplace approximation, with a variational (evidence lower bound) fit as a cross-check \cite{kingma2014}. Stage 3 is trained by gradient descent through an ODE solver. \textbf{Tools.} NumPy and SciPy for stages 0--2; PyTorch with \code{torchdiffeq} on a Colab GPU for stage 3. \textbf{Habits.} Fixed seeds, every run logged with its settings and result, checkpoints saved, all code in the repository.
+
+\section{Evaluation protocol, fixed in advance}\label{sec:eval}
+\subsection{Baselines}
+(i) DairyGuard Kinetic as released; (ii) a classical Baranyi fit with one shared batch; (iii) a black-box recurrent network (GRU) of similar size, given the same inputs.
+
+\subsection{Metrics}
+On held-out studies and the locked test batches: RMSE of $\log_{10}$ counts; Ross bias and accuracy factors \cite{ross1996}; AUC and calibration error for crossing the limit; coverage of the 90\,\% band; median error of hours left at 4\degC.
+
+\subsection{Pass and fail criteria}
+DairyGuard Batch replaces Kinetic in the software only if, on the locked test batches, it
+\begin{enumerate}
+\item reduces the median error of hours left at 4\degC{} by at least 30\,\% relative to Kinetic;
+\item keeps the coverage of its 90\,\% band between 85 and 95\,\%;
+\item is not worse than Kinetic on AUC for crossing the limit;
+\item beats the black-box baseline on RMSE of $\log_{10}$ counts.
+\end{enumerate}
+If it fails, the failure is reported in full, with which criterion failed and by how much. A negative answer to Q1, Q2 or Q3 is a result.
+
+\section{Deployment}
+DairyGuard Batch keeps the interface of WP-01: \code{update(T, dt)} and \code{status()}. The trained parameters ($\theta$, $m$, $\Sigma$, $W$) are exported as a small JSON file. Because the core is closed-form, the firmware needs only the integral of $\mu_\theta$, the encoder's matrix and the formula of Section~4.4; day-one test results are entered once when a batch is loaded. The browser app gains a ``batch tests'' panel. Tests will check that Python, JavaScript and C agree, as they do for Kinetic.
+
+\section{Risks}
+\begin{center}\small\begin{tabular}{@{}p{4.4cm}p{9.3cm}@{}}\toprule\rowcolor{dghead}
+Risk & Mitigation\\\midrule
+Lab access delayed & stages 0--1 need only public ComBase curves; the plan advances without the lab\\
+Too few batches for the encoder & linear encoder, strong population prior, results reported with intervals\\
+ComBase curves are heterogeneous & study-level random effects; data cards; sensitivity run without each source\\
+Overfitting a flexible part & every network enters only if it beats the simpler layer on validation data\\
+No calorimetry partner & E4 is optional; Q2 is answered with the other tests\\
+Plate-count errors & duplicates, censoring model, a bound lab notebook, raw data never edited\\
+\bottomrule\end{tabular}\end{center}
+
+\section{Timeline}
+\begin{center}\small\begin{tabular}{@{}p{3cm}p{8cm}p{2.6cm}@{}}\toprule\rowcolor{dghead}
+When & Milestone & Status\\\midrule
+October 2026 & this blueprint published & \st{DONE}\\
+Nov--Dec 2026 & curve pipeline; splits committed; stages 0 and 1; lab protocol agreed & \st{IN PROGRESS}\\
+Jan--Feb 2027 & E1 and E2; stage 2 on first batches; Q1 answered & \st{PLANNED}\\
+Spring 2027 & E3 (and E4 if a partner is found); locked-test evaluation; Q2, Q3 & \st{PLANNED}\\
+After & report of results; peer-reviewed paper if the results stand & \st{PLANNED}\\
+\bottomrule\end{tabular}\end{center}
+
+\section{Amendment log}\label{sec:amend}
+\begin{center}\small\begin{tabular}{@{}p{3cm}p{10.7cm}@{}}\toprule\rowcolor{dghead}
+Date & Change\\\midrule
+October 2026 & first version\\
+\bottomrule\end{tabular}\end{center}
+
+\section*{Note on tools}
+This design was drafted with the help of an AI assistant; the decisions, criteria and responsibility for them are the author's.
+
+\begin{thebibliography}{99}\small\setlength{\itemsep}{1pt}
+\bibitem{wp01} Singh SP. DairyGuard Kinetic: architecture of an open cold-chain spoilage monitor. DairyGuard White Paper WP-01; 2026. \url{https://github.com/CopyNinja07-07/dairyguard}
+\bibitem{book} Singh SP. Beyond the 4\,\textdegree C alarm: what a temperature log can and cannot tell about milk spoilage. Katra: the author; 2026. \url{https://github.com/CopyNinja07-07/dairyguard}
+\bibitem{combase} ComBase. Database of microbial responses to food environments. \url{https://www.combase.cc}
+\bibitem{lin2016} Lin H, Shavezipur M, Yousef A, Maleky F. Prediction of growth of \textit{Pseudomonas fluorescens} in milk during storage under fluctuating temperature. J Dairy Sci. 2016;99:1822--30. \url{https://doi.org/10.3168/jds.2015-10179}
+\bibitem{baranyi1993} Baranyi J, Roberts TA, McClure P. A non-autonomous differential equation to model bacterial growth. Food Microbiol. 1993;10:43--59. \url{https://doi.org/10.1006/fmic.1993.1005}
+\bibitem{baranyi1994} Baranyi J, Roberts TA. A dynamic approach to predicting bacterial growth in food. Int J Food Microbiol. 1994;23:277--94. \url{https://doi.org/10.1016/0168-1605(94)90157-0}
+\bibitem{gelman2007} Gelman A, Hill J. Data analysis using regression and multilevel/hierarchical models. Cambridge: Cambridge University Press; 2007.
+\bibitem{kingma2014} Kingma DP, Welling M. Auto-encoding variational Bayes. arXiv:1312.6114; 2014.
+\bibitem{chen2018} Chen RTQ, Rubanova Y, Bettencourt J, Duvenaud D. Neural ordinary differential equations. arXiv:1806.07366; 2018.
+\bibitem{rackauckas2020} Rackauckas C, Ma Y, Martensen J, et al. Universal differential equations for scientific machine learning. arXiv:2001.04385; 2020.
+\bibitem{ross1996} Ross T. Indices for performance evaluation of predictive models in food microbiology. J Appl Bacteriol. 1996;81:501--8. \url{https://doi.org/10.1111/j.1365-2672.1996.tb03539.x}
+\bibitem{iso4833} ISO 4833-1:2013. Microbiology of the food chain: horizontal method for the enumeration of microorganisms, part 1: colony count at 30\,\textdegree C by the pour plate technique.
+\bibitem{iso17410} ISO 17410:2019. Microbiology of the food chain: horizontal method for the enumeration of psychrotrophic microorganisms.
+\end{thebibliography}
+\end{document}

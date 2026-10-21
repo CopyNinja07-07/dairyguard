@@ -4,6 +4,9 @@
 <title>DairyGuard</title><link rel="icon" href="dg-icon.svg" type="image/svg+xml"><link rel="icon" href="dg-icon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="dg-touch-icon.png">
 <meta name="description" content="DairyGuard reads a cold-chain temperature log and says how likely it is that milk has crossed its bacterial limit, and how sure it can be. Open models, data, software and firmware.">
 <meta name="theme-color" content="#05070b">
+<meta property="og:type" content="website"><meta property="og:site_name" content="DairyGuard"><meta property="og:title" content="DairyGuard · The city sleeps. The cold chain doesn't."><meta property="og:description" content="An open cold-chain monitor that reads a temperature log and says how likely it is that milk has crossed its bacterial limit, and how sure it can be."><meta property="og:url" content="https://copyninja07-07.github.io/dairyguard/"><meta property="og:image" content="https://copyninja07-07.github.io/dairyguard/img/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="DairyGuard: a delivery judged at 81% chance of crossing the limit">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="DairyGuard · The city sleeps. The cold chain doesn't."><meta name="twitter:description" content="An open cold-chain monitor that reads a temperature log and says how likely it is that milk has crossed its bacterial limit, and how sure it can be."><meta name="twitter:image" content="https://copyninja07-07.github.io/dairyguard/img/og-card.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap" rel="stylesheet">
 <style>
@@ -84,6 +87,11 @@ nav .cta{color:var(--bg)!important;background:var(--sig);padding:7px 14px;border
 .lc{border:1px dashed var(--line);border-radius:var(--r);padding:22px;min-width:0}.lc b{display:block;font:800 40px var(--fd);color:var(--cold)}.lc p{font-size:15px;color:var(--mut);margin:6px 0 0}
 .nextc{margin-top:16px;border:1px solid rgba(94,195,255,.4);border-radius:var(--r);padding:26px;background:radial-gradient(120% 80% at 100% 0,rgba(94,195,255,.1),transparent 60%),var(--bg2)}
 .nextc small{font:500 11px var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--cold)}.nextc h3{font-size:clamp(28px,3.4vw,40px);margin:8px 0}.nextc p{color:var(--mut)}
+.nx{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:28px;align-items:center}
+.bpimg{display:block;transform:rotate(2.5deg);transition:transform .4s}.bpimg:hover{transform:rotate(0) scale(1.03)}.bpimg img{width:100%;display:block;border-radius:4px;box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.chips span{font:500 12px var(--fm);letter-spacing:.06em;color:var(--mut);border:1px solid var(--line);border-radius:99px;padding:5px 11px;background:var(--bg)}
+.chips span.n{color:var(--sig);border-color:rgba(242,181,68,.5)}.chips span.o{border-style:dashed}
+@media(max-width:760px){.nx{grid-template-columns:1fr}.bpimg{max-width:180px}}
 /* roadmap */
 .road{position:relative;margin-top:50px;padding-block:6px}
 .road .rail{position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--line)}
@@ -99,8 +107,8 @@ nav .cta{color:var(--bg)!important;background:var(--sig);padding:7px 14px;border
 .pill.d{color:var(--ok);border-color:rgba(95,211,154,.55)}.pill.now{color:#07090c;background:var(--sig);border-color:var(--sig)}
 @media(max-width:760px){.road .rail,.road .lit,.road .lamp{left:18px}.ms{grid-template-columns:36px 1fr;min-height:0;padding-block:24px}.ms .dot{grid-column:1}.ms.l .card,.ms.r .card{grid-column:2;justify-self:start;text-align:left}}
 /* read */
-.docs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:44px}
-@media(max-width:980px){.docs{grid-template-columns:1fr 1fr}}@media(max-width:520px){.docs{grid-template-columns:1fr}}
+.docs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin-top:44px}
+@media(max-width:1100px){.docs{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:820px){.docs{grid-template-columns:1fr 1fr}}@media(max-width:520px){.docs{grid-template-columns:1fr}}
 .dc{display:flex;flex-direction:column;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:var(--r);background:var(--bg2);overflow:hidden;transition:transform .3s,border-color .3s;min-width:0}
 .dc:hover{transform:translateY(-4px);border-color:var(--sig)}
 .dc .th{height:210px;overflow:hidden;background:#0d1219;display:flex;align-items:flex-start;justify-content:center}
@@ -108,7 +116,7 @@ nav .cta{color:var(--bg)!important;background:var(--sig);padding:7px 14px;border
 .dc .th.pg img{width:62%;margin-top:18px;box-shadow:0 10px 30px rgba(0,0,0,.6);border-radius:3px}
 .dc .th.gh{align-items:center;font:800 64px var(--fd);color:var(--sig)}
 .dc .bd{padding:18px;display:flex;flex-direction:column;flex:1}
-.dc small{font:500 10.5px var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}.dc h3{font-size:28px;margin:8px 0 6px}.dc p{font-size:14px;color:var(--mut);margin:0 0 12px}
+.dc small{font:500 10.5px var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}.dc h3{font-size:26px;margin:8px 0 6px}.dc p{font-size:14px;color:var(--mut);margin:0 0 12px}
 .dc .go{margin-top:auto;font:600 13.5px var(--fb);color:var(--sig)}
 /* help */
 .need{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:40px}@media(max-width:860px){.need{grid-template-columns:1fr}}
@@ -224,9 +232,12 @@ Log: 288 readings over 72.0 h, max 26.0 C, 5.0 h above 8 C in 1 warm event(s)
 <div class="lc rv"><b>No gain</b><p>A flexible neural law learns nothing new from growth rates alone. Better formulas aren't the answer.</p></div>
 <div class="lc rv"><b>±16 h</b><p>The monitor's estimate of hours left is cautious but imprecise, because the batch is unknown.</p></div>
 </div>
-<div class="nextc rv"><small>Next in our lab</small><h3>A model that learns each batch</h3><p>Keeping DairyGuard Kinetic's proven core, the next model will learn each batch's biology from complete growth curves of milk under changing temperatures and simple tests at loading. It will be published, with its data, once it has been built and tested.</p></div>
+<div class="nextc rv"><div class="nx"><div><small>Next in our lab</small><span class="pill" style="margin-left:10px">Design · not yet built</span><h3>DairyGuard Batch: a model that learns each batch</h3><p>Keeping DairyGuard Kinetic's proven core, the next model will learn each batch's biology from complete growth curves of milk under changing temperatures and simple tests at loading. Its blueprint is published before any lab data exist: the data we will collect, the architecture, the training plan, and the pass-or-fail tests it must meet.</p>
+<div class="chips"><span>1 · Clock</span><span>2 · Population of batches</span><span class="n">3 · Batch encoder</span><span>4 · Closed-form core</span><span class="o">5 · Shift residual, if needed</span></div>
+<div class="row" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px"><a class="btn p" href="blueprint.html">See the blueprint</a><a class="btn" href="DairyGuard-White-Paper-WP02.pdf">White paper WP-02 (PDF)</a></div></div>
+<a class="bpimg" href="blueprint.html" aria-label="Blueprint"><img src="img/blueprint-page.jpg" alt="First page of White Paper WP-02" loading="lazy"></a></div></div>
 <div class="road" id="road"><div class="rail"></div><div class="lit" id="lit"></div><div class="lamp" id="lamp"></div>
-<div class="ms l"><div class="dot"></div><div class="card"><span class="when">October 2026</span><span class="pill d">Done</span><h3>DairyGuard Kinetic</h3><p>Package, command line, firmware and browser app; the book and the architecture white paper.</p></div></div>
+<div class="ms l"><div class="dot"></div><div class="card"><span class="when">October 2026</span><span class="pill d">Done</span><h3>DairyGuard Kinetic</h3><p>Package, command line, firmware and browser app; the book; the architecture white paper; the blueprint of the next model.</p></div></div>
 <div class="ms r"><div class="dot"></div><div class="card"><span class="when">October 2026</span><span class="pill d">Done</span><h3>Real-data checks</h3><p>Five laws tested on 20 unseen <i>Listeria</i> studies; between-study spread measured; monitor against a trained model.</p></div></div>
 <div class="ms l"><div class="dot"></div><div class="card"><span class="when">Nov – Dec 2026</span><span class="pill now">Now</span><h3>Curves and protocol</h3><p>A pipeline for complete ComBase growth curves, and a lab protocol for milk under changing temperatures.</p></div></div>
 <div class="ms r"><div class="dot"></div><div class="card"><span class="when">Jan – Feb 2027</span><span class="pill">Next</span><h3>First lab measurements</h3><p>Plate counts of milk at steady and shifting temperatures, with simple batch tests on day one.</p></div></div>
@@ -240,6 +251,7 @@ Log: 288 readings over 72.0 h, max 26.0 C, 5.0 h above 8 C in 1 warm event(s)
 <a class="dc rv" href="explorer.html"><div class="th"><img src="img/demo-fleet.jpg" alt="The DairyGuard Monitor app" loading="lazy"></div><div class="bd"><small>Browser app · 5 minutes</small><h3>The monitor</h3><p>Watch six deliveries live, draw your own trip, explore the evidence.</p><span class="go">Open →</span></div></a>
 <a class="dc rv" href="Beyond-the-4C-Alarm-DairyGuard.pdf"><div class="th pg"><img src="img/book-cover.jpg" alt="Cover of Beyond the 4 °C Alarm" loading="lazy"></div><div class="bd"><small>Book · 68 pages</small><h3>Beyond the 4 °C Alarm</h3><p>The whole study: story, models, data, proofs, every result.</p><span class="go">Read the PDF →</span></div></a>
 <a class="dc rv" href="DairyGuard-White-Paper-WP01.pdf"><div class="th pg"><img src="img/whitepaper-page.jpg" alt="First page of the architecture white paper" loading="lazy"></div><div class="bd"><small>White paper WP-01</small><h3>The architecture</h3><p>How DairyGuard Kinetic is built: data, models, training, monitor, firmware.</p><span class="go">Read the PDF →</span></div></a>
+<a class="dc rv" href="blueprint.html"><div class="th pg"><img src="img/blueprint-page.jpg" alt="First page of the blueprint white paper" loading="lazy"></div><div class="bd"><small>White paper WP-02 · design</small><h3>The blueprint</h3><p>The next model, planned before the data: data, layers, training, pass-or-fail tests.</p><span class="go">See the blueprint →</span></div></a>
 <a class="dc rv" href="https://github.com/CopyNinja07-07/dairyguard"><div class="th gh">{ }</div><div class="bd"><small>Open source · MIT</small><h3>The code</h3><p>Python package, C firmware, 27 tests, every number regenerated from one command.</p><span class="go">GitHub →</span></div></a>
 </div>
 </section>
@@ -263,7 +275,7 @@ Log: 288 readings over 72.0 h, max 26.0 C, 5.0 h above 8 C in 1 warm event(s)
 </div></section>
 <footer><div class="w">
 <div><a class="brand" href="#"><img src="dg-icon.svg" alt="">DairyGuard</a><p>© 2026 Suryansh Pratap Singh · Open science</p></div>
-<div class="fl2"><a href="explorer.html">Monitor</a><a href="Beyond-the-4C-Alarm-DairyGuard.pdf">Book</a><a href="DairyGuard-White-Paper-WP01.pdf">White paper</a><a href="https://github.com/CopyNinja07-07/dairyguard">GitHub</a></div>
+<div class="fl2"><a href="explorer.html">Monitor</a><a href="Beyond-the-4C-Alarm-DairyGuard.pdf">Book</a><a href="DairyGuard-White-Paper-WP01.pdf">Architecture</a><a href="blueprint.html">Blueprint</a><a href="https://github.com/CopyNinja07-07/dairyguard">GitHub</a></div>
 </div></footer>
 
 <script>

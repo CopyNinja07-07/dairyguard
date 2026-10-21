@@ -33,6 +33,7 @@ report: figures generated
 	cd report && $(PY) cover.py && latexmk -pdf -interaction=nonstopmode main.tex && cp main.pdf ../docs/Beyond-the-4C-Alarm-DairyGuard.pdf
 whitepaper: generated
 	cd whitepaper && latexmk -pdf -interaction=nonstopmode main.tex && cp main.pdf ../docs/DairyGuard-White-Paper-WP01.pdf
+	cd whitepaper && latexmk -pdf -interaction=nonstopmode wp02.tex && cp wp02.pdf ../docs/DairyGuard-White-Paper-WP02.pdf
 demo: summary
 	cd demo && $(PY) build_web.py
 all: test validate extensions summary figures generated report whitepaper demo

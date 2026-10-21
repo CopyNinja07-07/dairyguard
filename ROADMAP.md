@@ -4,11 +4,11 @@ Each stop ends in something finished and public. A journal paper comes last, onc
 
 | When | Stop | Output | Status |
 |---|---|---|---|
-| October 2026 | DairyGuard Kinetic | Python package and command line, ESP32 firmware, browser app, 240,000 simulated deliveries, the book and the architecture white paper | Done |
+| October 2026 | DairyGuard Kinetic | Python package and command line, ESP32 firmware, browser app, 240,000 simulated deliveries, the book, the architecture white paper (WP-01) and the blueprint of the next model (WP-02) | Done |
 | October 2026 | Real-data checks | Five growth laws on 20 unseen *Listeria* studies, between-study spread from 11 studies, monitor against a trained model | Done |
 | November to December 2026 | Curves and protocol | A pipeline for complete ComBase growth curves (counts against time), and a written lab protocol for milk at steady and changing temperatures | In progress |
 | January to February 2027 | First lab measurements | Plate counts of milk at steady and shifting temperatures, with simple batch tests on the first day | Planned |
-| After that | The next model | A model that learns each batch's biology from growth curves and batch tests, evaluated on data it has not seen | Planned |
+| After that | DairyGuard Batch | Built to the WP-02 blueprint and evaluated on locked test batches | Planned |
 | After that | Peer review | A journal paper built on the laboratory results | Planned |
 
 ## Why the next model is needed
@@ -19,7 +19,7 @@ DairyGuard Kinetic's own results set the direction:
 - A flexible neural growth law fitted to growth rates alone predicts unseen studies no better than the square-root law. More data of the same kind will not close the gap.
 - In simulation, one measurement of the batch itself closes most of the gap.
 
-So the next step is better data, not a bigger formula: complete growth curves of real milk under changing temperatures, and cheap tests of each batch at loading.
+So the next step is better data, not a bigger formula: complete growth curves of real milk under changing temperatures, and cheap tests of each batch at loading. The model that will use them, DairyGuard Batch, is designed in [White Paper WP-02](docs/DairyGuard-White-Paper-WP02.pdf), with its pass-or-fail tests fixed in advance.
 
 ## Rules fixed in advance
 

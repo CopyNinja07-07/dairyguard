@@ -16,7 +16,8 @@
 <a href="https://copyninja07-07.github.io/dairyguard/"><b>Website</b></a> ·
 <a href="https://copyninja07-07.github.io/dairyguard/explorer.html"><b>Open the monitor</b></a> ·
 <a href="docs/Beyond-the-4C-Alarm-DairyGuard.pdf"><b>The book</b></a> ·
-<a href="docs/DairyGuard-White-Paper-WP01.pdf"><b>Architecture white paper</b></a>
+<a href="docs/DairyGuard-White-Paper-WP01.pdf"><b>Architecture (WP-01)</b></a> ·
+<a href="https://copyninja07-07.github.io/dairyguard/blueprint.html"><b>Next-model blueprint (WP-02)</b></a>
 </p>
 
 <p align="center"><img src="docs/img/trip.gif" alt="A delivery with a three-hour warm spell: the milk temperature, 40 possible batches of bacteria, and DairyGuard's verdict updating live" width="88%"></p>
@@ -263,7 +264,7 @@ dairyguard/
 ├── results/               saved output of all runs
 ├── generated/             numbers, tables and figures written from results
 ├── examples/              two example temperature logs
-├── report/ · whitepaper/  LaTeX sources of the book and the white paper
+├── report/ · whitepaper/  LaTeX sources of the book and the two white papers
 ├── demo/                  source of the browser app
 └── docs/                  website, app and PDFs (GitHub Pages)
 ```
@@ -290,7 +291,19 @@ Every number in the book and on the website is written from the result files by 
 
 ## Next in our lab
 
-The results point in one direction: the 25% spread between real studies is biology a log cannot see, and a more flexible formula on growth rates alone does not recover it. Our next model keeps DairyGuard Kinetic's proven core and learns each batch's biology from complete growth curves of milk under changing temperatures, plus simple tests at loading. Over November and December we are building the growth-curve pipeline and the lab protocol; first measurements are planned for January and February 2027. See [ROADMAP.md](ROADMAP.md).
+The results point in one direction: the 25% spread between real studies is biology a log cannot see, and a more flexible formula on growth rates alone does not recover it.
+
+The next model, **DairyGuard Batch**, keeps DairyGuard Kinetic's proven core and learns each batch's biology from complete growth curves of milk under changing temperatures, plus simple tests at loading. Its blueprint is published **before** any lab data exist, so the tests it must pass cannot be tuned afterwards:
+
+| Layer | What it does | Status |
+|---|---|---|
+| 1 · Clock | temperature enters only through generalized time; each batch runs its clock at its own speed | design |
+| 2 · Population | every batch has a hidden state (rate, lag, starting and maximum count) drawn from a learned population | design |
+| 3 · Batch encoder | estimates that state from day-one tests: initial count, dye-reduction time, pH | design (new) |
+| 4 · Closed-form core | Baranyi growth solved exactly in generalized time, no ODE solver | design |
+| 5 · Shift residual | a small network, added only if real curves leave the clock after temperature shifts | conditional |
+
+It replaces Kinetic only if, on locked test batches, it cuts the error of "hours left" by at least 30%, keeps its 90% band honest, and loses nothing on AUC. Read the [blueprint page](https://copyninja07-07.github.io/dairyguard/blueprint.html) or [White Paper WP-02](docs/DairyGuard-White-Paper-WP02.pdf). Timeline: [ROADMAP.md](ROADMAP.md).
 
 Have growth data, a microbiology lab or a calorimeter? [Offer data or lab access](https://github.com/CopyNinja07-07/dairyguard/issues/new?template=offer-data.yml).
 
@@ -301,6 +314,6 @@ Singh SP. Beyond the 4 °C Alarm: What a Temperature Log Can and Cannot Tell Abo
 Self-published, Katra, 2026. https://github.com/CopyNinja07-07/dairyguard
 ```
 
-Citation metadata is in [`CITATION.cff`](CITATION.cff). Code under the MIT licence; ComBase records remain subject to the ComBase terms of use. The book and white paper have not been peer reviewed.
+Citation metadata is in [`CITATION.cff`](CITATION.cff). Code under the MIT licence; ComBase records remain subject to the ComBase terms of use. The book and white papers have not been peer reviewed.
 
 <sub>Suryansh Pratap Singh · Department of Mathematics and Computing, Shri Mata Vaishno Devi University</sub>

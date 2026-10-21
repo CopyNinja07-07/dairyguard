@@ -1,0 +1,48 @@
+% Shared style for DairyGuard white papers. Each paper defines \wpname before \input{style}.
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,left=25mm,right=25mm,top=24mm,bottom=24mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{graphicx}
+\usepackage{booktabs,array,longtable}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\definecolor{dgblue}{HTML}{1B3A5C}
+\definecolor{dghead}{HTML}{EDF0F4}
+\definecolor{dgpale}{HTML}{F3F5F8}
+\definecolor{dgnight}{HTML}{0B1320}
+\definecolor{dgamber}{HTML}{F2B544}
+\definecolor{dgamberdk}{HTML}{B9760F}
+\definecolor{dggrey}{HTML}{5B6573}
+\usepackage[font={small,sf},labelfont={bf,color=dgamberdk},labelsep=quad,justification=justified,singlelinecheck=false,skip=6pt]{caption}
+\captionsetup[table]{position=top}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc,backgrounds}
+\usepackage{cite}
+\usepackage[colorlinks=true,allcolors=dgblue]{hyperref}
+\usepackage{xurl}
+\urlstyle{same}
+\arrayrulecolor{dgblue}
+\setlength{\heavyrulewidth}{0.9pt}\setlength{\lightrulewidth}{0.45pt}
+\renewcommand{\arraystretch}{1.22}
+\titleformat{\section}{\normalfont\sffamily\Large\bfseries\color{dgnight}}{\color{dgamberdk}\thesection}{0.7em}{}
+\titleformat{\subsection}{\normalfont\sffamily\normalsize\bfseries\color{dgblue}}{\thesubsection}{0.7em}{}
+\titlespacing*{\section}{0pt}{3.2ex plus .6ex}{1.2ex}
+\titlespacing*{\subsection}{0pt}{2.2ex plus .4ex}{0.7ex}
+\setlist{nosep,leftmargin=1.5em,topsep=3pt}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{dggrey}\wpname}
+\fancyhead[R]{\small\sffamily\bfseries\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\newtcolorbox{keybox}[1]{enhanced,breakable,colback=dgpale,colframe=dgpale,boxrule=0pt,borderline west={3pt}{0pt}{dgamber},arc=0pt,left=10pt,right=8pt,top=6pt,bottom=6pt,fontupper=\small\sffamily,title={\sffamily\bfseries\scriptsize #1},coltitle=dgamberdk,colbacktitle=dgpale,toptitle=2pt,bottomtitle=0pt}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\degC}{\,\textdegree C}
+\newcommand{\code}[1]{\texttt{\small #1}}
