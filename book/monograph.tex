@@ -34,9 +34,9 @@
 \setlength{\heavyrulewidth}{0.9pt}\setlength{\lightrulewidth}{0.45pt}
 \setlength{\aboverulesep}{0pt}\setlength{\belowrulesep}{0pt}
 \renewcommand{\arraystretch}{1.22}
-\input{../paper/numbers.tex}
-\input{../paper/tables.tex}
-\graphicspath{{../paper/fig/}{fig/}}
+\input{../report/numbers.tex}
+\input{../report/tables.tex}
+\graphicspath{{../report/fig/}{fig/}}
 % headings
 \titleformat{\chapter}[display]{\normalfont\sffamily\color{dgnight}}{\fontsize{11}{13}\selectfont\bfseries\color{dgamberdk}\textls[250]{\MakeUppercase{\chaptertitlename}}\hspace{6pt}{\fontsize{40}{40}\selectfont\color{dgamber}\thechapter}}{8pt}{\raggedright\fontsize{27}{32}\selectfont\bfseries}[\vspace{6pt}{\color{dgamber}\rule{48pt}{3pt}}]
 \titlespacing*{\chapter}{0pt}{0pt}{22pt}
@@ -79,7 +79,7 @@
 {\small\noindent Suryansh Pratap Singh\\
 \textit{Beyond the 4\,\textdegree C Alarm: What a Temperature Log Can and Cannot Tell About Milk Spoilage.} Monograph, October 2026.\\[6pt]
 Code, data, simulation results and the source of this text: \url{https://github.com/CopyNinja07-07/dairyguard}. Every number in the text, tables and figures is generated from the result files by script, with fixed random seeds, and can be reproduced with \texttt{make all}.\\[6pt]
-Chapters~4, 8 and 11 are based on joint work with Prof.\ (Dr.) Neeraj Tripathi, School of Electronics and Communication Engineering, Shri Mata Vaishno Devi University, reported in version 2 of the DairyGuard paper.\\[6pt]
+Chapters~4, 8 and 11 are based on joint work with Prof.\ (Dr.) Neeraj Tripathi, School of Electronics and Communication Engineering, Shri Mata Vaishno Devi University.\\[6pt]
 Released under the MIT licence. ComBase records remain subject to the ComBase terms of use.\par}
 
 \chapter*{Abstract}
@@ -863,7 +863,7 @@ Table~\ref{tab:dsp} lists the ComBase records of spoilage flora used in Chapter~
 All results are generated from fixed random seeds. With Python 3.10 or later, the packages in \texttt{requirements.txt} and a LaTeX installation:
 \begin{center}\begin{tabular}{@{}ll@{}}\toprule\rowcolor{dghead}
 Command & Effect\\\midrule
-\texttt{make test} & run the 14 automated tests\\
+\texttt{make test} & run the 19 automated tests\\
 \texttt{make runs} & run the five benchmark runs (about three hours on two cores)\\
 \texttt{make validate} & reproduce the validation of Chapter~\ref{ch:val}\\
 \texttt{make paper} & write all numbers, tables and figures and build the paper\\

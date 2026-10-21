@@ -1,22 +1,16 @@
 cff-version: 1.2.0
 message: "If you use this software or data, please cite it as below."
-title: "DairyGuard: a loss-budget benchmark for temperature-based milk spoilage estimation"
+title: "DairyGuard: what a temperature log can and cannot tell about milk spoilage"
 type: software
 authors:
   - family-names: "Singh"
     given-names: "Suryansh Pratap"
     affiliation: "Department of Mathematics and Computing, Shri Mata Vaishno Devi University"
+  - family-names: "Tripathi"
+    given-names: "Neeraj"
+    affiliation: "School of Electronics and Communication Engineering, Shri Mata Vaishno Devi University"
 date-released: 2026-10-21
 license: MIT
 repository-code: "https://github.com/CopyNinja07-07/dairyguard"
+url: "https://copyninja07-07.github.io/dairyguard/"
 keywords: [cold chain, predictive microbiology, non-isothermal kinetics, milk, shelf life, benchmark, calibration]
-preferred-citation:
-  type: article
-  title: "How Much Can a Temperature Log Tell Us About Spoiling Milk? Non-Isothermal Growth Kinetics and a Loss Budget for Cold-Chain Monitoring"
-  authors:
-    - family-names: "Singh"
-      given-names: "Suryansh Pratap"
-    - family-names: "Tripathi"
-      given-names: "Neeraj"
-  year: 2026
-  status: preprint

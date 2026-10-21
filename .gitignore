@@ -1,12 +1,12 @@
 __pycache__/
 *.pyc
-paper/*.aux
-paper/*.log
-paper/*.out
-paper/*.fls
-paper/*.fdb_latexmk
-paper/*.bbl
-paper/*.blg
+report/*.aux
+report/*.log
+report/*.out
+report/*.fls
+report/*.fdb_latexmk
+report/*.bbl
+report/*.blg
 *.pass1.pdf
 book/fig/eq_*.png
 
@@ -14,10 +14,8 @@ data/*.csv
 !data/params.csv
 !data/combase_milk_records.csv
 !data/combase_tasmania_pasteurised_milk.csv
-paper/main.pdf
 book/*.pdf
 docs/*.pass1.pdf
-paper/*.aux
 book/*.aux
 book/*.log
 book/*.out

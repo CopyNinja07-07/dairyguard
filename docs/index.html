@@ -122,6 +122,24 @@ section.c p{color:var(--mut)}section.c p b{color:var(--ink);font-weight:600}
 @media(max-width:640px){.sus{grid-template-columns:1fr}.cmp table,.cmp tbody,.cmp tr,.cmp td{display:block;min-width:0;width:auto!important}.cmp thead{display:none}.cmp tr{border-bottom:1px solid var(--line);padding:12px 0}.cmp td{border:0;padding:3px 16px}.cmp td:first-child{font:500 11px "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--sig)}.cmp td:nth-child(2):before{content:"v1  ";color:var(--dim);font:500 11px "JetBrains Mono",monospace}.cmp td:nth-child(3):before{content:"v2  ";color:var(--sig);font:500 11px "JetBrains Mono",monospace}}
 .card.fix{border-color:rgba(95,211,154,.5);background:radial-gradient(120% 90% at 100% 0,rgba(95,211,154,.14),transparent 60%),var(--bg2)}
 .card.fix .v{color:var(--ok);border-color:rgba(95,211,154,.5)}
+/* roadmap */
+.road{position:relative;display:grid;gap:14px;margin-top:34px;max-width:860px}
+.road:before{content:"";position:absolute;left:27px;top:28px;bottom:28px;width:1px;background:var(--line)}
+.stg{position:relative;display:grid;grid-template-columns:56px 1fr;gap:18px;align-items:start}
+.stg .dot{position:relative;z-index:1;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--bg);border:1px solid var(--line);font:600 18px "JetBrains Mono",monospace;color:var(--dim)}
+.stg.done .dot{border-color:var(--ok);color:var(--ok)}
+.stg.now .dot{border-color:var(--sig);color:var(--sig);box-shadow:0 0 0 6px rgba(242,181,68,.12)}
+.stg .bx{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:18px 22px;min-width:0}
+.stg.now .bx{border-color:rgba(242,181,68,.55)}
+.stg .sh{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px}
+.stg h3{font-size:26px;margin:0}.stg p{font-size:15px;margin:8px 0 0;color:var(--mut)}
+.stg .st{font:600 10.5px "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line);color:var(--dim)}
+.stg.done .st{color:var(--ok);border-color:rgba(95,211,154,.5)}
+.stg.now .st{color:var(--bg);background:var(--sig);border-color:var(--sig)}
+.bigq{margin-top:26px;max-width:860px;border-left:3px solid var(--sig);padding:6px 0 6px 22px}
+.bigq small{font:500 11px "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--sig)}
+.c .bigq p{font-size:clamp(22px,3vw,30px);line-height:1.25;color:var(--ink);margin:8px 0}
+.bigq span{font-size:15px;color:var(--mut)}
 /* closing */
 .closing{position:relative;height:min(94vh,780px);min-height:560px;overflow:hidden;border-top:1px solid var(--line);background:radial-gradient(120% 70% at 50% 100%,#10161e,var(--bg) 70%)}
 #pool{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -143,7 +161,7 @@ section.c p{color:var(--mut)}section.c p b{color:var(--ink);font-weight:600}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.fl{transition:none}.cue i{animation:none}}
 </style></head><body>
 
-<nav><div class="w"><b><img src="dg-icon.svg" alt="">DairyGuard</b><div class="lk"><a href="#journey">The journey</a><a href="#different">What's new</a><a href="#found">Findings</a><a href="#versions">v1 → v2</a><a href="#read">Read</a><a class="cta" href="explorer.html">Open the demo</a></div></div></nav>
+<nav><div class="w"><b><img src="dg-icon.svg" alt="">DairyGuard</b><div class="lk"><a href="#journey">The journey</a><a href="#different">What's new</a><a href="#found">Findings</a><a href="#versions">v1 → v2</a><a href="#roadmap">Roadmap</a><a href="#read">Read</a><a class="cta" href="explorer.html">Open the demo</a></div></div></nav>
 
 <header class="hero">
 <canvas id="sky" aria-hidden="true"></canvas>
@@ -197,12 +215,12 @@ section.c p{color:var(--mut)}section.c p b{color:var(--ink);font-weight:600}
 <div class="card rv"><div class="no">SUSPECT 01</div><h3>A better thermometer</h3><p>A lab-grade sensor in place of a cheap one.</p><span class="v">Barely helps</span></div>
 <div class="card rv"><div class="no">SUSPECT 02</div><h3>Checking more often</h3><p>Every minute instead of every hour.</p><span class="v">No real difference</span></div>
 <div class="card villain rv"><div class="no">SUSPECT 03</div><h3>What was already in the milk</h3><p>Which bacteria, how many, how fast they wake up. No thermometer sees this.</p><span class="v">The villain</span></div>
-<div class="card fix rv"><div class="no">THE FIX · NEW IN V2</div><h3>Test the milk, not the air</h3><p>One heat-flow test of the batch at dispatch, combined with the log, recovers 69–94% of what the thermometer misses.</p><span class="v">Most of the gap closed</span></div>
+<div class="card fix rv"><div class="no">THE FIX · NEW IN MODEL V2</div><h3>Test the milk, not the air</h3><p>One heat-flow test of the batch at dispatch, combined with the log, recovers 69–94% of what the thermometer misses. Shown in simulation; testing it on real milk is the next stage.</p><span class="v">Most of the gap closed</span></div>
 </div>
 <p class="rv" style="margin-top:44px">We scored every method on one question: from a delivery's temperature log, can you tell the cartons that will spoil from the ones that won't? A coin flip scores 50. A perfect method scores 100.</p>
 <div class="meter">
 <div class="row rv"><div class="top"><span>Lost because we cannot see the bacteria</span><span style="color:var(--hot)">9–40 pts</span></div><div class="tr"><div class="fl" data-w="100" style="background:var(--hot)"></div></div></div>
-<div class="row rv"><div class="top"><span>Won back by one heat-flow test of the batch</span><span style="color:var(--ok)">21–38 pts</span></div><div class="tr"><div class="fl" data-w="90" style="background:var(--ok)"></div></div></div>
+<div class="row rv"><div class="top"><span>Won back by one heat-flow test of the batch (simulated)</span><span style="color:var(--ok)">21–38 pts</span></div><div class="tr"><div class="fl" data-w="90" style="background:var(--ok)"></div></div></div>
 <div class="row rv"><div class="top"><span>Gained by a smarter rule over degree-hours</span><span>≤ 4 pts</span></div><div class="tr"><div class="fl" data-w="10" style="background:var(--cold)"></div></div></div>
 <div class="row rv"><div class="top"><span>Gained by a better thermometer</span><span>≤ 2 pts</span></div><div class="tr"><div class="fl" data-w="5" style="background:var(--cold)"></div></div></div>
 <div class="row rv"><div class="top"><span>Lost by checking hourly, not every minute</span><span>~0</span></div><div class="tr"><div class="fl" data-w="1.2" style="background:var(--cold)"></div></div></div>
@@ -211,18 +229,18 @@ section.c p{color:var(--mut)}section.c p b{color:var(--ink);font-weight:600}
 </section>
 
 <section class="c" id="versions"><span class="tag rv">How the study grew</span>
-<h2 class="rv">Version 1 asked what is lost. <span>Version 2 explains why, and how to win it back.</span></h2>
+<h2 class="rv">Model v1 asked what is lost. <span>Model v2 explains why, and how to win it back.</span></h2>
 <div class="ver">
-<div class="vcard rv"><span class="badge">V1 · WORKING PAPER</span><h3>The loss budget</h3><p>A simulated cold chain where the truth is always known. Accuracy is removed one source at a time to see what a temperature monitor is blind to.</p><div class="meta">9 pages · 50 references · Oct 2026 · not peer reviewed, superseded by v2</div><a class="btn" href="DairyGuard-v1-Working-Paper.pdf">Read v1</a></div>
-<div class="vcard v2 rv"><span class="badge">V2 · CURRENT</span><h3>The kinetic theory</h3><p>Proves why the loss budget looks the way it does, compares the temperature laws used in industry, and shows that a calorimetric test of the milk recovers most of what the log misses.</p><div class="meta">20 pages · 70 references · with Prof. (Dr.) Neeraj Tripathi</div><a class="btn" href="DairyGuard-Research-Paper.pdf?v=2">Read v2</a></div>
+<div class="vcard rv"><span class="badge">MODEL V1</span><h3>The loss budget</h3><p>A simulated cold chain where the truth is always known. Accuracy is removed one source at a time to see what a temperature monitor is blind to.</p><div class="meta">Working paper · 9 pages · Oct 2026 · not peer reviewed</div><a class="btn" href="DairyGuard-v1-Working-Paper.pdf">Read the v1 working paper</a></div>
+<div class="vcard v2 rv"><span class="badge">MODEL V2 · CURRENT</span><h3>The kinetic theory</h3><p>Proves why the loss budget looks the way it does, compares the temperature laws used in industry, and shows that a calorimetric test of the milk recovers most of what the log misses.</p><div class="meta">With Prof. (Dr.) Neeraj Tripathi · technical reports in preparation</div><a class="btn" href="DairyGuard-Monograph.pdf">Read it in the monograph</a></div>
 </div>
 <div class="cmp rv"><table>
-<thead><tr><th>&nbsp;</th><th>Version 1</th><th>Version 2</th></tr></thead>
+<thead><tr><th>&nbsp;</th><th>Model v1</th><th>Model v2</th></tr></thead>
 <tbody>
 <tr><td>Question</td><td>What limits a temperature monitor?</td><td>Why, and what would fix it?</td></tr>
 <tr><td>Theory</td><td>Growth models, applied</td><td>Six propositions: growth and the heat it releases depend on the temperature log only through one accumulated "generalized time"<span class="new">NEW</span></td></tr>
 <tr><td>Temperature laws</td><td>Square-root law</td><td>Four laws compared on ComBase data; Arrhenius and Q<sub>10</sub> rules tested on 240,000 trips<span class="new">NEW</span></td></tr>
-<tr><td>Calorimetry</td><td>Not covered</td><td>Heat-flow master curve; one test of the batch closes 69–94% of the gap<span class="new">NEW</span></td></tr>
+<tr><td>Calorimetry</td><td>Not covered</td><td>Heat-flow master curve; one simulated test of the batch closes 69–94% of the gap<span class="new">NEW</span></td></tr>
 <tr><td>Error analysis</td><td>Simulated</td><td>Predicted on paper first, then confirmed by simulation<span class="new">NEW</span></td></tr>
 <tr><td>Statistics</td><td>AUC with paired bootstrap</td><td>Full method: sample-size justification, paired variance, multiplicity, model selection</td></tr>
 <tr><td>Validation</td><td>Lin et al. experiment, ComBase spoilage flora and <i>Listeria</i></td><td>Same, plus held-out extrapolation into the cold</td></tr>
@@ -253,13 +271,35 @@ section.c p{color:var(--mut)}section.c p b{color:var(--ink);font-weight:600}
 <div class="limits rv">The trucks, fridges and calorimeter tests are simulated, so real delivery logs and real heat-flow measurements on milk are the next test. Growth numbers come from published experiments and a public database of growth records. This is research, not medical or food-safety advice.</div>
 </section>
 
+<section class="c" id="roadmap"><span class="tag rv">Where this is going</span>
+<h2 class="rv">From a simulation <span>to a measured result.</span></h2>
+<p class="lead rv">DairyGuard now grows in stages. Each one ends in something finished and public, and the journal paper comes last, once real milk has been measured.</p>
+<div class="road">
+<div class="stg done rv"><div class="dot">0</div><div class="bx"><div class="sh"><h3>Models v1 and v2</h3><span class="st">Done</span></div><p>The loss budget, the kinetic theory, 240,000 simulated trips, this site and the demo.</p></div></div>
+<div class="stg now rv"><div class="dot">1</div><div class="bx"><div class="sh"><h3>Report 1 · Framework</h3><span class="st">In progress</span></div><p>The idea and the mathematics, written up as a technical report.</p></div></div>
+<div class="stg rv"><div class="dot">2</div><div class="bx"><div class="sh"><h3>Report 2 · Model v3</h3><span class="st">Next</span></div><p>A hybrid model: the proven physics core, plus learned parts that estimate the hidden biology of each batch.</p></div></div>
+<div class="stg rv"><div class="dot">3</div><div class="bx"><div class="sh"><h3>Report 3 · Validation</h3><span class="st">Planned</span></div><p>Model v3 tested on real published growth data it has never seen.</p></div></div>
+<div class="stg rv"><div class="dot">4</div><div class="bx"><div class="sh"><h3>Experiment and journal paper</h3><span class="st">Planned</span></div><p>Milk held at steady and changing temperatures, counted in a lab, then a peer-reviewed paper built on that data.</p></div></div>
+</div>
+<div class="bigq rv"><small>The question for model v3</small><p>Which cheap test of the milk at loading buys the most accuracy?</p><span>Model v2 says the hidden biology is the limit. Next we find out how cheaply it can be measured, for milk first and then for other chilled foods.</span></div>
+</section>
+
+<section class="c" id="help"><span class="tag rv">Help us</span>
+<h2 class="rv">Real data is the <span>next ingredient.</span></h2>
+<div class="links">
+<a class="lk2 rv" href="https://github.com/CopyNinja07-07/dairyguard/issues/new?template=offer-data.yml"><small>Have growth data?</small><h3>Share data</h3><p>Counts of bacteria in milk or chilled food at changing temperatures, with the temperature log. Full credit given.</p></a>
+<a class="lk2 rv" href="https://github.com/CopyNinja07-07/dairyguard/issues/new?template=offer-data.yml"><small>Run a lab?</small><h3>Lab access</h3><p>Incubators and plate counting would let us run the milk experiment in stage 4.</p></a>
+<a class="lk2 rv" href="https://github.com/CopyNinja07-07/dairyguard/issues/new?template=bug.yml"><small>Found a problem?</small><h3>Report it</h3><p>A bug in the code, a wrong number or an unclear sentence. Every report is read.</p></a>
+</div>
+</section>
+
 <section class="c" id="read"><span class="tag rv">Go deeper</span>
 <h2 class="rv">Pick your <span>way in.</span></h2>
 <div class="links">
-<a class="lk2 rv" href="DairyGuard-Research-Paper.pdf?v=2"><small>For scientists · v2</small><h3>The paper</h3><p>Kinetic theory, temperature laws, calorimetry and the loss budget, with full statistics. Suryansh Pratap Singh and Prof. (Dr.) Neeraj Tripathi, School of Electronics and Communication Engineering, SMVDU.</p></a>
 <a class="lk2 rv" href="DairyGuard-Monograph.pdf"><small>For the full picture</small><h3>The monograph</h3><p>Background, models, validation, every result table and the parameter provenance, in one volume.</p></a>
 <a class="lk2 rv" href="explorer.html"><small>Try it</small><h3>The demo</h3><p>Heat the truck, swap the sensor, and watch the milk's fate play out.</p></a>
 <a class="lk2 rv" href="https://github.com/CopyNinja07-07/dairyguard"><small>For builders</small><h3>The code</h3><p>Every number regenerates from one command. Open source.</p></a>
+<a class="lk2 rv" href="DairyGuard-v1-Working-Paper.pdf"><small>Where it started</small><h3>Working paper</h3><p>The first write-up of model v1, October 2026. Not peer reviewed.</p></a>
 </div>
 </section>
 </div>
@@ -275,7 +315,7 @@ section.c p{color:var(--mut)}section.c p b{color:var(--ink);font-weight:600}
 </section>
 <footer class="ft"><div class="w">
 <div><a class="brand" href="#"><img src="dg-icon.svg" alt="">DairyGuard</a><p>© 2026 DairyGuard · Cold-chain intelligence · Open science</p></div>
-<div class="fl2"><a href="https://github.com/CopyNinja07-07/dairyguard">GitHub</a><a href="DairyGuard-Research-Paper.pdf?v=2">Paper</a><a href="DairyGuard-Monograph.pdf">Monograph</a><a href="explorer.html">Demo</a></div>
+<div class="fl2"><a href="https://github.com/CopyNinja07-07/dairyguard">GitHub</a><a href="#roadmap">Roadmap</a><a href="DairyGuard-Monograph.pdf">Monograph</a><a href="explorer.html">Demo</a></div>
 <div class="fs"><span>Food first</span><i></i><span>Sanskrit: <b lang="sa">आहार</b> nourishment</span></div>
 </div></footer>
 

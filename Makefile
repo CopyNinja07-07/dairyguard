@@ -1,6 +1,6 @@
-# Reproduce everything. Requires Python 3.10+, the packages in requirements.txt, and (for the paper) a LaTeX install.
+# Reproduce everything. Requires Python 3.10+, the packages in requirements.txt, and (for the monograph) a LaTeX install.
 PY=python3
-.PHONY: test runs validate summary figures paper book demo all
+.PHONY: test runs validate summary figures report book demo all
 test:
 	@for f in tests/test_*.py; do $(PY) $$f || exit 1; done
 runs:   # about three hours on two CPU cores
@@ -20,13 +20,12 @@ summary:
 	$(PY) src/summarize_runs.py
 figures:
 	cd book && $(PY) figures.py
-paper: summary
-	$(PY) paper/figures_paper.py
-	$(PY) paper/make_numbers.py
-	$(PY) paper/make_tables.py
-	cd paper && latexmk -pdf -interaction=nonstopmode main.tex && cp main.pdf ../docs/DairyGuard-Research-Paper.pdf
-book: figures
+report: summary   # numbers, tables and figures shared by the technical reports and the monograph
+	$(PY) report/make_numbers.py
+	$(PY) report/make_tables.py
+	$(PY) report/figures.py
+book: figures report
 	cd book && $(PY) cover.py && latexmk -pdf -interaction=nonstopmode monograph.tex && cp monograph.pdf ../docs/DairyGuard-Monograph.pdf
 demo: summary
 	cd demo && $(PY) build_web.py
-all: test validate summary figures paper book demo
+all: test validate summary figures report book demo

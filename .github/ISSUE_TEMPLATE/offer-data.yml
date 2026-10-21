@@ -1,0 +1,27 @@
+name: Offer data or lab access
+description: Share growth data, or offer a lab where the milk experiment could run.
+title: "[Data] "
+labels: ["data"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What are you offering?
+      options:
+        - Growth data (counts with a temperature log)
+        - Lab access
+        - Both
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Product, organism or flora, temperatures, how counts were made, and the size of the data. For a lab, what equipment is there.
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: How should we reach you?
+      description: Optional. Leave blank to continue in this issue.

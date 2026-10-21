@@ -104,6 +104,14 @@ td.num,th.num{text-align:right;font-family:var(--fm)}
 .dots{display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:3px}
 .dots i{display:block;aspect-ratio:1;border-radius:50%;background:var(--bg3)}
 .dots i.gd{background:var(--ok)}.dots i.bd2{background:var(--hot)}
+.ev{display:inline-block;margin-left:8px;font:600 10px var(--fm);letter-spacing:.12em;text-transform:uppercase;border-radius:99px;padding:3px 8px;vertical-align:3px;border:1px solid}
+.ev.sim{color:var(--sig);border-color:rgba(242,181,68,.55)}
+.ev.real{color:var(--ok,#5fd39a);border-color:rgba(95,211,154,.55)}
+.ev.nxt{color:var(--cold);border-color:currentColor}
+.evkey{font-size:13px;color:var(--mut);display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:10px 0 0}.evkey .ev{margin-left:0}
+.nextv3{display:block;margin-top:16px;padding:16px 18px;border:1px dashed var(--line);border-radius:12px;text-decoration:none;color:inherit;transition:.2s}
+.nextv3:hover{border-color:var(--cold)}
+.nextv3 .ev{margin:0 0 8px}.nextv3 b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}.nextv3 span:last-child{font-size:13px;color:var(--mut)}
 .newb{display:inline-block;margin-left:8px;font:600 10px var(--fm);letter-spacing:.12em;color:#07090c;background:var(--sig);border-radius:99px;padding:3px 8px;vertical-align:4px}
 .hb{display:grid;gap:12px;margin-top:8px}
 .hb .r .t{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;margin-bottom:5px}.hb .r .t b{font:800 20px var(--fd)}
@@ -121,7 +129,7 @@ body>.w,body>footer{position:relative;z-index:1}
 </style></head><body>
 <canvas id="bgfx" aria-hidden="true"></canvas>
 
-<nav><div class="w"><b><img src="dg-icon.svg" alt="">DairyGuard</b><div class="lk"><a href="index.html">Site</a><a href="DairyGuard-Research-Paper.pdf?v=2">Paper</a><a href="https://github.com/CopyNinja07-07/dairyguard">Code</a></div></div></nav>
+<nav><div class="w"><b><img src="dg-icon.svg" alt="">DairyGuard</b><div class="lk"><a href="index.html">Site</a><a href="index.html#roadmap">Roadmap</a><a href="https://github.com/CopyNinja07-07/dairyguard">Code</a></div></div></nav>
 
 <div class="w">
 <header class="hero">
@@ -167,13 +175,14 @@ body>.w,body>footer{position:relative;z-index:1}
 <div class="legend"><b id="mvcount" style="color:var(--ink);font-weight:600"></b><span><i style="background:var(--hot)"></i>went off</span><span><i style="background:#cfe6f5"></i>still fine</span></div>
 <p class="punch" id="mvpunch"></p></div>
 
-<div class="card ch"><h3>Model v1 vs model v2 <span class="newb">NEW</span></h3><p class="sub">Both models judge the same 60 cartons. Green: the model got that carton right. Red: it got it wrong.</p>
+<div class="card ch"><h3>Model v1 vs model v2 <span class="ev sim">Simulated</span></h3><p class="sub">Both models judge the same 60 cartons. Green: the model got that carton right. Red: it got it wrong.</p>
 <div class="mods">
 <div class="mod"><div class="hd"><span class="bd">V1 · LOG ONLY</span><span class="sc" id="v1s">–</span></div><p>Reads the temperature log and gives one answer for every carton on the truck, because every carton has the same log.</p><div class="dots" id="v1d"></div></div>
 <div class="mod v2"><div class="hd"><span class="bd">V2 · LOG + HEAT TEST</span><span class="sc" id="v2s">–</span></div><p>Adds one heat-flow (calorimetry) test of each batch at dispatch: how fast its bacteria start to give off heat at 20 °C. Now each carton gets its own answer.</p><div class="dots" id="v2d"></div></div>
 </div>
 <p class="punch" id="v12punch"></p>
-<p class="mut" style="font-size:12.5px;margin:6px 0 0">The heat test is simulated with a 5% measurement error. Across 48,000 simulated trips it recovers 69–94% of the accuracy the log alone cannot reach (paper v2, Results).</p></div>
+<p class="mut" style="font-size:12.5px;margin:6px 0 0">The heat test is simulated with a 5% measurement error. Across 48,000 simulated trips it recovers 69–94% of the accuracy the log alone cannot reach (model v2, described in the monograph).</p>
+<a class="nextv3" href="index.html#roadmap"><span class="ev nxt">Next · model v3</span><b>Which cheap test of the milk at loading buys the most accuracy?</b><span>The heat test is one candidate. Model v3 will compare it with a dye-reduction test and a plate count, on real data. See the roadmap.</span></a></div>
 
 <div class="card ch"><h3>What changes the answer more?</h3><p class="sub">How far the estimate of "how much of its life the milk has used" swings if you upgrade the thermometer or check more often, compared with not knowing the bacteria already in the milk.</p>
 <div class="duel">
@@ -186,6 +195,7 @@ body>.w,body>footer{position:relative;z-index:1}
 
 <section class="s"><span class="tag">The proof</span>
 <h2>240,000 simulated deliveries. <span>Here is what they show.</span></h2>
+<p class="evkey"><span class="ev sim">Simulated</span> results from the virtual cold chain <span class="ev real">Real data</span> checks against published experiments <span class="ev nxt">Next</span> planned work</p>
 <p class="lede" id="xnote">Each method is given a score out of 100 for how well it tells spoiled milk from good milk. 50 is a coin toss. 100 is perfect.</p>
 <div class="ectl">
 <label>Simulated world<select id="xvar"></select></label>
@@ -206,8 +216,8 @@ body>.w,body>footer{position:relative;z-index:1}
 <section class="s"><span class="tag">Reality check</span>
 <h2>Does it match <span>real milk?</span></h2>
 <div class="g2" style="margin-top:14px">
-<div class="card ch"><h3>A real lab experiment</h3><p class="sub">Scientists warmed milk twice for four hours and timed how fast it spoiled (Lin et al., 2016). Our model had never seen this result. Here is what it predicted.</p><div class="tw" id="lint"></div></div>
-<div class="card ch"><h3>Real growth records</h3><p class="sub">From ComBase, a public database of bacterial growth experiments.</p><p style="font-size:14.5px;margin:0 0 10px">Real milk bacteria (51 records) follow the same temperature pattern as the model, but grow about <b>1.6× slower</b> than the lab strains. Switching the model to these real numbers does not change any conclusion.</p><p style="font-size:14.5px;margin:0" id="lisv"></p></div>
+<div class="card ch"><h3>A real lab experiment <span class="ev real">Real data</span></h3><p class="sub">Scientists warmed milk twice for four hours and timed how fast it spoiled (Lin et al., 2016). Our model had never seen this result. Here is what it predicted.</p><div class="tw" id="lint"></div></div>
+<div class="card ch"><h3>Real growth records <span class="ev real">Real data</span></h3><p class="sub">From ComBase, a public database of bacterial growth experiments.</p><p style="font-size:14.5px;margin:0 0 10px">Real milk bacteria (51 records) follow the same temperature pattern as the model, but grow about <b>1.6× slower</b> than the lab strains. Switching the model to these real numbers does not change any conclusion.</p><p style="font-size:14.5px;margin:0" id="lisv"></p></div>
 </div>
 </section>
 
@@ -215,20 +225,20 @@ body>.w,body>footer{position:relative;z-index:1}
 <h2>Built from the ground up, <span>checked at every step.</span></h2>
 <div class="stats">
 <div><b>240,000</b><span>simulated milk deliveries, each tracked minute by minute</span></div>
-<div><b>70</b><span>published studies, datasets and standards cited, every one with a working link</span></div>
+<div><b>64</b><span>published studies, datasets and standards cited in the monograph, every one with a working link</span></div>
 <div><b>373</b><span>real bacterial growth records in milk compiled from ComBase and released</span></div>
 <div><b>4%</b><span>error when predicting a real lab experiment it never saw</span></div>
-<div><b>14</b><span>automated tests run on every change</span></div>
-<div><b>69–94%</b><span>of the lost accuracy won back by one heat-flow test of the batch (new in v2)</span></div>
+<div><b>19</b><span>automated tests run on every change</span></div>
+<div><b>69–94%</b><span>of the lost accuracy won back by one heat-flow test of the batch (simulated, new in model v2)</span></div>
 <div><b>0 of 60</b><span>settings where the Arrhenius or Q<sub>10</sub> rules used in shelf-life labels beat our square-root rule</span></div>
-<div><b>~2,300</b><span>lines of code: simulator, statistics, demo, paper and monograph</span></div>
+<div><b>~2,300</b><span>lines of code: simulator, statistics, demo and monograph</span></div>
 </div>
 <div class="steps2">
 <div><i>01</i><b>Read the science</b><span>From the Ratkowsky growth law and Baranyi&ndash;Roberts model to FSSAI milk standards and the Cornell spoilage models.</span></div>
 <div><i>02</i><b>Built a world</b><span>A simulator of trucks, shops and fridges where the true answer is always known.</span></div>
 <div><i>03</i><b>Checked it against reality</b><span>A published lab experiment and 150 real growth records from ComBase.</span></div>
 <div><i>04</i><b>Ran the experiment</b><span>Five simulated worlds, 12 settings each, 4,000 deliveries per setting.</span></div>
-<div><i>05</i><b>Explained it</b><span>Version 2, with Prof. (Dr.) Neeraj Tripathi, proves why the results come out this way, using the generalized time of thermal analysis, and tests a calorimetric fix.</span></div>
+<div><i>05</i><b>Explained it</b><span>Model v2, with Prof. (Dr.) Neeraj Tripathi, proves why the results come out this way, using the generalized time of thermal analysis, and tests a calorimetric fix.</span></div>
 </div>
 <h3 style="font-size:22px;margin:34px 0 12px">Built on</h3>
 <div class="refs">
@@ -254,7 +264,7 @@ body>.w,body>footer{position:relative;z-index:1}
 <a href="https://doi.org/10.1111/j.1365-2621.1991.tb04736.x">Fu et al. 1991 · <i>J. Food Sci.</i></a>
 <a href="https://www.combase.cc">ComBase growth database</a>
 <a href="https://fssai.gov.in/upload/uploadfiles/files/Appendix%20B(1).pdf">FSSAI microbiological standards</a>
-<a href="DairyGuard-Research-Paper.pdf?v=2">All 70 references in the paper</a>
+<a href="DairyGuard-Monograph.pdf">All references in the monograph</a>
 </div>
 </section>
 
@@ -264,12 +274,13 @@ body>.w,body>footer{position:relative;z-index:1}
 <li>The trucks, fridges and heat-flow tests are simulated. Real delivery logs, calorimeter measurements on milk and new lab counts are the next step.</li>
 <li>It estimates how much bacteria grew, not whether anyone gets sick. It is not a food-safety verdict: if milk smells or looks off, do not drink it.</li>
 <li>About half of the simulated trips spoil by design, so the percentages are not real-world rates.</li>
+<li>"Gone off" here means the bacterial count crossed the chosen limit (the FSSAI hygiene limit, or a growth target for <i>Listeria</i>). It is a count, not a taste or smell test.</li>
 </ul>
 </section>
 </div>
 <footer class="ft"><div class="w">
 <div><a class="brand" href="index.html"><img src="dg-icon.svg" alt="">DairyGuard</a><p>© 2026 DairyGuard · Cold-chain intelligence · Open science</p></div>
-<div class="fl2"><a href="https://github.com/CopyNinja07-07/dairyguard">GitHub</a><a href="DairyGuard-Research-Paper.pdf?v=2">Paper</a><a href="DairyGuard-Monograph.pdf">Monograph</a><a href="index.html">Site</a></div>
+<div class="fl2"><a href="https://github.com/CopyNinja07-07/dairyguard">GitHub</a><a href="index.html#roadmap">Roadmap</a><a href="DairyGuard-Monograph.pdf">Monograph</a><a href="index.html">Site</a></div>
 <div class="fs"><span>Food first</span><i></i><span>Sanskrit: <b lang="sa">आहार</b> nourishment</span></div>
 </div></footer>
 

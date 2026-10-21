@@ -1,5 +1,5 @@
-"""Vector figures for the research paper (white background, serif type, lettered panels).
-Run from the repository root: python paper/figures_paper.py"""
+"""Vector figures shared by the technical reports and the monograph (white background, serif type, lettered panels).
+Run from the repository root: python report/figures.py"""
 import os
 import sys
 import json
@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-OUT = os.path.join(ROOT, "paper", "fig")
+OUT = os.path.join(ROOT, "report", "fig")
 os.makedirs(OUT, exist_ok=True)
 
 INK, INK2, MUTED, GRID = "#1a1a1a", "#4a4a4a", "#8c8c8c", "#e3e3e3"
@@ -366,7 +366,7 @@ def fig_sampling():
 # ---------------------------------------------------------------- Fig: error budget and the binormal AUC curve
 def fig_errors():
     import re
-    tx = open(os.path.join(ROOT, "paper", "tables.tex")).read()
+    tx = open(os.path.join(ROOT, "report", "tables.tex")).read()
     g = lambda k: float(re.search(r"\\newcommand{\\%s}{([^}]*)}" % k, tx).group(1))
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(W2, 2.3), gridspec_kw={"width_ratios": [1.25, 1]})
     items = [("Strain growth rate b", g("AnSdB"), ORANGE), ("Minimum temperature T$_{\\min}$", g("AnSdT"), ORANGE), ("Lag and starting load", g("AnSdK"), ORANGE),
@@ -595,4 +595,4 @@ if __name__ == "__main__":
     fig_design(); fig_combase(); fig_lis(); fig_budget(); fig_runs()
     fig_story(); fig_clock(); fig_rates(); fig_sampling(); fig_errors(); fig_system()
     fig_hierarchy(); fig_secondary(); fig_rivals(); fig_stats(); fig_calorimetry(); fig_pipeline()
-    print("paper figures ok:", sorted(os.listdir(OUT)))
+    print("report figures ok:", sorted(os.listdir(OUT)))

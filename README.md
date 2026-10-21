@@ -9,9 +9,9 @@
 
 A simulation study of the cold chain for milk. We built a virtual world of thousands of milk deliveries, so that we always know the true outcome, and used it to find out what limits our ability to predict spoilage from a temperature record: the thermometer, how often we read it, the rule we use, or something no instrument can see.
 
-**[Website](https://copyninja07-07.github.io/dairyguard/) · [Live demo](https://copyninja07-07.github.io/dairyguard/explorer.html) · [Research paper v2 (PDF)](docs/DairyGuard-Research-Paper.pdf) · [Monograph (PDF)](docs/DairyGuard-Monograph.pdf)**
+**[Website](https://copyninja07-07.github.io/dairyguard/) · [Live demo](https://copyninja07-07.github.io/dairyguard/explorer.html) · [Monograph (PDF)](docs/DairyGuard-Monograph.pdf) · [Roadmap](ROADMAP.md) · [Help us](#help-us)**
 
-**Contents:** [The short version](#the-short-version) · [Problem](#problem) · [Approach](#approach-in-plain-words) · [Architecture](#architecture) · [Quickstart](#quickstart) · [The model](#the-model) · [The simulated world](#the-simulated-world) · [How methods are judged](#how-methods-are-judged) · [Is the model believable?](#is-the-model-believable) · [Results](#results) · [Version 1 and version 2](#version-1-and-version-2) · [Listeria case study](#listeria-case-study) · [Data](#data-and-parameters) · [Repository layout](#repository-layout) · [Limitations](#limitations) · [Next steps](#next-steps) · [Glossary](#glossary) · [Cite](#cite-and-licence)
+**Contents:** [The short version](#the-short-version) · [Problem](#problem) · [Approach](#approach-in-plain-words) · [Architecture](#architecture) · [Quickstart](#quickstart) · [The model](#the-model) · [The simulated world](#the-simulated-world) · [How methods are judged](#how-methods-are-judged) · [Is the model believable?](#is-the-model-believable) · [Results](#results) · [Model v1 and model v2](#model-v1-and-model-v2) · [Where this is going](#where-this-is-going) · [Help us](#help-us) · [Listeria case study](#listeria-case-study) · [Data](#data-and-parameters) · [Repository layout](#repository-layout) · [Limitations](#limitations) · [Next steps](#next-steps) · [Glossary](#glossary) · [Cite](#cite-and-licence)
 
 ---
 
@@ -22,9 +22,11 @@ A simulation study of the cold chain for milk. We built a virtual world of thous
 - We tested what limits prediction. **The biggest loss comes from what a thermometer cannot see:** which bacteria were in the milk and how many.
 - A more accurate thermometer helps only a little (at most 2 points out of 100). Reading the temperature every hour instead of every minute made no measurable difference in most settings.
 - So the money and effort are better spent on knowing the milk's starting condition, and on telling people the *chance* of spoilage instead of a plain red or green light.
-- **New in version 2:** the maths explains why. Growth, and even the heat that growing bacteria give off, depend on the temperature record only through one running total. The formulas used in many shelf-life labels (Arrhenius, Q10) never did better than the square-root rule, in any of 60 settings. And one heat-flow (calorimetry) test of a batch, added to the temperature log, won back **69 to 94%** of the accuracy the thermometer could not provide.
+- **New in model v2:** the maths explains why. Growth, and even the heat that growing bacteria give off, depend on the temperature record only through one running total. The formulas used in many shelf-life labels (Arrhenius, Q10) never did better than the square-root rule, in any of 60 settings. And one heat-flow (calorimetry) test of a batch, added to the temperature log, won back **69 to 94%** of the accuracy the thermometer could not provide.
 
 All of this is in a simulation. See [Limitations](#limitations) before drawing conclusions.
+
+*"Spoiled" in this project means the bacterial count crossed a chosen limit (the FSSAI hygiene limit for pasteurised milk, or a growth target). It is not a taste or smell test, and it is not a safety verdict.*
 
 ## Problem
 
@@ -88,7 +90,7 @@ Python 3.10 or newer is needed.
    ```bash
    pip install -r requirements.txt
    ```
-3. Run the 14 automatic checks (a few seconds).
+3. Run the 19 automatic checks (a few seconds).
    ```bash
    make test
    ```
@@ -214,17 +216,40 @@ What this means:
 - **Sensor and sampling matter little.** The better sensor gains at most 2 points. The adaptive rule gave no detectable advantage either.
 - **Say the uncertainty.** The probability forecast was better calibrated than a single alarm in every run (ECE about 0.02 to 0.11 against 0.34 to 0.45 for the spoilage runs), with one exception noted below.
 
-## Version 1 and version 2
+## Model v1 and model v2
 
-| | Version 1 (working paper, 9 pages) | Version 2 (current, 20 pages) |
+| | Model v1 | Model v2 (current) |
 |---|---|---|
 | Question | What limits a temperature monitor? | Why, and what would fix it? |
-| Theory | Growth models, applied | Six propositions: growth and its heat depend on the log only through one running total |
+| Theory | Growth models, applied | Growth and its heat depend on the log only through one running total (generalized time) |
 | Temperature laws | Square-root rule | Four laws compared on real records; Arrhenius and Q10 rules tested on 240,000 trips |
-| Calorimetry | Not covered | One heat-flow test of a batch closes 69–94% of the gap |
-| Authors | Suryansh Pratap Singh | Suryansh Pratap Singh and Prof. (Dr.) Neeraj Tripathi |
+| Calorimetry | Not covered | One simulated heat-flow test of a batch closes 69–94% of the gap |
 
-Version 1 is an earlier working paper, not peer reviewed and superseded by version 2. It is kept at [`docs/DairyGuard-v1-Working-Paper.pdf`](docs/DairyGuard-v1-Working-Paper.pdf). The [live demo](https://copyninja07-07.github.io/dairyguard/explorer.html) shows both models judging the same 60 cartons side by side.
+Model v1 is written up in a 9-page working paper, not peer reviewed: [`docs/DairyGuard-v1-Working-Paper.pdf`](docs/DairyGuard-v1-Working-Paper.pdf). Model v2 is described in the [monograph](docs/DairyGuard-Monograph.pdf) and will be written up in the technical reports below. The [live demo](https://copyninja07-07.github.io/dairyguard/explorer.html) shows both models judging the same 60 cartons side by side.
+
+## Where this is going
+
+DairyGuard is now a staged project. Each stage ends in something complete and public. The full plan is in [`ROADMAP.md`](ROADMAP.md).
+
+| Stage | What it delivers | Status |
+|---|---|---|
+| 0. Model v1 and v2 | Simulation benchmark, theory, website and demo | Done |
+| 1. Report 1: Framework | The idea and the mathematics, written up as a technical report | In progress |
+| 2. Report 2: Model v3 | A hybrid model: physics core plus learned parts for the hidden biology | Next |
+| 3. Report 3: Validation | Model v3 tested on real published growth data it has not seen | Planned |
+| 4. Experiment and journal paper | Real milk measured at changing temperatures, then a peer-reviewed paper | Planned |
+
+The big question for model v3: **which cheap test of the milk at loading buys the most accuracy?** Model v2 says the hidden biology is the limit. The next step is to find out how cheaply it can be measured.
+
+## Help us
+
+This project needs real data more than anything else.
+
+- **Growth data.** If you have counts of bacteria in milk (or other chilled food) measured at changing temperatures, with the temperature log, we would like to test model v3 on them. Full credit is given.
+- **Lab access.** A microbiology lab with incubators and plate counting would let us run the milk experiment in stage 4.
+- **Bugs and questions.** Open an [issue](https://github.com/CopyNinja07-07/dairyguard/issues/new/choose).
+
+To offer data or lab access, open an issue with the "Offer data or lab access" form and we will get in touch.
 
 ## *Listeria* case study
 
@@ -257,7 +282,7 @@ dairyguard/
 │   ├── calorimetry_info.py   value of a calorimetric test of the batch
 │   ├── example_setting.py    one setting in full detail, for the statistics figure
 │   └── summarize_runs.py     condenses the five runs into results/summary.json
-├── tests/                    14 automatic checks
+├── tests/                    19 automatic checks
 ├── results/                  saved output of the five runs
 │   ├── base/ lag/ low/ comb/ lis/   one folder per run (AUC, paired differences, calibration)
 │   ├── validation_*.json     outputs of the three validation checks
@@ -265,12 +290,13 @@ dairyguard/
 ├── data/
 │   ├── params.csv            every parameter with its source or ASSUMED flag
 │   └── README.md             about the ComBase records
-├── paper/                    source of the research paper
+├── report/                   numbers, tables and figures shared by the reports and the monograph
 ├── book/                     source of the monograph and its figures
 ├── demo/                     source of the interactive demo
 ├── docs/                     the website and the finished PDFs (served by GitHub Pages)
 ├── .github/workflows/        runs the tests on every push
-├── Makefile                  one-word commands: test, runs, summary, paper, book, demo
+├── Makefile                  one-word commands: test, runs, summary, report, book, demo
+├── ROADMAP.md                the staged plan
 ├── CITATION.cff   LICENSE   requirements.txt
 ```
 
@@ -286,6 +312,8 @@ dairyguard/
 - This is research, not food-safety or medical advice.
 
 ## Next steps
+
+The staged plan is in [`ROADMAP.md`](ROADMAP.md). In short:
 
 - Validate with real logger data from actual deliveries, to replace the assumed warm-event pattern.
 - Extend the growth records to more spoilage organisms.
@@ -312,4 +340,4 @@ dairyguard/
 
 Citation details are in [`CITATION.cff`](CITATION.cff). Released under the MIT licence.
 
-**Authors:** Suryansh Pratap Singh (code, simulation and both papers) and Prof. (Dr.) Neeraj Tripathi, School of Electronics and Communication Engineering, co-author and faculty guide for version 2. Both at Shri Mata Vaishno Devi University.
+**Authors:** Suryansh Pratap Singh (code, simulation and writing) and Prof. (Dr.) Neeraj Tripathi, School of Electronics and Communication Engineering, faculty guide and co-author of model v2. Both at Shri Mata Vaishno Devi University.

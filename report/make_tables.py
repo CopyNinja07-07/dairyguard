@@ -1,5 +1,5 @@
 """Write LaTeX tables and analytic numbers for the manuscript from the result files and the data.
-Run from the repository root: python paper/make_tables.py  ->  paper/tables.tex, paper/datatables.tex"""
+Run from the repository root: python report/make_tables.py  ->  report/tables.tex, report/datatables.tex"""
 import os
 import math
 import json
@@ -317,9 +317,9 @@ $T$/\textdegree C & $\mu_{\max}$/h$^{-1}$ & $T$/\textdegree C & $\mu_{\max}$/h$^
 
 import re as _re
 def _shade(x): return _re.sub(r"\\toprule(?!\\rowcolor)", r"\\toprule\\rowcolor{dghead}", x)
-open(R("paper", "tables.tex"), "w").write(_shade("\n".join(out) + "\n" + "\n\n".join(["\\newcommand{\\TabAUC}{" + tab_auc + "}", "\\newcommand{\\TabParams}{" + tab_params + "}", "\\newcommand{\\TabSpRecords}{" + tab_sp + "}", "\\newcommand{\\TabCalo}{" + tab_calo + "}", "\\newcommand{\\TabBudget}{" + tab_budget + "}", "\\newcommand{\\TabContrasts}{" + tab_con + "}", "\\newcommand{\\TabCal}{" + tab_cal + "}", "\\newcommand{\\TabDataComp}{" + dat_comp + "}", "\\newcommand{\\TabSecondary}{" + tab_sec + "}", "\\newcommand{\\TabRivals}{" + tab_rv + "}"]) + "\n"))
-open(R("paper", "datatables.tex"), "w").write(_shade(dat_sp) + "\n")
-open(R("paper", "datatables_lis.tex"), "w").write(_shade(dat_lis) + "\n")
+open(R("report", "tables.tex"), "w").write(_shade("\n".join(out) + "\n" + "\n\n".join(["\\newcommand{\\TabAUC}{" + tab_auc + "}", "\\newcommand{\\TabParams}{" + tab_params + "}", "\\newcommand{\\TabSpRecords}{" + tab_sp + "}", "\\newcommand{\\TabCalo}{" + tab_calo + "}", "\\newcommand{\\TabBudget}{" + tab_budget + "}", "\\newcommand{\\TabContrasts}{" + tab_con + "}", "\\newcommand{\\TabCal}{" + tab_cal + "}", "\\newcommand{\\TabDataComp}{" + dat_comp + "}", "\\newcommand{\\TabSecondary}{" + tab_sec + "}", "\\newcommand{\\TabRivals}{" + tab_rv + "}"]) + "\n"))
+open(R("report", "datatables.tex"), "w").write(_shade(dat_sp) + "\n")
+open(R("report", "datatables_lis.tex"), "w").write(_shade(dat_lis) + "\n")
 
 print("analytic:", dict(sd_b=sd_b, sd_T=round(sd_T, 3), sd_K=round(sd_K, 3), sd_bio=round(sd_bio, 3), sd_ds=round(sd_ds, 3), sd_pt=round(sd_pt, 3), K=round(K_nom, 2), riem=round(riem, 3)))
 print("lis records", len(lis), "sources", len(srcs))
