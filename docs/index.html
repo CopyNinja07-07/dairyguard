@@ -122,9 +122,33 @@ nav .cta{color:var(--bg)!important;background:var(--sig);padding:7px 14px;border
 .need{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:40px}@media(max-width:860px){.need{grid-template-columns:1fr}}
 .nd{display:block;text-decoration:none;color:inherit;background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:24px;transition:.25s;min-width:0}.nd:hover{transform:translateY(-3px);border-color:var(--sig)}
 .nd small{font:500 11px var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--sig)}.nd h3{font-size:30px;margin:10px 0 8px}.nd p{font-size:15px;color:var(--mut);margin:0}
-.closing{text-align:center;padding-block:clamp(90px,13vw,160px);border-top:1px solid var(--line);background:radial-gradient(80% 60% at 50% 100%,rgba(242,181,68,.08),transparent 70%)}
-.sk{font-family:"Tiro Devanagari Sanskrit","Noto Serif Devanagari",serif;font-size:clamp(34px,6vw,72px);line-height:1.2;margin:10px auto}
+.closing{position:relative;overflow:hidden;text-align:center;padding-block:clamp(110px,15vw,190px);border-top:1px solid var(--line);background:radial-gradient(70% 60% at 50% 52%,rgba(242,181,68,.10),transparent 70%),radial-gradient(90% 50% at 50% 100%,rgba(255,120,40,.07),transparent 70%)}
+.closing .w{position:relative;z-index:2}
+#embers{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.yantra{position:absolute;left:50%;top:50%;height:min(92%,118vw);width:auto;aspect-ratio:1;transform:translate(-50%,-50%);z-index:0;pointer-events:none;opacity:.9}
+.yantra .ln{fill:none;stroke:var(--sig);stroke-width:1.1;stroke-dasharray:1;stroke-dashoffset:1;opacity:.55;vector-effect:non-scaling-stroke}
+.yantra .ln.f{stroke-width:.7;opacity:.32}.yantra .ln.h{stroke:#ff9a4a;opacity:.45}
+.closing.on .yantra .ln{animation:draw 3.2s cubic-bezier(.6,.05,.2,1) forwards;animation-delay:var(--d,0s)}
+@keyframes draw{to{stroke-dashoffset:0}}
+.yantra .spin{transform-origin:500px 500px;animation:turn 120s linear infinite}.yantra .spin.r{animation-duration:160s;animation-direction:reverse}
+@keyframes turn{to{transform:rotate(360deg)}}
+.yantra .dots circle{fill:var(--sig);opacity:0;transition:opacity 1.2s}.closing.on .yantra .dots circle{opacity:.5}
+.yantra .bindu{fill:#ffd27a;opacity:0;transform-origin:500px 500px}.closing.on .yantra .bindu{animation:bindu 4s ease-in-out 2.6s infinite both}
+@keyframes bindu{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.5)}}
+.halo{position:absolute;left:50%;top:50%;width:min(520px,90vw);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(5,7,11,.92) 30%,rgba(5,7,11,.55) 58%,transparent 72%);z-index:1;pointer-events:none}
+.sk{font-family:"Tiro Devanagari Sanskrit","Noto Serif Devanagari",serif;font-size:clamp(36px,6.4vw,78px);line-height:1.25;margin:10px auto;display:flex;flex-wrap:wrap;justify-content:center;gap:.28em}
+.sk span{display:inline-block;opacity:0;transform:translateY(18px);filter:blur(8px);background:linear-gradient(100deg,#ebe7de 0%,#ebe7de 40%,#ffe2a3 50%,#ebe7de 60%,#ebe7de 100%);background-size:250% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;transition:opacity 1.4s ease,transform 1.4s ease,filter 1.4s ease}
+.closing.on .sk span{opacity:1;transform:none;filter:none;animation:shine 6s ease-in-out 3.2s infinite}
+.closing.on .sk span:nth-child(1){transition-delay:1.2s}.closing.on .sk span:nth-child(2){transition-delay:1.9s;animation-delay:3.6s}
+@keyframes shine{0%{background-position:100% 0}45%,100%{background-position:-60% 0}}
 .iast{font-family:"Tiro Devanagari Sanskrit",Georgia,serif;font-style:italic;font-size:clamp(17px,2vw,21px);color:var(--sig);margin:0 auto}.trn{font-size:clamp(17px,2vw,20px);margin:12px auto 0}
+.closing .fx{opacity:0;transform:translateY(10px);transition:opacity 1.2s ease,transform 1.2s ease}.closing.on .fx{opacity:1;transform:none}
+.closing.on .fx.a{transition-delay:2.6s}.closing.on .fx.b{transition-delay:3.1s}.closing.on .fx.c{transition-delay:3.5s}.closing.on .fx.d{transition-delay:3.9s}
+.diya{display:block;width:92px;height:auto;margin:26px auto 0;overflow:visible}
+.diya .fl{transform-origin:50px 46px;animation:flick 2.2s ease-in-out infinite}.diya .fl2{transform-origin:50px 46px;animation:flick 1.6s ease-in-out infinite reverse}
+@keyframes flick{0%,100%{transform:scale(1,1) skewX(0)}25%{transform:scale(.94,1.06) skewX(3deg)}50%{transform:scale(1.04,.95) skewX(-2deg)}75%{transform:scale(.97,1.04) skewX(2deg)}}
+.diya .glow{animation:glow 2.2s ease-in-out infinite}@keyframes glow{50%{opacity:.6}}
+@media(prefers-reduced-motion:reduce){.yantra .ln{stroke-dashoffset:0;animation:none!important}.yantra .spin,.diya .fl,.diya .fl2,.diya .glow,.sk span{animation:none!important}.sk span,.closing .fx{opacity:1;transform:none;filter:none;transition:none}.yantra .dots circle{opacity:.5}.yantra .bindu{opacity:.8}}
 .src{font:500 11px var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin:12px auto 0}
 footer{border-top:1px solid var(--line)}footer .w{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;padding-block:32px}
 footer .brand{display:flex;align-items:center;gap:10px;font:800 20px var(--fd);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none}footer .brand img{width:26px;height:26px}
@@ -266,12 +290,28 @@ Log: 288 readings over 72.0 h, max 26.0 C, 5.0 h above 8 C in 1 warm event(s)
 </section>
 </div>
 
-<section class="closing"><div class="w">
-<span class="tag rv">Why it matters</span>
-<p class="sk rv" lang="sa">आहारशुद्धौ सत्त्वशुद्धिः</p>
-<p class="iast rv">āhāra-śuddhau sattva-śuddhiḥ</p>
-<p class="trn rv">When food is pure, the mind is pure.</p>
-<p class="src rv">Chāndogya Upaniṣad 7.26.2</p>
+<section class="closing" id="shloka">
+<svg class="yantra" id="yantra" viewBox="0 0 1000 1000" aria-hidden="true"></svg>
+<div class="halo" aria-hidden="true"></div>
+<canvas id="embers" aria-hidden="true"></canvas>
+<div class="w">
+<span class="tag fx a" style="transition-delay:.3s">Why it matters</span>
+<p class="sk" lang="sa" aria-label="आहारशुद्धौ सत्त्वशुद्धिः"><span>आहारशुद्धौ</span><span>सत्त्वशुद्धिः</span></p>
+<p class="iast fx a">āhāra-śuddhau sattva-śuddhiḥ</p>
+<p class="trn fx b">When food is pure, the mind is pure.</p>
+<p class="src fx c">Chāndogya Upaniṣad 7.26.2</p>
+<svg class="diya fx d" viewBox="0 0 100 92" aria-hidden="true">
+<defs><radialGradient id="dg1" cx="50%" cy="40%" r="50%"><stop offset="0" stop-color="#ffdf8a" stop-opacity=".9"/><stop offset="1" stop-color="#ff8a2a" stop-opacity="0"/></radialGradient>
+<linearGradient id="dg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d98a3a"/><stop offset="1" stop-color="#7a3e14"/></linearGradient>
+<linearGradient id="dg3" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff7a1a"/><stop offset=".55" stop-color="#ffc24a"/><stop offset="1" stop-color="#fff2c4"/></linearGradient></defs>
+<circle class="glow" cx="50" cy="34" r="30" fill="url(#dg1)"/>
+<path class="fl" d="M50 6 C58 20 62 30 58 40 C56 46 44 46 42 40 C38 30 42 20 50 6Z" fill="url(#dg3)"/>
+<path class="fl2" d="M50 20 C54 28 55 34 53 39 C52 42 48 42 47 39 C45 34 46 28 50 20Z" fill="#fff6d8"/>
+<path d="M14 54 Q50 50 86 54 Q82 76 50 80 Q18 76 14 54Z" fill="url(#dg2)"/>
+<path d="M14 54 Q50 62 86 54" fill="none" stroke="#f2b544" stroke-width="1.6"/>
+<path d="M30 68 Q50 74 70 68" fill="none" stroke="#f2b544" stroke-width="1" opacity=".6"/>
+<ellipse cx="50" cy="86" rx="20" ry="3" fill="#f2b544" opacity=".18"/>
+</svg>
 </div></section>
 <footer><div class="w">
 <div><a class="brand" href="#"><img src="dg-icon.svg" alt="">DairyGuard</a><p>© 2026 Suryansh Pratap Singh · Open science</p></div>
@@ -357,6 +397,54 @@ document.querySelectorAll(".rv").forEach(el => io.observe(el));
     lit.style.height = y + "px"; lamp.style.top = y + "px"; lamp.style.opacity = p > 0 ? 1 : 0;
     for (const st of stops) { const d = st.querySelector(".dot"); st.classList.toggle("on", RM || st.offsetTop + d.offsetTop + d.offsetHeight / 2 <= y + 4); } }
   addEventListener("scroll", upd, {passive: true}); addEventListener("resize", upd); upd();
+})();
+
+// the shloka: a yantra drawn line by line, a lotus that turns, a diya, and rising embers
+(() => {
+  const sec = document.getElementById("shloka"), svg = document.getElementById("yantra"), NS = "http://www.w3.org/2000/svg", C = 500;
+  const el = (tag, a, parent = svg) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); parent.appendChild(e); return e; };
+  let d = 0; const step = () => (d += .18).toFixed(2) + "s";
+  const line = (tag, a, cls = "", parent = svg) => el(tag, Object.assign({class: "ln " + cls, pathLength: 1, style: "--d:" + step()}, a), parent);
+  // bhupura: the square enclosure with four gates
+  const g = 92, o = 430, i = 405, w = 70;
+  const gate = (r) => `M${C-r} ${C-r} L${C-w} ${C-r} L${C-w} ${C-r-g/3} L${C+w} ${C-r-g/3} L${C+w} ${C-r} L${C+r} ${C-r} L${C+r} ${C-w} L${C+r+g/3} ${C-w} L${C+r+g/3} ${C+w} L${C+r} ${C+w} L${C+r} ${C+r} L${C+w} ${C+r} L${C+w} ${C+r+g/3} L${C-w} ${C+r+g/3} L${C-w} ${C+r} L${C-r} ${C+r} L${C-r} ${C+w} L${C-r-g/3} ${C+w} L${C-r-g/3} ${C-w} L${C-r} ${C-w} Z`;
+  line("path", {d: gate(o)}); line("path", {d: gate(i)}, "f");
+  // three circles
+  for (const r of [370, 352, 336]) line("circle", {cx: C, cy: C, r}, r === 352 ? "f" : "");
+  // petals
+  const petal = (r0, r1, wd) => `M0 ${-r0} C${wd} ${-r0 - (r1 - r0) * .35} ${wd * .7} ${-r1 + (r1 - r0) * .25} 0 ${-r1} C${-wd * .7} ${-r1 + (r1 - r0) * .25} ${-wd} ${-r0 - (r1 - r0) * .35} 0 ${-r0}Z`;
+  const ring = (n, r0, r1, wd, cls, spin) => { const gg = el("g", {class: spin}); const pth = petal(r0, r1, wd);
+    for (let k = 0; k < n; k++) { const p = line("path", {d: pth, transform: `translate(${C} ${C}) rotate(${k * 360 / n})`}, cls, gg); if (k) p.style.setProperty("--d", (d - .18 + k * .05).toFixed(2) + "s"); } d += n * .05; };
+  ring(16, 236, 330, 44, "", "spin"); ring(8, 150, 236, 62, "h", "spin r");
+  // a ring of small dots, like rice-flour kolam points
+  const dots = el("g", {class: "dots spin"}); for (let k = 0; k < 48; k++) { const a = k / 48 * Math.PI * 2; el("circle", {cx: C + Math.cos(a) * 344, cy: C + Math.sin(a) * 344, r: 2.2, style: `transition-delay:${(2 + k * .03).toFixed(2)}s`}, dots); }
+  // interlocking triangles and the bindu
+  const tri = (r, up) => { const pts = [0, 1, 2].map(k => { const a = (up ? -90 : 90) + k * 120; return [C + r * Math.cos(a * Math.PI / 180), C + r * Math.sin(a * Math.PI / 180)].join(" "); }); return "M" + pts.join(" L") + " Z"; };
+  line("path", {d: tri(140, true)}); line("path", {d: tri(140, false)}); line("path", {d: tri(92, true)}, "h"); line("path", {d: tri(92, false)}, "h");
+  line("circle", {cx: C, cy: C, r: 40}, "f");
+  el("circle", {class: "bindu", cx: C, cy: C, r: 6});
+  // reveal when the section comes into view
+  let t0 = 0;
+  const io2 = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { sec.classList.add("on"); t0 = performance.now(); io2.disconnect(); } }), {threshold: .3});
+  io2.observe(sec); if (RM) sec.classList.add("on");
+  // embers rising from the diya
+  const cv = document.getElementById("embers"), x = cv.getContext("2d"); let W, H, P = [], vis = false;
+  const size = () => { const r = devicePixelRatio > 1 ? 2 : 1; W = sec.clientWidth; H = sec.clientHeight; cv.width = W * r; cv.height = H * r; x.setTransform(r, 0, 0, r, 0, 0); };
+  const spawn = () => { const dy = sec.querySelector(".diya").getBoundingClientRect(), sr = sec.getBoundingClientRect();
+    return {x: dy.left - sr.left + dy.width / 2 + (Math.random() - .5) * 18, y: dy.top - sr.top + 18, vx: (Math.random() - .5) * .35, vy: -.5 - Math.random() * .9, life: 0, max: 160 + Math.random() * 180, r: .8 + Math.random() * 1.8, ph: Math.random() * 6}; };
+  new IntersectionObserver(es => vis = es[0].isIntersecting).observe(sec);
+  function tick() {
+    if (vis && sec.classList.contains("on") && performance.now() - t0 > 3600) {
+      if (P.length < 70 && Math.random() < .5) P.push(spawn());
+      x.clearRect(0, 0, W, H);
+      for (const p of P) { p.life++; p.x += p.vx + Math.sin((p.life + p.ph * 40) / 28) * .35; p.y += p.vy; const k = 1 - p.life / p.max;
+        x.fillStyle = `rgba(255,${170 + 60 * k | 0},${80 + 60 * k | 0},${(.85 * k).toFixed(3)})`; x.shadowColor = "rgba(255,170,60,.9)"; x.shadowBlur = 8;
+        x.beginPath(); x.arc(p.x, p.y, p.r * (0.6 + .4 * k), 0, 7); x.fill(); }
+      P = P.filter(p => p.life < p.max);
+    }
+    requestAnimationFrame(tick);
+  }
+  size(); addEventListener("resize", size); if (!RM) requestAnimationFrame(tick);
 })();
 </script>
 </body></html>
