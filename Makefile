@@ -23,7 +23,7 @@ paper: summary
 	$(PY) paper/make_tables.py
 	cd paper && latexmk -pdf -interaction=nonstopmode main.tex && cp main.pdf ../docs/DairyGuard_Research_Paper.pdf
 book: figures
-	cd book && latexmk -pdf -interaction=nonstopmode monograph.tex && cp monograph.pdf ../docs/DairyGuard_Monograph.pdf
+	cd book && $(PY) cover.py && latexmk -pdf -interaction=nonstopmode monograph.tex && cp monograph.pdf ../docs/DairyGuard_Monograph.pdf
 demo: summary
 	cd demo && $(PY) build_web.py
 all: test validate summary figures paper book demo

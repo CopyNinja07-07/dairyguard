@@ -2,6 +2,9 @@
 \usepackage[a4paper,left=28mm,right=28mm,top=28mm,bottom=26mm,headsep=8mm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{mathptmx}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{pdfpages}
+\usepackage{tikz}
 \usepackage[letterspace=120]{microtype}
 \usepackage{amsmath,amssymb,amsthm,bm}
 \usepackage{graphicx}
@@ -11,7 +14,11 @@
 \definecolor{dgblue}{HTML}{1B3A5C}
 \definecolor{dghead}{HTML}{EDF0F4}
 \definecolor{dgpale}{HTML}{F3F5F8}
-\usepackage[font={small},labelfont={bf,color=dgblue},labelsep=space,justification=justified,singlelinecheck=false,figurename=Figure,skip=5pt]{caption}
+\definecolor{dgnight}{HTML}{0B1320}
+\definecolor{dgamber}{HTML}{F2B544}
+\definecolor{dgamberdk}{HTML}{B9760F}
+\definecolor{dggrey}{HTML}{5B6573}
+\usepackage[font={small,sf},labelfont={bf,color=dgamberdk},labelsep=quad,justification=justified,singlelinecheck=false,figurename=Figure,skip=6pt]{caption}
 \captionsetup[table]{position=top}
 \usepackage{titlesec,titletoc}
 \usepackage{enumitem}
@@ -31,21 +38,23 @@
 \input{../paper/tables.tex}
 \graphicspath{{../paper/fig/}{fig/}}
 % headings
-\titleformat{\chapter}[display]{\normalfont\color{dgblue}}{\fontsize{13}{15}\selectfont\textls[200]{\MakeUppercase{\chaptertitlename}}~\thechapter}{6pt}{\fontsize{24}{29}\selectfont\bfseries}[\vspace{4pt}{\titlerule[1.2pt]}]
-\titlespacing*{\chapter}{0pt}{10pt}{26pt}
-\titleformat{\section}{\needspace{5\baselineskip}\normalfont\large\bfseries\color{dgblue}}{\thesection}{0.8em}{}
-\titleformat{\subsection}{\needspace{4\baselineskip}\normalfont\normalsize\bfseries}{\thesubsection}{0.8em}{}
-\titlespacing*{\section}{0pt}{3.2ex plus .6ex}{1.4ex}
-\titlespacing*{\subsection}{0pt}{2.2ex plus .4ex}{0.8ex}
+\titleformat{\chapter}[display]{\normalfont\sffamily\color{dgnight}}{\fontsize{11}{13}\selectfont\bfseries\color{dgamberdk}\textls[250]{\MakeUppercase{\chaptertitlename}}\hspace{6pt}{\fontsize{40}{40}\selectfont\color{dgamber}\thechapter}}{8pt}{\fontsize{27}{32}\selectfont\bfseries}[\vspace{6pt}{\color{dgamber}\rule{48pt}{3pt}}]
+\titlespacing*{\chapter}{0pt}{0pt}{22pt}
+\titleformat{\section}{\needspace{5\baselineskip}\normalfont\sffamily\large\bfseries\color{dgnight}}{\color{dgamberdk}\thesection}{0.8em}{}
+\titleformat{\subsection}{\needspace{4\baselineskip}\normalfont\sffamily\normalsize\bfseries\color{dgblue}}{\thesubsection}{0.8em}{}
+\titlespacing*{\section}{0pt}{3.4ex plus .6ex}{1.4ex}
+\titlespacing*{\subsection}{0pt}{2.4ex plus .4ex}{0.8ex}
+\newcommand{\hook}[1]{{\noindent\fontsize{14}{20}\selectfont\itshape\color{dggrey}#1\par}\vspace{14pt}}
+\newcommand{\pullquote}[1]{\par\vspace{8pt}\noindent\begin{tikzpicture}\node[text width=0.86\textwidth,align=left,inner sep=0pt]{\fontsize{14.5}{20}\selectfont\itshape\color{dgnight}#1};\draw[dgamber,line width=3pt]([xshift=-10pt]current bounding box.north west)--([xshift=-10pt]current bounding box.south west);\end{tikzpicture}\par\vspace{10pt}}
 \setlist{nosep,leftmargin=1.5em,topsep=3pt}
 \setlength{\parindent}{1.2em}
 \renewcommand{\topfraction}{0.9}\renewcommand{\bottomfraction}{0.6}\renewcommand{\textfraction}{0.08}\renewcommand{\floatpagefraction}{0.85}
 \setcounter{topnumber}{3}\setcounter{totalnumber}{5}
 \pagestyle{fancy}\fancyhf{}
-\fancyhead[LE]{\small\thepage\hfill\color{dgblue}\textit{Beyond the 4\,\textdegree C Alarm}}
-\fancyhead[RO]{\small\color{dgblue}\textit{\nouppercase{\leftmark}}\hfill\color{black}\thepage}
+\fancyhead[LE]{\small\sffamily\bfseries\thepage\hfill\mdseries\color{dggrey}Beyond the 4\,\textdegree C Alarm}
+\fancyhead[RO]{\small\sffamily\color{dggrey}\nouppercase{\leftmark}\hfill\color{black}\bfseries\thepage}
 \renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
-\renewcommand{\headrulewidth}{0.4pt}\renewcommand{\headrule}{{\color{dgblue!40}\hrule height\headrulewidth}}
+\renewcommand{\headrulewidth}{0pt}
 \fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
 \newcommand{\CSL}{\mathrm{CSL}}
 \newcommand{\SL}{\mathrm{SL}}
@@ -53,31 +62,14 @@
 \newcommand{\dd}{\,\mathrm{d}}
 \newcommand{\degC}{\,\textdegree C}
 \newcommand{\secref}[1]{Sect.~\ref{#1}}
-\newtcolorbox{summary}{enhanced,breakable,colback=dgpale,colframe=dgblue,boxrule=0.5pt,leftrule=2.5pt,arc=0pt,left=8pt,right=8pt,top=5pt,bottom=5pt,fontupper=\small,before skip=6pt,after skip=12pt,title={\small\bfseries Summary},coltitle=dgblue,colbacktitle=dgpale,attach title to upper={\enspace}}
-\newtcolorbox{keyresults}[1][]{enhanced,breakable,colback=white,colframe=dgblue,boxrule=0.6pt,arc=1.5pt,left=8pt,right=8pt,top=5pt,bottom=5pt,fontupper=\small,before skip=8pt,after skip=10pt,title={\small\bfseries Principal findings#1},coltitle=white,colbacktitle=dgblue}
+\newtcolorbox{summary}{enhanced,breakable,colback=white,colframe=white,boxrule=0pt,borderline west={3pt}{0pt}{dgamber},arc=0pt,left=10pt,right=6pt,top=4pt,bottom=4pt,fontupper=\small\sffamily,before skip=4pt,after skip=14pt,title={\sffamily\bfseries\scriptsize\textls[200]{KEY POINTS}},coltitle=dgamberdk,colbacktitle=white,toptitle=0pt,bottomtitle=2pt}
+\newtcolorbox{keyresults}[1][]{enhanced,breakable,colback=dgnight,colframe=dgnight,coltext=white,boxrule=0pt,arc=2pt,left=10pt,right=10pt,top=6pt,bottom=8pt,fontupper=\small\sffamily,before skip=8pt,after skip=12pt,title={\sffamily\bfseries\scriptsize\textls[200]{PRINCIPAL FINDINGS}#1},coltitle=dgamber,colbacktitle=dgnight}
+\newcommand{\stat}[3]{\begin{tcolorbox}[enhanced,colback=dgpale,colframe=dgpale,arc=2pt,boxrule=0pt,borderline north={3pt}{0pt}{dgamber},left=8pt,right=8pt,top=8pt,bottom=8pt,height=3.25cm,valign=top]{\sffamily\fontsize{23}{27}\selectfont\bfseries\color{dgnight}#1\par}\vspace{4pt}{\sffamily\small\bfseries\color{dgamberdk}#2\par}\vspace{3pt}{\raggedright\sffamily\footnotesize\color{dggrey}#3\par}\end{tcolorbox}}
 \theoremstyle{definition}\newtheorem{definition}{Definition}[chapter]
 \hypersetup{pdftitle={Beyond the 4 °C Alarm: What a Temperature Log Can and Cannot Tell About Milk Spoilage},pdfauthor={Suryansh Pratap Singh}}
 \begin{document}
 \frontmatter
-\begin{titlepage}
-\newgeometry{left=28mm,right=28mm,top=40mm,bottom=30mm}\setlength{\parindent}{0pt}
-{\color{dgblue}\hrule height 2pt}\vspace{4pt}{\color{dgblue}\hrule height 0.5pt}
-\vspace{36mm}
-{\fontsize{34}{40}\selectfont\bfseries\color{dgblue} Beyond the 4\,\textdegree C Alarm\par}
-\vspace{8mm}
-{\fontsize{16}{21}\selectfont What a Temperature Log Can and Cannot Tell\\ About Milk Spoilage\par}
-\vspace{10mm}
-{\large A loss-budget study of cold-chain monitoring\par}
-\vfill
-{\Large Suryansh Pratap Singh\par}
-\vspace{3mm}
-{\small Shri Mata Vaishno Devi University, Katra, Jammu and Kashmir, India\par}
-\vspace{14mm}
-{\color{dgblue}\hrule height 0.5pt}\vspace{4pt}{\color{dgblue}\hrule height 2pt}
-\vspace{4mm}
-{\small Monograph \hfill October 2026 \hfill \href{https://github.com/CopyNinja07-07/dairyguard}{github.com/CopyNinja07-07/dairyguard}\par}
-\restoregeometry
-\end{titlepage}
+\includepdf[pages=1,pagecommand={\thispagestyle{empty}}]{cover.pdf}
 
 \thispagestyle{empty}
 \vspace*{\fill}
@@ -93,6 +85,30 @@ A cold-chain monitor records temperature, but whether milk spoils also depends o
 The question is answered with an open Monte Carlo benchmark of 240\,000 simulated deliveries. A Baranyi--Roberts growth model with a square-root temperature law stands in for real milk, and a closed-form Gompertz shelf-life accumulator, cheap enough to run on a microcontroller, tries to predict it from noisy, sampled records. Every rule is judged by its ability to rank spoiled above unspoiled trips, measured by the area under the receiver operating characteristic curve (AUC), with paired bootstrap comparisons on identical trips and an oracle that knows each trip's biology. Parameters are tied to published experiments and to the ComBase database. The model reproduces a published fluctuating-temperature experiment within \NumLinErrAbs\,\%, fits \NumCbNfit{} ComBase records of natural spoilage flora, and predicts \NumLisHeld{} held-out growth rates of \textit{Listeria monocytogenes} with an accuracy factor of \NumLisAccHeld.
 
 Unobserved biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC, an order of magnitude more than anything an engineer controls. A platinum resistance sensor instead of a low-cost digital probe gains at most \NumBaseSensMax; hourly sampling is indistinguishable from minute-by-minute sampling in \NumBaseSampNull{} of 12 settings; and a growth-model score improves on a plain degree-hour count by at most \NumLagGainMax. A Monte Carlo probability is far better calibrated than a single alarm. The same pattern holds in five parameter sets, including a hazard case study for \textit{Listeria}. For this problem, the accuracy of a temperature monitor is limited by biology, not by the thermometer, and effort is better spent on measuring the product than on measuring its temperature more precisely.
+
+
+\chapter*{The study in numbers}
+\addcontentsline{toc}{chapter}{The study in numbers}
+\hook{Every cold-chain monitor makes mistakes. This study measured where they come from.}
+\noindent\begin{minipage}[t]{0.485\textwidth}
+\stat{240\,000}{simulated deliveries}{five parameter sets, 12 settings each, every trip read with every sensor, sampling rule and score}
+\stat{\NumBaseGapMin--\NumBaseGapMax}{AUC lost to unseen biology}{strain, starting load and lag: what no thermometer can measure}
+\stat{\NumBaseSampNull\ of 12}{settings where hourly = every minute}{reading the temperature once an hour lost nothing measurable}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+\stat{$\le$\,\NumBaseSensMax}{AUC gained by a lab-grade sensor}{a PT1000 platinum probe against a low-cost DS18B20}
+\stat{$\le$\,\NumLagGainMax}{AUC a growth model adds over degree-hours}{a simple degree-hour count captures most of the value}
+\stat{\NumBaseEceMMin--\NumBaseEceMMax}{calibration error of a probability}{against \NumBaseEcePMin--\NumBaseEcePMax\ for a single red-or-green alarm}
+\end{minipage}
+
+\vspace{-4pt}\section*{Five things to take away}
+\begin{enumerate}[leftmargin=1.8em,itemsep=2pt]
+\item \textbf{The thermometer is not the bottleneck.} The biology inside the carton costs about ten times more accuracy than any choice of sensor or sampling interval.
+\item \textbf{Cheap hardware is enough.} A $\pm0.5$\degC{} digital probe read every 15--60 minutes loses almost nothing.
+\item \textbf{Simple rules come close, if they are the right ones.} Degree-hours nearly match a growth model; the maximum temperature and time above 8\degC{} do not.
+\item \textbf{Say ``how likely'', not ``spoiled''.} A probability is honest about what the log cannot know and is far better calibrated than an alarm.
+\item \textbf{Measure the milk, not just the air around it.} The next gain in accuracy will come from data on the product itself.
+\end{enumerate}
 
 \tableofcontents
 \listoffigures
@@ -128,12 +144,13 @@ ECE & expected calibration error & --\\
 \mainmatter
 %======================================================================
 \chapter{Introduction}\label{ch:intro}
+\hook{A carton of milk carries two histories: the temperature it has been through, and the bacteria it started with. A logger records only the first.}
 \section{The problem}
 Milk is perishable in a precise way. The psychrotrophic bacteria that spoil pasteurised milk grow slowly at 4\degC{} and several times faster at 13\degC, and every hand-off between the dairy, the truck, the depot, the shop and the household refrigerator is an opportunity for the temperature to drift. Predictive microbiology turns such a temperature history into an estimate of growth: a primary model describes the count against time, a secondary model describes the growth rate against temperature, and a tertiary model applies both along a measured history \cite{perez2013,tarlak2023,stavropoulou2019}.
 
 Temperature loggers are now cheap enough to travel with every crate \cite{badiamelis2018,mercier2017,jedermann2014}, and dynamic shelf-life labels, which replace a printed date by a prediction from the log, have been proposed for dairy and meat \cite{koutsoumanis2005,goransson2018,kim2020}. A monitor of this kind will be trusted to decide which crates are sold first, which are tested and which are discarded. It must therefore come with an honest account of how often it is wrong, and why.
 
-This monograph answers one question: \emph{given only a temperature record, how well can an inexpensive calculation tell whether milk has passed a limit, and what prevents it from doing better?}
+\pullquote{Given only a temperature record, how well can an inexpensive calculation tell whether milk has passed a limit, and what prevents it from doing better?}
 
 \section{Why the question matters}
 Post-pasteurisation contamination with psychrotrophic bacteria causes roughly half to three-fifths of fluid-milk spoilage in the United States \cite{martin2021}, and Gram-negative psychrotrophs that enter after pasteurisation are the main reason high-temperature short-time milk spoils early \cite{ranieri2009}. Foodborne disease more broadly causes an estimated 600 million illnesses and 420\,000 deaths a year, 175\,000 of them in the WHO South-East Asia region \cite{who2015}. These deaths are dominated by agents other than milk-borne bacteria and are quoted only as context; this work models growth, not disease.
@@ -156,6 +173,7 @@ Chapter~\ref{ch:background} reviews the microbiology of milk spoilage, predictiv
 
 %======================================================================
 \chapter{Background}\label{ch:background}
+\hook{Decades of predictive microbiology tell us how fast bacteria grow at a given temperature. Far less is known about how well that knowledge works inside a real monitor.}
 \begin{summary}
 Pasteurised milk spoils mainly through psychrotrophic bacteria introduced after pasteurisation. Their growth is described by primary and secondary models fitted under constant conditions and applied along changing temperature histories. Existing work quantifies how variable spoilage is and which unknown input matters most; none measures what is left to predict once the temperature has been logged.
 \end{summary}
@@ -198,6 +216,7 @@ Product-temperature estimation \cite{zou2023} & vehicle data & $Q_{10}$ & ignore
 
 %======================================================================
 \chapter{Models}\label{ch:models}
+\hook{Three equations carry the whole study: one for how temperature sets the growth rate, one for real milk, and one cheap enough to run on a low-cost microcontroller.}
 \begin{summary}
 A square-root law gives the growth rate; a Baranyi--Roberts model stands in for real milk; and a Gompertz accumulator, deliberately a different model, is what the monitor computes. The accumulator reduces a temperature record to the integral of the growth rate divided by a fixed budget, which is why a log can be read cheaply and why the budget, which carries the biology, limits accuracy.
 \end{summary}
@@ -248,6 +267,7 @@ and, by Eq.~\eqref{eq:K},
 \end{equation}
 The monitor integrates the growth rate along the log and compares the result with a fixed budget. In practice $\SL(T)$ is stored as a table on a 0.01\degC{} grid, and each reading costs one table look-up and one addition.
 
+\pullquote{The log measures how much growth the temperature allowed. It cannot measure how much growth the milk could afford.}
 Equation~\eqref{eq:cslint} separates what the record can supply from what it cannot. The integral is a property of the temperature history and is measured by the logger. The budget $K$ and the rate scale $b^2$ are properties of the bacteria in the carton: their starting load, their physiological state and their strain. No temperature record contains them.
 
 \section{Degree-hours as an approximation}
@@ -267,6 +287,7 @@ Figure~\ref{fig:story} shows the central difficulty on one 72-h delivery. Three 
 
 %======================================================================
 \chapter{The benchmark}\label{ch:bench}
+\hook{In a real cold chain nobody knows the truth for every carton. In a simulated one, we always do.}
 \begin{summary}
 Each simulated trip has a true temperature history and a true biology. The reference model labels it spoiled or not; the monitor sees only a sensed, sampled record. Five parameter sets, 12 settings each and 4\,000 trips per setting give 240\,000 trips, each read with every sensor, sampling rule and score.
 \end{summary}
@@ -336,6 +357,7 @@ For every run and setting: (1) generate 4\,000 temperature histories; (2) simula
 
 %======================================================================
 \chapter{Statistical methods}\label{ch:stats}
+\hook{A small difference between two monitors is real only if it survives on the same trips, again and again.}
 \begin{summary}
 Rules are compared by AUC, which measures ranking and does not depend on the constructed prevalence. Differences between rules are tested on identical trips with a paired bootstrap, and calibration is measured by the Brier score and the expected calibration error.
 \end{summary}
@@ -386,6 +408,7 @@ where $B_f=1$ means no bias and $A_f-1$ is the typical relative error.
 
 %======================================================================
 \chapter{Validation against real data}\label{ch:val}
+\hook{A simulation earns trust only when it meets real data and survives.}
 \begin{summary}
 The model reproduces a published fluctuating-temperature experiment within \NumLinErrAbs\,\%, fits natural spoilage flora with the same temperature shape as inoculated isolates but a lower level, and predicts held-out \textit{Listeria} growth rates without bias.
 \end{summary}
@@ -414,6 +437,7 @@ A ComBase search with milk as the food matrix returned about 480 records, of whi
 
 %======================================================================
 \chapter{Results}\label{ch:results}
+\hook{Remove one piece of information at a time, and watch where the accuracy goes.}
 \begin{keyresults}
 \begin{itemize}[leftmargin=1.1em]
 \item Unobserved biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC in the baseline run, an order of magnitude more than any sensor or sampling choice.
@@ -432,6 +456,7 @@ An oracle that knows each trip's biology and temperature separates spoiled from 
 \begin{figure}[!htbp]\centering\includegraphics[width=0.66\textwidth]{budget}
 \caption[Loss budget]{Loss budget for (a) a low-mass pouch and (b) an insulated crate (limit $3\times10^4$\,CFU\,mL$^{-1}$, $cv=0.10$). Grey: oracle with true biology and temperature. Blue: the growth-model score as information is removed step by step. Bars: 95\,\% bootstrap intervals}\label{fig:budget}\end{figure}
 
+\pullquote{A better thermometer is a poor way to improve a spoilage estimate.}
 \section{Against simple rules (RQ3)}
 On identical trips, the growth-model score beats time above 5\degC{} in \NumBaseFiveSig{} of 12 settings and the maximum temperature in \NumBaseMaxSig{} (Table~\ref{tab:auc}, Fig.~\ref{fig:methods}). Against degree-hours above 4\degC, a rule that needs no growth model, the gain is positive with an interval excluding zero in \NumBaseGainSig{} of 12 settings, but small: \NumBaseGainMin--\NumBaseGainMax{} AUC in the baseline run and up to \NumLagGainMax{} when extra lag is present. This is the behaviour predicted in Chapter~\ref{ch:models}: degree-hours are the linear part of the same integral, and the growth model gains only on the large excursions where the quadratic part matters. Time above 8\degC{} and the maximum temperature discard the duration or the depth of an excursion and rank trips worst.
 
@@ -464,6 +489,7 @@ A single alarm with nominal parameters is badly calibrated against the construct
 
 %======================================================================
 \chapter{\textit{Listeria monocytogenes}: a hazard case study}\label{ch:listeria}
+\hook{For a pathogen that still grows in the refrigerator, a warm hour is even more expensive. The lesson stays the same.}
 \begin{summary}
 For a pathogen with a minimum growth temperature close to refrigeration, a warm hour costs more, but the loss budget has the same shape: biology first, instruments a distant second.
 \end{summary}
@@ -481,6 +507,7 @@ This case study concerns growth, not illness. Risk of illness depends on dose, v
 
 %======================================================================
 \chapter{Monitor design and software}\label{ch:design}
+\hook{What the results mean for anyone who builds, buys or trusts a cold-chain monitor.}
 \begin{summary}
 The results translate into a short list of design rules. The estimator runs on a microcontroller, a browser demonstrator runs the same kernel, and the whole study is reproducible from one command.
 \end{summary}
@@ -524,6 +551,7 @@ A public demonstrator runs the same kernel in the browser (\url{https://copyninj
 
 %======================================================================
 \chapter{Discussion}\label{ch:disc}
+\hook{Where should the next rupee of effort go?}
 \section{Where effort belongs}
 In every run, what the thermometer cannot observe costs about an order of magnitude more accuracy than any choice of sensor or sampling interval. Equation~\eqref{eq:cslint} explains why: a log measures the integral of the growth rate well, but the rate scale and the budget against which the integral is compared vary from carton to carton. A more accurate thermometer is therefore a poor way to improve a spoilage estimate, and a low-cost probe sampled every 15--60\,min loses little under the assumptions made here. Effort is better spent on the biology: measuring the starting load or a proxy of handling history, learning the lag and strain spread of the product at hand, and reporting a probability instead of a verdict.
 
@@ -546,7 +574,9 @@ For spoilage flora a warm hour is costly but the baseline rate is already high; 
 
 %======================================================================
 \chapter{Conclusions}\label{ch:concl}
-A temperature log can say much about how much growth the milk \emph{could} have had, and little about how much it \emph{did}. In an open benchmark of 240\,000 trips anchored to published and ComBase data, unobserved biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC; a degree-hour count comes within \NumLagGainMax{} of a growth model; sensor quality and sampling interval matter little; and a Monte Carlo probability is far better calibrated than an alarm. The answers to the four research questions are therefore:
+\hook{Measure the milk, not just the air around it.}
+\pullquote{A temperature log can say much about how much growth the milk could have had, and little about how much it did.}
+In an open benchmark of 240\,000 trips anchored to published and ComBase data, unobserved biology costs \NumBaseGapMin--\NumBaseGapMax{} AUC; a degree-hour count comes within \NumLagGainMax{} of a growth model; sensor quality and sampling interval matter little; and a Monte Carlo probability is far better calibrated than an alarm. The answers to the four research questions are therefore:
 \begin{enumerate}[label=RQ\arabic*.,leftmargin=3em]
 \item Biology the log cannot see is the dominant loss in every run.
 \item A better sensor or faster sampling recovers at most about 0.02 AUC.
@@ -591,4 +621,6 @@ Every number quoted in the text is read from the result files by a script and wr
 \setlength{\itemsep}{1pt}
 \input{bibitems.tex}
 \end{thebibliography}}
+\clearpage
+\includepdf[pages=1,pagecommand={\thispagestyle{empty}}]{backcover.pdf}
 \end{document}
