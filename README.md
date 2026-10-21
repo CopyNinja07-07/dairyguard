@@ -274,6 +274,8 @@ dairyguard/
 - Extend the growth records to more spoilage organisms.
 - Use full growth curves, not only maximum rates, to test the waking-up behaviour after temperature jumps.
 
+An extended study, which explains these results from the mathematics of growth under changing temperature, is in preparation.
+
 ## Glossary
 
 | Term | Plain meaning |
