@@ -1,6 +1,65 @@
 \newcommand{\DatNFull}{373}
 \newcommand{\DatNLis}{102}
 \newcommand{\DatNSp}{51}
+\newcommand{\TabParams}{{\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.7cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash}p{6.6cm}@{}}
+\caption[Model parameters and provenance]{Model parameters, their values and their provenance, as recorded in \texttt{data/params.csv}. SOURCED: taken from a cited study; FITTED: estimated from data in this work; ASSUMED: no direct source}\label{tab:params}\\\toprule\rowcolor{dghead}
+Parameter & Value & Unit & Provenance\\\midrule\endfirsthead
+\toprule\rowcolor{dghead}Parameter & Value & Unit & Provenance\\\midrule\endhead
+\bottomrule\endfoot
+Tmin\_\allowbreak{}mean & -7.7 & degC & SOURCED: Neumeyer 1995 thesis Table 4.9 (-7.7 C, 68 growth curves, broth and milk). Literature mean 265.4 K = -7.75 C. Lin 2016 own data give -9.15 C\\
+Tmin\_\allowbreak{}sd & 1.5 & degC & ASSUMED. Neumeyer Table 5.1: $\pm$0.7 K is the 95\% CI of the MEAN over 64 sources; their SD is 2.83 K but includes method noise. 1.5 K lies between the two and should be replaced by a measured strain SD\\
+b\_\allowbreak{}nominal & 0.030 & sqrt(1/h)/degC (ln basis) & SOURCED, two independent sources agree: Neumeyer 1995 Table 4.9 (b=0.00465 on sqrt(1/generation time in min)) converts to 0.030; Lin et al. 2016 (growth rates 0.056/0.17/0.46 per h at 4/15/29 C, log10 basis) gives 0.027\\
+b\_\allowbreak{}cv & 0 / 0.10 / 0.25 & fraction & ASSUMED sensitivity axis, not measured\\
+h0\_\allowbreak{}truth & U(2.5,5.0) & dimensionless & SOURCED RANGE from Lin 2016 Table 2: lag x growth rate (ln basis) = 3.8, 5.0 and 3.0 at 4, 15, 29 C. Inoculated UHT milk, so natural contamination may differ\\
+h0\_\allowbreak{}estimator & 3.8 & dimensionless & SOURCED: Lin 2016 at 4 C (lag 29.5 h)\\
+log10N0\_\allowbreak{}truth & U(1.5,2.0) & log10 CFU/mL & ASSUMED. Martin et al. 2021 notes post-pasteurisation contamination is often very low (1 to 50 cells per 100 mL), so this is probably high and needs measuring\\
+log10N0\_\allowbreak{}estimator & 1.7 & log10 CFU/mL & ASSUMED\\
+log10Nmax & 9.0 & log10 CFU/mL & ASSUMED (typical order for milk psychrotrophs)\\
+Nlimit\_\allowbreak{}A & 3e4 & CFU/mL & SOURCED as a number: FSSAI Appendix B v2 (04.11.2024) Table 2A, pasteurized milk APC m=3x10\^{}4/mL. A process-hygiene criterion used here as a quality marker. US PMO limit 20,000 CFU/mL (Martin 2021)\\
+Nlimit\_\allowbreak{}B & 1e6 & CFU/mL & SUPPORTED: about 10\^{}6 CFU/mL is where quality deteriorates (Martin et al. 2021, citing Ranieri \& Boor 2009; Lin 2016 citing Momani \& Natsheh 2012)\\
+label\_\allowbreak{}shelf\_\allowbreak{}life & 83 (A) / 113 (B) & h & DESIGN: time for the estimator at nominal parameters held at 4 C to reach the limit; set for label balance before any method comparison\\
+events\_\allowbreak{}per\_\allowbreak{}trip & Poisson, 1 per 144 h of horizon, max 8 & count & ASSUMED\\
+event\_\allowbreak{}peak\_\allowbreak{}ambient & 12 / 14.3 / 17.5 / 30.7 (w .30/.25/.30/.15) & degC & ASSUMED: representative excursion peaks for transport and retail handling\\
+event\_\allowbreak{}duration & lognormal median 60 min, sigma 0.8, clip 10-480 & min & ASSUMED\\
+product\_\allowbreak{}time\_\allowbreak{}constant & low-mass U(5,20) min; insulated U(1,4) h & h & ASSUMED; to be measured on real packs\\
+base\_\allowbreak{}temp & U(2.5,5.0) & degC & ASSUMED\\
+shift\_\allowbreak{}lag\_\allowbreak{}fraction & 0 (baseline) / 0.25 (structure-risk run) & fraction of h0 & SOURCED VALUE, ASSUMED IMPLEMENTATION: Zwietering et al. 1994 (additional lag is one quarter of the lag at the new temperature, Lactobacillus plantarum); Lin 2016 saw extra lag after shifts in milk\\
+sensor\_\allowbreak{}DS18B20 & bias U(-0.5,0.5), noise sd 0.05, res 0.0625 & degC & accuracy $\pm$0.5 C from the manufacturer datasheet; noise ASSUMED\\
+sensor\_\allowbreak{}PT1000\_\allowbreak{}MAX31865 & bias U(-0.15,0.15), noise sd 0.03, res 0.03125 & degC & accuracy $\pm$0.15 C (IEC 60751 Class A tolerance at 0 C); noise ASSUMED\\
+combase\_\allowbreak{}fit & b 0.0256, Tmin -6.6 C (n=50 robust); log resid sd 0.16 &  & EMPIRICAL: 51 ComBase records (Tasmanian Institute of Agriculture, pasteurised milk, 2.7-14.9 C); one record with an implausible temperature removed; Neumeyer/Lin parameters overpredict these by 1.6x\\
+runs\_\allowbreak{}reported & baseline; extra lag; low starting load; ComBase-fitted milk flora; Listeria &  & all use seeds fixed in src/benchmark\_\allowbreak{}v2.py; 4000 trips per setting\\
+lis\_\allowbreak{}b & 0.0235 & ln basis & FITTED: 46 ComBase records of Listeria monocytogenes in milk, conditions not specified, 2-16 C; bootstrap 95\% 0.0203-0.0265. Held-out check on 53 records: bias factor 1.02, accuracy factor 1.37 (split by condition, not by study)\\
+lis\_\allowbreak{}Tmin & -2.3 & degC & FITTED: same fit; bootstrap 95\% -4.2 to -0.9 C\\
+lis\_\allowbreak{}Tmin\_\allowbreak{}sd & 1.0 & K & ASSUMED: of the order of the bootstrap standard error (about 0.8 K)\\
+lis\_\allowbreak{}h0 & 3.0 (estimator); U(2.0,4.5) (truth) & dimensionless & ASSUMED: no Listeria lag data were used; range borrowed from Pseudomonas\\
+lis\_\allowbreak{}N0 & U(-1.25,-0.75) narrow; estimator -1.0 & log10 CFU/mL & ASSUMED: about 0.06-0.18 cells per mL. Kept narrow on purpose: the +0.5 log label sits at -0.5, so a wider start range would put some trips above the label at time zero\\
+lis\_\allowbreak{}labels & +0.5 log10 (A) and +1 log10 (B) growth over starting load; horizons 100 h and 202 h &  & ASSUMED round-number labels, NOT regulatory limits (FSSAI Table 2B requires absence in 25 mL)\\
+\end{longtable}}}
+
+\newcommand{\TabSpRecords}{\begin{table}[!htbp]\centering\footnotesize
+\caption{ComBase records of aerobic spoilage bacteria in pasteurised milk (Tasmanian Institute of Agriculture; 51 records). $\mu_{\max}$: maximum growth rate in decimal-logarithm units per hour}\label{tab:dsp}
+\begin{tabular}{@{}cc|cc|cc@{}}\toprule\rowcolor{dghead}
+$T$/\textdegree C & $\mu_{\max}$/h$^{-1}$ & $T$/\textdegree C & $\mu_{\max}$/h$^{-1}$ & $T$/\textdegree C & $\mu_{\max}$/h$^{-1}$\\\midrule
+2.7 & 0.0171 & 6.8 & 0.0242 & 10.7 & 0.0866\\
+3.4 & 0.0139 & 7.3 & 0.0613 & 11.1 & 0.0910\\
+3.4 & 0.0264 & 7.4 & 0.0551 & 11.5 & 0.0852\\
+4.2 & 0.0334 & 8.1 & 0.0605 & 11.5 & 0.1040\\
+4.2 & 0.0313 & 8.2 & 0.0653 & 11.6 & 0.0948\\
+4.3 & 0.0426 & 8.7 & 0.0615 & 12.1 & 0.0961\\
+4.6 & 0.0391 & 8.8 & 0.0706 & 12.5 & 0.1070\\
+4.9 & 0.0360 & 8.8 & 0.0676 & 12.6 & 0.0750\\
+5.0 & 0.0396 & 9.3 & 0.0623 & 12.6 & 0.1270\\
+5.2 & 0.0489 & 9.4 & 0.0826 & 12.7 & 0.1040\\
+5.7 & 0.0492 & 9.6 & 0.0749 & 13.2 & 0.1330\\
+5.8 & 0.0520 & 9.6 & 0.0658 & 13.3 & 0.1110\\
+5.9 & 0.0431 & 9.9 & 0.0859 & 13.8 & 0.1230\\
+5.9 & 0.0519 & 10.1 & 0.0804 & 13.9 & 0.0910\\
+6.3 & 0.0512 & 10.2 & 0.0715 & 14.2 & 0.1310\\
+6.6 & 0.0486 & 10.5 & 0.0813 & 14.8 & 0.1500\\
+6.6 & 0.0562 & 10.7 & 0.0740 & 14.9 & 0.1200\\
+\bottomrule\end{tabular}\end{table}}
+
 \newcommand{\TabAUC}{\begin{table*}[t]\centering\footnotesize
 \caption{AUC of the five scores from a DS18B20 record sampled every 15\,min (baseline run, 4\,000 trips per row). The best score in each row is in bold. The last two columns give the same kinetic score with an ideal sensor sampled every minute, and the oracle that knows each trip's biology}\label{tab:auc}
 \begin{tabular}{@{}lllccccccc@{}}\toprule\rowcolor{dghead}

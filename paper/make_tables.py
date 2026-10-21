@@ -1,6 +1,7 @@
 """Write LaTeX tables and analytic numbers for the manuscript from the result files and the data.
 Run from the repository root: python paper/make_tables.py  ->  paper/tables.tex"""
 import os
+import math
 import pandas as pd
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
@@ -108,7 +109,35 @@ Organism & $n$ & Rate & Curve & None & N/T\\\midrule
 \bottomrule\end{tabular}\end{table}"""
 mac("DatNFull", str(len(full))); mac("DatNLis", str(len(lis))); mac("DatNSp", str(len(sp)))
 
+
+# ---------------------------------------------------------------- monograph appendix tables
+def _tex(x):
+    x = str(x)
+    for a, b in (("\\", "/"), ("&", "\\&"), ("%", "\\%"), ("_", "\\_\\allowbreak{}"), ("#", "\\#"), ("^", "\\^{}"), ("~", "$\\sim$"), ("+/-", "$\\pm$")):
+        x = x.replace(a, b)
+    return x
+par = pd.read_csv(R("data", "params.csv"))
+prow = [f"{_tex(r.parameter)} & {_tex(r.value)} & {_tex(r.unit) if isinstance(r.unit, str) else ''} & {_tex(r.provenance)}\\\\" for r in par.itertuples()]
+tab_params = r"""{\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.7cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash}p{6.6cm}@{}}
+\caption[Model parameters and provenance]{Model parameters, their values and their provenance, as recorded in \texttt{data/params.csv}. SOURCED: taken from a cited study; FITTED: estimated from data in this work; ASSUMED: no direct source}\label{tab:params}\\\toprule\rowcolor{dghead}
+Parameter & Value & Unit & Provenance\\\midrule\endfirsthead
+\toprule\rowcolor{dghead}Parameter & Value & Unit & Provenance\\\midrule\endhead
+\bottomrule\endfoot
+""" + "\n".join(prow) + r"""
+\end{longtable}}"""
+spd = sp.sort_values("temp_C")
+srows = [f"{r.temp_C:.1f} & {r.max_rate_log10_per_h:.4f}" for r in spd.itertuples()]
+per = math.ceil(len(srows) / 3); cols3 = [srows[i * per:(i + 1) * per] for i in range(3)]
+lines = [" & ".join(cols3[j][i] if i < len(cols3[j]) else " & " for j in range(3)) + "\\\\" for i in range(per)]
+tab_sp = r"""\begin{table}[!htbp]\centering\footnotesize
+\caption{ComBase records of aerobic spoilage bacteria in pasteurised milk (Tasmanian Institute of Agriculture; """ + str(len(spd)) + r""" records). $\mu_{\max}$: maximum growth rate in decimal-logarithm units per hour}\label{tab:dsp}
+\begin{tabular}{@{}cc|cc|cc@{}}\toprule
+$T$/\textdegree C & $\mu_{\max}$/h$^{-1}$ & $T$/\textdegree C & $\mu_{\max}$/h$^{-1}$ & $T$/\textdegree C & $\mu_{\max}$/h$^{-1}$\\\midrule
+""" + "\n".join(lines) + r"""
+\bottomrule\end{tabular}\end{table}"""
+
 import re as _re
 def _shade(x): return _re.sub(r"\\toprule(?!\\rowcolor)", r"\\toprule\\rowcolor{dghead}", x)
-T = {"TabAUC": tab_auc, "TabBudget": tab_budget, "TabContrasts": tab_con, "TabCal": tab_cal, "TabDataComp": dat_comp}
+T = {"TabParams": tab_params, "TabSpRecords": tab_sp, "TabAUC": tab_auc, "TabBudget": tab_budget, "TabContrasts": tab_con, "TabCal": tab_cal, "TabDataComp": dat_comp}
 open(R("paper", "tables.tex"), "w").write(_shade("\n".join(out) + "\n" + "\n\n".join("\\newcommand{\\%s}{%s}" % kv for kv in T.items()) + "\n"))

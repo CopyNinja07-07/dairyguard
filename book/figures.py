@@ -115,22 +115,6 @@ def fig_lin():
     fig.savefig(f"{OUT}/lin.png", dpi=220, bbox_inches="tight"); plt.close(fig)
 
 
-def fig_combase():
-    import math
-    d = pd.read_csv(os.path.join(os.path.dirname(__file__), "..", "data", "combase_tasmania_pasteurised_milk.csv"))
-    d = d[d.temp_C < 30]
-    T = np.linspace(2, 16, 100)
-    f = lambda b, T0: ((b * (T - T0)) ** 2) / math.log(10)
-    fig, ax = plt.subplots(figsize=(7.0, 3.3))
-    ax.scatter(d.temp_C, d.max_rate_log10_per_h, s=22, color=MUTED, zorder=3, label="ComBase records (51, natural spoilage flora)")
-    ax.plot(T, f(0.030, -7.7), color=C["deg_hours_4C"], lw=2, label="Neumeyer-anchored model used in Chapter 7 baseline")
-    ax.plot(T, f(0.0273, -9.15), color=C["t_above_5C"], lw=2, ls=(0, (5, 2)), label="Lin-anchored model")
-    ax.plot(T, f(0.0256, -6.6), color=C["CSL"], lw=2.2, label="Fitted to these records")
-    ax.set_xlabel("Temperature (\u00b0C)"); ax.set_ylabel("Maximum growth rate (log\u2081\u2080 CFU/mL per h)")
-    ax.legend(frameon=False, fontsize=7.5, loc="upper left"); _clean(ax); fig.tight_layout()
-    fig.savefig(f"{OUT}/combase.png", dpi=220, bbox_inches="tight"); plt.close(fig)
-
-
 def fig_methods(a, thr="A_3e4", sensor="DS18B20", sampling="15"):
     fig, axs = plt.subplots(1, 2, figsize=(7.0, 3.4), sharey=True)
     meths = ["CSL", "deg_hours_4C", "t_above_5C", "t_above_8C", "maxT"]
@@ -153,32 +137,6 @@ def fig_methods(a, thr="A_3e4", sensor="DS18B20", sampling="15"):
     fig.legend(handles=handles, loc="lower center", ncol=3, frameon=False, fontsize=8, bbox_to_anchor=(0.5, -0.1))
     fig.tight_layout()
     fig.savefig(f"{OUT}/methods.png", dpi=220, bbox_inches="tight")
-    plt.close(fig)
-
-
-def fig_budget(a, thr="A_3e4", cv=0.10):
-    steps = [("Oracle: true biology and true temperature", ("oracle", "1", "CSL_oracle")),
-             ("Nominal biology, ideal sensor, 1-min", ("ideal", "1", "CSL")),
-             ("PT1000 sensor, 15-min", ("PT1000", "15", "CSL")),
-             ("DS18B20 sensor, 15-min", ("DS18B20", "15", "CSL")),
-             ("DS18B20 sensor, 60-min", ("DS18B20", "60", "CSL"))]
-    fig, axs = plt.subplots(1, 2, figsize=(7.0, 2.9), sharey=True)
-    for ax, tau in zip(axs, ["low_mass", "insulated"]):
-        for i, (lab, (sen, s, m)) in enumerate(steps):
-            r = a[(a.thr == thr) & (a.tau == tau) & (a.cv == cv) & (a.sensor == sen) & (a.sampling == s) & (a.method == m)].iloc[0]
-            col = MUTED if sen == "oracle" else C["CSL"]
-            _dot(ax, r.AUC, i, r.lo, r.hi, col)
-            ax.text(min(r.hi + 0.015, 1.02), i, f"{r.AUC:.2f}", va="center", fontsize=8, color=INK)
-        ax.set_yticks(range(len(steps)))
-        ax.set_yticklabels([s[0] for s in steps], fontsize=7.5)
-        if tau != "low_mass": ax.tick_params(labelleft=False)
-        if tau == "low_mass": ax.invert_yaxis()
-        ax.set_xlim(0.45, 1.08)
-        ax.set_xlabel("AUC (95% CI)")
-        ax.set_title(TAU_LABEL[tau].split(" (")[0], fontsize=8.5, color=INK2, loc="left")
-        _clean(ax, "x")
-    fig.tight_layout(w_pad=0.5)
-    fig.savefig(f"{OUT}/budget.png", dpi=220, bbox_inches="tight")
     plt.close(fig)
 
 
@@ -234,65 +192,9 @@ def fig_cal(c, thr="A_3e4"):
     plt.close(fig)
 
 
-def fig_lis():
-    """Listeria monocytogenes in milk: ComBase records, fitted curve, held-out records, and the temperature sensitivity of the two organisms."""
-    import math, json
-    root = os.path.join(os.path.dirname(__file__), "..")
-    d = pd.read_csv(os.path.join(root, "data", "combase_milk_records.csv"))
-    d = d[d.organism.fillna("").str.startswith("Listeria") & d.max_rate_log10_per_h.notna()].copy()
-    d["T"] = pd.to_numeric(d.temp_C, errors="coerce"); d = d[d["T"].between(2, 16)]
-    clean = d.conditions.fillna("").str.contains("Not specified")
-    v = json.load(open(os.path.join(root, "results", "validation_lis.json")))
-    T = np.linspace(2, 16, 100)
-    f = lambda b, T0: ((b * (T - T0)) ** 2) / math.log(10)
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.4, 3.3), gridspec_kw={"width_ratios": [1.25, 1]})
-    a1.scatter(d[clean]["T"], d[clean].max_rate_log10_per_h, s=20, color=C["CSL"], zorder=3, label=f"Fitted records (n = {v['n_fit']})")
-    a1.scatter(d[~clean]["T"], d[~clean].max_rate_log10_per_h, s=20, facecolors="none", edgecolors=C["deg_hours_4C"], zorder=3, label=f"Held-out records (n = {v['n_heldout']})")
-    a1.plot(T, f(v["b_ln"], v["Tmin_C"]), color=INK, lw=1.8, label="Square-root fit")
-    a1.set_xlabel("Temperature (\u00b0C)"); a1.set_ylabel("Max growth rate (log\u2081\u2080 CFU/mL per h)")
-    a1.set_title("Listeria monocytogenes in milk", fontsize=8.5, color=INK2, loc="left"); a1.legend(frameon=False, fontsize=7, loc="upper left"); _clean(a1)
-    ref = lambda b, T0, t: (b * (t - T0)) ** 2
-    pseud = ref(0.0256, -6.6, T) / ref(0.0256, -6.6, 4.0); lis = ref(v["b_ln"], v["Tmin_C"], T) / ref(v["b_ln"], v["Tmin_C"], 4.0)
-    a2.plot(T, pseud, color=C["CSL"], lw=2, label="Spoilage flora"); a2.plot(T, lis, color=C["deg_hours_4C"], lw=2, label="Listeria")
-    a2.set_xlabel("Temperature (\u00b0C)"); a2.set_ylabel("Growth rate relative to 4 \u00b0C"); a2.legend(frameon=False, fontsize=7.5, loc="upper left")
-    a2.set_title("A warm hour costs a pathogen more", fontsize=8.5, color=INK2, loc="left"); _clean(a2)
-    fig.tight_layout(); fig.savefig(f"{OUT}/lis.png", dpi=220, bbox_inches="tight"); plt.close(fig)
-
-
-RUNS = [("results/base", "Baseline"), ("results/lag", "Extra lag after shifts"), ("results/low", "Low starting load"),
-        ("results/comb", "Fitted to milk flora"), ("results/lis", "Listeria (hazard)")]
-
-
-def fig_runs():
-    """Range of four headline effects across the 12 settings of each benchmark run."""
-    root = os.path.join(os.path.dirname(__file__), "..")
-    q = [("CSL - degree_hours_4C", "Kinetic score beats degree-hours by"), ("biology gap: oracle - ideal(1min,CSL)", "Loss to unobserved biology"),
-         ("sensor: PT1000 - DS18B20 (CSL,15min)", "Gain from a better sensor"), ("sampling: 60min - 1min (DS18B20,CSL)", "Change from sampling hourly vs every minute")]
-    runs = [(d, n) for d, n in RUNS if os.path.exists(os.path.join(root, d, "paired_contrasts.csv"))]
-    cols = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"]
-    fig, axes = plt.subplots(1, 4, figsize=(7.6, 2.9), sharey=True)
-    for ax, (cn, ttl) in zip(axes, q):
-        for i, (d, n) in enumerate(runs):
-            p = pd.read_csv(os.path.join(root, d, "paired_contrasts.csv")); x = p[p.contrast == cn]["diff"]
-            ax.plot([x.min(), x.max()], [i, i], color=cols[i], lw=5, solid_capstyle="butt")
-            ax.plot([x.median()], [i], "o", color=SURF, ms=3.5, zorder=4)
-        ax.axvline(0, color=MUTED, lw=0.8); ax.set_title(ttl, fontsize=7, color=INK2, loc="left", wrap=True); _clean(ax, "x")
-        ax.set_xlabel("AUC difference", fontsize=7)
-    axes[0].set_yticks(range(len(runs))); axes[0].set_yticklabels([n for _, n in runs], fontsize=7.5); axes[0].invert_yaxis()
-    fig.tight_layout(); fig.savefig(f"{OUT}/runs.png", dpi=220, bbox_inches="tight"); plt.close(fig)
-
-
 if __name__ == "__main__":
     used, cold = fig_trace()
     print("trace ok; CSL end with excursion %.3f vs cold %.3f" % (used, cold))
-    if os.path.exists(f"{RES}/calibration.csv"):
-        a, p, c = load()
-        fig_methods(a)
-        fig_budget(a)
-        fig_forest(p)
-        fig_cal(c)
-        fig_lin()
-        fig_combase()
-        fig_lis()
-        fig_runs()
-        print("result figures ok")
+    a, p, c = load()
+    fig_methods(a); fig_forest(p); fig_cal(c); fig_lin()
+    print("monograph figures ok")

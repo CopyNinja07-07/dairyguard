@@ -9,7 +9,7 @@
 
 A simulation study of the cold chain for milk. We built a virtual world of thousands of milk deliveries, so that we always know the true outcome, and used it to find out what limits our ability to predict spoilage from a temperature record: the thermometer, how often we read it, the rule we use, or something no instrument can see.
 
-**[Website](https://copyninja07-07.github.io/dairyguard/) · [Live demo](https://copyninja07-07.github.io/dairyguard/explorer.html) · [Research paper (PDF)](docs/DairyGuard_Research_Paper.pdf) · [Storybook (PDF)](docs/DairyGuard_Storybook.pdf)**
+**[Website](https://copyninja07-07.github.io/dairyguard/) · [Live demo](https://copyninja07-07.github.io/dairyguard/explorer.html) · [Research paper (PDF)](docs/DairyGuard_Research_Paper.pdf) · [Monograph (PDF)](docs/DairyGuard_Monograph.pdf)**
 
 **Contents:** [The short version](#the-short-version) · [Problem](#problem) · [Approach](#approach-in-plain-words) · [Architecture](#architecture) · [Quickstart](#quickstart) · [The model](#the-model) · [The simulated world](#the-simulated-world) · [How methods are judged](#how-methods-are-judged) · [Is the model believable?](#is-the-model-believable) · [Results](#results) · [Listeria case study](#listeria-case-study) · [Data](#data-and-parameters) · [Repository layout](#repository-layout) · [Limitations](#limitations) · [Next steps](#next-steps) · [Glossary](#glossary) · [Cite](#cite-and-licence)
 
@@ -250,7 +250,7 @@ dairyguard/
 │   ├── params.csv            every parameter with its source or ASSUMED flag
 │   └── README.md             about the ComBase records
 ├── paper/                    source of the research paper
-├── book/                     source of the storybook and its figures
+├── book/                     source of the monograph and its figures
 ├── demo/                     source of the interactive demo
 ├── docs/                     the website and the finished PDFs (served by GitHub Pages)
 ├── .github/workflows/        runs the tests on every push
