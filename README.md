@@ -297,11 +297,13 @@ The next model, **DairyGuard Batch**, keeps DairyGuard Kinetic's proven core and
 
 | Layer | What it does | Status |
 |---|---|---|
-| 1 · Clock | temperature enters only through generalized time; each batch runs its clock at its own speed | design |
-| 2 · Population | every batch has a hidden state (rate, lag, starting and maximum count) drawn from a learned population | design |
-| 3 · Batch encoder | estimates that state from day-one tests: initial count, dye-reduction time, pH | design (new) |
-| 4 · Closed-form core | Baranyi growth solved exactly in generalized time, no ODE solver | design |
+| 1 · Clock | temperature enters only through generalized time; each batch runs its clock at its own speed | prototype (simulated data) |
+| 2 · Population | every batch has a hidden state (rate, lag, starting and maximum count) drawn from a learned population | prototype (simulated data) |
+| 3 · Batch encoder | estimates that state from day-one tests: initial count, dye-reduction time, pH | prototype (simulated data) |
+| 4 · Closed-form core | Baranyi growth solved exactly in generalized time, no ODE solver | prototype (simulated data) |
 | 5 · Shift residual | a small network, added only if real curves leave the clock after temperature shifts | conditional |
+
+A first prototype of layers 1–4 runs on simulated batches: [`experiments/batch_prototype.py`](experiments/batch_prototype.py). Nothing has been trained on real milk yet.
 
 It replaces Kinetic only if, on locked test batches, it cuts the error of "hours left" by at least 30%, keeps its 90% band honest, and loses nothing on AUC. Read the [blueprint page](https://copyninja07-07.github.io/dairyguard/blueprint.html) or [White Paper WP-02](docs/DairyGuard-White-Paper-WP02.pdf). Timeline: [ROADMAP.md](ROADMAP.md).
 

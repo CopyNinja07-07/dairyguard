@@ -67,13 +67,13 @@ tr:last-child td{border-bottom:0}td.m{color:var(--mut)}
 .end{text-align:center}.end .row{justify-content:center}
 footer{border-top:1px solid var(--line)}footer .w{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-block:28px;font:500 11px var(--fm);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}footer a{color:var(--mut);text-decoration:none;margin-left:16px}
 </style></head><body>
-<nav><div class="w"><a class="b" href="./"><img src="dg-icon.svg" alt="">DairyGuard</a><div class="lk"><a href="#why">Why</a><a href="#arch">Architecture</a><a href="#data">Data</a><a href="#tests">Tests</a><a class="cta" href="DairyGuard-White-Paper-WP02.pdf">Read WP-02</a></div></div></nav>
+<nav><div class="w"><a class="b" href="./"><img src="dg-icon.svg" alt="">DairyGuard</a><div class="lk"><a href="#why">Why</a><a href="#arch">Architecture</a><a href="#data">Data</a><a href="#proto">Prototype</a><a href="#tests">Tests</a><a class="cta" href="DairyGuard-White-Paper-WP02.pdf">Read WP-02</a></div></div></nav>
 
 <header><div class="w">
 <span class="tag">White paper WP-02 · Blueprint</span>
 <h1>DairyGuard <span>Batch</span></h1>
 <p class="lead">The model our lab will build next. This page is its blueprint: the data we will collect and how we will get it, the architecture layer by layer, how it will be trained, and the tests it must pass. All of it is fixed <em>before</em> the lab data exist, so the results cannot be tuned to fit.</p>
-<span class="status"><i></i>Design · not yet built</span>
+<span class="status"><i></i>Design · prototype on simulated data</span>
 <div class="row"><a class="btn p" href="DairyGuard-White-Paper-WP02.pdf">Read the full white paper</a><a class="btn" href="DairyGuard-White-Paper-WP01.pdf">WP-01: what we built</a><a class="btn" href="./">Back to DairyGuard</a></div>
 </div></header>
 
@@ -124,6 +124,18 @@ footer{border-top:1px solid var(--line)}footer .w{display:flex;flex-wrap:wrap;ju
 </div>
 </div></section>
 
+<section id="proto"><div class="w">
+<span class="tag">Prototype</span>
+<h2>Already running, <span>on simulated batches.</span></h2>
+<p class="lead mut">Layers 1–4 and training stages 0–2 are written and tested in <a href="https://github.com/CopyNinja07-07/dairyguard/blob/main/experiments/batch_prototype.py">experiments/batch_prototype.py</a>. It learns from 30 simulated batches and judges 200 new ones on one trip. The batches and the link between day-one tests and biology are invented, so this tests the code, not milk.</p>
+<div class="grid4">
+<div class="ev"><em>simulation</em><b>87–100%</b><p>True batch parameters inside their 90% intervals after fitting (stage 0).</p></div>
+<div class="ev"><em>simulation</em><b>16–32 h</b><p>Median error of hours left using the population only, as DairyGuard Kinetic does.</p></div>
+<div class="ev"><em>simulation</em><b>14–15 h</b><p>Median error with day-one tests, across four random seeds.</p></div>
+<div class="ev"><em>simulation</em><b>0.82–0.98</b><p>How often the cautious value was safe with tests. Below 0.85 fails the blueprint's test: more batches needed.</p></div>
+</div>
+</div></section>
+
 <section id="tests"><div class="w">
 <span class="tag">Fixed in advance</span>
 <h2>It replaces Kinetic <span>only if it passes.</span></h2>
@@ -136,7 +148,7 @@ footer{border-top:1px solid var(--line)}footer .w{display:flex;flex-wrap:wrap;ju
 </div>
 <p class="mut" style="margin-top:20px">If it fails, the failure is reported in full. A negative answer is a result.</p>
 <div class="tl">
-<div class="ti d"><small>October 2026</small><p>Blueprint published.</p></div>
+<div class="ti d"><small>October 2026</small><p>Blueprint published. Prototype of stages 0–2 running on simulated batches.</p></div>
 <div class="ti n"><small>Nov – Dec 2026 · now</small><p>Curve pipeline; data splits committed; synthetic recovery and population fit; lab protocol agreed.</p></div>
 <div class="ti"><small>Jan – Feb 2027</small><p>E1 and E2 in the lab; batch encoder on first batches; Q1 answered.</p></div>
 <div class="ti"><small>Spring 2027</small><p>E3 (and E4 with a partner); locked-test evaluation; Q2 and Q3.</p></div>

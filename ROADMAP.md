@@ -36,6 +36,7 @@ So the next step is better data, not a bigger formula: complete growth curves of
 - [x] Growth laws compared on held-out studies
 - [x] Monitor compared with a trained logistic model; Monte Carlo size and correlated biology checked
 - [x] Firmware tested against the Python monitor
+- [x] Prototype of the next model (stages 0–2) on simulated data
 - [ ] ComBase growth-curve pipeline
 - [ ] Lab protocol for steady and shifting temperatures, agreed with a lab
 - [ ] First plate counts

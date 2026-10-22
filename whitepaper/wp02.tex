@@ -18,7 +18,7 @@
 \vspace{14pt}
 
 \begin{statusbox}
-{\color{dgamber}\bfseries STATUS: DESIGN, NOT YET BUILT.}\quad Nothing in this paper has been trained or measured. It is written \emph{before} the data exist, so that the data plan, the model and, above all, the tests it must pass are fixed in advance and cannot be tuned to the results. Changes after publication will be listed with their dates in the amendment log (Section~\ref{sec:amend}).
+{\color{dgamber}\bfseries STATUS: DESIGN; PROTOTYPE ON SIMULATED DATA ONLY.}\quad Nothing in this paper has been trained on, or measured in, real milk. A first prototype of stages 0--2 runs on simulated batches (Section~\ref{sec:proto}). It is written \emph{before} the data exist, so that the data plan, the model and, above all, the tests it must pass are fixed in advance and cannot be tuned to the results. Changes after publication will be listed with their dates in the amendment log (Section~\ref{sec:amend}).
 \end{statusbox}
 
 \begin{keybox}{WHAT THIS DOCUMENT IS}
@@ -146,7 +146,7 @@ Stage & What is fitted & Data & Pass condition\\\midrule
 2 & encoder $\phi$ & E1, E3 day-one tests and curves & better validation likelihood than the population alone\\
 3 & residual $\psi$, only if Q1 fails & shift curves, E2 & residual improves held-out shift curves\\
 \bottomrule\end{tabular}\end{center}
-\textbf{Method.} Stages 0--2 are fitted by maximising the marginal likelihood with batch states integrated out, using a Laplace approximation, with a variational (evidence lower bound) fit as a cross-check \cite{kingma2014}. Stage 3 is trained by gradient descent through an ODE solver. \textbf{Tools.} NumPy and SciPy for stages 0--2; PyTorch with \code{torchdiffeq} on a Colab GPU for stage 3. \textbf{Habits.} Fixed seeds, every run logged with its settings and result, checkpoints saved, all code in the repository.
+\textbf{Method.} Stages 0--2 are fitted by maximising the marginal likelihood with batch states integrated out. The prototype does this in two steps: each batch is fitted by least squares, giving an estimate $\hat z_b$ with covariance $C_b=s^2(J^{\top}J)^{-1}$; then $m$, $W$ and $\Sigma=LL^{\top}$ are chosen to maximise the likelihood of the estimates under $\hat z_b\sim\mathcal N(m+W(x_b-\bar x),\Sigma+C_b)$. A joint fit of all levels (Laplace approximation, with a variational fit as a cross-check \cite{kingma2014}) will replace the two-step version once it works on real curves. Stage 3 is trained by gradient descent through an ODE solver. \textbf{Tools.} NumPy and SciPy for stages 0--2; PyTorch with \code{torchdiffeq} on a Colab GPU for stage 3. \textbf{Habits.} Fixed seeds, every run logged with its settings and result, checkpoints saved, all code in the repository.
 
 \section{Evaluation protocol, fixed in advance}\label{sec:eval}
 \subsection{Baselines}
@@ -165,6 +165,18 @@ DairyGuard Batch replaces Kinetic in the software only if, on the locked test ba
 \end{enumerate}
 If it fails, the failure is reported in full, with which criterion failed and by how much. A negative answer to Q1, Q2 or Q3 is a result.
 
+
+\section{Prototype on simulated data}\label{sec:proto}
+\code{experiments/batch\_prototype.py} implements layers 1--4 and stages 0--2 with NumPy and SciPy. It simulates batches from a known population, four isothermal curves per batch (4, 7, 10, 15\degC; nine samples each, plate noise 0.2 $\log_{10}$) and three day-one tests whose link to the biology is \emph{invented} for testing the code. It then fits 30 training batches and judges 200 new ones on one trip (40\,h at 4\degC, 3\,h at 15\degC, 10\,h at 4\degC).
+\begin{center}\small\begin{tabular}{@{}lcccc@{}}\toprule\rowcolor{dghead}
+Seed & \multicolumn{2}{c}{median error of hours left at 4\degC} & \multicolumn{2}{c}{cautious value safe}\\
+ & population only & with day-one tests & population only & with tests\\\midrule
+1 & 31.9\,h & 14.1\,h & 0.98 & 0.82\\
+2 & 16.4\,h & 15.4\,h & 1.00 & 0.98\\
+3 & 22.1\,h & 14.7\,h & 1.00 & 0.95\\
+4 & 21.4\,h & 13.8\,h & 1.00 & 0.90\\\bottomrule\end{tabular}\end{center}
+Stage 0 recovered the true parameters inside their 90\,\% intervals in 87--100\,\% of cases (seed 1). What this shows: the pipeline works end to end, and informative day-one tests can sharpen ``hours left''. What it does not show: anything about real milk, because both the batches and the tests are simulated. It also shows a risk the evaluation must catch: with 30 batches the encoder can be over-confident (coverage 0.82 for seed 1, below criterion 2 of Section~\ref{sec:eval}).
+
 \section{Deployment}
 DairyGuard Batch keeps the interface of WP-01: \code{update(T, dt)} and \code{status()}. The trained parameters ($\theta$, $m$, $\Sigma$, $W$) are exported as a small JSON file. Because the core is closed-form, the firmware needs only the integral of $\mu_\theta$, the encoder's matrix and the formula of Section~4.4; day-one test results are entered once when a batch is loaded. The browser app gains a ``batch tests'' panel. Tests will check that Python, JavaScript and C agree, as they do for Kinetic.
 
@@ -182,7 +194,7 @@ Plate-count errors & duplicates, censoring model, a bound lab notebook, raw data
 \section{Timeline}
 \begin{center}\small\begin{tabular}{@{}p{3cm}p{8cm}p{2.6cm}@{}}\toprule\rowcolor{dghead}
 When & Milestone & Status\\\midrule
-October 2026 & this blueprint published & \st{DONE}\\
+October 2026 & this blueprint published; prototype of stages 0--2 on simulated data & \st{DONE}\\
 Nov--Dec 2026 & curve pipeline; splits committed; stages 0 and 1; lab protocol agreed & \st{IN PROGRESS}\\
 Jan--Feb 2027 & E1 and E2; stage 2 on first batches; Q1 answered & \st{PLANNED}\\
 Spring 2027 & E3 (and E4 if a partner is found); locked-test evaluation; Q2, Q3 & \st{PLANNED}\\
@@ -193,6 +205,7 @@ After & report of results; peer-reviewed paper if the results stand & \st{PLANNE
 \begin{center}\small\begin{tabular}{@{}p{3cm}p{10.7cm}@{}}\toprule\rowcolor{dghead}
 Date & Change\\\midrule
 October 2026 & first version\\
+22 October 2026 & added the prototype on simulated data (Section~\ref{sec:proto}); the method paragraph of Section~\ref{sec:train} now describes the two-step fit it uses\\
 \bottomrule\end{tabular}\end{center}
 
 \section*{Note on tools}
