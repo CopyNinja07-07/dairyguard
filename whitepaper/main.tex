@@ -5,11 +5,8 @@
 \hypersetup{pdftitle={DairyGuard Kinetic: architecture of an open cold-chain spoilage monitor},pdfauthor={Suryansh Pratap Singh}}
 \begin{document}
 \thispagestyle{empty}
-{\color{dgamber}\rule{\textwidth}{2pt}}\par\vspace{4pt}
-{\small\sffamily\color{dggrey}DAIRYGUARD WHITE PAPER WP-01 \hfill October 2026 \hfill github.com/CopyNinja07-07/dairyguard}\par
-\vspace{22pt}
-{\sffamily\fontsize{26}{31}\selectfont\bfseries\color{dgnight}DairyGuard Kinetic\par}
-\vspace{6pt}
+\begin{tikzpicture}[remember picture,overlay]\node[anchor=north,inner sep=0] at (current page.north) {\includegraphics[width=\paperwidth]{head-wp01.jpg}};\end{tikzpicture}\par
+\vspace*{75mm}
 {\sffamily\fontsize{14}{18}\selectfont\color{dgblue}Architecture of an open cold-chain spoilage monitor: data, models, estimator, evaluation and deployment\par}
 \vspace{14pt}
 {\sffamily\bfseries Suryansh Pratap Singh}\\
@@ -55,7 +52,7 @@ DairyGuard Kinetic has five layers (Fig.~\ref{fig:arch}). A data layer holds the
 \draw[arr] (e1)--(v1);
 \draw[arr] (e1.east)--++(0.3,0)|-(o1.west); \draw[arr] (e1)--(o2); \draw[arr] (e1.east)--++(0.3,0)|-(o3.west);
 \node[lab] at (-1.6,1.2) {DATA}; \node[lab] at (2.6,1.2) {MODELS}; \node[lab] at (6.8,1.2) {ESTIMATOR}; \node[lab] at (11,1.2) {DEPLOYMENT};
-\end{tikzpicture}
+\end{tikzpicture}\par
 \caption{The architecture of DairyGuard Kinetic. Every box is a module in the repository with its own tests}\label{fig:arch}
 \end{figure}
 

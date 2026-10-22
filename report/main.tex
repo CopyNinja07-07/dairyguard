@@ -14,7 +14,7 @@
 \definecolor{dgblue}{HTML}{3A0F34}
 \definecolor{dghead}{HTML}{E6E9EC}
 \definecolor{dgpale}{HTML}{F3F4F6}
-\definecolor{dgnight}{HTML}{1E0A1C}
+\definecolor{dgnight}{HTML}{2B0A27}
 \definecolor{dgamber}{HTML}{EAAA00}
 \definecolor{dgamberdk}{HTML}{A87A00}
 \definecolor{dggrey}{HTML}{6E5F78}
@@ -38,7 +38,7 @@
 \input{../generated/tables.tex}
 \graphicspath{{../generated/fig/}{fig/}}
 % headings
-\titleformat{\chapter}[display]{\normalfont\sffamily\color{dgnight}}{\fontsize{11}{13}\selectfont\bfseries\color{dgamberdk}\textls[250]{\MakeUppercase{\chaptertitlename}}\hspace{6pt}{\fontsize{40}{40}\selectfont\color{dgamber}\thechapter}}{8pt}{\raggedright\fontsize{27}{32}\selectfont\bfseries}[\vspace{6pt}{\color{dgamber}\rule{48pt}{3pt}}]
+\titleformat{\chapter}[display]{\normalfont\sffamily\color{dgnight}}{\fontsize{9}{11}\selectfont\bfseries\color{dggrey}\textls[300]{\MakeUppercase{\chaptertitlename}}\hfill{\fontsize{64}{60}\selectfont\color{dgamber}\thechapter}}{0pt}{\raggedright\fontsize{30}{33}\selectfont\bfseries}[\vspace{8pt}{\color{dgamber}\rlap{\rule[-1.2pt]{56pt}{3pt}}}{\color{dghead}\rule{\textwidth}{.6pt}}]
 \titlespacing*{\chapter}{0pt}{0pt}{22pt}
 \titleformat{\section}{\needspace{5\baselineskip}\normalfont\sffamily\large\bfseries\color{dgnight}}{\color{dgamberdk}\thesection}{0.8em}{}
 \titleformat{\subsection}{\needspace{4\baselineskip}\normalfont\sffamily\normalsize\bfseries\color{dgblue}}{\thesubsection}{0.8em}{}
@@ -64,7 +64,7 @@
 \newcommand{\degC}{\,\textdegree C}
 \newcommand{\secref}[1]{Sect.~\ref{#1}}
 \newtcolorbox{summary}{enhanced,breakable,colback=white,colframe=white,boxrule=0pt,borderline west={3pt}{0pt}{dgamber},arc=0pt,left=10pt,right=6pt,top=4pt,bottom=4pt,fontupper=\small\sffamily,before skip=4pt,after skip=14pt,title={\sffamily\bfseries\scriptsize\textls[200]{KEY POINTS}},coltitle=dgamberdk,colbacktitle=white,toptitle=0pt,bottomtitle=2pt}
-\newtcolorbox{keyresults}[1][]{enhanced,breakable,colback=dgnight,colframe=dgnight,coltext=white,boxrule=0pt,arc=2pt,left=10pt,right=10pt,top=6pt,bottom=8pt,fontupper=\small\sffamily,before skip=8pt,after skip=12pt,title={\sffamily\bfseries\scriptsize\textls[200]{PRINCIPAL FINDINGS}#1},coltitle=dgamber,colbacktitle=dgnight}
+\newtcolorbox{keyresults}[1][]{enhanced,before upper={\hypersetup{allcolors=dgamber}},breakable,colback=dgnight,colframe=dgnight,coltext=white,boxrule=0pt,arc=2pt,left=10pt,right=10pt,top=6pt,bottom=8pt,fontupper=\small\sffamily,before skip=8pt,after skip=12pt,title={\sffamily\bfseries\scriptsize\textls[200]{PRINCIPAL FINDINGS}#1},coltitle=dgamber,colbacktitle=dgnight}
 \newcommand{\stat}[3]{\begin{tcolorbox}[enhanced,colback=dgpale,colframe=dgpale,arc=2pt,boxrule=0pt,borderline north={3pt}{0pt}{dgamber},left=8pt,right=8pt,top=8pt,bottom=8pt,height=2.85cm,valign=top]{\sffamily\fontsize{21}{25}\selectfont\bfseries\color{dgnight}#1\par}\vspace{4pt}{\sffamily\small\bfseries\color{dgamberdk}#2\par}\vspace{3pt}{\raggedright\sffamily\footnotesize\color{dggrey}#3\par}\end{tcolorbox}}
 \theoremstyle{plain}\newtheorem{proposition}{Proposition}\newtheorem{corollary}{Corollary}
 \theoremstyle{definition}\newtheorem{definition}{Definition}[chapter]

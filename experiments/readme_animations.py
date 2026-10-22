@@ -16,8 +16,8 @@ from dairyguard import ColdChainMonitor, mu_sqrt
 from dairyguard.kinetics import LN10
 
 IMG = os.path.join(ROOT, "docs", "img"); os.makedirs(IMG, exist_ok=True)
-BG, PANEL, INK, MUT, LINE = "#0b0510", "#150a1a", "#dde3e8", "#a99bb0", "#43193f"
-SIG, HOT, COLD, OK = "#eaaa00", "#f2545b", "#a9c8de", "#5fd39a"
+BG, PANEL, INK, MUT, LINE = "#E6EAED", "#F4F6F8", "#2B0A27", "#66525F", "#D3CBD3"
+SIG, HOT, COLD, OK = "#D49B00", "#B3261E", "#5E7F99", "#2F7A52"
 plt.rcParams.update({"font.family": "sans-serif", "font.sans-serif": ["DejaVu Sans"], "font.size": 10,
                      "text.color": INK, "axes.labelcolor": MUT, "xtick.color": MUT, "ytick.color": MUT,
                      "axes.edgecolor": LINE, "figure.facecolor": BG, "axes.facecolor": PANEL})
@@ -62,7 +62,7 @@ def trip_gif():
         a1 = fig.add_axes([0.07, 0.58, 0.58, 0.32]); a2 = fig.add_axes([0.07, 0.13, 0.58, 0.38])
         a1.plot(t[:n], air[:n], color=HOT, lw=1, alpha=.8); a1.plot(t[:n], milk[:n], color=COLD, lw=2)
         a1.set_xlim(0, H); a1.set_ylim(0, 20); a1.set_xticks([]); a1.set_ylabel("°C")
-        a1.text(25, 15, "the trip: air (red), milk (silver)", color=MUT, fontsize=9)
+        a1.text(25, 15, "the trip: air (red), milk (blue)", color=MUT, fontsize=9)
         for c in curves:
             over = c[n - 1] >= lim
             a2.plot(t[:n], c[:n], color=HOT if over else COLD, lw=.8, alpha=.5)

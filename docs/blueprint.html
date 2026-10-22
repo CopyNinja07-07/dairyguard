@@ -3,102 +3,112 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>DairyGuard Batch Blueprint</title><link rel="icon" href="dg-icon.svg" type="image/svg+xml"><link rel="icon" href="dg-icon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="dg-touch-icon.png">
 <meta name="description" content="The blueprint of DairyGuard Batch, the model our lab will build next: the data we will collect, the architecture, the training plan and the pass-or-fail tests, fixed before the lab data exist.">
-<meta name="theme-color" content="#0b0510">
+<meta name="theme-color" content="#DDE3E8">
 <meta property="og:type" content="article"><meta property="og:site_name" content="DairyGuard"><meta property="og:title" content="DairyGuard Batch · The blueprint of our next model"><meta property="og:description" content="Data plan, architecture, training and pass-or-fail tests, fixed before the lab data exist. White Paper WP-02."><meta property="og:url" content="https://copyninja07-07.github.io/dairyguard/blueprint.html"><meta property="og:image" content="https://copyninja07-07.github.io/dairyguard/img/og-papers.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="DairyGuard white papers: built, tested, next the batch">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="DairyGuard Batch · The blueprint of our next model"><meta name="twitter:description" content="Data plan, architecture, training and pass-or-fail tests, fixed before the lab data exist."><meta name="twitter:image" content="https://copyninja07-07.github.io/dairyguard/img/og-papers.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0510;--bg2:#150a1a;--bg3:#1e0e24;--ink:#dde3e8;--mut:#a99bb0;--dim:#6e5f78;--line:#43193f;--sig:#eaaa00;--hot:#f2545b;--cold:#a9c8de;--ok:#5fd39a;--r:16px;
---fd:"Big Shoulders Display","Arial Narrow","Roboto Condensed",sans-serif;--fb:Inter,system-ui,sans-serif;--fm:"JetBrains Mono",ui-monospace,monospace;color-scheme:dark}
+:root{--ice:#DDE3E8;--bg:#E6EAED;--paper:#F2F4F6;--aub:#3A0F34;--ink:#2B0A27;--mut:#66525F;--dim:#97899A;--line:rgba(58,15,52,.14);--mari:#EAAA00;--mari2:#B98600;
+--fd:"Inter Tight","Inter Display",Inter,"Helvetica Neue",Arial,sans-serif;--fb:Inter,system-ui,sans-serif;--fm:"JetBrains Mono",ui-monospace,monospace;--fs:"Cormorant Garamond",Georgia,serif;color-scheme:light}
 *{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 var(--fb);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 var(--fb);-webkit-font-smoothing:antialiased;overflow-x:clip}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
-.w{position:relative;max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-h1,h2,h3{font-family:var(--fd);font-weight:800;line-height:.98;margin:0;text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
-h2{font-size:clamp(34px,5vw,62px)}h2 span,h1 span{color:var(--sig)}
-p{margin:0 0 1em;max-width:66ch}a{color:var(--sig)}
-.tag{display:inline-block;font:500 12px/1 var(--fm);letter-spacing:.2em;text-transform:uppercase;color:var(--sig);margin-bottom:16px}
+.grid{position:fixed;inset:0;pointer-events:none;z-index:0;display:grid;grid-template-columns:repeat(8,1fr);padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}.grid i{border-left:1px solid rgba(58,15,52,.07)}.grid i:last-child{border-right:1px solid rgba(58,15,52,.07)}
+@media(max-width:700px){.grid{grid-template-columns:repeat(4,1fr)}.grid i:nth-child(n+5){display:none}}
+.w{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--fd);font-weight:800;margin:0;text-wrap:balance}
+h2{font-size:clamp(40px,6vw,88px);line-height:.9;letter-spacing:-.055em}h2 em,h1 em{font:italic 600 1.02em/1 var(--fs);letter-spacing:-.02em}
+p{margin:0 0 1em;max-width:64ch}a{color:var(--aub)}
+.tag{display:flex;align-items:center;gap:14px;font:600 9.5px/1.9 var(--fb);letter-spacing:.34em;text-transform:uppercase;color:var(--mut);margin-bottom:26px}.tag::before{content:"";width:28px;height:1px;background:currentColor}
 .mut{color:var(--mut)}
-nav{position:fixed;inset:0 0 auto;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(11,5,16,.75);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(58,15,52,.7)}
-nav .w{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:14px}
-nav a.b{display:flex;align-items:center;gap:10px;font:800 22px var(--fd);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none}nav a.b img{width:28px;height:28px}
-nav .lk{display:flex;gap:18px;align-items:center}nav .lk a{color:var(--mut);text-decoration:none;font-size:14px}
-nav .cta{color:#1a0718!important;background:var(--sig);padding:7px 14px;border-radius:99px;font-weight:600;white-space:nowrap}
-@media(max-width:720px){nav .lk a:not(.cta){display:none}}
-header{padding-top:140px;padding-bottom:70px;background:radial-gradient(60% 80% at 85% 0,rgba(234,170,0,.16),transparent 70%)}
-header h1{font-size:clamp(46px,8vw,104px);font-weight:900}
-.lead{font-size:clamp(18px,2vw,21px);max-width:44em;margin-top:20px}
-.status{display:inline-flex;align-items:center;gap:10px;margin-top:22px;font:600 12px var(--fm);letter-spacing:.14em;text-transform:uppercase;color:#1a0718;background:var(--sig);border-radius:99px;padding:7px 14px}
-.status i{width:8px;height:8px;border-radius:50%;background:#1a0718;animation:pl 1.6s infinite}@keyframes pl{50%{opacity:.25}}
-.row{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
-.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--fb);text-decoration:none;padding:11px 18px;border-radius:99px;border:1px solid var(--line);color:var(--ink);background:var(--bg2)}.btn.p{background:var(--sig);border-color:var(--sig);color:#1a0718}.btn:hover{border-color:var(--sig)}
-section{position:relative}
-.eqw{position:absolute;right:0;top:clamp(40px,6vw,80px);font:italic 500 clamp(22px,3.4vw,46px)/1 "Cormorant Garamond",Georgia,serif;color:var(--sig);opacity:.13;white-space:nowrap;pointer-events:none;letter-spacing:.01em;max-width:100%;overflow:hidden}
-.eqw sup,.eqw sub{font-size:.6em}
-@media(max-width:700px){.eqw{display:none}}
-body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg fill='none' stroke='%23DDE3E8' stroke-width='1.2'%3E%3Crect x='30' y='40' width='26' height='10' rx='5' transform='rotate(-25 43 45)'/%3E%3Crect x='150' y='120' width='26' height='10' rx='5' transform='rotate(35 163 125)'/%3E%3Crect x='60' y='160' width='22' height='9' rx='4.5' transform='rotate(70 71 164)'/%3E%3Ccircle cx='170' cy='45' r='7'/%3E%3Ccircle cx='182' cy='45' r='7'/%3E%3Ccircle cx='110' cy='95' r='3'/%3E%3Ccircle cx='25' cy='120' r='2'/%3E%3C/g%3E%3C/svg%3E")}
-section{padding-block:clamp(70px,9vw,110px);border-top:1px solid var(--line)}
-.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:36px}
+nav{position:fixed;inset:0 0 auto;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(230,234,237,.74);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+nav .w{display:flex;justify-content:space-between;align-items:center;gap:12px;height:62px;border-bottom:1px solid var(--line)}
+nav a.b{display:flex;align-items:center;gap:10px;font:800 15px var(--fd);letter-spacing:-.02em;color:var(--aub);text-decoration:none}nav a.b img{width:22px;height:22px}
+nav .lk{display:flex;gap:clamp(14px,2.6vw,36px);align-items:center}nav .lk a{color:var(--aub);opacity:.8;text-decoration:none;font:600 9.5px var(--fb);letter-spacing:.3em;text-transform:uppercase}
+nav .cta{opacity:1!important;border:1px solid var(--aub);padding:9px 14px;border-radius:99px;white-space:nowrap}nav .cta:hover{background:var(--aub);color:var(--ice)!important}
+@media(max-width:760px){nav .lk a:not(.cta){display:none}}
+header{position:relative;overflow:hidden;padding-top:150px;padding-bottom:90px;background:linear-gradient(180deg,#E9ECEE,#DFE4E8)}
+header .glow{position:absolute;right:-8vw;top:-10vw;width:min(70vw,760px);aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,rgba(234,170,0,.85),rgba(234,170,0,.35) 40%,rgba(58,15,52,.45) 62%,transparent 75%);filter:blur(40px);opacity:.75;animation:br 9s ease-in-out infinite;pointer-events:none}
+@keyframes br{50%{transform:scale(1.08) translate(-2vw,2vw);opacity:.9}}
+header h1{font-size:clamp(64px,12vw,190px);font-weight:900;line-height:.82;letter-spacing:-.075em;color:var(--aub)}
+header h1 span{display:inline-block;filter:url(#mb);animation:fo 2.2s cubic-bezier(.2,.7,.2,1) both}header h1 em{display:block;padding-left:12vw;animation:fo 2.2s .25s cubic-bezier(.2,.7,.2,1) both}
+@keyframes fo{0%{opacity:0;transform:translateX(18vw);filter:blur(24px)}100%{opacity:1;transform:none}}
+.lead{font-size:clamp(18px,1.9vw,22px);line-height:1.55;max-width:42em;margin-top:30px}
+.status{display:inline-flex;align-items:center;gap:10px;margin-top:22px;font:600 9.5px var(--fb);letter-spacing:.3em;text-transform:uppercase;color:var(--aub);background:var(--mari);border-radius:99px;padding:9px 16px}
+.status i{width:7px;height:7px;border-radius:50%;background:var(--aub);animation:pl 1.6s infinite}@keyframes pl{50%{opacity:.25}}
+.row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 9.5px var(--fb);letter-spacing:.26em;text-transform:uppercase;text-decoration:none;padding:14px 20px;border-radius:99px;border:1px solid var(--aub);color:var(--aub)}.btn.p{background:var(--aub);color:var(--ice)}.btn:hover{background:var(--mari);border-color:var(--mari);color:var(--aub)}
+section{position:relative;z-index:1;padding-block:clamp(90px,11vw,140px);border-top:1px solid var(--line)}
+section:nth-of-type(even){background:var(--paper)}
+.eqw{display:block;font:italic 500 clamp(18px,2vw,26px) var(--fs);color:var(--mari2);margin:18px 0 26px}.eqw sup,.eqw sub{font-size:.62em}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:44px;border-top:1px solid var(--line)}
 @media(max-width:900px){.grid4{grid-template-columns:1fr 1fr}}@media(max-width:520px){.grid4{grid-template-columns:1fr}}
-.ev{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:20px;min-width:0}
-.ev b{display:block;font:800 40px var(--fd);color:var(--cold)}.ev p{font-size:14.5px;color:var(--mut);margin:6px 0 0}
-.ev em{font:600 10px var(--fm);letter-spacing:.12em;text-transform:uppercase;font-style:normal;color:var(--dim)}
-.arch{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:26px;margin-top:36px;align-items:start}
+.ev{padding:22px 20px 18px 0;min-width:0;border-bottom:1px solid var(--line)}.ev+.ev{padding-left:20px;border-left:1px solid var(--line)}
+@media(max-width:900px){.ev+.ev{padding-left:0;border-left:0}}
+.ev b{display:block;font:900 clamp(34px,3.6vw,48px)/1 var(--fd);letter-spacing:-.05em;color:var(--aub);margin-top:8px}.ev p{font-size:14.5px;color:var(--mut);margin:10px 0 0}
+.ev em{font:600 9px var(--fb);letter-spacing:.28em;text-transform:uppercase;font-style:normal;color:var(--mari2)}
+.arch{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:30px;margin-top:44px;align-items:start}
 @media(max-width:860px){.arch{grid-template-columns:1fr}}
-.layers{display:grid;gap:10px}
-.ly{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:center;text-align:left;width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 16px;color:var(--ink);font:inherit;cursor:pointer;transition:.25s}
-.ly .n{font:800 30px var(--fd);color:var(--dim)}.ly b{display:block;font:800 22px var(--fd);text-transform:uppercase}.ly span{font-size:13.5px;color:var(--mut)}
-.ly.new{border-color:rgba(234,170,0,.45)}.ly.opt{border-style:dashed}
-.ly[aria-pressed=true]{border-color:var(--sig);background:radial-gradient(120% 120% at 0 0,rgba(234,170,0,.12),transparent 60%),var(--bg2)}.ly[aria-pressed=true] .n{color:var(--sig)}
-.detail{position:sticky;top:90px;background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:24px;min-width:0}
-.detail small{font:500 11px var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--sig)}.detail h3{font-size:32px;margin:8px 0 10px}.detail p{color:var(--mut);font-size:15.5px}
-.eq{font:500 14px/1.6 var(--fm);color:var(--cold);background:#070309;border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;white-space:nowrap}
-.tw{overflow-x:auto;margin-top:30px;border:1px solid var(--line);border-radius:var(--r)}
+.layers{display:grid;gap:0;border-top:1px solid var(--line)}
+.ly{display:grid;grid-template-columns:60px minmax(0,1fr);gap:14px;align-items:center;text-align:left;width:100%;background:none;border:0;border-bottom:1px solid var(--line);padding:18px 10px 18px 0;color:var(--ink);font:inherit;cursor:pointer;transition:background .3s,padding .3s}
+.ly .n{font:900 40px/1 var(--fd);letter-spacing:-.05em;color:var(--aub);opacity:.18;transition:.3s}.ly b{display:block;font:800 22px var(--fd);letter-spacing:-.03em}.ly span{font-size:13.5px;color:var(--mut)}
+.ly.new b{background:linear-gradient(transparent 62%,rgba(234,170,0,.55) 62%);display:inline}.ly.opt b{font-style:italic}
+.ly:hover{padding-left:10px}
+.ly[aria-pressed=true]{background:linear-gradient(90deg,rgba(234,170,0,.22),transparent 75%);padding-left:12px}.ly[aria-pressed=true] .n{opacity:1;color:var(--mari2)}
+.detail{position:sticky;top:90px;background:var(--aub);color:var(--ice);border-radius:24px;padding:28px;min-width:0;box-shadow:0 30px 60px -30px rgba(58,15,52,.6);transition:opacity .35s,filter .35s}
+.detail.sw{opacity:0;filter:blur(10px)}
+.detail small{font:600 9.5px var(--fb);letter-spacing:.3em;text-transform:uppercase;color:var(--mari)}.detail h3{font-size:clamp(26px,3vw,36px);letter-spacing:-.04em;margin:10px 0 12px}.detail p{color:#D7CAD5;font-size:15.5px}
+.eq{font:500 13.5px/1.6 var(--fm);color:var(--mari);background:rgba(0,0,0,.25);border-radius:12px;padding:12px 14px;overflow-x:auto;white-space:nowrap}
+.tw{overflow-x:auto;margin-top:40px;border-top:2px solid var(--aub)}
 table{border-collapse:collapse;width:100%;min-width:640px;font-size:15px}
-th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}th{font:600 11px var(--fm);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);background:var(--bg2)}
+th,td{text-align:left;padding:15px 16px 15px 0;border-bottom:1px solid var(--line);vertical-align:top}th{font:600 9.5px var(--fb);letter-spacing:.3em;text-transform:uppercase;color:var(--mut)}
 tr:last-child td{border-bottom:0}td.m{color:var(--mut)}
-.pill{display:inline-block;font:600 10px var(--fm);letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:99px;border:1px solid var(--line);color:var(--dim);white-space:nowrap}
-.pill.ok{color:var(--ok);border-color:rgba(95,211,154,.55)}.pill.go{color:#1a0718;background:var(--sig);border-color:var(--sig)}.pill.req{color:var(--cold);border-color:rgba(169,200,222,.5)}
-.qs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:34px}@media(max-width:860px){.qs{grid-template-columns:1fr}}
-.q{border:1px dashed var(--line);border-radius:var(--r);padding:22px;min-width:0}.q b{font:800 34px var(--fd);color:var(--sig)}.q p{color:var(--mut);font-size:15.5px;margin:8px 0 0}
-.crit{display:grid;gap:10px;margin-top:30px;counter-reset:c}
-.cr{display:grid;grid-template-columns:52px minmax(0,1fr);gap:14px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
-.cr::before{counter-increment:c;content:"0" counter(c);font:800 30px var(--fd);color:var(--sig)}.cr p{margin:0}
-.tl{display:grid;gap:0;margin-top:34px;border-left:2px solid var(--line);margin-left:8px}
-.ti{position:relative;padding:0 0 26px 30px}.ti::before{content:"";position:absolute;left:-9px;top:6px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--dim)}
-.ti.d::before{background:var(--ok);border-color:var(--ok)}.ti.n::before{background:var(--sig);border-color:var(--sig);box-shadow:0 0 16px rgba(234,170,0,.6)}
-.ti small{font:500 12px var(--fm);letter-spacing:.14em;text-transform:uppercase;color:var(--sig)}.ti p{margin:4px 0 0;color:var(--mut)}
-.end{text-align:center}.end .row{justify-content:center}
-footer{border-top:1px solid var(--line)}footer .w{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-block:28px;font:500 11px var(--fm);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}footer a{color:var(--mut);text-decoration:none;margin-left:16px}
-body{background:radial-gradient(1100px 700px at 85% -5%,rgba(58,15,52,.75),transparent 65%),radial-gradient(900px 600px at 0% 100%,rgba(58,15,52,.45),transparent 60%),var(--bg);background-attachment:fixed}
-.eqw{top:0!important}
+.pill{display:inline-block;font:600 9px var(--fb);letter-spacing:.22em;text-transform:uppercase;padding:4px 9px;border-radius:99px;border:1px solid var(--line);color:var(--mut);white-space:nowrap}
+.pill.ok{color:#2f7a52;border-color:rgba(47,122,82,.4)}.pill.go{color:var(--aub);background:var(--mari);border-color:var(--mari)}.pill.req{color:var(--aub);border-color:var(--aub)}
+.qs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:44px}@media(max-width:860px){.qs{grid-template-columns:1fr}}
+.q{border-top:2px solid var(--aub);padding-top:16px;min-width:0}.q b{font:900 44px/1 var(--fd);letter-spacing:-.05em;color:var(--mari2)}.q p{color:var(--mut);font-size:15.5px;margin:10px 0 0}
+.crit{display:grid;gap:0;margin-top:40px;counter-reset:c;border-top:1px solid var(--line)}
+.cr{display:grid;grid-template-columns:70px minmax(0,1fr);gap:14px;align-items:center;border-bottom:1px solid var(--line);padding:18px 0}
+.cr::before{counter-increment:c;content:"0" counter(c);font:900 40px/1 var(--fd);letter-spacing:-.05em;color:var(--mari2)}.cr p{margin:0;font-size:17px}
+.tl{display:grid;margin-top:44px;border-left:1px solid var(--line);margin-left:7px}
+.ti{position:relative;padding:0 0 28px 30px}.ti::before{content:"";position:absolute;left:-8px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:1.5px solid var(--dim)}
+.ti.d::before{background:var(--aub);border-color:var(--aub)}.ti.n::before{background:var(--mari);border-color:var(--mari);box-shadow:0 0 0 7px rgba(234,170,0,.22)}
+.ti small{font:600 9.5px var(--fb);letter-spacing:.3em;text-transform:uppercase;color:var(--mari2)}.ti p{margin:4px 0 0;color:var(--mut)}
+.end{text-align:center;background:var(--aub)!important;color:var(--ice);overflow:hidden}.end .row{justify-content:center}.end .tag{justify-content:center;color:var(--mari)}.end .tag::before{display:none}.end h2 em{color:var(--mari)}
+.end .btn{border-color:var(--ice);color:var(--ice)}.end .btn.p{background:var(--mari);border-color:var(--mari);color:var(--aub)}
+.end .glow{position:absolute;left:50%;bottom:-40%;width:min(90vw,900px);aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(234,170,0,.55),rgba(234,170,0,.12) 50%,transparent 72%);filter:blur(30px);pointer-events:none}
+footer{position:relative;z-index:1;background:var(--aub);border-top:1px solid rgba(221,227,232,.14)}footer .w{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-block:26px;font:600 9.5px var(--fb);letter-spacing:.3em;text-transform:uppercase;color:#C9B9C6}footer a{color:#D7CAD5;text-decoration:none;margin-left:16px}
+.rv{opacity:0;filter:blur(12px);transform:translate3d(-24px,16px,0);transition:opacity 1s cubic-bezier(.2,.7,.2,1),filter 1.1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1)}.rv.in{opacity:1;filter:none;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;filter:none;transform:none;transition:none}header h1 span,header h1 em,header .glow{animation:none}}
 </style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="mb" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5 0"/></filter></svg>
+<div class="grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 <nav><div class="w"><a class="b" href="./"><img src="dg-icon.svg" alt="">DairyGuard</a><div class="lk"><a href="#why">Why</a><a href="#arch">Architecture</a><a href="#data">Data</a><a href="#proto">Prototype</a><a href="#tests">Tests</a><a class="cta" href="DairyGuard-White-Paper-WP02.pdf">Read WP-02</a></div></div></nav>
 
-<header><div class="w">
+<header><div class="glow" aria-hidden="true"></div><div class="w">
 <span class="tag">White paper WP-02 · Blueprint</span>
-<h1>DairyGuard <span>Batch</span></h1>
+<h1><span>DairyGuard</span> <em>Batch</em></h1>
 <p class="lead">The model our lab will build next. This page is its blueprint: the data we will collect and how we will get it, the architecture layer by layer, how it will be trained, and the tests it must pass. All of it is fixed <em>before</em> the lab data exist, so the results cannot be tuned to fit.</p>
 <span class="status"><i></i>Design · prototype on simulated data</span>
 <div class="row"><a class="btn p" href="DairyGuard-White-Paper-WP02.pdf">Read the full white paper</a><a class="btn" href="DairyGuard-White-Paper-WP01.pdf">WP-01: what we built</a><a class="btn" href="./">Back to DairyGuard</a></div>
 </div></header>
 
-<section id="why"><div class="w"><span class="eqw" aria-hidden="true">σ(ln b) = 0.25</span>
-<span class="tag">Why a second model</span>
-<h2>Kinetic showed <span>where it stops.</span></h2>
-<p class="lead mut">DairyGuard Kinetic treats every batch of milk as a draw from one fixed population. Its own results say that is now the limiting assumption.</p>
+<section id="why"><div class="w"><span class="tag">Why a second model</span>
+<h2 class="rv">Kinetic showed <em>where it stops.</em></h2>
+<span class="eqw rv">σ(ln b) = 0.25</span>
+<p class="rv lead mut">DairyGuard Kinetic treats every batch of milk as a draw from one fixed population. Its own results say that is now the limiting assumption.</p>
 <div class="grid4">
-<div class="ev"><em>simulation</em><b>0.27–0.40</b><p>AUC lost to the biology a log can't see. A lab-grade thermometer wins back at most 0.02.</p></div>
-<div class="ev"><em>real data</em><b>25%</b><p>Spread of growth rates between 11 real <i>Listeria</i> studies.</p></div>
-<div class="ev"><em>real data</em><b>No gain</b><p>A neural growth law fitted to rates alone predicts 20 unseen studies no better.</p></div>
-<div class="ev"><em>simulation</em><b>69–94%</b><p>Of the accuracy gap closed by one measurement of the batch itself.</p></div>
+<div class="rv ev"><em>simulation</em><b>0.27–0.40</b><p>AUC lost to the biology a log can't see. A lab-grade thermometer wins back at most 0.02.</p></div>
+<div class="rv ev"><em>real data</em><b>25%</b><p>Spread of growth rates between 11 real <i>Listeria</i> studies.</p></div>
+<div class="rv ev"><em>real data</em><b>No gain</b><p>A neural growth law fitted to rates alone predicts 20 unseen studies no better.</p></div>
+<div class="rv ev"><em>simulation</em><b>69–94%</b><p>Of the accuracy gap closed by one measurement of the batch itself.</p></div>
 </div>
 </div></section>
 
-<section id="arch"><div class="w"><span class="eqw" aria-hidden="true">τ<sub>b</sub> = e<sup>2δ</sup> ∫ μ dt</span>
-<span class="tag">Architecture</span>
-<h2>Five layers. <span>Tap one.</span></h2>
+<section id="arch"><div class="w"><span class="tag">Architecture</span>
+<h2 class="rv">Five layers. <em>Tap one.</em></h2>
+<span class="eqw rv">τ<sub>b</sub> = e<sup>2δ</sup> ∫ μ dt</span>
 <div class="arch">
 <div class="layers" role="group" aria-label="Layers">
 <button class="ly" data-k="0" aria-pressed="true"><span class="n">1</span><div><b>The clock</b><span>temperature enters only through generalized time</span></div></button>
@@ -111,10 +121,10 @@ body{background:radial-gradient(1100px 700px at 85% -5%,rgba(58,15,52,.75),trans
 </div>
 </div></section>
 
-<section id="data"><div class="w"><span class="eqw" aria-hidden="true">log<sub>10</sub> N<sup>obs</sup> ∼ 𝒩(·, 0.2²)</span>
-<span class="tag">Data plan</span>
-<h2>What we will collect, <span>and how we get it.</span></h2>
-<div class="tw"><table>
+<section id="data"><div class="w"><span class="tag">Data plan</span>
+<h2 class="rv">What we will collect, <em>and how we get it.</em></h2>
+<span class="eqw rv">log<sub>10</sub> N<sup>obs</sup> ∼ 𝒩(·, 0.2²)</span>
+<div class="rv tw"><table>
 <thead><tr><th>Source</th><th>What it gives</th><th>Access</th><th>Status</th></tr></thead>
 <tbody>
 <tr><td>ComBase growth curves</td><td class="m">counts against time for milk and chilled foods</td><td class="m">public, free registration</td><td><span class="pill go">In progress</span></td></tr>
@@ -125,47 +135,47 @@ body{background:radial-gradient(1100px 700px at 85% -5%,rgba(58,15,52,.75),trans
 <tr><td>Temperature logs</td><td class="m">the exact profile every sample saw</td><td class="m">our ESP32 + DS18B20 controller</td><td><span class="pill ok">Hardware ready</span></td></tr>
 </tbody></table></div>
 <div class="qs">
-<div class="q"><b>Q1</b><p>Do real milk curves under temperature shifts collapse onto one curve in generalized time?</p></div>
-<div class="q"><b>Q2</b><p>Which cheap test at loading (initial count, dye time, pH, heat test) predicts a batch best?</p></div>
-<div class="q"><b>Q3</b><p>On batches it has never seen, how much of Kinetic's error does a batch-aware model remove?</p></div>
+<div class="rv q"><b>Q1</b><p>Do real milk curves under temperature shifts collapse onto one curve in generalized time?</p></div>
+<div class="rv q"><b>Q2</b><p>Which cheap test at loading (initial count, dye time, pH, heat test) predicts a batch best?</p></div>
+<div class="rv q"><b>Q3</b><p>On batches it has never seen, how much of Kinetic's error does a batch-aware model remove?</p></div>
 </div>
 </div></section>
 
-<section id="proto"><div class="w"><span class="eqw" aria-hidden="true">Σ + C<sub>b</sub></span>
-<span class="tag">Prototype</span>
-<h2>Already running, <span>on simulated batches.</span></h2>
-<p class="lead mut">Layers 1–4 and training stages 0–2 are written and tested in <a href="https://github.com/CopyNinja07-07/dairyguard/blob/main/experiments/batch_prototype.py">experiments/batch_prototype.py</a>. It learns from 30 simulated batches and judges 200 new ones on one trip. The batches and the link between day-one tests and biology are invented, so this tests the code, not milk.</p>
+<section id="proto"><div class="w"><span class="tag">Prototype</span>
+<h2 class="rv">Already running, <em>on simulated batches.</em></h2>
+<span class="eqw rv">Σ + C<sub>b</sub></span>
+<p class="rv lead mut">Layers 1–4 and training stages 0–2 are written and tested in <a href="https://github.com/CopyNinja07-07/dairyguard/blob/main/experiments/batch_prototype.py">experiments/batch_prototype.py</a>. It learns from 30 simulated batches and judges 200 new ones on one trip. The batches and the link between day-one tests and biology are invented, so this tests the code, not milk.</p>
 <div class="grid4">
-<div class="ev"><em>simulation</em><b>87–100%</b><p>True batch parameters inside their 90% intervals after fitting (stage 0).</p></div>
-<div class="ev"><em>simulation</em><b>16–32 h</b><p>Median error of hours left using the population only, as DairyGuard Kinetic does.</p></div>
-<div class="ev"><em>simulation</em><b>14–15 h</b><p>Median error with day-one tests, across four random seeds.</p></div>
-<div class="ev"><em>simulation</em><b>0.82–0.98</b><p>How often the cautious value was safe with tests. Below 0.85 fails the blueprint's test: more batches needed.</p></div>
+<div class="rv ev"><em>simulation</em><b>87–100%</b><p>True batch parameters inside their 90% intervals after fitting (stage 0).</p></div>
+<div class="rv ev"><em>simulation</em><b>16–32 h</b><p>Median error of hours left using the population only, as DairyGuard Kinetic does.</p></div>
+<div class="rv ev"><em>simulation</em><b>14–15 h</b><p>Median error with day-one tests, across four random seeds.</p></div>
+<div class="rv ev"><em>simulation</em><b>0.82–0.98</b><p>How often the cautious value was safe with tests. Below 0.85 fails the blueprint's test: more batches needed.</p></div>
 </div>
 </div></section>
 
-<section id="tests"><div class="w"><span class="eqw" aria-hidden="true">0.85 ≤ coverage ≤ 0.95</span>
-<span class="tag">Fixed in advance</span>
-<h2>It replaces Kinetic <span>only if it passes.</span></h2>
-<p class="lead mut">On locked test batches, compared with DairyGuard Kinetic, a classical Baranyi fit, and a black-box recurrent network of similar size.</p>
+<section id="tests"><div class="w"><span class="tag">Fixed in advance</span>
+<h2 class="rv">It replaces Kinetic <em>only if it passes.</em></h2>
+<span class="eqw rv">0.85 ≤ coverage ≤ 0.95</span>
+<p class="rv lead mut">On locked test batches, compared with DairyGuard Kinetic, a classical Baranyi fit, and a black-box recurrent network of similar size.</p>
 <div class="crit">
-<div class="cr"><p>Cuts the median error of <b>hours left at 4 °C</b> by at least 30%.</p></div>
-<div class="cr"><p>Keeps its 90% uncertainty band honest: coverage between <b>85 and 95%</b>.</p></div>
-<div class="cr"><p>Is no worse than Kinetic at telling crossed cartons from safe ones (<b>AUC</b>).</p></div>
-<div class="cr"><p>Beats the <b>black-box</b> network on error of log counts.</p></div>
+<div class="rv cr"><p>Cuts the median error of <b>hours left at 4 °C</b> by at least 30%.</p></div>
+<div class="rv cr"><p>Keeps its 90% uncertainty band honest: coverage between <b>85 and 95%</b>.</p></div>
+<div class="rv cr"><p>Is no worse than Kinetic at telling crossed cartons from safe ones (<b>AUC</b>).</p></div>
+<div class="rv cr"><p>Beats the <b>black-box</b> network on error of log counts.</p></div>
 </div>
 <p class="mut" style="margin-top:20px">If it fails, the failure is reported in full. A negative answer is a result.</p>
 <div class="tl">
-<div class="ti d"><small>October 2026</small><p>Blueprint published. Prototype of stages 0–2 running on simulated batches.</p></div>
-<div class="ti n"><small>Nov – Dec 2026 · now</small><p>Curve pipeline; data splits committed; synthetic recovery and population fit; lab protocol agreed.</p></div>
-<div class="ti"><small>Jan – Feb 2027</small><p>E1 and E2 in the lab; batch encoder on first batches; Q1 answered.</p></div>
-<div class="ti"><small>Spring 2027</small><p>E3 (and E4 with a partner); locked-test evaluation; Q2 and Q3.</p></div>
-<div class="ti"><small>After</small><p>A report of the results, and a peer-reviewed paper if they stand.</p></div>
+<div class="rv ti d"><small>October 2026</small><p>Blueprint published. Prototype of stages 0–2 running on simulated batches.</p></div>
+<div class="rv ti n"><small>Nov – Dec 2026 · now</small><p>Curve pipeline; data splits committed; synthetic recovery and population fit; lab protocol agreed.</p></div>
+<div class="rv ti"><small>Jan – Feb 2027</small><p>E1 and E2 in the lab; batch encoder on first batches; Q1 answered.</p></div>
+<div class="rv ti"><small>Spring 2027</small><p>E3 (and E4 with a partner); locked-test evaluation; Q2 and Q3.</p></div>
+<div class="rv ti"><small>After</small><p>A report of the results, and a peer-reviewed paper if they stand.</p></div>
 </div>
 </div></section>
 
-<section class="end"><div class="w">
+<section class="end"><div class="glow" aria-hidden="true"></div><div class="w">
 <span class="tag">Read it</span>
-<h2>The whole design, <span>in seven pages.</span></h2>
+<h2 class="rv">The whole design, <em>in seven pages.</em></h2>
 <div class="row"><a class="btn p" href="DairyGuard-White-Paper-WP02.pdf">White paper WP-02 (PDF)</a><a class="btn" href="https://github.com/CopyNinja07-07/dairyguard/issues/new?template=offer-data.yml">Offer data or lab access</a></div>
 </div></section>
 <footer><div class="w"><span>© 2026 Suryansh Pratap Singh · Open science</span><span><a href="./">DairyGuard</a><a href="explorer.html">Monitor</a><a href="https://github.com/CopyNinja07-07/dairyguard">GitHub</a></span></div></footer>
@@ -176,8 +186,9 @@ const L=[
 {s:"Layer 3 · new",h:"The batch encoder",p:"Before any counts exist, the encoder estimates a batch's hidden state from simple tests at loading: an initial plate count, a dye-reduction time, pH and, if a partner lab joins, a calorimetric detection time. It starts linear, because there will be tens of batches, not thousands.",e:"q_φ(z_b | x_b) = N(m + W·x_b, Σ_x)"},
 {s:"Layer 4 · extends Kinetic",h:"A closed-form core",p:"In generalized time the Baranyi–Roberts equations lose temperature and have an exact solution. For any temperature history the core costs one integral and one formula: no ODE solver, cheap enough for a microcontroller.",e:"y(τ) = y0 + A(τ) − ln(1 + (e^A(τ) − 1)/e^(ymax − y0))"},
 {s:"Layer 5 · only if needed",h:"The shift residual",p:"If experiment E2 shows real curves departing from the clock after temperature shifts, a small network corrects the physiological state, with a penalty that pulls it to zero. Its size after training is the answer to Q1. Trained in PyTorch through an ODE solver.",e:"dq/dt = μ(T)·q + r_ψ(T, dT/dt, q)"}];
-const det=document.getElementById("det"),bs=[...document.querySelectorAll(".ly")];
-function show(k){const l=L[k];det.innerHTML=`<small>${l.s}</small><h3>${l.h}</h3><p>${l.p}</p><div class="eq">${l.e}</div>`;bs.forEach((b,i)=>b.setAttribute("aria-pressed",i===k));}
+let cur=0;const det=document.getElementById("det"),bs=[...document.querySelectorAll(".ly")];
+function show(k){const l=L[k];det.classList.add("sw");setTimeout(()=>{det.innerHTML=`<small>${l.s}</small><h3>${l.h}</h3><p>${l.p}</p><div class="eq">${l.e}</div>`;det.classList.remove("sw");},k===cur?0:220);cur=k;bs.forEach((b,i)=>b.setAttribute("aria-pressed",i===k));}
 bs.forEach((b,i)=>b.onclick=()=>show(i));show(0);
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll(".rv").forEach(el=>io.observe(el));
 </script>
 </body></html>

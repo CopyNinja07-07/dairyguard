@@ -2,15 +2,12 @@
 \input{style.tex}
 \input{../generated/numbers.tex}
 \hypersetup{pdftitle={DairyGuard Batch: blueprint of a batch-aware spoilage model},pdfauthor={Suryansh Pratap Singh}}
-\newtcolorbox{statusbox}{enhanced,colback=dgnight,colframe=dgnight,coltext=white,boxrule=0pt,arc=2pt,left=10pt,right=10pt,top=7pt,bottom=7pt,fontupper=\small\sffamily}
+\newtcolorbox{statusbox}{enhanced,before upper={\hypersetup{allcolors=dgamber}},colback=dgnight,colframe=dgnight,coltext=white,boxrule=0pt,arc=2pt,left=10pt,right=10pt,top=7pt,bottom=7pt,fontupper=\small\sffamily}
 \newcommand{\st}[1]{{\sffamily\scriptsize\bfseries\color{dgamberdk}#1}}
 \begin{document}
 \thispagestyle{empty}
-{\color{dgamber}\rule{\textwidth}{2pt}}\par\vspace{4pt}
-{\small\sffamily\color{dggrey}DAIRYGUARD WHITE PAPER WP-02 \hfill October 2026 \hfill DESIGN DOCUMENT}\par
-\vspace{22pt}
-{\sffamily\fontsize{26}{31}\selectfont\bfseries\color{dgnight}DairyGuard Batch\par}
-\vspace{6pt}
+\begin{tikzpicture}[remember picture,overlay]\node[anchor=north,inner sep=0] at (current page.north) {\includegraphics[width=\paperwidth]{head-wp02.jpg}};\end{tikzpicture}\par
+\vspace*{75mm}
 {\sffamily\fontsize{14}{18}\selectfont\color{dgblue}Blueprint of a batch-aware spoilage model: the data we will collect, the architecture we will build, how it will be trained, and the tests it must pass\par}
 \vspace{14pt}
 {\sffamily\bfseries Suryansh Pratap Singh}\\
@@ -107,7 +104,7 @@ DairyGuard Batch has five layers (Fig.~\ref{fig:batch}). Layers 1, 2 and 4 exten
 \draw[ar](enc.north) to[out=90,in=-120] node[left,font=\sffamily\tiny,text=dgblue]{$\delta_b$} (tau.south);
 \draw[ar](enc.north east) to[out=60,in=-100] node[right=3pt,font=\sffamily\tiny,text=dgblue,pos=.35,fill=white,inner sep=1pt]{$h_b,\ N_{0b},\ N_{\max b}$} (core.south);
 \draw[ar,dashed](res)--(core);
-\end{tikzpicture}
+\end{tikzpicture}\par
 \caption{DairyGuard Batch. Purple layers extend DairyGuard Kinetic; the marigold layer is new; the dashed layer is added only if experiment E2 shows that real curves depart from the generalized-time clock.}\label{fig:batch}
 \end{figure}
 

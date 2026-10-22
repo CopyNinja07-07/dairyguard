@@ -20,3 +20,4 @@ whitepaper/*.pdf
 **/*.blg
 *.egg-info/
 build/
+whitepaper/head-*.jpg

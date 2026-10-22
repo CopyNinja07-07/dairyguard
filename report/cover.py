@@ -1,106 +1,78 @@
-"""Draws the front and back covers of the technical report (report/cover.pdf, report/backcover.pdf)."""
-import math
+"""Draws the front and back covers of the book (report/cover.pdf, report/backcover.pdf).
+
+The art is painted with bloom.py at 200 dpi and placed full-bleed on an A4 page.
+"""
+import io
 import os
-import random
-from reportlab.lib import colors
+
+from PIL import Image
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.units import cm
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
+import bloom as B
+
 HERE = os.path.dirname(os.path.abspath(__file__))
-W, H = A4
-M = 2.3 * cm
-LIB = "/usr/share/fonts/truetype/liberation"
-pdfmetrics.registerFont(TTFont("Serif", f"{LIB}/LiberationSerif-Regular.ttf"))
-pdfmetrics.registerFont(TTFont("Serif-Italic", f"{LIB}/LiberationSerif-Italic.ttf"))
-pdfmetrics.registerFont(TTFont("Cond-Bold", "/usr/share/fonts/truetype/dejavu/DejaVuSansCondensed-Bold.ttf"))
-pdfmetrics.registerFont(TTFont("Mono", "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"))
-AMBER, PAPER, GREY = colors.HexColor("#EAAA00"), colors.HexColor("#DDE3E8"), colors.HexColor("#A99BB0")
+W, H = 1654, 2339          # A4 at 200 dpi
+M = 150                    # margin in pixels
+INK, MUT = B.AUB + (255,), (102, 82, 95, 255)
 
 
-def night(c, seed=11, beam=True, logo=True):
-    rnd = random.Random(seed)
-    steps = 60
-    for i in range(steps):
-        t = i / (steps - 1)
-        c.setFillColorRGB((11 + 47 * t) / 255, (5 + 10 * t) / 255, (16 + 36 * t) / 255)
-        c.rect(0, H * (1 - (i + 1) / steps), W, H / steps + 1, stroke=0, fill=1)
-    c.setFillColorRGB(.866, .89, .91)
-    for _ in range(170):
-        c.setFillAlpha(.15 + .5 * rnd.random()); x, y = rnd.random() * W, H * (.35 + .65 * rnd.random())
-        c.circle(x, y, .3 + .6 * rnd.random(), stroke=0, fill=1)
-    bx, by = W * .82, 0
-    ang = math.radians(98); L = H * 1.05; sp = math.radians(4.5)
-    if beam:
-        for k, a in enumerate([.10, .07, .05]):
-            c.setFillColorRGB(.918, .667, 0.0); c.setFillAlpha(a)
-            p = c.beginPath(); w2 = sp * (1 + .5 * k)
-            p.moveTo(bx - 4, by); p.lineTo(bx + math.cos(ang - w2) * L, by + math.sin(ang - w2) * L)
-            p.lineTo(bx + math.cos(ang + w2) * L, by + math.sin(ang + w2) * L); p.close(); c.drawPath(p, stroke=0, fill=1)
-    px, py = bx + math.cos(ang) * H * .66, by + math.sin(ang) * H * .66
-    if logo:
-        for rr, a in [(120, .05), (85, .08), (60, .12)]:
-            c.setFillColorRGB(.918, .667, 0.0); c.setFillAlpha(a); c.circle(px, py, rr, stroke=0, fill=1)
-        c.setFillAlpha(1); ls = 120
-        c.drawImage(os.path.join(HERE, "logo.png"), px - ls / 2, py - ls / 2, width=ls, height=ls, mask="auto")
-    x = -6
-    while x < W + 10:
-        w = 18 + rnd.random() * 46; h = H * (.07 + rnd.random() * .2) * (1.5 if rnd.random() < .12 else 1)
-        c.setFillAlpha(1); c.setFillColorRGB(.035, .016, .043); c.rect(x, 0, w, h, stroke=0, fill=1)
-        for yy in range(8, int(h) - 6, 9):
-            for xx in range(5, int(w) - 5, 7):
-                if rnd.random() < .11:
-                    warm = rnd.random() > .72
-                    c.setFillColor(colors.HexColor("#EAAA00" if warm else "#A9C8DE")); c.setFillAlpha(.6 if warm else .25)
-                    c.rect(x + xx, h - yy - 4, 2.2, 3.6, stroke=0, fill=1)
-        x += w + rnd.random() * 3
-    for i in range(80):
-        c.setFillColorRGB(11 / 255, 5 / 255, 16 / 255); c.setFillAlpha(.92 * (1 - i / 80) ** 1.4)
-        c.rect(0, i * 4, W, 4, stroke=0, fill=1)
-    c.setFillAlpha(1)
+def place(img, path, title):
+    c = canvas.Canvas(path, pagesize=A4); c.setTitle(title); c.setAuthor("Suryansh Pratap Singh")
+    buf = io.BytesIO(); img.convert("RGB").save(buf, "JPEG", quality=80, dpi=(200, 200)); buf.seek(0)
+    c.drawImage(ImageReader(buf), 0, 0, width=A4[0], height=A4[1])
+    c.showPage(); c.save()
 
 
 def front(path):
-    c = canvas.Canvas(path, pagesize=A4); c.setTitle("Beyond the 4 °C Alarm"); c.setAuthor("Suryansh Pratap Singh")
-    night(c)
-    c.setFillColor(AMBER); c.setFont("Mono", 8.5); c.drawString(M, H - M, "DAIRYGUARD  ·  OPEN RESEARCH")
-    c.setFillColor(PAPER); c.setFont("Cond-Bold", 46); c.drawString(M, 250, "BEYOND THE")
-    c.setFillColor(AMBER); c.drawString(M, 202, "4 °C ALARM")
-    c.setFillColor(GREY); c.setFont("Serif", 13.5); c.drawString(M, 172, "What a temperature log can and cannot tell us about spoiling milk")
-    c.setStrokeColor(AMBER); c.setLineWidth(1.2); c.line(M, 156, M + 46, 156)
-    c.setFillColor(PAPER); c.setFont("Serif", 12.5); c.drawString(M, 74, "Suryansh Pratap Singh")
-    c.setFillColor(GREY); c.setFont("Serif-Italic", 9.5)
-    c.drawString(M, 59, "Shri Mata Vaishno Devi University")
-    c.drawRightString(W - M, 59, "October 2026")
-    c.showPage(); c.save()
+    img = B.ground(W, H, margin=M)
+    B.glow(img, W * .66, H * .36, W * .34, a=70)
+    B.lily(img, W * .28, H * .86, W * .16, depth=1)
+    B.lily(img, W * .66, H * .36, W * .30)
+    img = B.grain(img, 4)
+    B.text(img, (M, M), "DAIRYGUARD  ·  OPEN RESEARCH", 26, INK, B.INTER_SEMI, .32)
+    B.text(img, (W - M, M), "OCTOBER 2026", 26, INK, B.INTER_SEMI, .32, "ra")
+    B.text(img, (M, M + 70), "A CLEANER", 22, INK, B.INTER_SEMI, .34)
+    B.text(img, (M, M + 104), "COLD CHAIN", 22, INK, B.INTER_SEMI, .34)
+    sz, y0 = 250, H * .43
+    B.smear_text(img, (M - 12, y0), "Beyond", sz, smear=10)
+    B.smear_text(img, (M + 150, y0 + sz * .86), "the 4 °C", sz, smear=18)
+    B.smear_text(img, (M + 420, y0 + sz * 1.72), "Alarm.", sz, smear=8)
+    B.text(img, (M, y0 + sz * 2.95), "What a temperature log can and cannot", 50, INK, B.SERIF_IT)
+    B.text(img, (M, y0 + sz * 2.95 + 64), "tell us about spoiling milk", 50, INK, B.SERIF_IT)
+    B.text(img, (M, H - M - 70), "SURYANSH PRATAP SINGH", 30, INK, B.INTER_SEMI, .3)
+    B.text(img, (M, H - M - 22), "Shri Mata Vaishno Devi University", 30, MUT, B.INTER_MED)
+    B.text(img, (W - M, H * .45), "01", 24, INK, B.INTER_SEMI, .2, "ra")
+    from PIL import ImageDraw
+    d = ImageDraw.Draw(img)
+    for i in range(6):
+        d.line([(W - M - (30 if i == 0 else 14), H * .45 + 40 + i * 12), (W - M, H * .45 + 40 + i * 12)], fill=INK if i == 0 else (58, 15, 52, 110), width=3)
+    place(img, path, "Beyond the 4 °C Alarm")
 
 
 def back(path):
-    c = canvas.Canvas(path, pagesize=A4)
-    night(c, seed=23, beam=False, logo=False)
-    c.setFillColor(AMBER); c.setFont("Mono", 8.5); c.drawString(M, H - M, "BEYOND THE 4 °C ALARM")
-    y = H - 6.2 * cm
-    c.setFillColor(PAPER); c.setFont("Serif", 17)
-    for line in ("A temperature log can say much about how much",
-                 "growth the milk could have had, and little",
-                 "about how much it did."):
-        c.drawString(M, y, line); y -= 25
-    y -= 18; c.setStrokeColor(AMBER); c.setLineWidth(1.2); c.line(M, y, M + 46, y); y -= 34
-    c.setFillColor(GREY); c.setFont("Serif", 11.5)
+    img = B.ground(W, H, dark=True, margin=M)
+    B.glow(img, W * .5, H * .98, W * .5, a=110)
+    B.lily(img, W * .80, H * .90, W * .22, depth=.7, stem=False)
+    img = B.grain(img, 4)
+    ICE, MARI, SOFT = B.ICE + (255,), B.MARI + (255,), (201, 185, 198, 255)
+    B.text(img, (M, M), "BEYOND THE 4 °C ALARM", 26, MARI, B.INTER_SEMI, .32)
+    y = 520
+    for line in ("A temperature log can say much", "about how much growth the milk", "could have had, and little about", "how much it did."):
+        B.text(img, (M, y), line, 74, ICE, B.SERIF_IT); y += 92
+    y += 60
     for line in ("240,000 simulated deliveries. One question: when a milk monitor is wrong,",
                  "what is it wrong about? The answer is not the thermometer. It is the",
                  "biology inside the carton, which no sensor can see, and which one",
-                 "calorimetric test of the batch could largely recover,",
-                 "as the simulation shows. Real milk is the next test.",
+                 "calorimetric test of the batch could largely recover, as the simulation",
+                 "shows. Real milk is the next test.",
                  "",
                  "Open code, open data, every number reproducible from one command."):
-        c.drawString(M, y, line); y -= 17
-    c.setFillColor(AMBER); c.setFont("Mono", 9)
-    c.drawString(M, 74, "github.com/CopyNinja07-07/dairyguard")
-    c.setFillColor(GREY); c.drawRightString(W - M, 74, "copyninja07-07.github.io/dairyguard")
-    c.showPage(); c.save()
+        B.text(img, (M, y), line, 36, SOFT, B.INTER_MED); y += 56
+    B.text(img, (M, H - M - 20), "github.com/CopyNinja07-07/dairyguard", 28, MARI, B.INTER_SEMI)
+    B.text(img, (W - M, H - M - 20), "copyninja07-07.github.io/dairyguard", 28, SOFT, B.INTER_SEMI, 0, "ra")
+    place(img, path, "Beyond the 4 °C Alarm")
 
 
 if __name__ == "__main__":
