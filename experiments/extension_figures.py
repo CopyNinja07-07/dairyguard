@@ -18,7 +18,7 @@ OUT, IMG = os.path.join(ROOT, "generated", "fig"), os.path.join(ROOT, "docs", "i
 os.makedirs(OUT, exist_ok=True); os.makedirs(IMG, exist_ok=True)
 
 INK, INK2, GRID = "#1a1a1a", "#4a4a4a", "#e3e3e3"
-BLUE, ORANGE, GREEN, GOLD, PINK, GREY = "#1f5fa8", "#d1622b", "#2e8b57", "#c99400", "#b4467a", "#8c8c8c"
+BLUE, ORANGE, GREEN, GOLD, PINK, GREY = "#5a1f52", "#d1622b", "#2e8b57", "#d99e00", "#b4467a", "#8c8c8c"
 plt.rcParams.update({"font.family": "sans-serif", "font.sans-serif": ["Liberation Sans", "Arial", "DejaVu Sans"],
                      "font.size": 8, "axes.labelsize": 8, "legend.fontsize": 7.5, "xtick.labelsize": 7.5,
                      "ytick.labelsize": 7.5, "axes.edgecolor": INK2, "axes.linewidth": 0.6, "pdf.fonttype": 42,

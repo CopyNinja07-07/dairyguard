@@ -16,7 +16,7 @@ OUT = os.path.join(ROOT, "generated", "fig")
 os.makedirs(OUT, exist_ok=True)
 
 INK, INK2, MUTED, GRID = "#1a1a1a", "#4a4a4a", "#8c8c8c", "#e3e3e3"
-BLUE, ORANGE, GREEN, GOLD, PINK = "#1f5fa8", "#d1622b", "#2e8b57", "#c99400", "#b4467a"
+BLUE, ORANGE, GREEN, GOLD, PINK = "#5a1f52", "#d1622b", "#2e8b57", "#d99e00", "#b4467a"
 plt.rcParams.update({
     "font.family": "sans-serif", "font.sans-serif": ["Liberation Sans", "Arial", "DejaVu Sans"], "mathtext.fontset": "custom", "mathtext.rm": "Liberation Sans", "mathtext.it": "Liberation Sans:italic", "mathtext.bf": "Liberation Sans:bold",
     "font.size": 8, "axes.labelsize": 8, "axes.titlesize": 8, "legend.fontsize": 8,
@@ -163,7 +163,7 @@ def fig_runs():
     save(fig, "runs.pdf")
 
 
-def _box(ax, x, y, w, h, text, fc="#eef3fa", ec=BLUE, bold=False, fs=8):
+def _box(ax, x, y, w, h, text, fc="#f2edf2", ec=BLUE, bold=False, fs=8):
     ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.2,rounding_size=1.0", fc=fc, ec=ec, lw=.8))
     ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=fs, fontweight="bold" if bold else "normal", color=INK, linespacing=1.2)
 
@@ -221,7 +221,7 @@ def fig_story():
     stages = [(0, 5.5, "Dairy", "0–6 h"), (5.5, 12, "Truck", "6–12 h"), (12, 30, "Depot cold store", "12–30 h"),
               (30, 48, "Shop shelf", "30–48 h"), (48, 72, "Home fridge", "48–72 h")]
     for i, (x0, x1, h, sub) in enumerate(stages):
-        a0.add_patch(FancyBboxPatch((x0 + .35, .05), x1 - x0 - .7, .8, boxstyle="round,pad=0,rounding_size=.25", fc="#eef3fa", ec=BLUE, lw=.8, mutation_aspect=0.1))
+        a0.add_patch(FancyBboxPatch((x0 + .35, .05), x1 - x0 - .7, .8, boxstyle="round,pad=0,rounding_size=.25", fc="#f2edf2", ec=BLUE, lw=.8, mutation_aspect=0.1))
         a0.text((x0 + x1) / 2, .58, h, ha="center", va="center", fontsize=8 if x1 - x0 > 7 else 6.8, fontweight="bold")
         a0.text((x0 + x1) / 2, .27, sub, ha="center", va="center", fontsize=8, color=INK2)
     for j, (s0, s1, _, _) in enumerate(ev):
@@ -397,10 +397,10 @@ def fig_system():
     ax.text(0, 60, "Example values under each block: 40 min after a truck door was left open.  Steps 2–5 run on the logger.", fontsize=8, color=INK2, style="italic", va="center")
     W, Hb = 28, 15
     blocks = [((0, 37), "1  Sense", "probe in the crate\n(DS18B20 or PT1000)", "#fdf1ea", ORANGE, "T = 13.2 °C"),
-              ((36, 37), "2  Schedule", "every minute while changing,\nevery 15 min when steady", "#eef3fa", BLUE, "Δt = 1 min"),
-              ((72, 37), "3  Look up", "rate of shelf-life use\n1/SL(T) from a stored table", "#eef3fa", BLUE, "1/SL = 0.039 h$^{-1}$"),
-              ((72, 8), "4  Accumulate", "cumulative shelf life\nCSL ← CSL + Δt/SL", "#eef3fa", BLUE, "CSL = 0.71"),
-              ((36, 8), "5  Propagate", "same sum for 80 sampled\nbiological parameter sets", "#eef3fa", BLUE, "P(spoiled) = 72 %"),
+              ((36, 37), "2  Schedule", "every minute while changing,\nevery 15 min when steady", "#f2edf2", BLUE, "Δt = 1 min"),
+              ((72, 37), "3  Look up", "rate of shelf-life use\n1/SL(T) from a stored table", "#f2edf2", BLUE, "1/SL = 0.039 h$^{-1}$"),
+              ((72, 8), "4  Accumulate", "cumulative shelf life\nCSL ← CSL + Δt/SL", "#f2edf2", BLUE, "CSL = 0.71"),
+              ((36, 8), "5  Propagate", "same sum for 80 sampled\nbiological parameter sets", "#f2edf2", BLUE, "P(spoiled) = 72 %"),
               ((0, 8), "6  Show", "risk band and alert,\nsent over Bluetooth", "#f4f4f4", INK2, "“inspect before use”")]
     for (x, y), ttl, body, fc, ec, val in blocks:
         ax.add_patch(FancyBboxPatch((x, y), W, Hb, boxstyle="round,pad=0.3,rounding_size=1.2", fc=fc, ec=ec, lw=.9))
@@ -418,24 +418,6 @@ def fig_system():
 
 
 # ================================================================= model comparison and statistics figures
-def fig_hierarchy():
-    fig, ax = plt.subplots(figsize=(W2, 2.9)); ax.set_xlim(0, 100); ax.set_ylim(0, 44); ax.axis("off")
-    cols = [(0, "Primary model", "count against time at a\nfixed temperature",
-             "modified Gompertz (estimator)\nBaranyi–Roberts (reference)\nthree-phase linear, logistic", "#fdf1ea", ORANGE),
-            (34, "Secondary model", "growth rate against\ntemperature",
-             "square-root (Ratkowsky)\nArrhenius, Arrhenius–Davey\nconstant Q$_{10}$, cardinal", "#eef3fa", BLUE),
-            (68, "Tertiary model", "a tool that applies both\nto a temperature history",
-             "shelf-life accumulator (CSL)\nmean kinetic temperature\ntime–temperature indicators", "#eef7f1", GREEN)]
-    for x, t, sub, ex, fc, ec in cols:
-        _box(ax, x, 21, 32, 18, f"\n{sub}", fc, ec, bold=False)
-        ax.text(x + 16, 35.5, t, ha="center", fontsize=8, fontweight="bold", color=ec)
-        _box(ax, x, 1, 32, 15, ex, "white", ec)
-    for x in (32.4, 66.4):
-        _arr(ax, x, 30, x + 1.4, 30)
-    for x in (16, 50, 84):
-        _arr(ax, x, 20.6, x, 16.4, INK2)
-    ax.text(0, 42.8, "Model layers in predictive microbiology, and the members compared in this study", fontsize=8, color=INK2, style="italic")
-    save(fig, "hierarchy.pdf")
 
 
 def fig_secondary():
@@ -489,41 +471,6 @@ def fig_rivals():
     save(fig, "rivals.pdf")
 
 
-def fig_stats():
-    z = np.load(os.path.join(ROOT, "results", "example_setting.npz")); y = z["label"]
-    def roc(s):
-        o = np.argsort(-s); yy = y[o]; tp = np.cumsum(yy) / yy.sum(); fp = np.cumsum(1 - yy) / (1 - yy).sum()
-        return np.r_[0, fp], np.r_[0, tp]
-    sys.path.insert(0, os.path.join(ROOT, "src")); from dairyguard import benchmark as Bm
-    fig, axs = plt.subplots(1, 3, figsize=(W2, 2.45))
-    ax = axs[0]
-    for k, lab, ls, c in [("oracle", "oracle", (0, (1, 1)), MUTED), ("CSL", "CSL", "-", BLUE), ("deg_hours_4C", "degree-hours", (0, (4, 2)), ORANGE),
-                          ("t_above_5C", "time > 5 °C", (0, (1.5, 1.2)), GREEN), ("maxT", "T$_{max}$", (0, (6, 1.5, 1.5, 1.5)), PINK)]:
-        fp, tp = roc(z[k]); ax.plot(fp, tp, ls=ls, color=c, lw=1.3, label=f"{lab} {Bm.auc_fast(z[k], y):.2f}")
-    ax.plot([0, 1], [0, 1], color=GRID, lw=.8)
-    ax.set_xlabel("False-positive rate"); ax.set_ylabel("True-positive rate"); ax.legend(frameon=False, fontsize=8, loc="lower right", handlelength=1.6, bbox_to_anchor=(1.04, -0.02), borderpad=0.2)
-    clean(ax, None); ax.set_aspect("equal"); tag(ax, "a")
-    ax = axs[1]
-    edges = np.linspace(0, 1, 11)
-    for P, lab, mk, c in [(z["P_mc"], "Monte Carlo probability", "o", BLUE), (z["P_alarm"], "single alarm", "s", ORANGE)]:
-        xs, ys = [], []
-        for i in range(10):
-            msk = (P >= edges[i]) & ((P < edges[i + 1]) if i < 9 else (P <= 1))
-            if msk.sum() >= 20:
-                xs.append(P[msk].mean()); ys.append(y[msk].mean())
-        ax.plot(xs, ys, marker=mk, ms=4, color=c, lw=1.1, label=lab)
-    ax.plot([0, 1], [0, 1], color=INK2, lw=.7, ls=(0, (3, 2)), label="perfect calibration")
-    ax.set_xlabel("Predicted probability"); ax.set_ylabel("Observed fraction spoiled"); ax.legend(frameon=False, fontsize=8, loc="lower right", bbox_to_anchor=(1.04, -0.02))
-    ax.set_xlim(0, 1); ax.set_ylim(0, 1); clean(ax, None); ax.set_aspect("equal"); tag(ax, "b")
-    ax = axs[2]; d = z["boot_diff"]
-    ax.hist(d, bins=40, color=BLUE, alpha=.75, edgecolor="white", lw=.3)
-    lo, hi = np.percentile(d, [2.5, 97.5])
-    for v in (lo, hi): ax.axvline(v, color=INK, lw=.8, ls=(0, (3, 2)))
-    ax.axvline(0, color=ORANGE, lw=1.0)
-    ax.set_xlabel("AUC(CSL) − AUC(degree-hours)"); ax.set_ylabel("Bootstrap replicates"); clean(ax); tag(ax, "c")
-    ax.text(.14, .95, f"95 % interval\n{lo:.3f} to {hi:.3f}", transform=ax.transAxes, ha="left", va="top", fontsize=8)
-    fig.tight_layout(w_pad=1.0)
-    save(fig, "stats.pdf")
 
 
 # ---------------------------------------------------------------- Fig: calorimetric master curve and value of a calorimetric measurement
@@ -566,33 +513,10 @@ def fig_calorimetry():
     save(fig, "calorimetry.pdf")
 
 
-# ---------------------------------------------------------------- Fig: study pipeline and statistical procedures
-def fig_pipeline():
-    fig, ax = plt.subplots(figsize=(W2, 2.75)); ax.set_xlim(0, 100); ax.set_ylim(0, 60); ax.axis("off")
-    top = [("Choose run\nand setting", "#f4f4f4", INK2), ("Generate\n4000 trips", "#fdf1ea", ORANGE),
-           ("Draw each\ntrip's biology", "#fdf1ea", ORANGE), ("Grow bacteria;\nlabel each trip", "#fdf1ea", ORANGE),
-           ("Sensor error\nand sampling", "#eef3fa", BLUE), ("Scores: CSL,\nrules, oracle,\nprobability", "#eef3fa", BLUE),
-           ("Evaluate:\nAUC, Brier,\nECE", "#eef7f1", GREEN)]
-    bot = [("Labels y and\nscores s", "#f4f4f4", INK2), ("AUC by the\nMann–Whitney\nstatistic", "#eef3fa", BLUE),
-           ("Bootstrap,\n200 resamples:\nAUC interval", "#eef3fa", BLUE), ("Paired bootstrap,\n400 resamples:\nAUC difference", "#eef3fa", BLUE),
-           ("Brier score and\ncalibration error", "#eef7f1", GREEN), ("Growth-rate fits:\nBf, Af, AICc,\ncross-validation", "#fdf1ea", ORANGE)]
-    def row(items, y, h, tagl, title):
-        n = len(items); gap = 2.2; w = (100 - gap * (n - 1)) / n
-        for i, (t, fc, ec) in enumerate(items):
-            x = i * (w + gap); _box(ax, x, y, w, h, t, fc, ec, fs=7)
-            if i: _arr(ax, x - gap + 0.15, y + h / 2, x - 0.15, y + h / 2)
-        ax.text(0, y + h + 3.2, tagl, fontsize=8.5, fontweight="bold", color=INK)
-        ax.text(4, y + h + 3.2, title, fontsize=8, color=INK2)
-        return w, gap
-    w, gap = row(top, 34, 13, "(a)", "Study pipeline, repeated for every setting of every run")
-    ax.annotate("", xy=(w / 2, 33.4), xytext=(6 * (w + gap) + w / 2, 33.4), arrowprops=dict(arrowstyle="-|>", lw=.7, color=MUTED, connectionstyle="arc3,rad=-0.12", shrinkA=0, shrinkB=0, mutation_scale=7))
-    ax.text(50, 27.6, "next setting or run", ha="center", fontsize=7, color=MUTED)
-    row(bot, 2, 13, "(b)", "Statistical procedures applied to each setting")
-    save(fig, "pipeline.pdf")
 
 
 if __name__ == "__main__":
     fig_design(); fig_combase(); fig_lis(); fig_budget(); fig_runs()
     fig_story(); fig_clock(); fig_rates(); fig_sampling(); fig_errors(); fig_system()
-    fig_hierarchy(); fig_secondary(); fig_rivals(); fig_stats(); fig_calorimetry(); fig_pipeline()
+    fig_secondary(); fig_rivals(); fig_calorimetry()
     print("generated figures ok:", sorted(os.listdir(OUT)))

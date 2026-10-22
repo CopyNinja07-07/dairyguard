@@ -18,7 +18,7 @@ OUT = os.path.join(os.path.dirname(__file__), "fig")
 os.makedirs(OUT, exist_ok=True)
 
 SURF, INK, INK2, MUTED, GRID = "#fcfcfb", "#1b1b1a", "#52514e", "#8a8984", "#e4e3df"
-C = {"CSL": "#2a78d6", "deg_hours_4C": "#eb6834", "t_above_5C": "#1baf7a", "t_above_8C": "#eda100", "maxT": "#e87ba4"}
+C = {"CSL": "#5a1f52", "deg_hours_4C": "#eb6834", "t_above_5C": "#1baf7a", "t_above_8C": "#eaaa00", "maxT": "#e87ba4"}
 LABEL = {"CSL": "Kinetic score (CSL)", "deg_hours_4C": "Degree-hours above 4 °C",
          "t_above_5C": "Time above 5 °C", "t_above_8C": "Time above 8 °C", "maxT": "Maximum temperature"}
 TAU_LABEL = {"low_mass": "Low-mass pouch (time constant 5-20 min)", "insulated": "Insulated crate (time constant 1-4 h)"}

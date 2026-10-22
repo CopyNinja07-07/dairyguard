@@ -3,14 +3,14 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>DairyGuard</title><link rel="icon" href="dg-icon.svg" type="image/svg+xml"><link rel="icon" href="dg-icon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="dg-touch-icon.png">
 <meta name="description" content="DairyGuard reads a cold-chain temperature log and says how likely it is that milk has crossed its bacterial limit, and how sure it can be. Open models, data, software and firmware.">
-<meta name="theme-color" content="#05070b">
+<meta name="theme-color" content="#0b0510">
 <meta property="og:type" content="website"><meta property="og:site_name" content="DairyGuard"><meta property="og:title" content="DairyGuard · The city sleeps. The cold chain doesn't."><meta property="og:description" content="An open cold-chain monitor that reads a temperature log and says how likely it is that milk has crossed its bacterial limit, and how sure it can be."><meta property="og:url" content="https://copyninja07-07.github.io/dairyguard/"><meta property="og:image" content="https://copyninja07-07.github.io/dairyguard/img/og-card.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="DairyGuard: a delivery judged at 81% chance of crossing the limit">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="DairyGuard · The city sleeps. The cold chain doesn't."><meta name="twitter:description" content="An open cold-chain monitor that reads a temperature log and says how likely it is that milk has crossed its bacterial limit, and how sure it can be."><meta name="twitter:image" content="https://copyninja07-07.github.io/dairyguard/img/og-card.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Cormorant+Garamond:ital,wght@1,500&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#05070b;--bg2:#0b0f16;--bg3:#111722;--ink:#ebe7de;--mut:#8c95a1;--dim:#58616d;--line:#1b2330;--sig:#f2b544;--hot:#ff5a3c;--cold:#5ec3ff;--ok:#5fd39a;--r:16px;
+:root{--bg:#0b0510;--bg2:#150a1a;--bg3:#1e0e24;--ink:#dde3e8;--mut:#a99bb0;--dim:#6e5f78;--line:#43193f;--sig:#eaaa00;--hot:#f2545b;--cold:#a9c8de;--ok:#5fd39a;--r:16px;
 --fd:"Big Shoulders Display","Arial Narrow","Roboto Condensed",sans-serif;--fb:Inter,system-ui,sans-serif;--fm:"JetBrains Mono",ui-monospace,monospace;color-scheme:dark}
 *{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 var(--fb);-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -22,11 +22,16 @@ p{margin:0 0 1em;max-width:64ch}a{color:var(--sig)}
 .tag{display:inline-block;font:500 12px/1 var(--fm);letter-spacing:.2em;text-transform:uppercase;color:var(--sig);margin-bottom:18px}
 .lead{font-size:clamp(18px,2vw,21px);line-height:1.6;color:var(--ink);max-width:42em;margin-top:22px}
 .mut{color:var(--mut)}
+section.c{position:relative}
+.eqw{position:absolute;right:0;top:clamp(40px,6vw,80px);font:italic 500 clamp(22px,3.4vw,46px)/1 "Cormorant Garamond",Georgia,serif;color:var(--sig);opacity:.13;white-space:nowrap;pointer-events:none;letter-spacing:.01em;max-width:100%;overflow:hidden}
+.eqw sup,.eqw sub{font-size:.6em}
+@media(max-width:700px){.eqw{display:none}}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg fill='none' stroke='%23DDE3E8' stroke-width='1.2'%3E%3Crect x='30' y='40' width='26' height='10' rx='5' transform='rotate(-25 43 45)'/%3E%3Crect x='150' y='120' width='26' height='10' rx='5' transform='rotate(35 163 125)'/%3E%3Crect x='60' y='160' width='22' height='9' rx='4.5' transform='rotate(70 71 164)'/%3E%3Ccircle cx='170' cy='45' r='7'/%3E%3Ccircle cx='182' cy='45' r='7'/%3E%3Ccircle cx='110' cy='95' r='3'/%3E%3Ccircle cx='25' cy='120' r='2'/%3E%3C/g%3E%3C/svg%3E")}
 section.c{padding-block:clamp(80px,11vw,140px);border-top:1px solid var(--line)}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease}.rv.in{opacity:1;transform:none}
 .ev{display:inline-block;font:600 10px var(--fm);letter-spacing:.12em;text-transform:uppercase;border:1px solid;border-radius:99px;padding:2px 7px;margin-left:8px;vertical-align:2px;font-style:normal}
-.ev.s{color:var(--sig);border-color:rgba(242,181,68,.5)}.ev.r{color:var(--ok);border-color:rgba(95,211,154,.5)}
-nav{position:fixed;inset:0 0 auto;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(5,7,11,.72);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(27,35,48,.7)}
+.ev.s{color:var(--sig);border-color:rgba(234,170,0,.5)}.ev.r{color:var(--ok);border-color:rgba(95,211,154,.5)}
+nav{position:fixed;inset:0 0 auto;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(11,5,16,.72);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(58,15,52,.7)}
 nav .w{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:14px}
 nav b{display:flex;align-items:center;gap:10px;font:800 22px var(--fd);letter-spacing:.08em;text-transform:uppercase}nav b img{width:28px;height:28px}
 nav .lk{display:flex;gap:20px;align-items:center}nav .lk a{color:var(--mut);text-decoration:none;font-size:14px}nav .lk a:hover{color:var(--ink)}
@@ -40,8 +45,8 @@ nav .cta{color:var(--bg)!important;background:var(--sig);padding:7px 14px;border
 .hero h1{font-size:clamp(46px,min(8.4vw,11vh),126px);font-weight:900;max-width:11ch;text-shadow:0 4px 40px rgba(0,0,0,.6)}.hero h1 span{color:var(--sig)}
 .hero p{font-size:clamp(17px,2vw,21px);max-width:40ch;margin-top:20px;text-shadow:0 2px 20px rgba(0,0,0,.85)}
 .hero .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
-.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--fb);text-decoration:none;padding:11px 18px;border-radius:99px;border:1px solid var(--line);color:var(--ink);background:rgba(11,15,22,.75)}
-.btn.p{background:var(--sig);border-color:var(--sig);color:#07090c}.btn:hover{border-color:var(--sig)}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--fb);text-decoration:none;padding:11px 18px;border-radius:99px;border:1px solid var(--line);color:var(--ink);background:rgba(21,10,26,.75)}
+.btn.p{background:var(--sig);border-color:var(--sig);color:#1a0718}.btn:hover{border-color:var(--sig)}
 .facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px;font:500 12px var(--fm);letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}.facts b{color:var(--ink)}
 /* story */
 .story{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:44px}
@@ -51,13 +56,13 @@ nav .cta{color:var(--bg)!important;background:var(--sig);padding:7px 14px;border
 /* system */
 .sys{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:44px;position:relative}
 .ly{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:18px 16px;min-width:0;position:relative}
-.ly.e{border-color:rgba(242,181,68,.55);background:radial-gradient(120% 90% at 50% 0,rgba(242,181,68,.12),transparent 70%),var(--bg2)}
+.ly.e{border-color:rgba(234,170,0,.55);background:radial-gradient(120% 90% at 50% 0,rgba(234,170,0,.12),transparent 70%),var(--bg2)}
 .ly small{font:500 10.5px var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}.ly b{display:block;font:800 22px/1.05 var(--fd);text-transform:uppercase;margin:8px 0 6px}.ly span{font-size:13.5px;color:var(--mut);display:block}
 .ly code{font:500 11.5px var(--fm);color:var(--cold);display:block;margin-top:8px;word-break:break-all}
 @media(max-width:960px){.sys{grid-template-columns:1fr 1fr}}@media(max-width:520px){.sys{grid-template-columns:1fr}}
 .ship{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;margin-top:16px}
 @media(max-width:900px){.ship{grid-template-columns:1fr}}
-.term{background:#020305;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.term{background:#070309;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
 .term .bar{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line)}.term .bar i{width:10px;height:10px;border-radius:50%;background:#2a3240;display:block}
 .term pre{margin:0;padding:16px;font:12.5px/1.6 var(--fm);color:#c9d1d9;overflow-x:auto;white-space:pre}
 .term .pr{color:var(--ok)}.term .hl{color:var(--sig)}.term .bd{color:var(--hot)}
@@ -80,31 +85,31 @@ nav .cta{color:var(--bg)!important;background:var(--sig);padding:7px 14px;border
 .clock{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:34px;margin-top:44px;align-items:center}
 .plot{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:18px;min-width:0}.plot svg{width:100%;height:auto;display:block}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:99px;padding:3px;margin-top:12px}.seg button{font:600 13px var(--fb);color:var(--mut);background:none;border:0;border-radius:99px;padding:8px 14px;cursor:pointer}
-.seg button[aria-pressed=true]{background:var(--sig);color:#07090c}
+.seg button[aria-pressed=true]{background:var(--sig);color:#1a0718}
 @media(max-width:860px){.clock{grid-template-columns:1fr}}
 /* limits */
 .lim{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:40px}@media(max-width:860px){.lim{grid-template-columns:1fr}}
 .lc{border:1px dashed var(--line);border-radius:var(--r);padding:22px;min-width:0}.lc b{display:block;font:800 40px var(--fd);color:var(--cold)}.lc p{font-size:15px;color:var(--mut);margin:6px 0 0}
-.nextc{margin-top:16px;border:1px solid rgba(94,195,255,.4);border-radius:var(--r);padding:26px;background:radial-gradient(120% 80% at 100% 0,rgba(94,195,255,.1),transparent 60%),var(--bg2)}
+.nextc{margin-top:16px;border:1px solid rgba(169,200,222,.4);border-radius:var(--r);padding:26px;background:radial-gradient(120% 80% at 100% 0,rgba(169,200,222,.1),transparent 60%),var(--bg2)}
 .nextc small{font:500 11px var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--cold)}.nextc h3{font-size:clamp(28px,3.4vw,40px);margin:8px 0}.nextc p{color:var(--mut)}
 .nx{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:28px;align-items:center}
 .bpimg{display:block;transform:rotate(2.5deg);transition:transform .4s}.bpimg:hover{transform:rotate(0) scale(1.03)}.bpimg img{width:100%;display:block;border-radius:4px;box-shadow:0 18px 40px rgba(0,0,0,.6)}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.chips span{font:500 12px var(--fm);letter-spacing:.06em;color:var(--mut);border:1px solid var(--line);border-radius:99px;padding:5px 11px;background:var(--bg)}
-.chips span.n{color:var(--sig);border-color:rgba(242,181,68,.5)}.chips span.o{border-style:dashed}
+.chips span.n{color:var(--sig);border-color:rgba(234,170,0,.5)}.chips span.o{border-style:dashed}
 @media(max-width:760px){.nx{grid-template-columns:1fr}.bpimg{max-width:180px}}
 /* roadmap */
 .road{position:relative;margin-top:50px;padding-block:6px}
 .road .rail{position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--line)}
-.road .lit{position:absolute;left:50%;top:0;width:2px;margin-left:-1px;height:0;background:var(--sig);box-shadow:0 0 18px rgba(242,181,68,.6)}
-.road .lamp{position:absolute;left:50%;top:0;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:var(--sig);opacity:0;box-shadow:0 0 0 6px rgba(242,181,68,.18),0 0 36px 8px rgba(242,181,68,.45)}
+.road .lit{position:absolute;left:50%;top:0;width:2px;margin-left:-1px;height:0;background:var(--sig);box-shadow:0 0 18px rgba(234,170,0,.6)}
+.road .lamp{position:absolute;left:50%;top:0;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:var(--sig);opacity:0;box-shadow:0 0 0 6px rgba(234,170,0,.18),0 0 36px 8px rgba(234,170,0,.45)}
 .ms{position:relative;display:grid;grid-template-columns:1fr 60px 1fr;align-items:center;min-height:150px}
 .ms .dot{grid-column:2;grid-row:1;justify-self:center;width:20px;height:20px;border-radius:50%;background:var(--bg);border:2px solid var(--dim);transition:.5s;z-index:1}
-.ms.on .dot{border-color:var(--sig);background:var(--sig);box-shadow:0 0 20px rgba(242,181,68,.7)}
+.ms.on .dot{border-color:var(--sig);background:var(--sig);box-shadow:0 0 20px rgba(234,170,0,.7)}
 .ms .card{grid-row:1;max-width:420px;opacity:.25;transform:translateY(14px);transition:opacity .7s,transform .7s}.ms.on .card{opacity:1;transform:none}
 .ms.l .card{grid-column:1;justify-self:end;text-align:right}.ms.r .card{grid-column:3;justify-self:start}
 .ms .when{font:500 12px var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--sig)}.ms h3{font-size:clamp(26px,3vw,34px);margin:6px 0}.ms p{font-size:15px;color:var(--mut);margin:0;max-width:none}
 .pill{display:inline-block;font:600 10px var(--fm);letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:99px;margin-left:8px;vertical-align:3px;border:1px solid var(--line);color:var(--dim)}
-.pill.d{color:var(--ok);border-color:rgba(95,211,154,.55)}.pill.now{color:#07090c;background:var(--sig);border-color:var(--sig)}
+.pill.d{color:var(--ok);border-color:rgba(95,211,154,.55)}.pill.now{color:#1a0718;background:var(--sig);border-color:var(--sig)}
 @media(max-width:760px){.road .rail,.road .lit,.road .lamp{left:18px}.ms{grid-template-columns:36px 1fr;min-height:0;padding-block:24px}.ms .dot{grid-column:1}.ms.l .card,.ms.r .card{grid-column:2;justify-self:start;text-align:left}}
 /* read */
 .docs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin-top:44px}
@@ -122,12 +127,12 @@ nav .cta{color:var(--bg)!important;background:var(--sig);padding:7px 14px;border
 .need{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:40px}@media(max-width:860px){.need{grid-template-columns:1fr}}
 .nd{display:block;text-decoration:none;color:inherit;background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:24px;transition:.25s;min-width:0}.nd:hover{transform:translateY(-3px);border-color:var(--sig)}
 .nd small{font:500 11px var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--sig)}.nd h3{font-size:30px;margin:10px 0 8px}.nd p{font-size:15px;color:var(--mut);margin:0}
-.closing{position:relative;overflow:hidden;text-align:center;padding-block:clamp(110px,15vw,190px);border-top:1px solid var(--line);background:radial-gradient(70% 60% at 50% 52%,rgba(242,181,68,.10),transparent 70%),radial-gradient(90% 50% at 50% 100%,rgba(255,120,40,.07),transparent 70%)}
+.closing{position:relative;overflow:hidden;text-align:center;padding-block:clamp(110px,15vw,190px);border-top:1px solid var(--line);background:radial-gradient(70% 60% at 50% 52%,rgba(234,170,0,.10),transparent 70%),radial-gradient(90% 50% at 50% 100%,rgba(255,120,40,.07),transparent 70%)}
 .closing .w{position:relative;z-index:2}
 #embers{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
 .yantra{position:absolute;left:50%;top:50%;height:min(92%,118vw);width:auto;aspect-ratio:1;transform:translate(-50%,-50%);z-index:0;pointer-events:none;opacity:.9}
 .yantra .ln{fill:none;stroke:var(--sig);stroke-width:1.1;stroke-dasharray:1;stroke-dashoffset:1;opacity:.55;vector-effect:non-scaling-stroke}
-.yantra .ln.f{stroke-width:.7;opacity:.32}.yantra .ln.h{stroke:#ff9a4a;opacity:.45}
+.yantra .ln.f{stroke-width:.7;opacity:.32}.yantra .ln.h{stroke:#f28c28;opacity:.45}
 .closing.on .yantra .ln{animation:draw 3.2s cubic-bezier(.6,.05,.2,1) forwards;animation-delay:var(--d,0s)}
 @keyframes draw{to{stroke-dashoffset:0}}
 .yantra .spin{transform-origin:500px 500px;animation:turn 120s linear infinite}.yantra .spin.r{animation-duration:160s;animation-direction:reverse}
@@ -135,9 +140,9 @@ nav .cta{color:var(--bg)!important;background:var(--sig);padding:7px 14px;border
 .yantra .dots circle{fill:var(--sig);opacity:0;transition:opacity 1.2s}.closing.on .yantra .dots circle{opacity:.5}
 .yantra .bindu{fill:#ffd27a;opacity:0;transform-origin:500px 500px}.closing.on .yantra .bindu{animation:bindu 4s ease-in-out 2.6s infinite both}
 @keyframes bindu{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.5)}}
-.halo{position:absolute;left:50%;top:50%;width:min(520px,90vw);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(5,7,11,.92) 30%,rgba(5,7,11,.55) 58%,transparent 72%);z-index:1;pointer-events:none}
+.halo{position:absolute;left:50%;top:50%;width:min(520px,90vw);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(11,5,16,.92) 30%,rgba(11,5,16,.55) 58%,transparent 72%);z-index:1;pointer-events:none}
 .sk{font-family:"Tiro Devanagari Sanskrit","Noto Serif Devanagari",serif;font-size:clamp(36px,6.4vw,78px);line-height:1.25;margin:10px auto;display:flex;flex-wrap:wrap;justify-content:center;gap:.28em}
-.sk span{display:inline-block;opacity:0;transform:translateY(18px);filter:blur(8px);background:linear-gradient(100deg,#ebe7de 0%,#ebe7de 40%,#ffe2a3 50%,#ebe7de 60%,#ebe7de 100%);background-size:250% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;transition:opacity 1.4s ease,transform 1.4s ease,filter 1.4s ease}
+.sk span{display:inline-block;opacity:0;transform:translateY(18px);filter:blur(8px);background:linear-gradient(100deg,#dde3e8 0%,#dde3e8 40%,#ffe2a3 50%,#dde3e8 60%,#dde3e8 100%);background-size:250% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;transition:opacity 1.4s ease,transform 1.4s ease,filter 1.4s ease}
 .closing.on .sk span{opacity:1;transform:none;filter:none;animation:shine 6s ease-in-out 3.2s infinite}
 .closing.on .sk span:nth-child(1){transition-delay:1.2s}.closing.on .sk span:nth-child(2){transition-delay:1.9s;animation-delay:3.6s}
 @keyframes shine{0%{background-position:100% 0}45%,100%{background-position:-60% 0}}
@@ -155,6 +160,7 @@ footer .brand{display:flex;align-items:center;gap:10px;font:800 20px var(--fd);l
 footer p{font:500 10.5px var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin:6px 0 0}
 footer .fl2{display:flex;gap:20px;flex-wrap:wrap}footer .fl2 a{color:var(--mut);text-decoration:none;font-size:14px}footer .fl2 a:hover{color:var(--sig)}
 @media(prefers-reduced-motion:reduce){.rv,.ms .card{opacity:1;transform:none;transition:none}.fl{transition:none}html{scroll-behavior:auto}}
+body{background:radial-gradient(1100px 700px at 85% -5%,rgba(58,15,52,.75),transparent 65%),radial-gradient(900px 600px at 0% 100%,rgba(58,15,52,.45),transparent 60%),var(--bg);background-attachment:fixed}
 </style></head><body>
 
 <nav><div class="w"><b><img src="dg-icon.svg" alt="">DairyGuard</b><div class="lk"><a href="#story">Story</a><a href="#built">What we built</a><a href="#how">How</a><a href="#found">Findings</a><a href="#read">Read</a><a class="cta" href="explorer.html">Open the monitor</a></div></div></nav>
@@ -162,16 +168,16 @@ footer .fl2{display:flex;gap:20px;flex-wrap:wrap}footer .fl2 a{color:var(--mut);
 <header class="hero">
 <canvas id="night" aria-hidden="true"></canvas>
 <div class="w">
-<span class="tag">Open research · cold-chain monitoring</span>
+<span class="tag">The night watch of the cold chain</span>
 <h1>The city sleeps. <span>The cold chain doesn't.</span></h1>
-<p>DairyGuard reads a delivery's temperature log and says how likely it is that the milk has crossed its bacterial limit, and how sure it can be.</p>
+<p>While the trucks cross the city at night, DairyGuard watches every carton and answers what no logger does: has the milk crossed its bacterial limit, and how sure can we be?</p>
 <div class="row"><a class="btn p" href="explorer.html">Open the monitor</a><a class="btn" href="#story">How it started</a></div>
 <div class="facts"><span><b>240,000</b> simulated deliveries</span><span><b>373</b> ComBase records</span><span><b>27</b> automated tests</span><span><b>Python · C · JS</b></span></div>
 </div>
 </header>
 
 <div class="w">
-<section class="c" id="story"><span class="tag rv">Why we started</span>
+<section class="c" id="story"><span class="eqw" aria-hidden="true">N(t) = N₀ e<sup>μt</sup></span><span class="tag rv">Why we started</span>
 <h2 class="rv">It began as a box. <span>It became a question.</span></h2>
 <p class="lead rv">For the Smart India Hackathon our team designed a cold-chain pod for dairy logistics: an ESP32, a DS18B20 temperature probe and a Peltier cooler, with an app that warns when milk has been too warm for too long. Building its shelf-life model raised a question the hardware could not answer.</p>
 <div class="story">
@@ -181,7 +187,7 @@ footer .fl2{display:flex;gap:20px;flex-wrap:wrap}footer .fl2 a{color:var(--mut);
 </div>
 </section>
 
-<section class="c" id="built"><span class="tag rv">What we built</span>
+<section class="c" id="built"><span class="eqw" aria-hidden="true">√μ = b (T − T<sub>min</sub>)</span><span class="tag rv">What we built</span>
 <h2 class="rv">DairyGuard Kinetic, <span>end to end.</span></h2>
 <p class="lead rv">A complete, open system: real growth data, kinetic models, a monitor that turns a log into a verdict, a simulator that tests it, and three ways to run it.</p>
 <div class="sys">
@@ -210,7 +216,7 @@ Log: 288 readings over 72.0 h, max 26.0 C, 5.0 h above 8 C in 1 warm event(s)
 </div>
 </section>
 
-<section class="c" id="how"><span class="tag rv">How we did it</span>
+<section class="c" id="how"><span class="eqw" aria-hidden="true">τ = ∫ μ(T) dt</span><span class="tag rv">How we did it</span>
 <h2 class="rv">From records <span>to results.</span></h2>
 <div class="how">
 <div class="st rv"><span class="n">STEP 01</span><h3>Collected the data</h3><p>Searched ComBase, the public database of bacterial growth experiments, for milk. Transcribed organism, temperature, pH, water activity, source study and growth rate for each record, and converted every rate from log₁₀ to natural-log units. Added a published fluctuating-temperature experiment (Lin et al. 2016) and the FSSAI limit.</p><span class="num">373 records</span><span class="num">52 sources</span><span class="num">every value sourced or flagged</span></div>
@@ -222,7 +228,7 @@ Log: 288 readings over 72.0 h, max 26.0 C, 5.0 h above 8 C in 1 warm event(s)
 </div>
 </section>
 
-<section class="c" id="found"><span class="tag rv">What we found</span>
+<section class="c" id="found"><span class="eqw" aria-hidden="true">AUC = P(s⁺ &gt; s⁻)</span><span class="tag rv">What we found</span>
 <h2 class="rv">The thermometer isn't the problem. <span>The hidden biology is.</span></h2>
 <p class="lead rv">We scored every way of reading a log on one question: can it tell the cartons that crossed the bacterial limit from those that didn't? A coin flip scores 50, a perfect method 100.</p>
 <div class="meter">
@@ -239,7 +245,7 @@ Log: 288 readings over 72.0 h, max 26.0 C, 5.0 h above 8 C in 1 warm event(s)
 <p class="note rv">"Crossing the limit" means the bacteria count passed the FSSAI hygiene limit for pasteurised milk. It is a count, not a taste test or a safety verdict. The heat test is a calorimetry measurement, simulated so far.</p>
 </section>
 
-<section class="c" id="clock"><span class="tag rv">The key idea</span>
+<section class="c" id="clock"><span class="eqw" aria-hidden="true">dy/dτ = q/(1+q) · (1 − e<sup>y−y<sub>max</sub></sup>)</span><span class="tag rv">The key idea</span>
 <h2 class="rv">Bacteria keep <span>their own clock.</span></h2>
 <div class="clock">
 <div class="plot rv"><svg id="ck" viewBox="0 0 560 320" role="img" aria-label="Growth curves at 4, 8 and 12 degrees Celsius on ordinary and biological time"></svg>
@@ -249,7 +255,7 @@ Log: 288 readings over 72.0 h, max 26.0 C, 5.0 h above 8 C in 1 warm event(s)
 </div>
 </section>
 
-<section class="c" id="next"><span class="tag rv">Where it stops</span>
+<section class="c" id="next"><span class="eqw" aria-hidden="true">z<sub>b</sub> ∼ 𝒩(m, Σ)</span><span class="tag rv">Where it stops</span>
 <h2 class="rv">The evidence <span>points to the batch.</span></h2>
 <div class="lim">
 <div class="lc rv"><b>25%</b><p>Real growth rates differ between studies by a quarter. The biology a log can't see is real, and large.</p></div>
@@ -269,7 +275,7 @@ Log: 288 readings over 72.0 h, max 26.0 C, 5.0 h above 8 C in 1 warm event(s)
 </div>
 </section>
 
-<section class="c" id="read"><span class="tag rv">Read and run</span>
+<section class="c" id="read"><span class="eqw" aria-hidden="true">SL = λ + A/(μe) [1 − ln(−ln L/A)]</span><span class="tag rv">Read and run</span>
 <h2 class="rv">Go as deep <span>as you like.</span></h2>
 <div class="docs">
 <a class="dc rv" href="explorer.html"><div class="th"><img src="img/demo-fleet.jpg" alt="The DairyGuard Monitor app" loading="lazy"></div><div class="bd"><small>Browser app · 5 minutes</small><h3>The monitor</h3><p>Watch six deliveries live, draw your own trip, explore the evidence.</p><span class="go">Open →</span></div></a>
@@ -280,7 +286,7 @@ Log: 288 readings over 72.0 h, max 26.0 C, 5.0 h above 8 C in 1 warm event(s)
 </div>
 </section>
 
-<section class="c" id="help"><span class="tag rv">Work with us</span>
+<section class="c" id="help"><span class="eqw" aria-hidden="true">CSL = Σ Δt / SL(T)</span><span class="tag rv">Work with us</span>
 <h2 class="rv">What we're <span>looking for.</span></h2>
 <div class="need">
 <a class="nd rv" href="https://github.com/CopyNinja07-07/dairyguard/issues/new?template=offer-data.yml"><small>Microbiology lab</small><h3>Bench time</h3><p>Incubators and plate counting for a few weeks, to measure milk at steady and changing temperatures.</p></a>
@@ -308,9 +314,9 @@ Log: 288 readings over 72.0 h, max 26.0 C, 5.0 h above 8 C in 1 warm event(s)
 <path class="fl" d="M50 6 C58 20 62 30 58 40 C56 46 44 46 42 40 C38 30 42 20 50 6Z" fill="url(#dg3)"/>
 <path class="fl2" d="M50 20 C54 28 55 34 53 39 C52 42 48 42 47 39 C45 34 46 28 50 20Z" fill="#fff6d8"/>
 <path d="M14 54 Q50 50 86 54 Q82 76 50 80 Q18 76 14 54Z" fill="url(#dg2)"/>
-<path d="M14 54 Q50 62 86 54" fill="none" stroke="#f2b544" stroke-width="1.6"/>
-<path d="M30 68 Q50 74 70 68" fill="none" stroke="#f2b544" stroke-width="1" opacity=".6"/>
-<ellipse cx="50" cy="86" rx="20" ry="3" fill="#f2b544" opacity=".18"/>
+<path d="M14 54 Q50 62 86 54" fill="none" stroke="#eaaa00" stroke-width="1.6"/>
+<path d="M30 68 Q50 74 70 68" fill="none" stroke="#eaaa00" stroke-width="1" opacity=".6"/>
+<ellipse cx="50" cy="86" rx="20" ry="3" fill="#eaaa00" opacity=".18"/>
 </svg>
 </div></section>
 <footer><div class="w">
@@ -336,24 +342,24 @@ document.querySelectorAll(".rv").forEach(el => io.observe(el));
   }
   function frame(now) {
     const t = (now - t0) / 1000;
-    const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#04060a"); g.addColorStop(.62, "#0b1220"); g.addColorStop(.86, "#141a26"); g.addColorStop(1, "#05070b"); x.fillStyle = g; x.fillRect(0, 0, W, H);
-    for (let i = 0; i < 7; i++) { const cx = ((i * 263 + t * 6) % (W + 400)) - 200, cy = H * (.12 + (i % 3) * .07); const cg = x.createRadialGradient(cx, cy, 0, cx, cy, 260); cg.addColorStop(0, "rgba(40,52,70,.35)"); cg.addColorStop(1, "rgba(40,52,70,0)"); x.fillStyle = cg; x.fillRect(cx - 260, cy - 260, 520, 520); }
+    const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#08030b"); g.addColorStop(.62, "#1b0a20"); g.addColorStop(.86, "#2a1030"); g.addColorStop(1, "#0b0510"); x.fillStyle = g; x.fillRect(0, 0, W, H);
+    for (let i = 0; i < 7; i++) { const cx = ((i * 263 + t * 6) % (W + 400)) - 200, cy = H * (.12 + (i % 3) * .07); const cg = x.createRadialGradient(cx, cy, 0, cx, cy, 260); cg.addColorStop(0, "rgba(58,15,52,.35)"); cg.addColorStop(1, "rgba(58,15,52,0)"); x.fillStyle = cg; x.fillRect(cx - 260, cy - 260, 520, 520); }
     const ox = W * .7, oy = H * .34, sw = Math.sin(t * .25) * .32 - Math.PI / 2 - .1, L = H * 1.1, sp = .085;
-    const bg = x.createLinearGradient(ox, oy, ox + Math.cos(sw) * L, oy + Math.sin(sw) * L); bg.addColorStop(0, "rgba(242,181,68,.30)"); bg.addColorStop(1, "rgba(242,181,68,0)");
+    const bg = x.createLinearGradient(ox, oy, ox + Math.cos(sw) * L, oy + Math.sin(sw) * L); bg.addColorStop(0, "rgba(234,170,0,.30)"); bg.addColorStop(1, "rgba(234,170,0,0)");
     x.fillStyle = bg; x.beginPath(); x.moveTo(ox, oy); x.lineTo(ox + Math.cos(sw - sp) * L, oy + Math.sin(sw - sp) * L); x.lineTo(ox + Math.cos(sw + sp) * L, oy + Math.sin(sw + sp) * L); x.closePath(); x.fill();
     const sx = ox + Math.cos(sw) * H * .3, sy = Math.max(H * .1, oy + Math.sin(sw) * H * .3), r = Math.min(W, H) * .09;
-    const sg = x.createRadialGradient(sx, sy, 0, sx, sy, r * 1.8); sg.addColorStop(0, "rgba(242,181,68,.42)"); sg.addColorStop(.55, "rgba(242,181,68,.16)"); sg.addColorStop(1, "rgba(242,181,68,0)");
+    const sg = x.createRadialGradient(sx, sy, 0, sx, sy, r * 1.8); sg.addColorStop(0, "rgba(234,170,0,.42)"); sg.addColorStop(.55, "rgba(234,170,0,.16)"); sg.addColorStop(1, "rgba(234,170,0,0)");
     x.fillStyle = sg; x.beginPath(); x.ellipse(sx, sy, r * 1.8, r * 1.3, 0, 0, 7); x.fill();
     if (icon.complete && icon.naturalWidth) { x.globalAlpha = .55; x.drawImage(icon, sx - r * .62, sy - r * .62, r * 1.24, r * 1.24); x.globalAlpha = 1; }
-    for (const b of sky) { x.fillStyle = "#070a10"; x.fillRect(b.x, H * .84 - b.h, b.w, b.h); for (const [wx, wy, p] of b.win) if (Math.sin(t * .3 + p * 40) > -.85) { x.fillStyle = p > .8 ? "rgba(94,195,255,.55)" : "rgba(242,181,68,.55)"; x.fillRect(wx, wy, 3, 4); } }
-    x.fillStyle = "#06080c"; x.fillRect(0, H * .84, W, H * .16);
-    x.strokeStyle = "rgba(242,181,68,.25)"; x.lineWidth = 2; x.setLineDash([22, 26]); x.lineDashOffset = -t * 60; x.beginPath(); x.moveTo(0, H * .92); x.lineTo(W, H * .92); x.stroke(); x.setLineDash([]); x.lineWidth = 1;
+    for (const b of sky) { x.fillStyle = "#0d0612"; x.fillRect(b.x, H * .84 - b.h, b.w, b.h); for (const [wx, wy, p] of b.win) if (Math.sin(t * .3 + p * 40) > -.85) { x.fillStyle = p > .8 ? "rgba(169,200,222,.55)" : "rgba(234,170,0,.55)"; x.fillRect(wx, wy, 3, 4); } }
+    x.fillStyle = "#0a040d"; x.fillRect(0, H * .84, W, H * .16);
+    x.strokeStyle = "rgba(234,170,0,.25)"; x.lineWidth = 2; x.setLineDash([22, 26]); x.lineDashOffset = -t * 60; x.beginPath(); x.moveTo(0, H * .92); x.lineTo(W, H * .92); x.stroke(); x.setLineDash([]); x.lineWidth = 1;
     const kx = ((t * 70) % (W + 260)) - 200, ky = H * .9;
     const hl = x.createRadialGradient(kx + 142, ky - 8, 0, kx + 142, ky - 8, 110); hl.addColorStop(0, "rgba(255,240,200,.45)"); hl.addColorStop(1, "rgba(255,240,200,0)"); x.fillStyle = hl; x.fillRect(kx + 140, ky - 70, 140, 120);
-    x.fillStyle = "#1a2230"; x.fillRect(kx, ky - 30, 112, 30); x.fillStyle = "#243042"; x.fillRect(kx + 112, ky - 20, 30, 20);
-    x.fillStyle = "#ebe7de"; x.font = "700 11px Inter, sans-serif"; x.fillText("MILK", kx + 40, ky - 11);
-    x.fillStyle = "#ff5a3c"; x.fillRect(kx - 2, ky - 9, 3, 4);
-    x.strokeStyle = "rgba(170,190,220,.16)"; x.beginPath();
+    x.fillStyle = "#2a1430"; x.fillRect(kx, ky - 30, 112, 30); x.fillStyle = "#3a1a40"; x.fillRect(kx + 112, ky - 20, 30, 20);
+    x.fillStyle = "#dde3e8"; x.font = "700 11px Inter, sans-serif"; x.fillText("MILK", kx + 40, ky - 11);
+    x.fillStyle = "#f2545b"; x.fillRect(kx - 2, ky - 9, 3, 4);
+    x.strokeStyle = "rgba(221,227,232,.16)"; x.beginPath();
     for (const d of rain) { const yy = (d[1] + t * d[3]) % (H + 40) - 20, xx = ((d[0] - t * 40) % W + W) % W; x.moveTo(xx, yy); x.lineTo(xx - 3, yy + d[2]); }
     x.stroke();
     if (!RM) requestAnimationFrame(frame);
@@ -370,15 +376,15 @@ document.querySelectorAll(".rv").forEach(el => io.observe(el));
   function curve(T) { let y = P.n0 * LN, q = 1 / (Math.exp(P.h0) - 1); const out = [], dt = .1; for (let i = 0; i <= 2400; i++) { if (i % 10 === 0) out.push([i * dt, y / LN]); const m = mu(T), a = q / (1 + q); y += dt * m * a * (1 - Math.exp(y - P.nmax * LN)); q += dt * m * q; } return out; }
   const L = 60, R = 540, T0 = 20, B = 280, X = h => L + h / 240 * (R - L), Y = v => B - (v - 1) / 9 * (B - T0);
   const el = (n, a) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); s.appendChild(e); return e; };
-  for (let v = 2; v <= 10; v += 2) { el("line", {x1: L, x2: R, y1: Y(v), y2: Y(v), stroke: "#1b2330"}); el("text", {x: L - 10, y: Y(v) + 4, "text-anchor": "end", fill: "#58616d", "font-size": 12, "font-family": "JetBrains Mono, monospace"}).textContent = v; }
+  for (let v = 2; v <= 10; v += 2) { el("line", {x1: L, x2: R, y1: Y(v), y2: Y(v), stroke: "#43193f"}); el("text", {x: L - 10, y: Y(v) + 4, "text-anchor": "end", fill: "#6e5f78", "font-size": 12, "font-family": "JetBrains Mono, monospace"}).textContent = v; }
   const lim = Math.log10(3e4);
-  el("line", {x1: L, x2: R, y1: Y(lim), y2: Y(lim), stroke: "#ff5a3c", "stroke-dasharray": "5 5", opacity: .7});
-  el("text", {x: R, y: Y(lim) - 6, "text-anchor": "end", fill: "#ff5a3c", "font-size": 12}).textContent = "FSSAI limit";
-  el("text", {x: 16, y: (T0 + B) / 2, transform: `rotate(-90 16 ${(T0 + B) / 2})`, "text-anchor": "middle", fill: "#8c95a1", "font-size": 12}).textContent = "bacteria per mL (log10)";
-  const ax = el("text", {x: (L + R) / 2, y: 314, "text-anchor": "middle", fill: "#8c95a1", "font-size": 12});
-  for (let h = 0; h <= 240; h += 48) el("text", {x: X(h), y: B + 17, "text-anchor": "middle", fill: "#58616d", "font-size": 12, "font-family": "JetBrains Mono, monospace"}).textContent = h;
-  const lines = [[4, "#5ec3ff"], [8, "#f2b544"], [12, "#ff5a3c"]].map(([T, col]) => ({T, pts: curve(T), e: el("path", {fill: "none", stroke: col, "stroke-width": 2.5, "stroke-linecap": "round"}), lab: el("text", {fill: col, "font-size": 13, "font-weight": 600})}));
-  const one = el("text", {x: X(166), y: Y(6.6), fill: "#ebe7de", "font-size": 13, "font-weight": 600}); one.textContent = "4, 8 and 12 °C: one curve";
+  el("line", {x1: L, x2: R, y1: Y(lim), y2: Y(lim), stroke: "#f2545b", "stroke-dasharray": "5 5", opacity: .7});
+  el("text", {x: R, y: Y(lim) - 6, "text-anchor": "end", fill: "#f2545b", "font-size": 12}).textContent = "FSSAI limit";
+  el("text", {x: 16, y: (T0 + B) / 2, transform: `rotate(-90 16 ${(T0 + B) / 2})`, "text-anchor": "middle", fill: "#a99bb0", "font-size": 12}).textContent = "bacteria per mL (log10)";
+  const ax = el("text", {x: (L + R) / 2, y: 314, "text-anchor": "middle", fill: "#a99bb0", "font-size": 12});
+  for (let h = 0; h <= 240; h += 48) el("text", {x: X(h), y: B + 17, "text-anchor": "middle", fill: "#6e5f78", "font-size": 12, "font-family": "JetBrains Mono, monospace"}).textContent = h;
+  const lines = [[4, "#a9c8de"], [8, "#eaaa00"], [12, "#f2545b"]].map(([T, col]) => ({T, pts: curve(T), e: el("path", {fill: "none", stroke: col, "stroke-width": 2.5, "stroke-linecap": "round"}), lab: el("text", {fill: col, "font-size": 13, "font-weight": 600})}));
+  const one = el("text", {x: X(166), y: Y(6.6), fill: "#dde3e8", "font-size": 13, "font-weight": 600}); one.textContent = "4, 8 and 12 °C: one curve";
   let k = 0, goal = 0;
   function draw() {
     for (const l of lines) { const f = 1 + k * (mu(l.T) / mu(4) - 1); let d = ""; for (const [h, v] of l.pts) { if (h * f > 240) break; d += (d ? "L" : "M") + X(h * f).toFixed(1) + " " + Y(v).toFixed(1); } l.e.setAttribute("d", d);

@@ -17,7 +17,7 @@ pdfmetrics.registerFont(TTFont("Serif", f"{LIB}/LiberationSerif-Regular.ttf"))
 pdfmetrics.registerFont(TTFont("Serif-Italic", f"{LIB}/LiberationSerif-Italic.ttf"))
 pdfmetrics.registerFont(TTFont("Cond-Bold", "/usr/share/fonts/truetype/dejavu/DejaVuSansCondensed-Bold.ttf"))
 pdfmetrics.registerFont(TTFont("Mono", "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"))
-AMBER, PAPER, GREY = colors.HexColor("#F2B544"), colors.HexColor("#ECE9E2"), colors.HexColor("#8B939E")
+AMBER, PAPER, GREY = colors.HexColor("#EAAA00"), colors.HexColor("#DDE3E8"), colors.HexColor("#A99BB0")
 
 
 def night(c, seed=11, beam=True, logo=True):
@@ -25,9 +25,9 @@ def night(c, seed=11, beam=True, logo=True):
     steps = 60
     for i in range(steps):
         t = i / (steps - 1)
-        c.setFillColorRGB((5 + 12 * t) / 255, (7 + 17 * t) / 255, (10 + 22 * t) / 255)
+        c.setFillColorRGB((11 + 47 * t) / 255, (5 + 10 * t) / 255, (16 + 36 * t) / 255)
         c.rect(0, H * (1 - (i + 1) / steps), W, H / steps + 1, stroke=0, fill=1)
-    c.setFillColorRGB(.82, .85, .9)
+    c.setFillColorRGB(.866, .89, .91)
     for _ in range(170):
         c.setFillAlpha(.15 + .5 * rnd.random()); x, y = rnd.random() * W, H * (.35 + .65 * rnd.random())
         c.circle(x, y, .3 + .6 * rnd.random(), stroke=0, fill=1)
@@ -35,29 +35,29 @@ def night(c, seed=11, beam=True, logo=True):
     ang = math.radians(98); L = H * 1.05; sp = math.radians(4.5)
     if beam:
         for k, a in enumerate([.10, .07, .05]):
-            c.setFillColorRGB(.95, .71, .27); c.setFillAlpha(a)
+            c.setFillColorRGB(.918, .667, 0.0); c.setFillAlpha(a)
             p = c.beginPath(); w2 = sp * (1 + .5 * k)
             p.moveTo(bx - 4, by); p.lineTo(bx + math.cos(ang - w2) * L, by + math.sin(ang - w2) * L)
             p.lineTo(bx + math.cos(ang + w2) * L, by + math.sin(ang + w2) * L); p.close(); c.drawPath(p, stroke=0, fill=1)
     px, py = bx + math.cos(ang) * H * .66, by + math.sin(ang) * H * .66
     if logo:
         for rr, a in [(120, .05), (85, .08), (60, .12)]:
-            c.setFillColorRGB(.95, .71, .27); c.setFillAlpha(a); c.circle(px, py, rr, stroke=0, fill=1)
+            c.setFillColorRGB(.918, .667, 0.0); c.setFillAlpha(a); c.circle(px, py, rr, stroke=0, fill=1)
         c.setFillAlpha(1); ls = 120
         c.drawImage(os.path.join(HERE, "logo.png"), px - ls / 2, py - ls / 2, width=ls, height=ls, mask="auto")
     x = -6
     while x < W + 10:
         w = 18 + rnd.random() * 46; h = H * (.07 + rnd.random() * .2) * (1.5 if rnd.random() < .12 else 1)
-        c.setFillAlpha(1); c.setFillColorRGB(.012, .016, .024); c.rect(x, 0, w, h, stroke=0, fill=1)
+        c.setFillAlpha(1); c.setFillColorRGB(.035, .016, .043); c.rect(x, 0, w, h, stroke=0, fill=1)
         for yy in range(8, int(h) - 6, 9):
             for xx in range(5, int(w) - 5, 7):
                 if rnd.random() < .11:
                     warm = rnd.random() > .72
-                    c.setFillColor(colors.HexColor("#F2B544" if warm else "#5EC3FF")); c.setFillAlpha(.6 if warm else .25)
+                    c.setFillColor(colors.HexColor("#EAAA00" if warm else "#A9C8DE")); c.setFillAlpha(.6 if warm else .25)
                     c.rect(x + xx, h - yy - 4, 2.2, 3.6, stroke=0, fill=1)
         x += w + rnd.random() * 3
     for i in range(80):
-        c.setFillColorRGB(7 / 255, 9 / 255, 12 / 255); c.setFillAlpha(.92 * (1 - i / 80) ** 1.4)
+        c.setFillColorRGB(11 / 255, 5 / 255, 16 / 255); c.setFillAlpha(.92 * (1 - i / 80) ** 1.4)
         c.rect(0, i * 4, W, 4, stroke=0, fill=1)
     c.setFillAlpha(1)
 

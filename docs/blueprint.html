@@ -3,36 +3,41 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>DairyGuard Batch Blueprint</title><link rel="icon" href="dg-icon.svg" type="image/svg+xml"><link rel="icon" href="dg-icon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="dg-touch-icon.png">
 <meta name="description" content="The blueprint of DairyGuard Batch, the model our lab will build next: the data we will collect, the architecture, the training plan and the pass-or-fail tests, fixed before the lab data exist.">
-<meta name="theme-color" content="#05070b">
+<meta name="theme-color" content="#0b0510">
 <meta property="og:type" content="article"><meta property="og:site_name" content="DairyGuard"><meta property="og:title" content="DairyGuard Batch · The blueprint of our next model"><meta property="og:description" content="Data plan, architecture, training and pass-or-fail tests, fixed before the lab data exist. White Paper WP-02."><meta property="og:url" content="https://copyninja07-07.github.io/dairyguard/blueprint.html"><meta property="og:image" content="https://copyninja07-07.github.io/dairyguard/img/og-papers.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="DairyGuard white papers: built, tested, next the batch">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="DairyGuard Batch · The blueprint of our next model"><meta name="twitter:description" content="Data plan, architecture, training and pass-or-fail tests, fixed before the lab data exist."><meta name="twitter:image" content="https://copyninja07-07.github.io/dairyguard/img/og-papers.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#05070b;--bg2:#0b0f16;--bg3:#111722;--ink:#ebe7de;--mut:#8c95a1;--dim:#58616d;--line:#1b2330;--sig:#f2b544;--hot:#ff5a3c;--cold:#5ec3ff;--ok:#5fd39a;--r:16px;
+:root{--bg:#0b0510;--bg2:#150a1a;--bg3:#1e0e24;--ink:#dde3e8;--mut:#a99bb0;--dim:#6e5f78;--line:#43193f;--sig:#eaaa00;--hot:#f2545b;--cold:#a9c8de;--ok:#5fd39a;--r:16px;
 --fd:"Big Shoulders Display","Arial Narrow","Roboto Condensed",sans-serif;--fb:Inter,system-ui,sans-serif;--fm:"JetBrains Mono",ui-monospace,monospace;color-scheme:dark}
 *{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 var(--fb);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
-.w{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.w{position:relative;max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:var(--fd);font-weight:800;line-height:.98;margin:0;text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
 h2{font-size:clamp(34px,5vw,62px)}h2 span,h1 span{color:var(--sig)}
 p{margin:0 0 1em;max-width:66ch}a{color:var(--sig)}
 .tag{display:inline-block;font:500 12px/1 var(--fm);letter-spacing:.2em;text-transform:uppercase;color:var(--sig);margin-bottom:16px}
 .mut{color:var(--mut)}
-nav{position:fixed;inset:0 0 auto;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(5,7,11,.75);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(27,35,48,.7)}
+nav{position:fixed;inset:0 0 auto;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(11,5,16,.75);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(58,15,52,.7)}
 nav .w{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:14px}
 nav a.b{display:flex;align-items:center;gap:10px;font:800 22px var(--fd);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none}nav a.b img{width:28px;height:28px}
 nav .lk{display:flex;gap:18px;align-items:center}nav .lk a{color:var(--mut);text-decoration:none;font-size:14px}
-nav .cta{color:#07090c!important;background:var(--sig);padding:7px 14px;border-radius:99px;font-weight:600;white-space:nowrap}
+nav .cta{color:#1a0718!important;background:var(--sig);padding:7px 14px;border-radius:99px;font-weight:600;white-space:nowrap}
 @media(max-width:720px){nav .lk a:not(.cta){display:none}}
-header{padding-top:140px;padding-bottom:70px;background:radial-gradient(60% 80% at 85% 0,rgba(242,181,68,.16),transparent 70%)}
+header{padding-top:140px;padding-bottom:70px;background:radial-gradient(60% 80% at 85% 0,rgba(234,170,0,.16),transparent 70%)}
 header h1{font-size:clamp(46px,8vw,104px);font-weight:900}
 .lead{font-size:clamp(18px,2vw,21px);max-width:44em;margin-top:20px}
-.status{display:inline-flex;align-items:center;gap:10px;margin-top:22px;font:600 12px var(--fm);letter-spacing:.14em;text-transform:uppercase;color:#07090c;background:var(--sig);border-radius:99px;padding:7px 14px}
-.status i{width:8px;height:8px;border-radius:50%;background:#07090c;animation:pl 1.6s infinite}@keyframes pl{50%{opacity:.25}}
+.status{display:inline-flex;align-items:center;gap:10px;margin-top:22px;font:600 12px var(--fm);letter-spacing:.14em;text-transform:uppercase;color:#1a0718;background:var(--sig);border-radius:99px;padding:7px 14px}
+.status i{width:8px;height:8px;border-radius:50%;background:#1a0718;animation:pl 1.6s infinite}@keyframes pl{50%{opacity:.25}}
 .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
-.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--fb);text-decoration:none;padding:11px 18px;border-radius:99px;border:1px solid var(--line);color:var(--ink);background:var(--bg2)}.btn.p{background:var(--sig);border-color:var(--sig);color:#07090c}.btn:hover{border-color:var(--sig)}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--fb);text-decoration:none;padding:11px 18px;border-radius:99px;border:1px solid var(--line);color:var(--ink);background:var(--bg2)}.btn.p{background:var(--sig);border-color:var(--sig);color:#1a0718}.btn:hover{border-color:var(--sig)}
+section{position:relative}
+.eqw{position:absolute;right:0;top:clamp(40px,6vw,80px);font:italic 500 clamp(22px,3.4vw,46px)/1 "Cormorant Garamond",Georgia,serif;color:var(--sig);opacity:.13;white-space:nowrap;pointer-events:none;letter-spacing:.01em;max-width:100%;overflow:hidden}
+.eqw sup,.eqw sub{font-size:.6em}
+@media(max-width:700px){.eqw{display:none}}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg fill='none' stroke='%23DDE3E8' stroke-width='1.2'%3E%3Crect x='30' y='40' width='26' height='10' rx='5' transform='rotate(-25 43 45)'/%3E%3Crect x='150' y='120' width='26' height='10' rx='5' transform='rotate(35 163 125)'/%3E%3Crect x='60' y='160' width='22' height='9' rx='4.5' transform='rotate(70 71 164)'/%3E%3Ccircle cx='170' cy='45' r='7'/%3E%3Ccircle cx='182' cy='45' r='7'/%3E%3Ccircle cx='110' cy='95' r='3'/%3E%3Ccircle cx='25' cy='120' r='2'/%3E%3C/g%3E%3C/svg%3E")}
 section{padding-block:clamp(70px,9vw,110px);border-top:1px solid var(--line)}
 .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:36px}
 @media(max-width:900px){.grid4{grid-template-columns:1fr 1fr}}@media(max-width:520px){.grid4{grid-template-columns:1fr}}
@@ -44,17 +49,17 @@ section{padding-block:clamp(70px,9vw,110px);border-top:1px solid var(--line)}
 .layers{display:grid;gap:10px}
 .ly{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:center;text-align:left;width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 16px;color:var(--ink);font:inherit;cursor:pointer;transition:.25s}
 .ly .n{font:800 30px var(--fd);color:var(--dim)}.ly b{display:block;font:800 22px var(--fd);text-transform:uppercase}.ly span{font-size:13.5px;color:var(--mut)}
-.ly.new{border-color:rgba(242,181,68,.45)}.ly.opt{border-style:dashed}
-.ly[aria-pressed=true]{border-color:var(--sig);background:radial-gradient(120% 120% at 0 0,rgba(242,181,68,.12),transparent 60%),var(--bg2)}.ly[aria-pressed=true] .n{color:var(--sig)}
+.ly.new{border-color:rgba(234,170,0,.45)}.ly.opt{border-style:dashed}
+.ly[aria-pressed=true]{border-color:var(--sig);background:radial-gradient(120% 120% at 0 0,rgba(234,170,0,.12),transparent 60%),var(--bg2)}.ly[aria-pressed=true] .n{color:var(--sig)}
 .detail{position:sticky;top:90px;background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:24px;min-width:0}
 .detail small{font:500 11px var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--sig)}.detail h3{font-size:32px;margin:8px 0 10px}.detail p{color:var(--mut);font-size:15.5px}
-.eq{font:500 14px/1.6 var(--fm);color:var(--cold);background:#020305;border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;white-space:nowrap}
+.eq{font:500 14px/1.6 var(--fm);color:var(--cold);background:#070309;border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;white-space:nowrap}
 .tw{overflow-x:auto;margin-top:30px;border:1px solid var(--line);border-radius:var(--r)}
 table{border-collapse:collapse;width:100%;min-width:640px;font-size:15px}
 th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}th{font:600 11px var(--fm);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);background:var(--bg2)}
 tr:last-child td{border-bottom:0}td.m{color:var(--mut)}
 .pill{display:inline-block;font:600 10px var(--fm);letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:99px;border:1px solid var(--line);color:var(--dim);white-space:nowrap}
-.pill.ok{color:var(--ok);border-color:rgba(95,211,154,.55)}.pill.go{color:#07090c;background:var(--sig);border-color:var(--sig)}.pill.req{color:var(--cold);border-color:rgba(94,195,255,.5)}
+.pill.ok{color:var(--ok);border-color:rgba(95,211,154,.55)}.pill.go{color:#1a0718;background:var(--sig);border-color:var(--sig)}.pill.req{color:var(--cold);border-color:rgba(169,200,222,.5)}
 .qs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:34px}@media(max-width:860px){.qs{grid-template-columns:1fr}}
 .q{border:1px dashed var(--line);border-radius:var(--r);padding:22px;min-width:0}.q b{font:800 34px var(--fd);color:var(--sig)}.q p{color:var(--mut);font-size:15.5px;margin:8px 0 0}
 .crit{display:grid;gap:10px;margin-top:30px;counter-reset:c}
@@ -62,10 +67,12 @@ tr:last-child td{border-bottom:0}td.m{color:var(--mut)}
 .cr::before{counter-increment:c;content:"0" counter(c);font:800 30px var(--fd);color:var(--sig)}.cr p{margin:0}
 .tl{display:grid;gap:0;margin-top:34px;border-left:2px solid var(--line);margin-left:8px}
 .ti{position:relative;padding:0 0 26px 30px}.ti::before{content:"";position:absolute;left:-9px;top:6px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--dim)}
-.ti.d::before{background:var(--ok);border-color:var(--ok)}.ti.n::before{background:var(--sig);border-color:var(--sig);box-shadow:0 0 16px rgba(242,181,68,.6)}
+.ti.d::before{background:var(--ok);border-color:var(--ok)}.ti.n::before{background:var(--sig);border-color:var(--sig);box-shadow:0 0 16px rgba(234,170,0,.6)}
 .ti small{font:500 12px var(--fm);letter-spacing:.14em;text-transform:uppercase;color:var(--sig)}.ti p{margin:4px 0 0;color:var(--mut)}
 .end{text-align:center}.end .row{justify-content:center}
 footer{border-top:1px solid var(--line)}footer .w{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-block:28px;font:500 11px var(--fm);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}footer a{color:var(--mut);text-decoration:none;margin-left:16px}
+body{background:radial-gradient(1100px 700px at 85% -5%,rgba(58,15,52,.75),transparent 65%),radial-gradient(900px 600px at 0% 100%,rgba(58,15,52,.45),transparent 60%),var(--bg);background-attachment:fixed}
+.eqw{top:0!important}
 </style></head><body>
 <nav><div class="w"><a class="b" href="./"><img src="dg-icon.svg" alt="">DairyGuard</a><div class="lk"><a href="#why">Why</a><a href="#arch">Architecture</a><a href="#data">Data</a><a href="#proto">Prototype</a><a href="#tests">Tests</a><a class="cta" href="DairyGuard-White-Paper-WP02.pdf">Read WP-02</a></div></div></nav>
 
@@ -77,7 +84,7 @@ footer{border-top:1px solid var(--line)}footer .w{display:flex;flex-wrap:wrap;ju
 <div class="row"><a class="btn p" href="DairyGuard-White-Paper-WP02.pdf">Read the full white paper</a><a class="btn" href="DairyGuard-White-Paper-WP01.pdf">WP-01: what we built</a><a class="btn" href="./">Back to DairyGuard</a></div>
 </div></header>
 
-<section id="why"><div class="w">
+<section id="why"><div class="w"><span class="eqw" aria-hidden="true">σ(ln b) = 0.25</span>
 <span class="tag">Why a second model</span>
 <h2>Kinetic showed <span>where it stops.</span></h2>
 <p class="lead mut">DairyGuard Kinetic treats every batch of milk as a draw from one fixed population. Its own results say that is now the limiting assumption.</p>
@@ -89,7 +96,7 @@ footer{border-top:1px solid var(--line)}footer .w{display:flex;flex-wrap:wrap;ju
 </div>
 </div></section>
 
-<section id="arch"><div class="w">
+<section id="arch"><div class="w"><span class="eqw" aria-hidden="true">τ<sub>b</sub> = e<sup>2δ</sup> ∫ μ dt</span>
 <span class="tag">Architecture</span>
 <h2>Five layers. <span>Tap one.</span></h2>
 <div class="arch">
@@ -104,7 +111,7 @@ footer{border-top:1px solid var(--line)}footer .w{display:flex;flex-wrap:wrap;ju
 </div>
 </div></section>
 
-<section id="data"><div class="w">
+<section id="data"><div class="w"><span class="eqw" aria-hidden="true">log<sub>10</sub> N<sup>obs</sup> ∼ 𝒩(·, 0.2²)</span>
 <span class="tag">Data plan</span>
 <h2>What we will collect, <span>and how we get it.</span></h2>
 <div class="tw"><table>
@@ -124,7 +131,7 @@ footer{border-top:1px solid var(--line)}footer .w{display:flex;flex-wrap:wrap;ju
 </div>
 </div></section>
 
-<section id="proto"><div class="w">
+<section id="proto"><div class="w"><span class="eqw" aria-hidden="true">Σ + C<sub>b</sub></span>
 <span class="tag">Prototype</span>
 <h2>Already running, <span>on simulated batches.</span></h2>
 <p class="lead mut">Layers 1–4 and training stages 0–2 are written and tested in <a href="https://github.com/CopyNinja07-07/dairyguard/blob/main/experiments/batch_prototype.py">experiments/batch_prototype.py</a>. It learns from 30 simulated batches and judges 200 new ones on one trip. The batches and the link between day-one tests and biology are invented, so this tests the code, not milk.</p>
@@ -136,7 +143,7 @@ footer{border-top:1px solid var(--line)}footer .w{display:flex;flex-wrap:wrap;ju
 </div>
 </div></section>
 
-<section id="tests"><div class="w">
+<section id="tests"><div class="w"><span class="eqw" aria-hidden="true">0.85 ≤ coverage ≤ 0.95</span>
 <span class="tag">Fixed in advance</span>
 <h2>It replaces Kinetic <span>only if it passes.</span></h2>
 <p class="lead mut">On locked test batches, compared with DairyGuard Kinetic, a classical Baranyi fit, and a black-box recurrent network of similar size.</p>
