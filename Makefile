@@ -21,6 +21,7 @@ extensions:   # growth-law study on real ComBase data and further tests of the m
 	DG_PARAMS=ref $(PY) experiments/monitor_studies.py
 	$(PY) experiments/extension_figures.py
 	$(PY) experiments/readme_animations.py
+	$(PY) experiments/readme_svgs.py
 summary:
 	$(PY) experiments/summarize_runs.py
 figures:

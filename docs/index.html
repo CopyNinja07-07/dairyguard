@@ -11,7 +11,7 @@
 <style>
 :root{--ice:#DDE3E8;--bg:#E6EAED;--paper:#F2F4F6;--aub:#3A0F34;--ink:#2B0A27;--mut:#66525F;--dim:#97899A;--line:rgba(58,15,52,.14);--mari:#EAAA00;--mari2:#B98600;--red:#B3261E;--cold:#5E7F99;
 --fd:"Inter Tight","Inter Display",Inter,"Helvetica Neue",Arial,sans-serif;--fb:Inter,system-ui,sans-serif;--fm:"JetBrains Mono",ui-monospace,monospace;--fs:"Cormorant Garamond",Georgia,serif;--g:max(16px,env(safe-area-inset-left,0px));--gr:max(16px,env(safe-area-inset-right,0px));color-scheme:light}
-*{box-sizing:border-box}html{background:var(--bg)}
+*{box-sizing:border-box}html{background:var(--bg);-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 var(--fb);-webkit-font-smoothing:antialiased;overflow-x:clip}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60}
 .w{max-width:1200px;margin:0 auto;padding-left:var(--g);padding-right:var(--gr)}
@@ -82,7 +82,7 @@ main{position:relative;z-index:1}
 .big{font:900 clamp(48px,6vw,84px)/.8 var(--fd);letter-spacing:-.06em;color:var(--aub);opacity:.12;display:block;margin-bottom:10px}
 @media(max-width:860px){.three{grid-template-columns:1fr}.three>div,.three>div+div{padding:24px 0;border-right:0;border-bottom:1px solid var(--line)}}
 .layers{margin-top:56px;border-top:1px solid var(--line)}
-.ly{display:grid;grid-template-columns:110px minmax(0,1.1fr) minmax(0,2fr) minmax(0,1.2fr);gap:20px;align-items:baseline;padding:22px 0;border-bottom:1px solid var(--line);transition:background .3s,padding .3s}
+.ly{display:grid;grid-template-columns:132px minmax(0,1.1fr) minmax(0,2fr) minmax(0,1.2fr);gap:20px;align-items:baseline;padding:22px 0;border-bottom:1px solid var(--line);transition:background .3s,padding .3s}
 .ly:hover{background:linear-gradient(90deg,rgba(234,170,0,.16),transparent 70%);padding-left:14px}
 .ly small{font:600 9.5px var(--fb);letter-spacing:.3em;color:var(--mut)}.ly b{font:800 22px var(--fd);letter-spacing:-.03em}.ly span{color:var(--mut);font-size:15px}.ly code{font:500 12px var(--fm);color:var(--aub);opacity:.7;overflow-wrap:anywhere}
 .ly.e b{background:linear-gradient(transparent 62%,rgba(234,170,0,.55) 62%)}
@@ -98,10 +98,13 @@ main{position:relative;z-index:1}
 .st{flex:0 0 min(420px,80vw);border:1px solid var(--line);border-radius:22px;background:var(--paper);padding:30px;min-width:0;display:flex;flex-direction:column}
 .st .n{font:900 64px/.8 var(--fd);letter-spacing:-.06em;color:var(--mari)}.st h3{margin:20px 0 12px}.st p{font-size:15.5px;color:var(--mut)}
 .st .nums{margin-top:auto;display:flex;flex-wrap:wrap;gap:6px}.num{font:500 11.5px var(--fm);color:var(--aub);border:1px solid var(--line);border-radius:99px;padding:4px 10px}
-.how.pin{height:var(--hh)}.how.pin .stick{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.how.pin{height:var(--hh)}.how.pin .stick{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
 .how.pin .inr{padding-block:80px 40px}
 .how .prog{height:2px;background:var(--line);margin-top:30px;max-width:420px}.how .prog i{display:block;height:100%;width:0;background:var(--aub)}
-@media(max-width:860px){.how .rail{flex-direction:column}.st{flex-basis:auto}.how .prog{display:none}}
+.how:not(.pin) .rail{overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-left:calc(-1 * var(--g));margin-right:calc(-1 * var(--gr));padding:4px var(--gr) 10px var(--g);scroll-padding-inline:var(--g)}
+.how:not(.pin) .rail::-webkit-scrollbar{display:none}.how:not(.pin) .st{scroll-snap-align:start;flex-basis:min(420px,84vw)}.how:not(.pin) .prog i{transition:width .2s}
+@media(max-width:560px){.st{padding:24px}.st .n{font-size:54px}}
+@media(max-aspect-ratio:4/5){.pg{min-height:0}}
 .meter{display:grid;gap:26px;margin-top:56px;max-width:940px}
 .mr .top{display:flex;justify-content:space-between;gap:16px;font-size:16px;margin-bottom:10px}.mr .top b{font:700 15px var(--fm);white-space:nowrap;color:var(--mari)}
 .tr2{height:6px;background:rgba(221,227,232,.12);border-radius:9px;overflow:hidden}.fl{height:100%;width:0;border-radius:9px;background:var(--mari);transition:width 1.8s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 14px rgba(234,170,0,.6)}
@@ -384,7 +387,9 @@ function Bloom(canvas, opt) {
 const Sc = {y: scrollY, h: innerHeight, w: innerWidth, fns: [], tick: false};
 const onScroll = fn => Sc.fns.push(fn);
 addEventListener("scroll", () => { if (Sc.tick) return; Sc.tick = true; requestAnimationFrame(() => { Sc.tick = false; Sc.y = scrollY; Sc.fns.forEach(f => f()); }); }, {passive: true});
-let rzT; const onResize = fn => addEventListener("resize", () => { clearTimeout(rzT); rzT = setTimeout(() => { const wChanged = innerWidth !== Sc.w; Sc.w = innerWidth; Sc.h = innerHeight; Sc.y = scrollY; fn(wChanged); }, 150); });
+// on phones the address bar showing or hiding changes only the height a little; that is not worth a re-layout mid-scroll
+const TOUCH = matchMedia("(pointer:coarse)").matches;
+const onResize = fn => { let rzT; addEventListener("resize", () => { clearTimeout(rzT); rzT = setTimeout(() => { const wChanged = innerWidth !== Sc.w; if (TOUCH && !wChanged && Math.abs(innerHeight - Sc.h) < 160) return; Sc.w = innerWidth; Sc.h = innerHeight; Sc.y = scrollY; fn(wChanged); }, 150); }); };
 
 // hero: the lily is painted only while it opens; after that it is a still picture moved by cheap transforms
 (() => {
@@ -429,18 +434,28 @@ let rzT; const onResize = fn => addEventListener("resize", () => { clearTimeout(
   onResize(wc => { if (wc) { B.size(); painted = false; wake(); } });
 })();
 
+// where an element sits in the document, measured from the sheets in normal flow (sticky offsets ignored)
+const PgTop = {tops: [], after: [], of(el) { let t = 0; while (el && !el.hasAttribute("data-pg")) { t += el.offsetTop; el = el.offsetParent; } if (!el) return t; const i = [...document.querySelectorAll("[data-pg]")].indexOf(el); return t + (PgTop.tops[i] ?? el.offsetTop); }};
+
 // pages slide over one another: each sheet sticks once its bottom is reached, and the next one rises over it
 (() => {
   const pgs = [...document.querySelectorAll("[data-pg]")], shades = pgs.map(p => p.querySelector(".shade")), ticks = [...document.querySelectorAll("#idx i")], num = document.getElementById("idxn"), nav = document.getElementById("nav"), idx = document.getElementById("idx");
   const how = document.getElementById("howwrap"), rail = document.getElementById("rail"), hp = document.getElementById("howp");
   let tops = [], howTop = 0, extra = 0, last = -1, lastDark = null;
   function layout() {
-    const pin = innerWidth > 860 && !RM;
-    how.classList.toggle("pin", pin); rail.style.transform = "";
+    // the cards are driven by the page scroll only on wide, landscape screens; elsewhere they are swiped sideways
+    const pin = innerWidth > 860 && innerHeight <= innerWidth && !RM;
+    how.classList.toggle("pin", pin); rail.style.transform = ""; hp.style.width = "";
     if (pin) { extra = Math.max(0, rail.scrollWidth - rail.clientWidth); how.style.setProperty("--hh", (innerHeight + extra) + "px"); } else extra = 0;
     pgs.forEach((p, i) => { p.style.zIndex = i + 1; if (!RM) p.style.top = Math.min(0, innerHeight - p.offsetHeight) + "px"; });
-    tops = pgs.map(p => p.offsetTop); howTop = how.offsetTop + how.offsetParent.offsetTop;
+    // a stuck sheet reports its stuck offsetTop, so positions are summed from the heights in normal flow
+    let t = 0; tops = pgs.map(p => { const v = t; t += p.offsetHeight; return v; }); PgTop.tops = tops;
+    howTop = PgTop.of(how);
+    if (!pin) swipe();
   }
+  // swiping the cards: the bar under the title follows the rail
+  const swipe = () => { if (extra) return; const m = rail.scrollWidth - rail.clientWidth; hp.style.width = (m > 0 ? rail.scrollLeft / m * 100 : 100).toFixed(1) + "%"; };
+  rail.addEventListener("scroll", swipe, {passive: true});
   function upd() {
     const y = Sc.y, h = Sc.h;
     nav.classList.toggle("s", y > 40);
@@ -451,7 +466,7 @@ let rzT; const onResize = fn => addEventListener("resize", () => { clearTimeout(
     const dark = pgs[cur].matches(".dk,.closing") && tops[cur] - y < 40; if (dark !== lastDark) { idx.classList.toggle("lt", dark); nav.classList.toggle("dk", dark); lastDark = dark; }
     if (extra) { const k = Math.max(0, Math.min(1, (y - howTop) / extra)); rail.style.transform = `translate3d(${(-k * extra).toFixed(1)}px,0,0)`; hp.style.width = (k * 100).toFixed(1) + "%"; }
   }
-  const all = () => { layout(); Sc.y = scrollY; upd(); };
+  const all = () => { layout(); Sc.y = scrollY; upd(); PgTop.after.forEach(f => f()); };
   all(); onScroll(upd); onResize(all); addEventListener("load", all);
   if (document.fonts) document.fonts.ready.then(all);
   let imgT; document.querySelectorAll("img").forEach(im => im.addEventListener("load", () => { clearTimeout(imgT); imgT = setTimeout(all, 200); }));
@@ -487,12 +502,15 @@ let rzT; const onResize = fn => addEventListener("resize", () => { clearTimeout(
 // roadmap: a line fills as you read down, and each milestone comes into focus
 (() => {
   const road = document.getElementById("road"), lit = document.getElementById("lit"), stops = [...road.querySelectorAll(".ms")];
-  let top = 0, hgt = 1, at = [];
-  const layout = () => { let el = road, t = 0; while (el) { t += el.offsetTop; el = el.offsetParent; } top = t; hgt = road.offsetHeight; at = stops.map(st => { const d = st.querySelector(".dot"); return st.offsetTop + d.offsetTop + d.offsetHeight / 2; }); };
+  const sheet = road.closest("[data-pg]");
+  let top = 0, hgt = 1, at = [], y0 = 0, y1 = 1;
+  const layout = () => { top = PgTop.of(road); hgt = road.offsetHeight; at = stops.map(st => { const d = st.querySelector(".dot"); return st.offsetTop + d.offsetTop + d.offsetHeight / 2; });
+    // the line starts filling as the roadmap reaches the reading line, and is full by the time the next page rises over it
+    y0 = top - Sc.h * .62; y1 = Math.max(y0 + 1, Math.min(top + hgt - Sc.h * .62, PgTop.of(sheet) + sheet.offsetHeight - Sc.h - 40)); };
   function upd() { const r = top - Sc.y; if (r > Sc.h * 1.5 || r + hgt < -Sc.h) return;
-    const p = Math.max(0, Math.min(1, (Sc.h * .62 - r) / hgt)), y = p * hgt; lit.style.height = y.toFixed(0) + "px";
+    const p = Math.max(0, Math.min(1, (Sc.y - y0) / (y1 - y0))), y = p * hgt; lit.style.height = y.toFixed(0) + "px";
     stops.forEach((st, i) => st.classList.toggle("on", RM || at[i] <= y + 4)); }
-  layout(); upd(); onScroll(upd); onResize(() => { layout(); upd(); }); addEventListener("load", () => { layout(); upd(); });
+  layout(); upd(); onScroll(upd); PgTop.after.push(() => { layout(); upd(); });   // re-measured whenever the sheets are
 })();
 
 // closing: a lotus opens out of the blur beneath the verse, then holds still; pollen drifts up only while you are looking

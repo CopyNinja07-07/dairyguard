@@ -1,5 +1,7 @@
 # DairyGuard roadmap
 
+<p align="center"><img src="docs/img/roadmap.svg" alt="Roadmap timeline" width="100%"></p>
+
 Each stop ends in something finished and public. A journal paper comes last, once laboratory results stand.
 
 | When | Stop | Output | Status |
