@@ -11,7 +11,7 @@
 <style>
 :root{--ice:#DDE3E8;--bg:#E6EAED;--paper:#F2F4F6;--aub:#3A0F34;--ink:#2B0A27;--mut:#66525F;--dim:#97899A;--line:rgba(58,15,52,.14);--mari:#EAAA00;--mari2:#B98600;
 --fd:"Inter Tight","Inter Display",Inter,"Helvetica Neue",Arial,sans-serif;--fb:Inter,system-ui,sans-serif;--fm:"JetBrains Mono",ui-monospace,monospace;--fs:"Cormorant Garamond",Georgia,serif;color-scheme:light}
-*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg);-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 var(--fb);-webkit-font-smoothing:antialiased;overflow-x:clip}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
 .grid{position:fixed;inset:0;pointer-events:none;z-index:0;display:grid;grid-template-columns:repeat(8,1fr);padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}.grid i{border-left:1px solid rgba(58,15,52,.07)}.grid i:last-child{border-right:1px solid rgba(58,15,52,.07)}
