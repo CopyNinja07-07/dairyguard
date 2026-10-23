@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/banner.png" alt="DairyGuard" width="100%"></p>
+<p align="center"><picture><source media="(prefers-reduced-motion: reduce)" srcset="docs/banner.png"><img src="docs/img/hero.svg" alt="DairyGuard keeps the clock. Milk keeps its own clock; we read it." width="100%"></picture></p>
 
 <h1 align="center">DairyGuard</h1>
 
@@ -28,7 +28,7 @@
 
 ## Contents
 
-[Why we started](#why-we-started) · [Quickstart](#quickstart) · [How it works](#how-it-works) · [How we collected the data](#how-we-collected-the-data) · [How we fitted and trained the models](#how-we-fitted-and-trained-the-models) · [How we tested it](#how-we-tested-it) · [Results](#results) · [The mathematics](#the-mathematics) · [Firmware](#firmware) · [Python API](#python-api) · [Repository map](#repository-map) · [Reproduce everything](#reproduce-everything) · [Limits](#limits) · [Next in our lab](#next-in-our-lab) · [Cite](#cite)
+[Why we started](#why-we-started) · [Quickstart](#quickstart) · [How it works](#how-it-works) · [How we collected the data](#how-we-collected-the-data) · [How we fitted and trained the models](#how-we-fitted-and-trained-the-models) · [How we tested it](#how-we-tested-it) · [Results](#results) · [The mathematics](#the-mathematics) · [Firmware](#firmware) · [Python API](#python-api) · [Repository map](#repository-map) · [Reproduce everything](#reproduce-everything) · [Limits](#limits) · [Next in our lab](#next-in-our-lab) · [Contributing and security](#contributing-and-security) · [Cite](#cite)
 
 ## Why we started
 
@@ -72,6 +72,10 @@ dairyguard products                                       # milk, milk-combase, 
 
 ## How it works
 
+<p align="center"><img src="docs/img/pipeline.svg" alt="Data feeds the models, the models feed the monitor, the monitor runs in Python, firmware and the browser, and a simulator with 240,000 trips evaluates it" width="100%"></p>
+
+<details><summary>The same diagram as a Mermaid flowchart</summary>
+
 ```mermaid
 flowchart LR
     D["<b>1 · Data</b><br/>373 ComBase milk records<br/>published experiments<br/>every value sourced"] --> M["<b>2 · Models</b><br/>square-root growth law<br/>Gompertz shelf life<br/>Baranyi reference"]
@@ -81,10 +85,12 @@ flowchart LR
     E --> S
 ```
 
+</details>
+
 The monitor does three things at every reading:
 
 1. **Advances the biological clock.** Each reading adds `Δt / SL(T)` to the shelf life used, where `SL(T)` is the time the milk would last at that temperature.
-2. **Carries 80 plausible batches along.** Each batch has its own growth rate, lag and starting count, drawn from the spread seen between real studies. The share of batches over the limit is the chance the limit was crossed.
+2. **Carries plausible batches along** (80 in the benchmark, 200 by default in the Python package, 64 on the ESP32). Each batch has its own growth rate, lag and starting count, drawn from the spread seen between real studies. The share of batches over the limit is the chance the limit was crossed.
 3. **Turns that into a decision.** Fresh, use soon, check before use, or likely over the limit, with hours left if the milk is put back at 4 °C, typical and cautious.
 
 <p align="center"><img src="docs/img/clock.gif" alt="Growth curves at 4, 8 and 12 °C collapse into one curve when plotted on the bacteria's own clock" width="88%"></p>
@@ -112,7 +118,7 @@ For every ComBase record we transcribed the organism, temperature, pH, water act
 
 **Judged on unseen data.** For *Listeria*, each of the 20 studies is left out in turn, every law is fitted on the other 19, and the held-out study is predicted. Spoilage flora use 5-fold cross-validation. Scores are the Ross bias and accuracy factors. Code: [`experiments/growth_law_study.py`](experiments/growth_law_study.py).
 
-**Between-study spread.** A square-root law with one slope `b` per study and a shared `Tmin`, fitted to the 11 studies with three or more records, gives the real spread of growth rates between studies. That spread sets how widely the monitor's 80 batches are drawn.
+**Between-study spread.** A square-root law with one slope `b` per study and a shared `Tmin`, fitted to the 11 studies with three or more records, gives the real spread of growth rates between studies. That spread sets how widely the monitor's plausible batches are drawn.
 
 ## How we tested it
 
@@ -274,7 +280,7 @@ dairyguard/
 ```bash
 make test         # 27 tests, a few seconds
 make validate     # real-data checks
-make extensions   # growth-law study, monitor studies, figures, animations (a few minutes)
+make extensions   # growth-law study, monitor studies, figures, GIF and SVG animations (a few minutes)
 make runs         # the five simulated worlds, about three hours on two cores
 make generated report whitepaper demo
 ```
@@ -293,6 +299,8 @@ Every number in the book and on the website is written from the result files by 
 
 The results point in one direction: the 25% spread between real studies is biology a log cannot see, and a more flexible formula on growth rates alone does not recover it.
 
+<p align="center"><img src="docs/img/roadmap.svg" alt="Roadmap: DairyGuard Kinetic and real-data checks done in October 2026; curves and lab protocol now; first lab measurements January to February 2027; then DairyGuard Batch and peer review" width="100%"></p>
+
 The next model, **DairyGuard Batch**, keeps DairyGuard Kinetic's proven core and learns each batch's biology from complete growth curves of milk under changing temperatures, plus simple tests at loading. Its blueprint is published **before** any lab data exist, so the tests it must pass cannot be tuned afterwards:
 
 | Layer | What it does | Status |
@@ -308,6 +316,10 @@ A first prototype of layers 1–4 runs on simulated batches: [`experiments/batch
 It replaces Kinetic only if, on locked test batches, it cuts the error of "hours left" by at least 30%, keeps its 90% band honest, and loses nothing on AUC. Read the [blueprint page](https://copyninja07-07.github.io/dairyguard/blueprint.html) or [White Paper WP-02](docs/DairyGuard-White-Paper-WP02.pdf). Timeline: [ROADMAP.md](ROADMAP.md).
 
 Have growth data, a microbiology lab or a calorimeter? [Offer data or lab access](https://github.com/CopyNinja07-07/dairyguard/issues/new?template=offer-data.yml).
+
+## Contributing and security
+
+Bug reports, data offers and pull requests are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md). To report a security problem privately, follow [SECURITY.md](SECURITY.md).
 
 ## Cite
 
