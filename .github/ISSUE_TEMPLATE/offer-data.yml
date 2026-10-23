@@ -24,4 +24,4 @@ body:
     id: contact
     attributes:
       label: How should we reach you?
-      description: Optional. Leave blank to continue in this issue.
+      description: Optional. Leave blank to continue in this issue. Issues are public, so share only contact details you are happy for anyone to see.

@@ -435,7 +435,7 @@ const onResize = fn => { let rzT; addEventListener("resize", () => { clearTimeou
 })();
 
 // where an element sits in the document, measured from the sheets in normal flow (sticky offsets ignored)
-const PgTop = {tops: [], of(el) { let t = 0; while (el && !el.hasAttribute("data-pg")) { t += el.offsetTop; el = el.offsetParent; } if (!el) return t; const i = [...document.querySelectorAll("[data-pg]")].indexOf(el); return t + (PgTop.tops[i] ?? el.offsetTop); }};
+const PgTop = {tops: [], after: [], of(el) { let t = 0; while (el && !el.hasAttribute("data-pg")) { t += el.offsetTop; el = el.offsetParent; } if (!el) return t; const i = [...document.querySelectorAll("[data-pg]")].indexOf(el); return t + (PgTop.tops[i] ?? el.offsetTop); }};
 
 // pages slide over one another: each sheet sticks once its bottom is reached, and the next one rises over it
 (() => {
@@ -466,7 +466,7 @@ const PgTop = {tops: [], of(el) { let t = 0; while (el && !el.hasAttribute("data
     const dark = pgs[cur].matches(".dk,.closing") && tops[cur] - y < 40; if (dark !== lastDark) { idx.classList.toggle("lt", dark); nav.classList.toggle("dk", dark); lastDark = dark; }
     if (extra) { const k = Math.max(0, Math.min(1, (y - howTop) / extra)); rail.style.transform = `translate3d(${(-k * extra).toFixed(1)}px,0,0)`; hp.style.width = (k * 100).toFixed(1) + "%"; }
   }
-  const all = () => { layout(); Sc.y = scrollY; upd(); };
+  const all = () => { layout(); Sc.y = scrollY; upd(); PgTop.after.forEach(f => f()); };
   all(); onScroll(upd); onResize(all); addEventListener("load", all);
   if (document.fonts) document.fonts.ready.then(all);
   let imgT; document.querySelectorAll("img").forEach(im => im.addEventListener("load", () => { clearTimeout(imgT); imgT = setTimeout(all, 200); }));
@@ -502,12 +502,15 @@ const PgTop = {tops: [], of(el) { let t = 0; while (el && !el.hasAttribute("data
 // roadmap: a line fills as you read down, and each milestone comes into focus
 (() => {
   const road = document.getElementById("road"), lit = document.getElementById("lit"), stops = [...road.querySelectorAll(".ms")];
-  let top = 0, hgt = 1, at = [];
-  const layout = () => { top = PgTop.of(road); hgt = road.offsetHeight; at = stops.map(st => { const d = st.querySelector(".dot"); return st.offsetTop + d.offsetTop + d.offsetHeight / 2; }); };
+  const sheet = road.closest("[data-pg]");
+  let top = 0, hgt = 1, at = [], y0 = 0, y1 = 1;
+  const layout = () => { top = PgTop.of(road); hgt = road.offsetHeight; at = stops.map(st => { const d = st.querySelector(".dot"); return st.offsetTop + d.offsetTop + d.offsetHeight / 2; });
+    // the line starts filling as the roadmap reaches the reading line, and is full by the time the next page rises over it
+    y0 = top - Sc.h * .62; y1 = Math.max(y0 + 1, Math.min(top + hgt - Sc.h * .62, PgTop.of(sheet) + sheet.offsetHeight - Sc.h - 40)); };
   function upd() { const r = top - Sc.y; if (r > Sc.h * 1.5 || r + hgt < -Sc.h) return;
-    const p = Math.max(0, Math.min(1, (Sc.h * .62 - r) / hgt)), y = p * hgt; lit.style.height = y.toFixed(0) + "px";
+    const p = Math.max(0, Math.min(1, (Sc.y - y0) / (y1 - y0))), y = p * hgt; lit.style.height = y.toFixed(0) + "px";
     stops.forEach((st, i) => st.classList.toggle("on", RM || at[i] <= y + 4)); }
-  layout(); upd(); onScroll(upd); onResize(() => { layout(); upd(); }); addEventListener("load", () => { layout(); upd(); });
+  layout(); upd(); onScroll(upd); PgTop.after.push(() => { layout(); upd(); });   // re-measured whenever the sheets are
 })();
 
 // closing: a lotus opens out of the blur beneath the verse, then holds still; pollen drifts up only while you are looking
